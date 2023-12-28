@@ -81,16 +81,6 @@ export default function TradeSellerServiceHoursForm() {
 
       {/* Contact Details */}
       <div className="flex gap-5 w-full sm:flex-row flex-col my-3 ">
-        <label className="inline-block w-full">
-          Contact Number:
-          <input
-            type="text"
-            value={contactNumber}
-            onChange={handleContactNumberChange}
-            placeholder="000000000"
-            className="border-[#CECED7] border-2 rounded-md p-3 w-full block text-[#8891B2] mt-3"
-          />
-        </label>
         <label className=" inline-block w-full">
           Area Code:
           <select
@@ -104,6 +94,16 @@ export default function TradeSellerServiceHoursForm() {
             {/* Add more options as needed */}
           </select>
         </label>
+        <label className="inline-block w-full">
+          Contact Number:
+          <input
+            type="text"
+            value={contactNumber}
+            onChange={handleContactNumberChange}
+            placeholder="000000000"
+            className="border-[#CECED7] border-2 rounded-md p-3 w-full block text-[#8891B2] mt-3"
+          />
+        </label>
       </div>
 
       {/* Select Days */}
@@ -113,7 +113,11 @@ export default function TradeSellerServiceHoursForm() {
           {["Mon", "Tues", "Wed", "Thurs", "Fri"].map((day) => (
             <div key={day}>
               <button
-                className="bg-[#0D1A8B] text-white p-3 rounded-md w-28"
+                className={`${
+                  selectedDays.includes(day)
+                    ? "bg-[#0D1A8B] text-white"
+                    : "bg-white text-[#8891B2] border-2 border-[#e0deee] rounded-md"
+                } p-3 rounded-md w-28`}
                 onClick={() => handleDayClick(day)}
               >
                 {day}

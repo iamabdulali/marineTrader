@@ -65,14 +65,28 @@ export default function TradeSeller() {
             <React.Fragment key={step}>
               {index > 0 && (
                 <div
-                  className={`bg-[#0D1A8B] h-1 w-full rounded-sm relative top-5 bar${step}`}
+                  className={` h-1 w-full rounded-sm relative top-5 bar${step} ${
+                    step <= currentStep
+                      ? "bg-[#0D1A8B]"
+                      : "bg-[#8891B2] bg-opacity-20"
+                  }`}
                 />
               )}
-              <div className="flex flex-col items-center gap-4 text-[#0D1A8B] font-semibold ">
-                <div className="text-[#0D1A8B] font-semibold w-12 h-12 flex justify-center items-center rounded-full border-2 border-[#0D1A8B]">
+              <div className="flex flex-col items-center gap-4  font-semibold ">
+                <div
+                  className={` ${
+                    step <= currentStep
+                      ? "text-[#0D1A8B] border-[#0D1A8B]"
+                      : "text-[#8891B2] border-[#8891B2]"
+                  } font-semibold w-12 h-12 flex justify-center items-center rounded-full border-2 `}
+                >
                   {step}
                 </div>
-                <div>
+                <div
+                  className={`${
+                    step <= currentStep ? "text-[#0D1A8B]" : "text-[#8891B2]"
+                  }`}
+                >
                   {step === 1 && "Service Hours"}
                   {step === 2 && "Company Info"}
                   {step === 3 && "Facilities"}
