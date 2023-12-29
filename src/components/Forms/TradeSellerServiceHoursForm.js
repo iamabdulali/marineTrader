@@ -161,7 +161,7 @@ export default function TradeSellerServiceHoursForm() {
                 </span>
                 <Field
                   as="select"
-                  // value={dayTimes[selectedDay] || ""}
+                  value={dayTimes[selectedDay] || ""}
                   name="startTime"
                   onChange={(event) => handleTimeChange(selectedDay, event)}
                   className="border-[#CECED7] border-2 rounded-md p-3 w-48 block text-[#8891B2]"
