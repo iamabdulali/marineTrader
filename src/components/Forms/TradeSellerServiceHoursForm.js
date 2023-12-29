@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Field, ErrorMessage } from "formik";
 
 export default function TradeSellerServiceHoursForm() {
   const [serviceType, setServiceType] = useState("open12Hours");
@@ -83,25 +84,38 @@ export default function TradeSellerServiceHoursForm() {
       <div className="flex gap-5 w-full sm:flex-row flex-col my-3 ">
         <label className=" inline-block w-full">
           Area Code:
-          <select
-            value={areaCode}
-            onChange={handleAreaCodeChange}
+          <Field
+            as="select"
+            name="areaCode"
+            // value={areaCode}
+            // onChange={handleAreaCodeChange}
             className="border-[#CECED7] border-2 rounded-md p-3 w-full block text-[#8891B2] mt-3"
           >
             <option value="">Select Area Code</option>
             <option value="areaCode1">Area Code 1</option>
             <option value="areaCode2">Area Code 2</option>
             {/* Add more options as needed */}
-          </select>
+          </Field>
+          <ErrorMessage
+            name="areaCode"
+            component="span"
+            className="text-red-500"
+          />
         </label>
         <label className="inline-block w-full">
           Contact Number:
-          <input
+          <Field
             type="text"
-            value={contactNumber}
-            onChange={handleContactNumberChange}
+            // value={contactNumber}
+            // onChange={handleContactNumberChange}
             placeholder="000000000"
+            name="contactNumber"
             className="border-[#CECED7] border-2 rounded-md p-3 w-full block text-[#8891B2] mt-3"
+          />
+          <ErrorMessage
+            name="contactNumber"
+            component="span"
+            className="text-red-500"
           />
         </label>
       </div>
@@ -113,6 +127,8 @@ export default function TradeSellerServiceHoursForm() {
           {["Mon", "Tues", "Wed", "Thurs", "Fri"].map((day) => (
             <div key={day}>
               <button
+                type="button"
+                name="selectedDays"
                 className={`${
                   selectedDays.includes(day)
                     ? "bg-[#0D1A8B] text-white"
@@ -125,6 +141,13 @@ export default function TradeSellerServiceHoursForm() {
             </div>
           ))}
         </div>
+        <div
+          className={`text-red-500 ${
+            selectedDays.length == 0 ? "block" : "hidden"
+          }`}
+        >
+          Select One Day At Least
+        </div>
         <div className="flex items-center gap-1 mt-8">
           <p className="text-[#0D1A8B] font-semibold  min-w-28">Select Time</p>
           <p className="bg-[#CECED7] w-full h-[2px]"></p>
@@ -136,27 +159,31 @@ export default function TradeSellerServiceHoursForm() {
                 <span className="text-[#11133D] font-medium min-w-14">
                   {selectedDay}
                 </span>
-                <select
-                  value={dayTimes[selectedDay] || ""}
+                <Field
+                  as="select"
+                  // value={dayTimes[selectedDay] || ""}
+                  name="startTime"
                   onChange={(event) => handleTimeChange(selectedDay, event)}
                   className="border-[#CECED7] border-2 rounded-md p-3 w-48 block text-[#8891B2]"
                 >
-                  <option value="">12:00 PM</option>
-                  <option value="">12:30 PM</option>
-                  <option value="">12:45 PM</option>
+                  <option value="12:00pm">12:00 PM</option>
+                  <option value="12:30pm">12:30 PM</option>
+                  <option value="12:45pm">12:45 PM</option>
                   {/* Add more options as needed */}
-                </select>
+                </Field>
                 <span className="text-[#11133D] font-medium">To</span>
-                <select
+                <Field
+                  as="select"
+                  name="endTime"
                   value={dayTimes[selectedDay] || ""}
                   onChange={(event) => handleTimeChange(selectedDay, event)}
                   className="border-[#CECED7] border-2 rounded-md p-3 w-48 block text-[#8891B2]"
                 >
-                  <option value="">12:00 AM</option>
-                  <option value="">12:30 AM</option>
-                  <option value="">12:45 AM</option>
+                  <option value="12">12:00 AM</option>
+                  <option value="13">12:30 AM</option>
+                  <option value="14">12:45 AM</option>
                   {/* Add more options as needed */}
-                </select>
+                </Field>
               </label>
             </div>
           ))}

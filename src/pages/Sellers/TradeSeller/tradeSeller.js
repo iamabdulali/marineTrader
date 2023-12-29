@@ -1,52 +1,121 @@
+// TradeSeller.js
 import React, { useState } from "react";
-import TradeSellerCompanyInfoForm from "../../../components/Forms/TradeSellerCompanyInfoForm"; // Import your actual component here
-import Ship from "../../../assets/ship.png";
+import { Formik, Form } from "formik";
+import TradeSellerCompanyInfoForm from "../../../components/Forms/TradeSellerCompanyInfoForm";
 import TradeSellerServiceHoursForm from "../../../components/Forms/TradeSellerServiceHoursForm";
 import TradeSellerFacilitiesForm from "../../../components/Forms/TradeSellerFacilitiesForm";
+import Ship from "../../../assets/ship.png";
 import { logo } from "../../../assets";
+import { validationSchema } from "../../../utils/ValidationSchema";
 
-export default function TradeSeller() {
-  const [currentStep, setCurrentStep] = useState(1);
-  const circleSize = "50px";
-  const barHeight = "5px";
+const initialValues = {
+  companyName: "",
+  websiteAddress: "",
+  aboutCompany: "",
+  buildingNumber: "",
+  streetName: "",
+  townCity: "",
+  postcode: "",
+  country: "",
+  phoneNumber: "",
+  timezone: "",
+  emailAddress: "",
+  password: "",
+  confirmPassword: "",
+  areaCode: "",
+  contactNumber: "",
+  startTime: "",
+  endTime: "",
+  facilities: "",
+};
 
-  const handleNextStep = () => {
-    setCurrentStep(currentStep + 1);
-  };
+const TradeSeller = () => {
+  const [step, setStep] = useState(1);
 
-  const handlePrevStep = () => {
-    setCurrentStep(currentStep - 1);
-  };
+  const nextStep = (values, { setTouched, setErrors }) => {
+    try {
+      // Validate only the fields for the current step
+      const fieldsToValidate = Object.keys(validationSchema.fields).filter(
+        (field) => {
+          // Customize this condition based on your step logic
+          if (step === 1) {
+            return [
+              "companyName",
+              "websiteAddress",
+              "aboutCompany",
+              "buildingNumber",
+              "streetName",
+              "townCity",
+              "postcode",
+              "country",
+              "phoneNumber",
+              "timezone",
+              "emailAddress",
+              "password",
+              "confirmPassword",
+            ].includes(field);
+          } else if (step === 2) {
+            return ["areaCode", "contactNumber"].includes(field);
+          } else if (step === 3) {
+            return [
+              "serviceType",
+              "contactNumber",
+              "areaCode",
+              "selectedDays",
+              "dayTimes",
+              "publicHolidays",
+            ].includes(field);
+          }
+          return true; // Include all fields if not in a specific step
+        }
+      );
 
-  const getTitleStyle = (step) => {
-    return {
-      color: step <= currentStep ? "#0D1A8B" : "black",
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      padding: "10px 0",
-    };
-  };
+      validationSchema
+        .pick(fieldsToValidate)
+        .validateSync(values, { abortEarly: false });
 
-  const renderStepContent = () => {
-    switch (currentStep) {
-      case 1:
-        return (
-          <div>
-            <h2 className="sm:mx-8 mx-3 text-[#0D1A8B] font-semibold text-xl mt-10 flex items-center gap-2">
-              <div className="bg-[#0D1A8B] w-[5px] h-8 rounded-xl"></div>
-              Company Info
-            </h2>
-            <TradeSellerCompanyInfoForm />
-          </div>
-        );
-      case 2:
-        return <TradeSellerServiceHoursForm />;
-      case 3:
-        return <TradeSellerFacilitiesForm />;
-      default:
-        return null;
+      // Increment the step
+      setStep((prevStep) => prevStep + 1);
+    } catch (error) {
+      if (error.name === "ValidationError") {
+        // Display validation errors even if the user is trying to move to the next step
+        console.error("Validation errors:", error.errors);
+
+        // Set touched for all fields to trigger error messages
+        const allFields = Object.keys(values);
+        const touchedState = allFields.reduce((acc, field) => {
+          acc[field] = true;
+          return acc;
+        }, {});
+        setTouched(touchedState);
+
+        // Set errors to display them in the form
+        const errorState = error.errors.reduce((acc, error) => {
+          acc[error.path] = error.message;
+          return acc;
+        }, {});
+        setErrors(errorState);
+      } else {
+        // Handle other errors
+        console.error("Error:", error.message);
+      }
     }
+  };
+
+  const prevStep = () => setStep(step - 1);
+
+  const handleSubmit = (values, { setSubmitting }) => {
+    // Handle form submission here
+    // Assuming you want to display the form data as JSON
+    const formDataString = JSON.stringify(values);
+
+    // Display the formatted JSON in an alert box
+    // console.log(formDataString);
+    console.log(values);
+    setSubmitting(false);
+
+    // Move to the next step after form submission if needed
+    // setStep((prevStep) => prevStep + 1);
   };
 
   return (
@@ -61,12 +130,12 @@ export default function TradeSeller() {
 
         {/* Progress Indicator */}
         <div className="flex justify-center  text-center mt-10 sm:w-8/12 w-11/12 mx-auto">
-          {[1, 2, 3].map((step, index) => (
-            <React.Fragment key={step}>
+          {[1, 2, 3].map((progress, index) => (
+            <React.Fragment key={progress}>
               {index > 0 && (
                 <div
-                  className={` h-1 w-full rounded-sm relative top-5 bar${step} ${
-                    step <= currentStep
+                  className={` h-1 w-full rounded-sm relative top-5 bar${progress} ${
+                    progress <= step
                       ? "bg-[#0D1A8B]"
                       : "bg-[#8891B2] bg-opacity-20"
                   }`}
@@ -75,21 +144,21 @@ export default function TradeSeller() {
               <div className="flex flex-col items-center gap-4  font-semibold ">
                 <div
                   className={` ${
-                    step <= currentStep
+                    progress <= step
                       ? "text-[#0D1A8B] border-[#0D1A8B]"
                       : "text-[#8891B2] border-[#8891B2]"
                   } font-semibold w-12 h-12 flex justify-center items-center rounded-full border-2 `}
                 >
-                  {step}
+                  {progress}
                 </div>
                 <div
                   className={`${
-                    step <= currentStep ? "text-[#0D1A8B]" : "text-[#8891B2]"
+                    progress <= step ? "text-[#0D1A8B]" : "text-[#8891B2]"
                   }`}
                 >
-                  {step === 1 && "Service Hours"}
-                  {step === 2 && "Company Info"}
-                  {step === 3 && "Facilities"}
+                  {progress === 1 && "Service Hours"}
+                  {progress === 2 && "Company Info"}
+                  {progress === 3 && "Facilities"}
                 </div>
               </div>
             </React.Fragment>
@@ -97,12 +166,61 @@ export default function TradeSeller() {
         </div>
 
         {/* Form Content */}
-        {renderStepContent()}
+        <Formik
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={handleSubmit}
+        >
+          {({ isSubmitting, isValid, values, setErrors, setTouched }) => (
+            <Form>
+              {" "}
+              {step === 1 && <TradeSellerCompanyInfoForm />}
+              {step === 2 && <TradeSellerServiceHoursForm />}
+              {step === 3 && <TradeSellerFacilitiesForm />}
+              {/* {console.log(isValid)} */}
+              {/* {console.log(values)} */}
+              {console.log(step)}
+              {/* Navigation buttons */}
+              <div className="text-right mr-8 mt-10">
+                {step > 1 && (
+                  <button
+                    type="button"
+                    onClick={prevStep}
+                    className="bg-[#8891B2] text-white p-3 rounded-md w-28 mr-5"
+                  >
+                    Back
+                  </button>
+                )}
+
+                {step < 3 ? (
+                  <button
+                    type="button"
+                    onClick={() => nextStep(values, { setTouched, setErrors })}
+                    className={`bg-[#0D1A8B] text-white p-3 rounded-md w-28`}
+                  >
+                    Next
+                  </button>
+                ) : (
+                  <button
+                    type="submit"
+                    disabled={isSubmitting || !isValid}
+                    className={`bg-[#0D1A8B] text-white p-3 rounded-md w-28  ${
+                      isValid ? "opacity-100" : "opacity-70"
+                    }`}
+                  >
+                    Submit
+                  </button>
+                )}
+              </div>
+            </Form>
+          )}
+        </Formik>
 
         {/* Buttons */}
-        <div className="text-right mr-8 mt-10">
+        {/* <div className="text-right mr-8 mt-10">
           {currentStep > 1 && (
             <button
+              type="button"
               className="bg-[#8891B2] text-white p-3 rounded-md w-28 mr-5"
               onClick={handlePrevStep}
             >
@@ -110,12 +228,13 @@ export default function TradeSeller() {
             </button>
           )}
           <button
-            className="bg-[#0D1A8B] text-white p-3 rounded-md w-28"
             onClick={handleNextStep}
+            type="submit"
+            className="bg-[#0D1A8B] text-white p-3 rounded-md w-28"
           >
             {currentStep < 3 ? "Next" : "Submit"}
           </button>
-        </div>
+        </div> */}
       </div>
 
       {/* Right side (Image) */}
@@ -125,4 +244,6 @@ export default function TradeSeller() {
       </div>
     </div>
   );
-}
+};
+
+export default TradeSeller;

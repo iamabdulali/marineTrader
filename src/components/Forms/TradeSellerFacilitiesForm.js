@@ -1,28 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { plusSign } from "../../assets";
+import { Field } from "formik";
 
 const initialFacilities = {
-  Accommodation: false,
-  "Licensed Bar": false,
-  Restaurant: false,
-  "24/7 Support": false,
-  "Service Department": false,
-  Reception: false,
-  Counter: false,
-  Parking: false,
-  "Disabled Access": false,
-  Finance: false,
-  "Equipment Hire": false,
-  "On Site Transport": false,
-  Delivery: false,
-  Showroom: false,
-  Shop: false,
-  Parts: false,
-  Dsds: false,
+  facilities: {
+    Accommodation: false,
+    "Licensed Bar": false,
+    Restaurant: false,
+    "24/7 Support": false,
+    "Service Department": false,
+    Reception: false,
+    Counter: false,
+    Parking: false,
+    "Disabled Access": false,
+    Finance: false,
+    "Equipment Hire": false,
+    "On Site Transport": false,
+    Delivery: false,
+    Showroom: false,
+    Shop: false,
+    Parts: false,
+    Dsds: false,
+  },
 };
 
 export default function TradeSellerFacilitiesForm() {
-  const [facilities, setFacilities] = useState(initialFacilities);
+  const [facilities, setFacilities] = useState(initialFacilities.facilities);
+
   const [newFacility, setNewFacility] = useState("");
 
   const handleFacilityChange = (facility) => {
@@ -35,6 +39,10 @@ export default function TradeSellerFacilitiesForm() {
   const handleNewFacilityChange = (e) => {
     setNewFacility(e.target.value);
   };
+
+  useEffect(() => {
+    console.log("Facilities state:", facilities);
+  }, [facilities]);
 
   const handleAddFacility = () => {
     if (newFacility.trim() !== "") {
@@ -56,11 +64,13 @@ export default function TradeSellerFacilitiesForm() {
         {Object.keys(facilities).map((facility) => (
           <div key={facility}>
             <label className="flex text-[#11133D]">
-              <input
+              <Field
                 className="w-[24px] h-[24px] text-blue-600 bg-gray-100 border-gray-300 rounded mr-3"
                 type="checkbox"
-                checked={facilities[facility]}
-                onChange={() => handleFacilityChange(facility)}
+                name="facilities"
+                // checked={facilities[facility]}
+                value={facility}
+                // onChange={() => handleFacilityChange(facility)}
               />
               {facility}
             </label>
@@ -79,11 +89,13 @@ export default function TradeSellerFacilitiesForm() {
         <input
           type="text"
           placeholder="New Facility"
-          value={newFacility}
-          onChange={handleNewFacilityChange}
+          name="new-facility"
+          // value={newFacility}
+          // onChange={handleNewFacilityChange}
           className="border-[#CECED7] border-2 rounded-md p-3 sm:w-72 w-full sm:mr-6"
         />
         <button
+          type="button"
           className="bg-[#0D1A8B] text-white p-3 rounded-md"
           onClick={handleAddFacility}
         >
