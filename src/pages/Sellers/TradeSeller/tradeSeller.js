@@ -105,17 +105,10 @@ const TradeSeller = () => {
   const prevStep = () => setStep(step - 1);
 
   const handleSubmit = (values, { setSubmitting }) => {
-    // Handle form submission here
     // Assuming you want to display the form data as JSON
     const formDataString = JSON.stringify(values);
-
-    // Display the formatted JSON in an alert box
-    // console.log(formDataString);
     console.log(values);
     setSubmitting(false);
-
-    // Move to the next step after form submission if needed
-    // setStep((prevStep) => prevStep + 1);
   };
 
   return (
@@ -177,10 +170,6 @@ const TradeSeller = () => {
               {step === 1 && <TradeSellerCompanyInfoForm />}
               {step === 2 && <TradeSellerServiceHoursForm />}
               {step === 3 && <TradeSellerFacilitiesForm />}
-              {/* {console.log(isValid)} */}
-              {/* {console.log(values)} */}
-              {console.log(step)}
-              {/* Navigation buttons */}
               <div className="text-right mr-8 mt-10">
                 {step > 1 && (
                   <button
@@ -195,7 +184,10 @@ const TradeSeller = () => {
                 {step < 3 ? (
                   <button
                     type="button"
-                    onClick={() => nextStep(values, { setTouched, setErrors })}
+                    onClick={(e) => {
+                      e.preventDefault(); // Add this line
+                      nextStep(values, { setTouched, setErrors });
+                    }}
                     className={`bg-[#0D1A8B] text-white p-3 rounded-md w-28`}
                   >
                     Next
@@ -215,26 +207,6 @@ const TradeSeller = () => {
             </Form>
           )}
         </Formik>
-
-        {/* Buttons */}
-        {/* <div className="text-right mr-8 mt-10">
-          {currentStep > 1 && (
-            <button
-              type="button"
-              className="bg-[#8891B2] text-white p-3 rounded-md w-28 mr-5"
-              onClick={handlePrevStep}
-            >
-              Back
-            </button>
-          )}
-          <button
-            onClick={handleNextStep}
-            type="submit"
-            className="bg-[#0D1A8B] text-white p-3 rounded-md w-28"
-          >
-            {currentStep < 3 ? "Next" : "Submit"}
-          </button>
-        </div> */}
       </div>
 
       {/* Right side (Image) */}

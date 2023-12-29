@@ -6,9 +6,6 @@ export const validationSchema = Yup.object().shape({
   websiteAddress: Yup.string()
     .url("Enter a valid URL")
     .required("Website Address is required"),
-  // aboutCompany: Yup.string()
-  //   .max(250, "About Company must be at most 250 characters")
-  //   .required("Description is Required"),
   buildingNumber: Yup.string().required("Building Number is required"),
   streetName: Yup.string().required("Street Name is required"),
   townCity: Yup.string().required("Town/City is required"),
