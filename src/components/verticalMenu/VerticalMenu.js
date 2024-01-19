@@ -7,6 +7,7 @@ const VerticalMenu = ({ onTabClick }) => {
   const navigate = useNavigate();
 
   const tabs = [
+    { id: 0, icon: require("../../assets/selling.png"), text: "Dashboard" },
     { id: 1, icon: require("../../assets/selling.png"), text: "Selling" },
     {
       id: 2,

@@ -22,7 +22,7 @@ export default function TradeSellerCompanyInfoForm() {
   };
 
   return (
-    <div className="sm:mx-8 mx-3 ">
+    <div className="sm:mx-8 mx-0 ">
       <h2 className=" text-[#0D1A8B] font-semibold text-xl mt-10 flex items-center gap-2">
         <div className="bg-[#0D1A8B] w-[5px] h-8 rounded-xl"></div>
         Company Info
@@ -144,19 +144,36 @@ export default function TradeSellerCompanyInfoForm() {
           </div>
         </div>
         <div className="flex gap-4 sm:flex-row flex-col">
-          <div className="w-full">
-            <Field
-              type="tel"
-              name="phoneNo"
-              placeholder="Phone Number"
-              className="border-[#CECED7] border-2 rounded-md p-3 w-full"
-            />
+          <div className="w-full relative">
+            {/* Country Code Dropdown */}
+            <div className="absolute left-3 top-1">
+              <Field
+                as="select"
+                name="countryCode"
+                className="rounded-md py-2 w-full"
+              >
+                <option value="+1">+1 (USA)</option>
+                <option value="+44">+44 (UK)</option>
+              </Field>
+            </div>
+
+            {/* Phone Number Input */}
+            <div className="w-full">
+              <Field
+                type="tel"
+                name="phoneNo"
+                placeholder="00000000000"
+                className="border-[#CECED7] border-2 rounded-md p-3 pl-28 w-full"
+              />
+            </div>
+
             <ErrorMessage
               name="phoneNo"
               component="span"
               className="text-red-500"
             />
           </div>
+
           <div className="w-full">
             <SelectDropdown
               name="currency"

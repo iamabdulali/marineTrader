@@ -18,9 +18,9 @@ export default function Dashboard() {
     setActiveTab(tabId);
   };
 
-  if (!user) {
-    return <div>You Must be Logged In</div>;
-  }
+  // if (!user) {
+  //   return <div>You Must be Logged In</div>;
+  // }
 
   return (
     <>
