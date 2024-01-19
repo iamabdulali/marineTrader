@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { eye } from "../../assets";
-import { FaEye } from "react-icons/fa";
+import { FaArrowDown, FaChevronCircleDown, FaEye } from "react-icons/fa";
 import { Field, ErrorMessage } from "formik";
 import SelectDropdown from "./FormElements/SelectDropdown";
 import {
@@ -117,12 +117,18 @@ export default function TradeSellerCompanyInfoForm() {
           </div>
         </div>
         <div className="flex gap-4 sm:flex-row flex-col">
-          <div className="w-full">
-            <SelectDropdown
-              name="country"
-              options={countryOptions}
-              className="border-[#CECED7] border-2 rounded-md p-3 w-full appearance-none sm:appearance-auto bg-white"
-            />
+          <div className="w-full ">
+            <div className="flex items-center">
+              <FaChevronCircleDown
+                className="absolute right-6 block sm:hidden"
+                size={16}
+              />
+              <SelectDropdown
+                name="country"
+                options={countryOptions}
+                className="border-[#CECED7] border-2 rounded-md p-3 w-full appearance-none sm:appearance-auto bg-white"
+              />
+            </div>
             <ErrorMessage
               name="country"
               component="span"
@@ -130,12 +136,18 @@ export default function TradeSellerCompanyInfoForm() {
             />
           </div>
 
-          <div className="w-full">
-            <SelectDropdown
-              name="region"
-              options={regionOptions}
-              className="border-[#CECED7] border-2 rounded-md p-3 w-full appearance-none sm:appearance-auto bg-white"
-            />
+          <div className="w-full ">
+            <div className="items-center flex">
+              <FaChevronCircleDown
+                className="absolute right-6 block sm:hidden"
+                size={16}
+              />
+              <SelectDropdown
+                name="region"
+                options={regionOptions}
+                className="border-[#CECED7] border-2 rounded-md p-3 w-full appearance-none sm:appearance-auto bg-white"
+              />
+            </div>
             <ErrorMessage
               name="region"
               component="span"
@@ -147,7 +159,7 @@ export default function TradeSellerCompanyInfoForm() {
           <div className="w-full relative">
             {/* Country Code Dropdown */}
             <div className="flex items-center">
-              <div className="absolute left-3 ">
+              <div className="absolute left-3 flex items-center ">
                 <Field
                   as="select"
                   name="countryCode"
@@ -156,6 +168,7 @@ export default function TradeSellerCompanyInfoForm() {
                   <option value="+1">+1 (USA)</option>
                   <option value="+44">+44 (UK)</option>
                 </Field>
+                <FaChevronCircleDown className=" block sm:hidden" size={16} />
               </div>
 
               {/* Phone Number Input */}
@@ -164,7 +177,7 @@ export default function TradeSellerCompanyInfoForm() {
                   type="tel"
                   name="phoneNo"
                   placeholder="00000000000"
-                  className="border-[#CECED7] border-2 rounded-md p-3 pl-20 sm:pl-28 w-full bg-white"
+                  className="border-[#CECED7] border-2 rounded-md p-3 pl-24 sm:pl-28 w-full bg-white"
                 />
               </div>
             </div>
@@ -176,11 +189,17 @@ export default function TradeSellerCompanyInfoForm() {
           </div>
 
           <div className="w-full">
-            <SelectDropdown
-              name="currency"
-              options={currencyOptions}
-              className="border-[#CECED7] border-2 rounded-md p-3 w-full appearance-none sm:appearance-auto bg-white"
-            />
+            <div className="flex items-center">
+              <FaChevronCircleDown
+                className="absolute right-6 block sm:hidden"
+                size={16}
+              />
+              <SelectDropdown
+                name="currency"
+                options={currencyOptions}
+                className="border-[#CECED7] border-2 rounded-md p-3 w-full appearance-none sm:appearance-auto bg-white"
+              />
+            </div>
             <ErrorMessage
               name="currency"
               component="span"
