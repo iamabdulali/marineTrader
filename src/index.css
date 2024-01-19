@@ -60,3 +60,17 @@ code {
 .radio input[type="radio"] + .radio-label:empty:before {
   margin-right: 0;
 }
+
+#sidebar-menu::-webkit-scrollbar {
+  display: none;
+}
+
+#welcome-div {
+  background: rgb(13, 26, 139);
+  background: linear-gradient(
+    90deg,
+    rgba(13, 26, 139, 1) 12%,
+    rgba(58, 71, 184, 1) 55%,
+    rgba(58, 71, 191, 1) 100%
+  );
+}

@@ -1,69 +1,80 @@
-import React from "react";
-import "./Header.css";
+import React, { useState } from "react";
+import { FaChevronDown } from "react-icons/fa";
+import { flagUsa, notificationIcon, userProfile } from "../../assets";
 import { Link } from "react-router-dom";
 
-const DefaultHeader = () => (
-  <div className="header-container">
-    {/* Logo */}
-    <img
-      src={require("../../assets/logo.png")}
-      style={{ objectFit: "contain", width: 100, height: 100 }}
-      alt="Logo"
-    />
-  </div>
-);
+const Header = () => {
+  const [languageDropdownOpen, setLanguageDropdownOpen] = useState(false);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
 
-const NotificationsHeader = () => (
-  <div className="header-container">
-    {/* Add code for the header with notifications */}
-    {/* ... */}
-  </div>
-);
-
-const CustomHeader = ({ userDetails }) => (
-  <Link to="/">
-    <div className="custom-header-container flex items-center justify-between w-full">
-      <div className="flex items-center">
-        <img
-          src={require("../../assets/logo.png")}
-          style={{ objectFit: "contain", width: 65, height: 65, marginLeft: 10 }}
-          alt="Logo"
-        />
-      </div>
-      {userDetails && userDetails.data && userDetails.data.name && (
-        <span className="user-name flex-grow ml-3 p-3 text-right">
-          Welcome {userDetails.data.name}
-        </span>
-      )}
-    </div>
-  </Link>
-);
-
-
-export default function Header(props) {
-  const { headerType } = props;
-
-  const user = localStorage.getItem("user") || "";
-  let userDetails = {};
-
-  try {
-    // Attempt to parse the user data, handle empty string
-    userDetails = JSON.parse(user);
-  } catch (error) {
-    console.error("Error parsing user data:", error);
-    userDetails = {};
-  }
-
-  const renderHeader = () => {
-    switch (headerType) {
-      case "profile":
-        return <NotificationsHeader />;
-      case "login":
-        return <CustomHeader userDetails={userDetails} />;
-      default:
-        return <DefaultHeader />;
-    }
+  const toggleLanguageDropdown = () => {
+    setLanguageDropdownOpen(!languageDropdownOpen);
   };
 
-  return renderHeader();
-}
+  const toggleUserMenu = () => {
+    setUserMenuOpen(!userMenuOpen);
+  };
+
+  return (
+    <div className="bg-white px-10 py-6 flex justify-end gap-6 items-center">
+      {/* Language Dropdown */}
+      <div className="relative inline-block">
+        <button
+          onClick={toggleLanguageDropdown}
+          className="flex items-center space-x-2 focus:outline-none"
+        >
+          <img src={flagUsa} className="w-6" />
+          <FaChevronDown size={12} color="#696E9D" />
+        </button>
+        {languageDropdownOpen && (
+          <div className="absolute w-max mt-2 bg-white border rounded shadow-lg">
+            <button className="py-2 px-3 flex items-center">
+              {" "}
+              <img src={flagUsa} className="w-6 mr-3" />
+              English
+            </button>
+            <button className="py-2 px-3 flex items-center">
+              {" "}
+              <img src={flagUsa} className="w-6 mr-3" />
+              French
+            </button>
+          </div>
+        )}
+      </div>
+
+      {/* Bell and Notification Icons */}
+      <div className="flex items-center space-x-4">
+        <Link to="/offers">
+          <img src={notificationIcon} className="w-10" />
+        </Link>
+      </div>
+
+      {/* User Picture and Menu */}
+      <div className="relative inline-block">
+        <button
+          onClick={toggleUserMenu}
+          className="flex items-center space-x-2 focus:outline-none"
+        >
+          <div className="flex items-center justify-start gap-3 text-left">
+            <img src={userProfile} className="w-10" />
+            <div>
+              <span className="text-[#151D48] items-center font-semibold text-left flex">
+                Musfiq <FaChevronDown className="ml-16" size={12} />
+              </span>
+              <span className="text-[#737791] text-sm">Trade Seller</span>
+            </div>
+          </div>
+        </button>
+        {userMenuOpen && (
+          <div className="absolute mt-2 min-w-36 bg-white border rounded shadow-lg">
+            <button className="py-2 px-4 block">Profile</button>
+            <button className="py-2 px-4 block">Settings</button>
+            <button className="py-2 px-4 block">Logout</button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default Header;

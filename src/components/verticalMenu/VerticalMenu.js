@@ -1,94 +1,110 @@
-import React, { useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import React from "react";
+import { Link } from "react-router-dom";
+import {
+  FaHome,
+  FaStore,
+  FaAddressBook,
+  FaNewspaper,
+  FaCalendarAlt,
+  FaClipboardList,
+  FaEnvelope,
+  FaSignOutAlt,
+} from "react-icons/fa";
+import { blueBg, logo, msgIcon, phoneIcon } from "../../assets";
 
-const VerticalMenu = ({ onTabClick }) => {
-  const [activeTab, setActiveTab] = useState(null);
-  const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const navigate = useNavigate();
-
-  const tabs = [
-    { id: 0, icon: require("../../assets/selling.png"), text: "Dashboard" },
-    { id: 1, icon: require("../../assets/selling.png"), text: "Selling" },
-    {
-      id: 2,
-      icon: require("../../assets/shopping-cart.png"),
-      text: "Directory",
-    },
-    { id: 3, icon: require("../../assets/news.png"), text: "News" },
-    { id: 4, icon: require("../../assets/events.png"), text: "Events" },
-    {
-      id: 5,
-      icon: require("../../assets/subscriptions.png"),
-      text: "Subscriptions",
-    },
-    { id: 6, icon: require("../../assets/contact.png"), text: "Contact" },
-    { id: 7, icon: require("../../assets/signOut.png"), text: "Sign Out" },
-  ];
-
-  const handleTabClick = (tabId) => {
-    setActiveTab(tabId);
-    onTabClick(tabId);
-    // Close the mobile menu after clicking a tab
-    setMobileMenuOpen(false);
-  };
-
-  const handleSignOut = () => {
-    // Add your sign-out logic here
-    localStorage.removeItem("user");
-    navigate("/login");
-
-    // You might want to call a function from your authentication context to handle the sign-out process
-  };
-
+const VerticalMenu = () => {
   return (
-    <div className="flex flex-col lg:flex-row bg-blue-700 text-white w-48 lg:w-auto h-screen lg:h-auto rounded-lg">
-      {/* Hamburger Menu for Mobile */}
-      <div className="lg:hidden">
-        <button
-          className="p-2 focus:outline-none"
-          onClick={() => setMobileMenuOpen(!isMobileMenuOpen)}
-        >
-          <svg
-            className="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M4 6h16M4 12h16m-7 6h7"
-            ></path>
-          </svg>
-        </button>
+    <div
+      id="sidebar-menu"
+      className="w-72 p-4 pb-20 bg-white fixed top-0 bottom-0 overflow-y-scroll text-sm"
+    >
+      <div className="flex justify-center mb-16">
+        <img src={logo} className="w-28" />
       </div>
-
-      {/* Tabs Section */}
-      <div
-        className={`flex flex-col lg:flex-row p-2 w-full lg:w-48 pt-2 ${
-          isMobileMenuOpen ? "block" : "hidden lg:block"
-        }`}
-      >
-        {tabs.map((tab) => (
-          <div
-            key={tab.id}
-            className={`flex items-center p-2 ${
-              activeTab === tab.id ? "bg-blue-700" : "hover:bg-blue-100"
-            } rounded-lg mt-1 cursor-pointer transition duration-300`}
-            onClick={() =>
-              tab.id === 7 ? handleSignOut() : handleTabClick(tab.id)
-            }
-          >
-            <img
-              src={tab.icon}
-              alt={`Icon ${tab.id}`}
-              className="w-3/12 lg:w-6 mr-2"
-            />
-            <span className="text-sm font-semibold">{tab.text}</span>
-          </div>
-        ))}
+      <nav>
+        <ul>
+          <li className="mb-4">
+            <Link
+              to="/dashboard"
+              className="flex items-center bg-[#0D1A8B] py-4 px-4 text-white rounded-xl"
+            >
+              <FaHome className="mr-3" size={18} />
+              Dashboard
+            </Link>
+          </li>
+          <li className="mb-4">
+            <Link
+              to="/selling"
+              className="flex items-center py-4 px-4 text-[#8891B2] rounded-xl hover:bg-gray-200 active:bg-blue-800 active:text-white"
+            >
+              <FaStore className="mr-3" size={18} />
+              Selling
+            </Link>
+          </li>
+          <li className="mb-4">
+            <Link
+              to="/directory"
+              className="flex items-center py-4 px-4 text-[#8891B2] rounded-xl hover:bg-gray-200 active:bg-blue-800 active:text-white"
+            >
+              <FaAddressBook className="mr-3" size={18} />
+              Directory
+            </Link>
+          </li>
+          <li className="mb-4">
+            <Link
+              to="/news"
+              className="flex items-center py-4 px-4 text-[#8891B2] rounded-xl hover:bg-gray-200 active:bg-blue-800 active:text-white"
+            >
+              <FaNewspaper className="mr-3" size={18} />
+              News
+            </Link>
+          </li>
+          <li className="mb-4">
+            <Link
+              to="/events"
+              className="flex items-center py-4 px-4 text-[#8891B2] rounded-xl hover:bg-gray-200 active:bg-blue-800 active:text-white"
+            >
+              <FaCalendarAlt className="mr-3" size={18} />
+              Events
+            </Link>
+          </li>
+          <li className="mb-4">
+            <Link
+              to="/subscriptions"
+              className="flex items-center py-4 px-4 text-[#8891B2] rounded-xl hover:bg-gray-200 active:bg-blue-800 active:text-white"
+            >
+              <FaClipboardList className="mr-3" size={18} />
+              Subscriptions
+            </Link>
+          </li>
+          <li className="mb-4">
+            <Link
+              to="/contact-mt"
+              className="flex items-center py-4 px-4 text-[#8891B2] rounded-xl hover:bg-gray-200 active:bg-blue-800 active:text-white"
+            >
+              <FaEnvelope className="mr-3" size={18} />
+              Contact MT
+            </Link>
+          </li>
+          <li className="mb-4">
+            <Link
+              to="/sign-out"
+              className="flex items-center py-4 px-4 text-[#8891B2] rounded-xl hover:bg-gray-200 active:bg-blue-800 active:text-white"
+            >
+              <FaSignOutAlt className="mr-3" size={18} />
+              Sign Out
+            </Link>
+          </li>
+        </ul>
+      </nav>
+      <div className="mt-14 text-white relative flex justify-center">
+        <img src={blueBg} className="rounded-3xl" />
+        <div className="absolute flex flex-col items-center top-1/2 -translate-y-1/2">
+          <img src={phoneIcon} className="w-10 mb-3" />
+          <p>+44 7700 900077</p>
+          <img src={msgIcon} className="w-10 my-3" />
+          <a href="mailto:dealer@example.com">dealer@example.com</a>
+        </div>
       </div>
     </div>
   );

@@ -1,63 +1,33 @@
-import React, { useContext, useState } from "react";
-import { useLocation } from "react-router-dom";
+import React from "react";
 import VerticalMenu from "../../components/verticalMenu/VerticalMenu";
-import DashHeader from "../../components/dashHeader/DashHeader";
-import CategoryLists from "../../components/categoryList/CategoryList";
 import Header from "../../components/Header/Header";
-import { AuthContext } from "../../Context/AuthContext";
+import PackageMessage from "../../components/Notifications/PackageMessage";
+import { jetski3d, packageIcon } from "../../assets";
+import { FaCross, FaTimes } from "react-icons/fa";
+import WelcomeMessage from "../../components/Notifications/WelcomeMessage";
+import ListingTable from "../../components/Tables/ListingTable";
 
 export default function Dashboard() {
-  const user = localStorage.getItem("user");
-
-  const location = useLocation();
-  const userName = new URLSearchParams(location.search).get("name");
-
-  const [activeTab, setActiveTab] = useState(null);
-
-  const handleTabClick = (tabId) => {
-    setActiveTab(tabId);
-  };
-
-  // if (!user) {
-  //   return <div>You Must be Logged In</div>;
-  // }
-
   return (
     <>
-      {" "}
-      <Header headerType="login" />
-      <div style={{ display: "flex", backgroundColor: "#F6F6F6", padding: 10 }}>
-        <VerticalMenu onTabClick={handleTabClick} />
-        <div>
-          {activeTab === 1 /* ID for "buying" tab */ ? (
-            <>
-              <h1 className=" text-[#0D1A8B] sm:ml-2 mt-2 ml-3 font-semibold">
-                Start A New Listing
-              </h1>
-              <CategoryLists />
-            </>
-          ) : activeTab === 2 /* ID for the second tab */ ? (
-            /* Content for the second tab */
-            <p>Content for the second tab</p>
-          ) : activeTab === 3 /* ID for the third tab */ ? (
-            /* Content for the third tab */
-            <p>Content for the third tab</p>
-          ) : activeTab === 4 /* ID for the fourth tab */ ? (
-            /* Content for the fourth tab */
-            <p>Content for the fourth tab</p>
-          ) : activeTab === 5 /* ID for the fifth tab */ ? (
-            /* Content for the fifth tab */
-            <p>Content for the fifth tab</p>
-          ) : activeTab === 6 /* ID for the sixth tab */ ? (
-            /* Content for the sixth tab */
-            <p>Content for the sixth tab</p>
-          ) : activeTab === 7 /* ID for the seventh tab */ ? (
-            /* Content for the seventh tab */
-            <p>Content for the seventh tab</p>
-          ) : (
-            /* Render something else when no tab is active */
-            <p>Welcome to Marine Trader</p>
-          )}
+      <div className="bg-[#f6f6f6] min-h-screen">
+        <Header />
+        <VerticalMenu />
+        <div className="ml-72 py-8 px-8">
+          <PackageMessage
+            className="bg-white flex items-center justify-between p-4 rounded-xl font-medium shadow-[3px]"
+            image={packageIcon}
+            content="Congratulations! You Have successfully subscribed to Dealer Plus Package"
+            icon={<FaTimes color="#fff" />}
+          />
+          <WelcomeMessage
+            className="text-white flex justify-between p-10 mt-5 rounded-xl"
+            heading="Welcome to Trade Seller Dashboard"
+            subHeading="Let’s get it started & Create your listings."
+            buttonText="Create New Listing"
+            image={jetski3d}
+          />
+          <ListingTable />
         </div>
       </div>
     </>
