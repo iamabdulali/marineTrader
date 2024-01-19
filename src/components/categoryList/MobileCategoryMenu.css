@@ -1,0 +1,26 @@
+/* mobile-category-menu */
+
+
+.mobile-category-menu {
+    
+    left: 0;
+    width: 100vw;
+    top: 0;
+    height: 4vh;
+    background-color: #080808;
+    z-index: 999;
+    color: rgb(255, 255, 255);
+    transition: transform 0.3s ease-in-out;
+    transform: translateX(-100%);
+    z-index: 5;
+  }
+  
+  .mobile-category-menu.open {
+    transform: translateX(0);
+    width: 100vw;
+    height: 7vh;
+  }
+  
+.category-list{
+    background-color: black;
+}

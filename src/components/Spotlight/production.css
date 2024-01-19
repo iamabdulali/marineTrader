@@ -1,0 +1,130 @@
+/* The main container for the product section */
+.product-section {
+  display: flex;
+  flex-direction: column;
+  width: auto;
+  padding: 5vh 10vw;
+  box-sizing: border-box;
+}
+
+/* The container for the title and view all button */
+.row-1 {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Styling for the section title */
+.product-section h2 {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+/* Grid layout for the products */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+/* Styling for each product card */
+.product-card {
+  box-sizing: border-box;
+  text-align: left;
+}
+
+/* Styling for the product image */
+.product-card img {
+  width: 100%;
+  height: auto;
+}
+
+/* Styling for the product category */
+.product-info .category {
+  font-size: 14px;
+  color: #777;
+  line-height: 0%;
+}
+
+/* Styling for the product title */
+.product-info .title {
+  font-size: 18px;
+  color: #333;
+  margin: 10px 0;
+  line-height: 0%;
+}
+
+/* Styling for the product price */
+.product-info .price {
+  font-size: 14px;
+  font-weight: bold;
+  color: blue;
+  line-height: 0%;
+  padding-bottom: 15px;
+}
+
+/* Styling for the view all button */
+.view-all-btn {
+  color: blue;
+  text-decoration: underline;
+  font-size: 14px;
+  font-weight: bold;
+  background-color: white;
+  border: none;
+}
+
+/* Hover effect for the view all button */
+.view-all-btn:hover {
+  color: black;
+  cursor: pointer;
+}
+
+/* Hover and active effects for the product image */
+.image:hover {
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+.image:active {
+  opacity: 1;
+}
+
+/* Styling for the show more button */
+.show-more-btn {
+  align-items: center;
+  align-self: center;
+  width: auto;
+  padding: 10px;
+  background-color: #ffffff;
+  color: #363636;
+  border: 1px solid #333;
+  border-radius: 12px;
+  text-align: center;
+  text-decoration: none;
+  margin: 20px 0;
+  transition: background-color 0.3s ease;
+}
+
+/* Hover effect for the show more button */
+.show-more-btn:hover {
+  background-color: #0c137e;
+  color: white;
+  border-color: #0c137e;
+  cursor: pointer;
+}
+ 
+@media (max-width: 768px) {
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .product-section {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    padding: 2vw 5vh;
+    box-sizing: border-box;
+  }
+
+}

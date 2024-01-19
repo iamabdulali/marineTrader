@@ -1,0 +1,56 @@
+/* VerticalMenu.css */
+
+.vertical-menu {
+  display: flex;
+  flex-direction: column;
+  background-color: #333;
+  color: #fff;
+  width: 200px;
+  height: 100vh;
+  border-radius: 20px;
+}
+
+.tabs {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  width: 90%;
+  padding-top: 2vw;
+  
+}
+.tab-icon {
+  width: 12px;
+  height: auto;
+  margin-right: 10px;
+}
+.tab-text{
+  font-size: 12px;
+  font-weight: 600;
+}
+
+
+.tab {
+  display: flex;
+  align-items: center;
+  padding: 10px 20px !important;
+  margin-top: 3px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  border-radius: 15px; /* Rounded corners */
+}
+
+.tab:hover {
+  background-color: #eefbff;
+  padding: 10px 20px;
+}
+
+.tab.active-tab {
+  background-color: #0D1A8B;
+  color: #ffffff !important; /* Text turns white when clicked */
+}
+
+@media screen and (max-width: 786px) {
+  .vertical-menu {
+ 
+  }
+}
