@@ -164,7 +164,7 @@ export default function TradeSellerCompanyInfoForm() {
                   type="tel"
                   name="phoneNo"
                   placeholder="00000000000"
-                  className="border-[#CECED7] border-2 rounded-md p-3 pl-28 w-full bg-white"
+                  className="border-[#CECED7] border-2 rounded-md p-3 pl-20 sm:pl-28 w-full bg-white"
                 />
               </div>
             </div>
