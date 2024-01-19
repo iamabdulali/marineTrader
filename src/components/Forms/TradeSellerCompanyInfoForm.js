@@ -121,7 +121,7 @@ export default function TradeSellerCompanyInfoForm() {
             <SelectDropdown
               name="country"
               options={countryOptions}
-              className="border-[#CECED7] border-2 rounded-md p-3 w-full"
+              className="border-[#CECED7] border-2 rounded-md p-3 w-full appearance-none bg-white"
             />
             <ErrorMessage
               name="country"
@@ -134,7 +134,7 @@ export default function TradeSellerCompanyInfoForm() {
             <SelectDropdown
               name="region"
               options={regionOptions}
-              className="border-[#CECED7] border-2 rounded-md p-3 w-full"
+              className="border-[#CECED7] border-2 rounded-md p-3 w-full appearance-none bg-white"
             />
             <ErrorMessage
               name="region"
@@ -150,7 +150,7 @@ export default function TradeSellerCompanyInfoForm() {
               <Field
                 as="select"
                 name="countryCode"
-                className="rounded-md py-2 w-full appearance-none"
+                className="rounded-md py-2 w-full appearance-none bg-white"
               >
                 <option value="+1">+1 (USA)</option>
                 <option value="+44">+44 (UK)</option>
@@ -163,7 +163,7 @@ export default function TradeSellerCompanyInfoForm() {
                 type="tel"
                 name="phoneNo"
                 placeholder="00000000000"
-                className="border-[#CECED7] border-2 rounded-md p-3 pl-20 w-full"
+                className="border-[#CECED7] border-2 rounded-md p-3 pl-20 w-full bg-white"
               />
             </div>
 
@@ -178,7 +178,7 @@ export default function TradeSellerCompanyInfoForm() {
             <SelectDropdown
               name="currency"
               options={currencyOptions}
-              className="border-[#CECED7] border-2 rounded-md p-3 w-full"
+              className="border-[#CECED7] border-2 rounded-md p-3 w-full appearance-none bg-white"
             />
             <ErrorMessage
               name="currency"
