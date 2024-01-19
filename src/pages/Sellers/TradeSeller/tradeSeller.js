@@ -168,7 +168,7 @@ const TradeSeller = () => {
         </h1>
 
         {/* Progress Indicator */}
-        <div className="flex justify-center  text-center mt-10 sm:w-8/12 w-11/12 mx-auto">
+        <div className="flex justify-center  text-center mt-10 sm:w-8/12 w-full mx-auto">
           {[1, 2, 3].map((progress, index) => (
             <React.Fragment key={progress}>
               {index > 0 && (
