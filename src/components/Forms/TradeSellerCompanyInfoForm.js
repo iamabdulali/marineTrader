@@ -121,7 +121,7 @@ export default function TradeSellerCompanyInfoForm() {
             <SelectDropdown
               name="country"
               options={countryOptions}
-              className="border-[#CECED7] border-2 rounded-md p-3 w-full appearance-none bg-white"
+              className="border-[#CECED7] border-2 rounded-md p-3 w-full appearance-none sm:appearance-auto bg-white"
             />
             <ErrorMessage
               name="country"
@@ -134,7 +134,7 @@ export default function TradeSellerCompanyInfoForm() {
             <SelectDropdown
               name="region"
               options={regionOptions}
-              className="border-[#CECED7] border-2 rounded-md p-3 w-full appearance-none bg-white"
+              className="border-[#CECED7] border-2 rounded-md p-3 w-full appearance-none sm:appearance-auto bg-white"
             />
             <ErrorMessage
               name="region"
@@ -146,27 +146,28 @@ export default function TradeSellerCompanyInfoForm() {
         <div className="flex gap-4 sm:flex-row flex-col">
           <div className="w-full relative">
             {/* Country Code Dropdown */}
-            <div className="absolute left-3 top-1">
-              <Field
-                as="select"
-                name="countryCode"
-                className="rounded-md py-2 w-full appearance-none bg-white"
-              >
-                <option value="+1">+1 (USA)</option>
-                <option value="+44">+44 (UK)</option>
-              </Field>
-            </div>
+            <div className="flex items-center">
+              <div className="absolute left-3 ">
+                <Field
+                  as="select"
+                  name="countryCode"
+                  className="rounded-md py-2 w-full appearance-none sm:appearance-auto bg-white"
+                >
+                  <option value="+1">+1 (USA)</option>
+                  <option value="+44">+44 (UK)</option>
+                </Field>
+              </div>
 
-            {/* Phone Number Input */}
-            <div className="w-full">
-              <Field
-                type="tel"
-                name="phoneNo"
-                placeholder="00000000000"
-                className="border-[#CECED7] border-2 rounded-md p-3 pl-20 w-full bg-white"
-              />
+              {/* Phone Number Input */}
+              <div className="w-full">
+                <Field
+                  type="tel"
+                  name="phoneNo"
+                  placeholder="00000000000"
+                  className="border-[#CECED7] border-2 rounded-md p-3 pl-28 w-full bg-white"
+                />
+              </div>
             </div>
-
             <ErrorMessage
               name="phoneNo"
               component="span"
@@ -178,7 +179,7 @@ export default function TradeSellerCompanyInfoForm() {
             <SelectDropdown
               name="currency"
               options={currencyOptions}
-              className="border-[#CECED7] border-2 rounded-md p-3 w-full appearance-none bg-white"
+              className="border-[#CECED7] border-2 rounded-md p-3 w-full appearance-none sm:appearance-auto bg-white"
             />
             <ErrorMessage
               name="currency"
