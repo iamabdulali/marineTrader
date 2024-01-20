@@ -17,6 +17,7 @@ import ResetPassword from "./pages/resetPassword/ResetPassword";
 import TradeSeller from "./pages/Sellers/TradeSeller/tradeSeller";
 import PrivateSeller from "./pages/Sellers/PrivateSeller/privateSeller";
 import Selling from "./pages/Selling/Selling";
+import AdSubscription from "./pages/AdSubscription/AdSubscription";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
         <Route path="/register" element={<Registration />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/selling" element={<Selling />} />
+        <Route path="/adsubscription" element={<AdSubscription />} />
         <Route path="/reset-password" element={<ResetPassword />} />
 
         <Route path="/trade-seller" element={<TradeSeller />} />

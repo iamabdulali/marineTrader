@@ -17,14 +17,14 @@ export default function Selling() {
         <div className="ml-72 py-8 px-8">
           <div className="flex items-center justify-between">
             <Heading content="Selling" />
-            <Link className="flex items-center text-sm gap-2 bg-[#0D1A8B] text-white py-3 px-5 font-medium rounded-md">
+            <Link
+              to={"/adsubscription"}
+              className="flex items-center text-sm gap-2 bg-[#0D1A8B] text-white py-3 px-5 font-medium rounded-md"
+            >
               <FaPlus size={15} /> Create New Listing
             </Link>
           </div>
-          {/* <div className="flex items-center justify-between bg-white shadow-[8px] py-5 px-7 mt-6 rounded-lg">
-            <p className="text-[#11133D] font-semibold">Your Listings</p>
-            <SortDropdown />
-          </div> */}
+
           <ListingTable
             hasSort={true}
             hasPadding={true}
