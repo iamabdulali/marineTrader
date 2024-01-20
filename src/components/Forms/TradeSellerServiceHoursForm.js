@@ -4,6 +4,7 @@ import { cloud, plusSign } from "../../assets";
 import SelectDropdown from "./FormElements/SelectDropdown";
 import { timeZoneOptions } from "../../utils/DropdownOptions";
 import FileInput from "./FormElements/FileInput";
+import Heading from "../Heading";
 
 export default function TradeSellerServiceHoursForm() {
   const initialFacilities = {
@@ -104,10 +105,7 @@ export default function TradeSellerServiceHoursForm() {
 
   return (
     <div className="sm:mx-8 mx-3 text-sm">
-      <h2 className=" text-[#0D1A8B] font-semibold text-xl mt-10 flex items-center gap-2">
-        <div className="bg-[#0D1A8B] w-[5px] h-8 rounded-xl"></div>
-        Business Details
-      </h2>
+      <Heading content="Business Details" />
       <div className="2xl:w-1/2  mt-5">
         <label className=" inline-block w-full">
           Time Zone

@@ -16,6 +16,7 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import ResetPassword from "./pages/resetPassword/ResetPassword";
 import TradeSeller from "./pages/Sellers/TradeSeller/tradeSeller";
 import PrivateSeller from "./pages/Sellers/PrivateSeller/privateSeller";
+import Selling from "./pages/Selling/Selling";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Registration />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/selling" element={<Selling />} />
         <Route path="/reset-password" element={<ResetPassword />} />
 
         <Route path="/trade-seller" element={<TradeSeller />} />

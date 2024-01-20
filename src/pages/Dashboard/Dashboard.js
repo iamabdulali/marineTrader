@@ -6,6 +6,7 @@ import { jetski3d, packageIcon } from "../../assets";
 import { FaCross, FaTimes } from "react-icons/fa";
 import WelcomeMessage from "../../components/Notifications/WelcomeMessage";
 import ListingTable from "../../components/Tables/ListingTable";
+import { dashboardHeader } from "../../utils/DummyData";
 
 export default function Dashboard() {
   return (
@@ -27,7 +28,13 @@ export default function Dashboard() {
             buttonText="Create New Listing"
             image={jetski3d}
           />
-          <ListingTable />
+          <ListingTable
+            hasSearch={true}
+            backgroundWhite={true}
+            sidePadding={true}
+            tableHeader={dashboardHeader}
+            dashboardListing={true}
+          />
         </div>
       </div>
     </>

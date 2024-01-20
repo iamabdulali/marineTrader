@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import {
   FaHome,
   FaStore,
@@ -24,76 +24,76 @@ const VerticalMenu = () => {
       <nav>
         <ul>
           <li className="mb-4">
-            <Link
+            <NavLink
               to="/dashboard"
-              className="flex items-center bg-[#0D1A8B] py-4 px-4 text-white rounded-xl"
+              className="flex items-center py-4 px-4 text-[#8891B2] rounded-xl hover:bg-gray-200"
             >
               <FaHome className="mr-3" size={18} />
               Dashboard
-            </Link>
+            </NavLink>
           </li>
           <li className="mb-4">
-            <Link
+            <NavLink
               to="/selling"
-              className="flex items-center py-4 px-4 text-[#8891B2] rounded-xl hover:bg-gray-200 active:bg-blue-800 active:text-white"
+              className="flex items-center py-4 px-4 text-[#8891B2] rounded-xl hover:bg-gray-200"
             >
               <FaStore className="mr-3" size={18} />
               Selling
-            </Link>
+            </NavLink>
           </li>
           <li className="mb-4">
-            <Link
+            <NavLink
               to="/directory"
-              className="flex items-center py-4 px-4 text-[#8891B2] rounded-xl hover:bg-gray-200 active:bg-blue-800 active:text-white"
+              className="flex items-center py-4 px-4 text-[#8891B2] rounded-xl hover:bg-gray-200"
             >
               <FaAddressBook className="mr-3" size={18} />
               Directory
-            </Link>
+            </NavLink>
           </li>
           <li className="mb-4">
-            <Link
+            <NavLink
               to="/news"
-              className="flex items-center py-4 px-4 text-[#8891B2] rounded-xl hover:bg-gray-200 active:bg-blue-800 active:text-white"
+              className="flex items-center py-4 px-4 text-[#8891B2] rounded-xl hover:bg-gray-200"
             >
               <FaNewspaper className="mr-3" size={18} />
               News
-            </Link>
+            </NavLink>
           </li>
           <li className="mb-4">
-            <Link
+            <NavLink
               to="/events"
-              className="flex items-center py-4 px-4 text-[#8891B2] rounded-xl hover:bg-gray-200 active:bg-blue-800 active:text-white"
+              className="flex items-center py-4 px-4 text-[#8891B2] rounded-xl hover:bg-gray-200"
             >
               <FaCalendarAlt className="mr-3" size={18} />
               Events
-            </Link>
+            </NavLink>
           </li>
           <li className="mb-4">
-            <Link
+            <NavLink
               to="/subscriptions"
-              className="flex items-center py-4 px-4 text-[#8891B2] rounded-xl hover:bg-gray-200 active:bg-blue-800 active:text-white"
+              className="flex items-center py-4 px-4 text-[#8891B2] rounded-xl hover:bg-gray-200"
             >
               <FaClipboardList className="mr-3" size={18} />
               Subscriptions
-            </Link>
+            </NavLink>
           </li>
           <li className="mb-4">
-            <Link
+            <NavLink
               to="/contact-mt"
-              className="flex items-center py-4 px-4 text-[#8891B2] rounded-xl hover:bg-gray-200 active:bg-blue-800 active:text-white"
+              className="flex items-center py-4 px-4 text-[#8891B2] rounded-xl hover:bg-gray-200"
             >
               <FaEnvelope className="mr-3" size={18} />
               Contact MT
-            </Link>
+            </NavLink>
           </li>
           <li className="mb-4">
-            <Link
+            <NavLink
               to="/sign-out"
-              className="flex items-center py-4 px-4 text-[#8891B2] rounded-xl hover:bg-gray-200 active:bg-blue-800 active:text-white"
+              className="flex items-center py-4 px-4 text-[#8891B2] rounded-xl hover:bg-gray-200"
             >
               <FaSignOutAlt className="mr-3" size={18} />
               Sign Out
-            </Link>
+            </NavLink>
           </li>
         </ul>
       </nav>

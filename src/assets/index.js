@@ -11,6 +11,7 @@ import userProfile from "./user-image.png";
 import packageIcon from "./package.png";
 import jetski3d from "./jetski-3d.png";
 import jetski2 from "./jetski-2.png";
+import sortIcon from "./sort-icon.png";
 export {
   logo,
   eye,
@@ -25,4 +26,5 @@ export {
   packageIcon,
   jetski3d,
   jetski2,
+  sortIcon,
 };

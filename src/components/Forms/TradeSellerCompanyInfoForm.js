@@ -8,6 +8,7 @@ import {
   currencyOptions,
   regionOptions,
 } from "../../utils/DropdownOptions";
+import Heading from "../Heading";
 
 export default function TradeSellerCompanyInfoForm() {
   const [showPassword1, setShowPassword1] = useState(false);
@@ -23,10 +24,7 @@ export default function TradeSellerCompanyInfoForm() {
 
   return (
     <div className="sm:mx-8 mx-0 ">
-      <h2 className=" text-[#0D1A8B] font-semibold text-xl mt-10 flex items-center gap-2">
-        <div className="bg-[#0D1A8B] w-[5px] h-8 rounded-xl"></div>
-        Company Info
-      </h2>
+      <Heading content="Company Info" />
       {/* Left side (Form) */}
       <div className="flex flex-col gap-4 text-[#8891B2] text-sm my-8">
         {/* Form rows */}

@@ -66,7 +66,7 @@ const Header = () => {
           </div>
         </button>
         {userMenuOpen && (
-          <div className="absolute mt-2 min-w-36 bg-white border rounded shadow-lg">
+          <div className="absolute z-10 mt-2 min-w-36 bg-white border rounded shadow-lg">
             <button className="py-2 px-4 block">Profile</button>
             <button className="py-2 px-4 block">Settings</button>
             <button className="py-2 px-4 block">Logout</button>

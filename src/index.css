@@ -74,3 +74,13 @@ code {
     rgba(58, 71, 191, 1) 100%
   );
 }
+
+.active {
+  background-color: #0d1a8b;
+  color: #fff;
+}
+
+.active:hover {
+  background-color: #0c1673 !important;
+  color: #fff;
+}
