@@ -14,6 +14,10 @@ import jetski2 from "./jetski-2.png";
 import sortIcon from "./sort-icon.png";
 import ribbon from "./ribbon.png";
 import star from "./star.png";
+import offerIcon from "./offers.png";
+import warning from "./subscriptionWarning.png";
+import purpleNotification from "./purple-notification-icon.png";
+import greenNotification from "./green-notification.png";
 export {
   logo,
   eye,
@@ -31,4 +35,8 @@ export {
   sortIcon,
   ribbon,
   star,
+  offerIcon,
+  warning,
+  purpleNotification,
+  greenNotification,
 };

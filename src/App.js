@@ -18,6 +18,8 @@ import TradeSeller from "./pages/Sellers/TradeSeller/tradeSeller";
 import PrivateSeller from "./pages/Sellers/PrivateSeller/privateSeller";
 import Selling from "./pages/Selling/Selling";
 import AdSubscription from "./pages/AdSubscription/AdSubscription";
+import Offer from "./pages/Offers/Offer";
+import Notifications from "./pages/Notifications/Notifications";
 
 function App() {
   return (
@@ -30,6 +32,8 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/selling" element={<Selling />} />
         <Route path="/adsubscription" element={<AdSubscription />} />
+        <Route path="/offers" element={<Offer />} />
+        <Route path="/notifications" element={<Notifications />} />
         <Route path="/reset-password" element={<ResetPassword />} />
 
         <Route path="/trade-seller" element={<TradeSeller />} />

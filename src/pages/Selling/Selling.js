@@ -26,8 +26,10 @@ export default function Selling() {
           </div>
 
           <ListingTable
+            tableFor="Your Listings"
             hasSort={true}
             hasPadding={true}
+            sellingListing={true}
             tableHeader={sellingHeader}
           />
         </div>

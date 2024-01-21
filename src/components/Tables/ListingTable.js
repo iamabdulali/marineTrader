@@ -2,7 +2,7 @@ import React from "react";
 import { FiSearch, FiEye, FiMoreVertical } from "react-icons/fi";
 import { jetski2, jetski3d } from "../../assets";
 import SortDropdown from "../SortDropdown";
-import { listingData, sellingData } from "../../utils/DummyData";
+import { OffersData, listingData, sellingData } from "../../utils/DummyData";
 
 const ListingTable = ({
   hasSort,
@@ -12,6 +12,8 @@ const ListingTable = ({
   sidePadding,
   tableHeader,
   dashboardListing,
+  sellingListing,
+  tableFor,
 }) => {
   console.log(dashboardListing);
   return (
@@ -27,7 +29,7 @@ const ListingTable = ({
         } rounded-lg shadow-[7px] justify-between items-center mb-4 w-[900px] lg:w-auto`}
       >
         <label htmlFor="search" className="mr-2 text-lg font-bold">
-          Your Listings
+          {tableFor}
         </label>
         {hasSearch ? (
           <div className="relative w-80">
@@ -108,7 +110,7 @@ const ListingTable = ({
               )
             )}
           </tbody>
-        ) : (
+        ) : sellingListing ? (
           <tbody>
             {/* Map through the array to dynamically render rows */}
             {sellingData.map(
@@ -179,6 +181,61 @@ const ListingTable = ({
                       cursor="pointer"
                       color="#0D1A8B"
                     />
+                  </td>
+                </tr>
+              )
+            )}
+          </tbody>
+        ) : (
+          <tbody>
+            {/* Map through the array to dynamically render rows */}
+            {OffersData.map(
+              ({
+                id,
+                image,
+                itemName,
+                accept,
+                reject,
+                offerAmount,
+                price,
+                buyerName,
+                telephone,
+                email,
+              }) => (
+                <tr
+                  key={id}
+                  className="bg-white border-b-[20px] shadow-[25px] border-[#f6f6f6] text-sm text-[#696E9D]"
+                >
+                  <td className="py-4 px-4 whitespace-nowrap">
+                    <div className="flex items-center gap-2">
+                      <img
+                        src={image}
+                        alt="Item"
+                        className="w-16 h-16 object-cover rounded-lg mr-2"
+                      />
+                      <div>
+                        <p className="text-[#11133D] font-semibold text-base mb-1">
+                          {itemName}
+                        </p>
+                        <p>{price}</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td className="py-4 px-4">{buyerName}</td>
+                  <td className="py-4 px-4">{email}</td>
+                  <td className="py-4 px-4">{telephone}</td>
+                  <td className="py-4 px-4">
+                    <p className="font-semibold">{offerAmount}</p>
+                  </td>
+                  <td className="py-4 px-4">
+                    <div className="flex gap-3 font-semibold items-center justify-center">
+                      <button className="bg-[#36B37E] flex items-center justify-center w-9 h-9 text-white rounded-full">
+                        {accept}
+                      </button>
+                      <button className="bg-[#FF4A6B] flex items-center justify-center w-9 h-9 text-white rounded-full">
+                        {reject}
+                      </button>
+                    </div>
                   </td>
                 </tr>
               )

@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import { FaChevronDown } from "react-icons/fa";
-import { flagUsa, notificationIcon, userProfile } from "../../assets";
+import {
+  flagUsa,
+  notificationIcon,
+  offerIcon,
+  userProfile,
+} from "../../assets";
 import { Link } from "react-router-dom";
 
 const Header = () => {
@@ -45,6 +50,9 @@ const Header = () => {
       {/* Bell and Notification Icons */}
       <div className="flex items-center space-x-4">
         <Link to="/offers">
+          <img src={offerIcon} className="w-10" />
+        </Link>
+        <Link to="/notifications">
           <img src={notificationIcon} className="w-10" />
         </Link>
       </div>

@@ -29,6 +29,7 @@ export default function Dashboard() {
             image={jetski3d}
           />
           <ListingTable
+            tableFor="Your Listings"
             hasSearch={true}
             backgroundWhite={true}
             sidePadding={true}
