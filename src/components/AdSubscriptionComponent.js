@@ -10,6 +10,7 @@ const AdSubscriptionComponent = ({
   packageHeading,
   variant,
   isStandard,
+  featuresArray,
 }) => {
   let variantStyles = {};
 
@@ -46,7 +47,15 @@ const AdSubscriptionComponent = ({
       };
   }
 
-  console.log(variant);
+  const renderFeatures = (features) => {
+    return features.map((feature, index) => (
+      <p key={index} className="flex items-center mt-5 gap-4 font-medium">
+        <FaCheckCircle size={20} />
+        {feature}
+      </p>
+    ));
+  };
+
   return (
     <div
       className={`flex bg-white ad-subscription w-full mt-6 shadow-[8px] rounded-lg`}
@@ -78,34 +87,10 @@ const AdSubscriptionComponent = ({
       <div className="py-10 px-10 w-8/12">
         <p className="text-[#171923] font-semibold">{packageHeading}</p>
         <div className="mt-6 flex justify-between pr-20">
-          <div>
-            <p className="flex items-center gap-4 font-medium">
-              <FaCheckCircle size={20} />
-              200 Character Description
-            </p>
-            <p className="flex items-center mt-5 gap-4 font-medium">
-              <FaCheckCircle size={20} />
-              200 Character Description
-            </p>
-            <p className="flex items-center mt-5 gap-4 font-medium">
-              <FaCheckCircle size={20} />
-              200 Character Description
-            </p>
-          </div>
-          <div className={`${isStandard ? "hidden" : "block"}`}>
-            <p className="flex items-center gap-4 font-medium">
-              <FaCheckCircle size={20} />
-              200 Character Description
-            </p>
-            <p className="flex items-center mt-5 gap-4 font-medium">
-              <FaCheckCircle size={20} />
-              200 Character Description
-            </p>
-            <p className="flex items-center mt-5 gap-4 font-medium">
-              <FaCheckCircle size={20} />
-              200 Character Description
-            </p>
-          </div>
+          <div>{renderFeatures(featuresArray.slice(0, 3))}</div>
+          {featuresArray.length > 3 && (
+            <div>{renderFeatures(featuresArray.slice(3, 6))}</div>
+          )}
         </div>
       </div>
     </div>

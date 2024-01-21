@@ -7,6 +7,11 @@ import { Link } from "react-router-dom";
 import AdSubscriptionComponent from "../../components/AdSubscriptionComponent";
 import { faL } from "@fortawesome/free-solid-svg-icons";
 import { star } from "../../assets";
+import {
+  adsubscriptionFeaturedFeatures,
+  adsubscriptionPremiumFeatures,
+  adsubscriptionStandardFeatures,
+} from "../../utils/DummyData";
 
 export default function AdSubscription() {
   return (
@@ -38,6 +43,7 @@ export default function AdSubscription() {
             packageHeading="Standard package includes the following."
             variant="green"
             isStandard={true}
+            featuresArray={adsubscriptionStandardFeatures}
           />
           <AdSubscriptionComponent
             packageName="Premium"
@@ -47,6 +53,7 @@ export default function AdSubscription() {
             packageHeading="Premium package includes the following."
             variant="yellow"
             isStandard={false}
+            featuresArray={adsubscriptionPremiumFeatures}
           />
           <AdSubscriptionComponent
             packageName="Featured"
@@ -56,6 +63,7 @@ export default function AdSubscription() {
             packageHeading="Featured package includes the following."
             variant="purple"
             isStandard={false}
+            featuresArray={adsubscriptionFeaturedFeatures}
           />
         </div>
       </div>

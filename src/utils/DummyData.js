@@ -195,3 +195,27 @@ export const notificationsData = [
     timeAgo: "2days ago.",
   },
 ];
+
+export const adsubscriptionStandardFeatures = [
+  "200 Character Description",
+  "Up to 5 Photos",
+  "Contact via email and call.",
+];
+
+export const adsubscriptionPremiumFeatures = [
+  "Up to 50 Photos",
+  "2 Mins Video",
+  "Unlimited Description",
+  "3x Search Results Boost",
+  "Bold Outline Border",
+  "Social Media Package.",
+];
+
+export const adsubscriptionFeaturedFeatures = [
+  "Up to 50 Photos",
+  "2 Mins Video",
+  "Unlimited Description",
+  "3x Search Results Boost",
+  "Bold Outline Border",
+  "Social Media Package.",
+];
