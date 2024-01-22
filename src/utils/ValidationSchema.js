@@ -70,3 +70,12 @@ export const validationSchema = Yup.object().shape({
   lastName: Yup.string().required("Last Name is required"),
   jobTitle: Yup.string().required("Job Title is required"),
 });
+
+export const categoryDropdownValidationSchema = Yup.object().shape({
+  category: Yup.string().required("Category is required"),
+  make: Yup.string().required("Make is required"),
+  model: Yup.string().required("Model is required"),
+  type: Yup.string().required("Type is required"),
+  condition: Yup.string().required("Condition is required"),
+  year: Yup.string().required("Year is required"),
+});

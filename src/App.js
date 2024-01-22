@@ -10,8 +10,6 @@ import {
 import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
 import Registration from "./pages/Registration/Registration";
-import Header from "./components/Header/Header";
-import Footer from "./components/Footer/Footer";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import ResetPassword from "./pages/resetPassword/ResetPassword";
 import TradeSeller from "./pages/Sellers/TradeSeller/tradeSeller";

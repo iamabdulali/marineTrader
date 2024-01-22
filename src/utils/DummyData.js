@@ -1,5 +1,8 @@
 import { FaCheck, FaTicketAlt, FaTimes } from "react-icons/fa";
 import {
+  base,
+  base1,
+  base2,
   greenNotification,
   jetski2,
   jetski3d,
@@ -218,4 +221,115 @@ export const adsubscriptionFeaturedFeatures = [
   "3x Search Results Boost",
   "Bold Outline Border",
   "Social Media Package.",
+];
+
+export const SpotLightListingsData = [
+  {
+    id: 1,
+    listingType: "Yacht",
+    listingName: "Princess 72 Elite",
+    listingPrice: "£55000000",
+    isFeatured: true,
+  },
+  {
+    id: 2,
+    listingType: "Sailboat",
+    listingName: "Oceanis 45",
+    listingPrice: "£250000",
+    isFeatured: false,
+  },
+  {
+    id: 3,
+    listingType: "Motorboat",
+    listingName: "Sunseeker Predator 57",
+    listingPrice: "£1200000",
+    isFeatured: true,
+  },
+  {
+    id: 4,
+    listingType: "Catamaran",
+    listingName: "Lagoon 450 F",
+    listingPrice: "£500000",
+    isFeatured: false,
+  },
+  {
+    id: 5,
+    listingType: "Fishing Boat",
+    listingName: "Boston Whaler 280 Outrage",
+    listingPrice: "£180000",
+    isFeatured: true,
+  },
+  {
+    id: 6,
+    listingType: "Speedboat",
+    listingName: "Sea Ray 270 Sundeck",
+    listingPrice: "£75000",
+    isFeatured: false,
+  },
+  {
+    id: 7,
+    listingType: "Houseboat",
+    listingName: "Lakeview Houseboat",
+    listingPrice: "£350000",
+    isFeatured: true,
+  },
+  {
+    id: 8,
+    listingType: "Dinghy",
+    listingName: "Zodiac Cadet 310",
+    listingPrice: "£3000",
+    isFeatured: false,
+  },
+  {
+    id: 9,
+    listingType: "Jet Ski",
+    listingName: "Yamaha VX Cruiser",
+    listingPrice: "£12000",
+    isFeatured: true,
+  },
+  {
+    id: 10,
+    listingType: "Canoe",
+    listingName: "Old Town Saranac 146",
+    listingPrice: "£800",
+    isFeatured: false,
+  },
+  {
+    id: 11,
+    listingType: "Kayak",
+    listingName: "Perception Pescador Pro 12",
+    listingPrice: "£600",
+    isFeatured: true,
+  },
+  {
+    id: 12,
+    listingType: "Inflatable Boat",
+    listingName: "Intex Explorer K2",
+    listingPrice: "£100",
+    isFeatured: false,
+  },
+];
+
+export const newsData = [
+  {
+    id: 1,
+    newsDate: "December 18, 2023",
+    newsTitle: "Golden Yachts hosts ocean clean-up event at Marina Zeas",
+    isNews: true,
+    thumbnail: base2,
+  },
+  {
+    id: 2,
+    newsDate: "January 5, 2024",
+    newsTitle: "Luxury Yacht Show 2024: Explore the Latest Trends in Yachting",
+    isNews: true,
+    thumbnail: base1,
+  },
+  {
+    id: 3,
+    newsDate: "February 20, 2024",
+    newsTitle: "New Sustainable Technologies Introduced in Yachting Industry",
+    isNews: true,
+    thumbnail: base,
+  },
 ];

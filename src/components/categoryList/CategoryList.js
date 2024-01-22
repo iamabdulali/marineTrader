@@ -1,54 +1,70 @@
-import React, { useState } from 'react';
-import { ReactSVG } from 'react-svg';
-import './CategoryList.css';
-import PackageCard from '../Card/packageCard/PackageCard';
-
-import jetskiIcon from '../../assets/jetski.svg';
-import boatHomeIcon from '../../assets/boatHome.svg';
-import commercialIcon from '../../assets/commercial.svg';
-import motorYachtIcon from '../../assets/motor-yatch.svg';
-import sailboatIcon from '../../assets/sailboat.svg';
-import smallcraftIcon from '../../assets/smallcraft.svg';
-import fishingIcon from '../../assets/fishing.svg';
-import ribIcon from '../../assets/rib.svg';
-import nonMotorIcon from '../../assets/non-motor.svg';
+import React, { useState } from "react";
+import { ReactSVG } from "react-svg";
+import {
+  boatHomeIcon,
+  commercialIcon,
+  fishingIcon,
+  jetskiIcon,
+  motorYachtIcon,
+  nonMotorIcon,
+  ribIcon,
+  sailboatIcon,
+  smallcraftIcon,
+} from "../../assets";
 
 const CategoryList = ({ categories, onCategoryClick }) => {
-  const [selectedCategory, setSelectedCategory] = useState('Jet Skis');
+  const [selectedCategory, setSelectedCategory] = useState("Jet Skis");
+
+  const categoryIcons = {
+    "Jet Skis": jetskiIcon,
+    "Boat Home": boatHomeIcon,
+    Commercial: commercialIcon,
+    "Motor/Yacht": motorYachtIcon,
+    Sailboat: sailboatIcon,
+    Smallcraft: smallcraftIcon,
+    Fishing: fishingIcon,
+    Rib: ribIcon,
+    "Non-Motor": nonMotorIcon,
+  };
+
+  const setIconStyles = (svg, strokeColor, strokeOpacity) => {
+    svg.setAttribute("stroke", strokeColor);
+    svg.setAttribute("stroke-opacity", strokeOpacity);
+  };
 
   const getCategoryIcon = (category) => {
     const isSelected = category === selectedCategory;
-    const strokeColor = isSelected ? 'blue' : 'currentColor';
-    const strokeOpacity = isSelected ? '0.5' : '0'; // Adjust this value to make the stroke lighter or darker
+    const strokeColor = isSelected ? "#0D1A8B" : "#8891B2";
+    const beforeInjection = (svg) => {
+      const paths = svg.querySelectorAll("path");
+      svg.setAttribute("width", 90);
+      svg.setAttribute("height", 90);
 
-    switch (category) {
-      case 'Jet Skis':
-        return <ReactSVG src={jetskiIcon} beforeInjection={svg => { svg.setAttribute('stroke', strokeColor); svg.setAttribute('stroke-opacity', strokeOpacity); }} />;
-      case 'Boat Home':
-        return <ReactSVG src={boatHomeIcon} beforeInjection={svg => { svg.setAttribute('stroke', strokeColor); svg.setAttribute('stroke-opacity', strokeOpacity); }} />;
-      case 'Commercial':
-        return <ReactSVG src={commercialIcon} beforeInjection={svg => { svg.setAttribute('stroke', strokeColor); svg.setAttribute('stroke-opacity', strokeOpacity); }} />;
-      case 'Motor/Yacht':
-        return <ReactSVG src={motorYachtIcon} beforeInjection={svg => { svg.setAttribute('stroke', strokeColor); svg.setAttribute('stroke-opacity', strokeOpacity); }} />;
-      case 'Sailboat':
-        return <ReactSVG src={sailboatIcon} beforeInjection={svg => { svg.setAttribute('stroke', strokeColor); svg.setAttribute('stroke-opacity', strokeOpacity); }} />;
-      case 'Smallcraft':
-        return <ReactSVG src={smallcraftIcon} beforeInjection={svg => { svg.setAttribute('stroke', strokeColor); svg.setAttribute('stroke-opacity', strokeOpacity); }} />;
-      case 'Fishing':
-        return <ReactSVG src={fishingIcon} beforeInjection={svg => { svg.setAttribute('stroke', strokeColor); svg.setAttribute('stroke-opacity', strokeOpacity); }} />;
-      case 'Rib':
-        return <ReactSVG src={ribIcon} beforeInjection={svg => { svg.setAttribute('stroke', strokeColor); svg.setAttribute('stroke-opacity', strokeOpacity); }} />;
-      case 'Non-Motor':
-        return <ReactSVG src={nonMotorIcon} beforeInjection={svg => { svg.setAttribute('stroke', strokeColor); svg.setAttribute('stroke-opacity', strokeOpacity); }} />;
-      default:
-        return '🚤';
-    }
+      paths.forEach((path) => {
+        path.setAttribute("fill", strokeColor);
+      });
+    };
+    return (
+      <ReactSVG
+        src={categoryIcons[category]}
+        beforeInjection={beforeInjection}
+      />
+    );
   };
 
   return (
-    <div className="category-list">
+    <div className="category-list flex lg:w-full  justify-between px-24 mt-3 mb-6 w-[1300px]">
       {categories.map((category) => (
-        <div key={category} onClick={() => { onCategoryClick(category); setSelectedCategory(category); }} className={`category-item ${category === selectedCategory ? 'selected' : ''}`}>
+        <div
+          key={category}
+          onClick={() => {
+            onCategoryClick(category);
+            setSelectedCategory(category);
+          }}
+          className={`category-item cursor-pointer ${
+            category === selectedCategory ? "border-b-4 border-[#0D1A8B]" : ""
+          }`}
+        >
           <span className="category-icon">{getCategoryIcon(category)}</span>
         </div>
       ))}
@@ -56,33 +72,19 @@ const CategoryList = ({ categories, onCategoryClick }) => {
   );
 };
 
-const DisplayedName = ({ selectedCategory }) => {
-  return (
-    <div className="displayed-name">
-      {selectedCategory ? (
-        <h2 style={{ padding: 10, fontSize: '14px', fontWeight: '630', marginLeft: '15px' }}>
-          Selected Category:
-        </h2>
-      ) : (
-        <h2 style={{ padding: 10, fontSize: '16px', fontWeight: '600', marginLeft: '15px' }}></h2>
-      )}
-    </div>
-  );
-};
-
 const CategoryLists = () => {
-  const [selectedCategory, setSelectedCategory] = useState('Jet Skis');
+  const [selectedCategory, setSelectedCategory] = useState("Jet Skis");
 
   const categories = [
-    'Jet Skis',
-    'Boat Home',
-    'Commercial',
-    'Motor/Yacht',
-    'Sailboat',
-    'Smallcraft',
-    'Fishing',
-    'Rib',
-    'Non-Motor',
+    "Jet Skis",
+    "Boat Home",
+    "Commercial",
+    "Motor/Yacht",
+    "Sailboat",
+    "Smallcraft",
+    "Fishing",
+    "Rib",
+    "Non-Motor",
   ];
 
   const handleCategoryClick = (category) => {
@@ -90,16 +92,11 @@ const CategoryLists = () => {
   };
 
   return (
-    <div>
-      <DisplayedName selectedCategory={selectedCategory} />
-      <CategoryList categories={categories} onCategoryClick={handleCategoryClick} />
-      <h2 style={{ paddingLeft:25, fontSize: '16px', fontWeight: '700', alignItems: 'center',paddingTop:'2vh', }}>
-        {selectedCategory ? `Packages for: ${selectedCategory}` : ''}
-      </h2>
-
-      <div style={{ padding: 20 }}>
-        <PackageCard />
-      </div>
+    <div className="overflow-x-scroll lg:overflow-auto">
+      <CategoryList
+        categories={categories}
+        onCategoryClick={handleCategoryClick}
+      />
     </div>
   );
 };
