@@ -1,30 +1,7 @@
 import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { categoryDropdownValidationSchema } from "../../utils/ValidationSchema";
-
-const SelectDropdown = ({ label, name, options }) => (
-  <div className="mb-4 w-full text-sm">
-    <label
-      className="block text-[#11133D] text-sm font-medium mb-2"
-      htmlFor={name}
-    >
-      {label}
-    </label>
-    <Field
-      as="select"
-      name={name}
-      className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
-    >
-      <option value="" label={`Select a ${label.toLowerCase()}`} />
-      {options.map((option) => (
-        <option key={option} value={option}>
-          {option}
-        </option>
-      ))}
-    </Field>
-    <ErrorMessage component="span" name={name} className="text-[red]" />
-  </div>
-);
+import { CategorySelectDropdown } from "../CategorySelectDropdown";
 
 const CategoryDropdown = ({ onSubmit }) => {
   const handleSubmit = (values) => {
@@ -48,12 +25,12 @@ const CategoryDropdown = ({ onSubmit }) => {
       <Form className="bg-white shadow-md rounded-lg px-8 w-full py-8 mb-4">
         <div className="mb-4">
           <div className="flex gap-4">
-            <SelectDropdown
+            <CategorySelectDropdown
               label="Category"
               name="category"
               options={["Category1", "Category2", "Category3"]}
             />
-            <SelectDropdown
+            <CategorySelectDropdown
               label="Make"
               name="make"
               options={["Make1", "Make2", "Make3"]}
@@ -61,24 +38,24 @@ const CategoryDropdown = ({ onSubmit }) => {
           </div>
 
           <div className="flex gap-4">
-            <SelectDropdown
+            <CategorySelectDropdown
               label="Model"
               name="model"
               options={["Model1", "Model2", "Model3"]}
             />
-            <SelectDropdown
+            <CategorySelectDropdown
               label="Type"
               name="type"
               options={["Type1", "Type2", "Type3"]}
             />
           </div>
           <div className="flex gap-4">
-            <SelectDropdown
+            <CategorySelectDropdown
               label="Condition"
               name="condition"
               options={["Condition1", "Condition2", "Condition3"]}
             />
-            <SelectDropdown
+            <CategorySelectDropdown
               label="Year"
               name="year"
               options={["Year1", "Year2", "Year3"]}

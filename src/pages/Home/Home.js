@@ -9,7 +9,11 @@ const HomePage = () => {
   return (
     <div className="homepage">
       <Header />
-      <CategoryLists />
+      <CategoryLists
+        className="flex lg:w-full  justify-between px-24 mt-3 mb-6 w-[1300px]"
+        activeCategory="border-b-4 border-[#0D1A8B] py-4"
+        unActiveCategory="py-4"
+      />
       <HeroSection />
       <SpotLight />
       <Footer />

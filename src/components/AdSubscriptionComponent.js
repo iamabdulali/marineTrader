@@ -1,6 +1,7 @@
 import React from "react";
 import { FaCheckCircle, FaEye } from "react-icons/fa";
 import { ribbon } from "../assets";
+import { Link } from "react-router-dom";
 
 const AdSubscriptionComponent = ({
   packageName,
@@ -72,11 +73,12 @@ const AdSubscriptionComponent = ({
           {packageName}
         </p>
         <p className="text-[#171923] font-semibold text-4xl mb-7">{price}</p>
-        <button
-          className={`${variantStyles.buttonBg} text-white font-semibold py-3 w-9/12 rounded-lg`}
+        <Link
+          to="/buildAd"
+          className={`${variantStyles.buttonBg} text-white font-semibold inline-block py-3 w-9/12 rounded-lg`}
         >
           {buttonText}
-        </button>
+        </Link>
         <p
           className={`${variantStyles.textColor} justify-center mt-4 flex items-center gap-2 underline font-medium`}
         >

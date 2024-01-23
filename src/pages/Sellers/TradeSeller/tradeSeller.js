@@ -10,6 +10,7 @@ import { validationSchema } from "../../../utils/ValidationSchema";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useSignup } from "../../../Hooks/useSignUpTrade";
 import { AuthContext } from "../../../Context/AuthContext";
+import ProgressSteps from "../../../components/ProgressSteps";
 
 const initialValues = {
   username: "",
@@ -43,6 +44,11 @@ const TradeSeller = () => {
   const user = localStorage.getItem("user");
   const navigate = useNavigate();
   const { signup, error } = useSignup();
+  const stepLabels = [
+    "Company Info",
+    "Business Details",
+    "Contact Person Details",
+  ];
 
   const nextStep = (values, { setTouched, setErrors }) => {
     try {
@@ -170,42 +176,12 @@ const TradeSeller = () => {
         </h1>
 
         {/* Progress Indicator */}
-        <div className="flex justify-center  text-center mt-10 sm:w-8/12 w-full mx-auto">
-          {[1, 2, 3].map((progress, index) => (
-            <React.Fragment key={progress}>
-              {index > 0 && (
-                <div
-                  className={` h-1 w-full rounded-sm relative top-5 bar${progress} ${
-                    progress <= step
-                      ? "bg-[#0D1A8B]"
-                      : "bg-[#8891B2] bg-opacity-20"
-                  }`}
-                />
-              )}
-              <div className="flex flex-col items-center gap-4 font-semibold ">
-                <div
-                  className={` ${
-                    progress <= step
-                      ? "text-[#0D1A8B] border-[#0D1A8B]"
-                      : "text-[#8891B2] border-[#8891B2]"
-                  } font-semibold w-12 h-12 flex justify-center items-center rounded-full border-2 `}
-                >
-                  {progress}
-                </div>
-                <p
-                  className={`${
-                    progress <= step ? "text-[#0D1A8B]" : "text-[#8891B2]"
-                  } text-xs w-28 `}
-                >
-                  {progress === 1 && "Company Info"}
-                  {progress === 2 && "Business Details"}
-                  {progress === 3 && "Contact Person Details"}
-                </p>
-              </div>
-            </React.Fragment>
-          ))}
-        </div>
-
+        <ProgressSteps
+          className="mt-10 sm:w-8/12 w-full mx-auto"
+          totalSteps={stepLabels.length}
+          currentStep={step}
+          stepLabels={stepLabels}
+        />
         {/* Form Content */}
         <Formik
           initialValues={initialValues}

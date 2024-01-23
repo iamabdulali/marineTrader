@@ -7,33 +7,30 @@ import { FaPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import SortDropdown from "../../components/SortDropdown";
 import { sellingHeader } from "../../utils/DummyData";
+import Layout from "../../components/Layout/Layout";
 
 export default function Selling() {
   return (
     <>
-      <div className="bg-[#f6f6f6] min-h-screen">
-        <Header />
-        <VerticalMenu />
-        <div className="ml-72 py-8 px-8">
-          <div className="flex items-center justify-between">
-            <Heading content="Selling" />
-            <Link
-              to={"/adsubscription"}
-              className="flex items-center text-sm gap-2 bg-[#0D1A8B] text-white py-3 px-5 font-medium rounded-md"
-            >
-              <FaPlus size={15} /> Create New Listing
-            </Link>
-          </div>
-
-          <ListingTable
-            tableFor="Your Listings"
-            hasSort={true}
-            hasPadding={true}
-            sellingListing={true}
-            tableHeader={sellingHeader}
-          />
+      <Layout>
+        <div className="flex items-center justify-between">
+          <Heading content="Selling" />
+          <Link
+            to={"/adsubscription"}
+            className="flex items-center text-sm gap-2 bg-[#0D1A8B] text-white py-3 px-5 font-medium rounded-md"
+          >
+            <FaPlus size={15} /> Create New Listing
+          </Link>
         </div>
-      </div>
+
+        <ListingTable
+          tableFor="Your Listings"
+          hasSort={true}
+          hasPadding={true}
+          sellingListing={true}
+          tableHeader={sellingHeader}
+        />
+      </Layout>
     </>
   );
 }

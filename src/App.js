@@ -18,6 +18,11 @@ import Selling from "./pages/Selling/Selling";
 import AdSubscription from "./pages/AdSubscription/AdSubscription";
 import Offer from "./pages/Offers/Offer";
 import Notifications from "./pages/Notifications/Notifications";
+import BuildAd from "./pages/BuildAd/BuildAd";
+import Directory from "./pages/Directory/Directory";
+import Subscription from "./pages/Subscription/Subscription";
+import News from "./pages/News/News";
+import Events from "./pages/Events/Events";
 
 function App() {
   return (
@@ -33,6 +38,11 @@ function App() {
         <Route path="/offers" element={<Offer />} />
         <Route path="/notifications" element={<Notifications />} />
         <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/buildAd" element={<BuildAd />} />
+        <Route path="/directory" element={<Directory />} />
+        <Route path="/subscriptions" element={<Subscription />} />
+        <Route path="/news" element={<News />} />
+        <Route path="/events" element={<Events />} />
 
         <Route path="/trade-seller" element={<TradeSeller />} />
         <Route path="/private-seller" element={<PrivateSeller />} />
