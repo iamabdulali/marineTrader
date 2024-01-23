@@ -79,3 +79,20 @@ export const categoryDropdownValidationSchema = Yup.object().shape({
   condition: Yup.string().required("Condition is required"),
   year: Yup.string().required("Year is required"),
 });
+
+export const buildAdValidationSchema = Yup.object().shape({
+  make: Yup.string().required("Make is required"),
+  model: Yup.string().required("Model is required"),
+  condition: Yup.string().required("Condition is required"),
+  year: Yup.string().required("Year is required"),
+  color: Yup.string().required("Color is required"),
+  serviceHistory: Yup.string().required("Service History is required"),
+  passenger: Yup.string().required("Passenger is required"),
+  length: Yup.string().required("Length is required"),
+  hours: Yup.string().required("Hours is required"),
+  trailers: Yup.string().required("Trailers is required"),
+  modification: Yup.string().required("Modification is required"),
+  feature: Yup.string().required("Feature is required"),
+  convenience: Yup.string().required("Convenience is required"),
+  accessories: Yup.string().required("Accessories is required"),
+});

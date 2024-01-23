@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import CategoryLists from "../categoryList/CategoryList";
-import Heading from "../Heading";
 import BuildLayout from "./BuildLayout";
 
 const SelectCategoryStep1 = ({ onCategoryChange }) => {

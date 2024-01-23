@@ -8,6 +8,7 @@ import ItemFeaturesStep3 from "../../components/BuildAdSteps/ItemFeaturesStep3";
 import NotesSteps4 from "../../components/BuildAdSteps/NotesSteps4";
 import PriceStep6 from "../../components/BuildAdSteps/PriceStep6";
 import GalleryStep5 from "../../components/BuildAdSteps/GalleryStep5";
+import { buildAdValidationSchema } from "../../utils/ValidationSchema";
 
 const BuildAd = () => {
   const [step, setStep] = useState(1);
@@ -48,7 +49,7 @@ const BuildAd = () => {
       />
       <Formik
         initialValues={initialValues}
-        // validationSchema={validationSchema}
+        validationSchema={buildAdValidationSchema}
         onSubmit={handleSubmit}
       >
         {({
