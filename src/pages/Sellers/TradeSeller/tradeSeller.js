@@ -39,7 +39,7 @@ const initialValues = {
 };
 
 const TradeSeller = () => {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(2);
   const [redirect, setRedirect] = useState(false);
   const user = localStorage.getItem("user");
   const navigate = useNavigate();

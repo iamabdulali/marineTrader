@@ -42,7 +42,7 @@ code {
   cursor: pointer;
   text-align: center;
   transition: all 250ms ease;
-  z-index: -1;
+  z-index: 1;
 }
 .radio input[type="radio"]:checked + .radio-label:before {
   background-color: #0d1a8b;

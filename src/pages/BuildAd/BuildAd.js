@@ -8,10 +8,13 @@ import ItemFeaturesStep3 from "../../components/BuildAdSteps/ItemFeaturesStep3";
 import NotesSteps4 from "../../components/BuildAdSteps/NotesSteps4";
 import PriceStep6 from "../../components/BuildAdSteps/PriceStep6";
 import GalleryStep5 from "../../components/BuildAdSteps/GalleryStep5";
-import { buildAdValidationSchema } from "../../utils/ValidationSchema";
+import {
+  buildAdValidationSchema,
+  imageValidationSchema,
+} from "../../utils/ValidationSchema";
 
 const BuildAd = () => {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(5);
   const [selectedCategory, setSelectedCategory] = useState("Jet Skis");
   const stepLabels = [
     "Category",
@@ -21,8 +24,6 @@ const BuildAd = () => {
     "Gallery",
     "Price",
   ];
-  const prevStep = () => setStep(step - 1);
-  const nextStep = () => setStep(step + 1);
 
   const handleCategoryChange = (category, setFieldValue) => {
     setSelectedCategory(category);
@@ -30,10 +31,103 @@ const BuildAd = () => {
   };
   const initialValues = {
     boatName: "",
+    title: "",
+    subtitle: "",
+    make: "",
+    modal: "",
+    year: "",
+    condition: "",
+    color: "",
+    serviceHistory: "",
+    passenger: "",
+    length: "",
+    hours: "",
+    trailers: "",
+    modifications: "",
+    feature: "",
+    convenience: "",
+    accessories: "",
+    description: "",
     tags: [],
+    buildAdImages: "",
+    buildAdVideo: [],
+    priceOnInformation: "",
+    currency: "",
+    price: "",
+    facilities: [],
+  };
+  const prevStep = () => setStep(step - 1);
+
+  const nextStep = (values, { setTouched, setErrors }) => {
+    try {
+      // Validate only the fields for steps 2 to 6
+      if (step > 1) {
+        const fieldsToValidate = Object.keys(
+          buildAdValidationSchema.fields
+        ).filter((field) => {
+          if (step === 2) {
+            return [
+              "title",
+              "subtitle",
+              "make",
+              "model",
+              "year",
+              "condition",
+              "color",
+              "serviceHistory",
+              "passenger",
+              "length",
+              "hours",
+              "trailers",
+            ].includes(field);
+          } else if (step === 3) {
+            return [
+              "modification",
+              "feature",
+              "convenience",
+              "accessories",
+            ].includes(field);
+          } else if (step === 4) {
+            return ["description", "tags"].includes(field);
+          } else if (step === 5) {
+            return ["buildAdImages", "buildAdVideo"].includes(field);
+          } else if (step === 6) {
+            return ["currency", "price"].includes(field);
+          }
+          return true; // Include all fields if not in a specific step
+        });
+
+        buildAdValidationSchema.pick(fieldsToValidate).validateSync(values, {
+          abortEarly: false,
+        });
+      }
+
+      // Increment the step
+      setStep((prevStep) => prevStep + 1);
+    } catch (error) {
+      if (error.name === "ValidationError") {
+        console.error("Validation errors:", error.errors);
+
+        const allFields = Object.keys(values);
+        const touchedState = allFields.reduce((acc, field) => {
+          acc[field] = true;
+          return acc;
+        }, {});
+        setTouched(touchedState);
+
+        const errorState = error.errors.reduce((acc, error) => {
+          acc[error.path] = error.message;
+          return acc;
+        }, {});
+        setErrors(errorState);
+      } else {
+        console.error("Error:", error.message);
+      }
+    }
   };
 
   const handleSubmit = async (values, { setSubmitting }) => {
+    // alert(JSON.stringify(values));
     console.log(values);
   };
   return (
@@ -117,7 +211,7 @@ const BuildAd = () => {
                       isValid ? "opacity-100" : "opacity-70"
                     }`}
                   >
-                    Submit
+                    List Item
                   </button>
                 )}
               </div>

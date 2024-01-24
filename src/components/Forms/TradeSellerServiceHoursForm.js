@@ -204,8 +204,6 @@ export default function TradeSellerServiceHoursForm() {
               type="radio"
               name="openPublicHolidays"
               value="yes"
-              // checked={publicHolidays === "yes"}
-              // onChange={handlePublicHolidaysChange}
             />
             <label htmlFor="yes-checkbox" className="radio-label mr-5">
               Yes
@@ -217,8 +215,6 @@ export default function TradeSellerServiceHoursForm() {
               id="no-checkbox"
               type="radio"
               value="no"
-              // checked={publicHolidays === "no"}
-              // onChange={handlePublicHolidaysChange}
             />
             <label htmlFor="no-checkbox" className="radio-label">
               No
@@ -243,9 +239,7 @@ export default function TradeSellerServiceHoursForm() {
                 className="w-[20px] h-[20px] text-blue-600 bg-gray-100 border-gray-300 rounded mr-3"
                 type="checkbox"
                 name="facilities"
-                // checked={facilities[facility]}
                 value={facility}
-                // onChange={() => handleFacilityChange(facility)}
               />
               {facility}
             </label>

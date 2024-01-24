@@ -31,7 +31,7 @@ export const TagsInput = ({ field, form }) => {
   };
 
   return (
-    <div className="text-sm">
+    <div className="text-sm mt-4">
       <label
         htmlFor={field.name}
         className="block text-[#11133D] text-sm font-medium mb-2"
@@ -40,7 +40,6 @@ export const TagsInput = ({ field, form }) => {
       </label>
       <input
         type="text"
-        {...field}
         placeholder={`Enter Tags`}
         onKeyDown={handleTagInput}
         className="border-[#CECED7] mb-4 text-[#8891B2] border-2 rounded-md p-3 w-full"

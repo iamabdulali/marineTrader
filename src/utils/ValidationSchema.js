@@ -80,7 +80,39 @@ export const categoryDropdownValidationSchema = Yup.object().shape({
   year: Yup.string().required("Year is required"),
 });
 
+// Validation schema for images (buildAdImages)
+const imageValidationSchema = Yup.array()
+  .test("fileSize", "File size is too large", (value) => {
+    // Assuming you want to limit the file size to 5MB for images
+    return !value.some((file) => file.size > 5 * 1024 * 1024);
+  })
+  .test("fileType", "Invalid file type", (value) => {
+    // Validate file type for images
+    const acceptedImageTypes = ["image/jpeg", "image/png"];
+    return !value.some((file) => !acceptedImageTypes.includes(file.type));
+  })
+  .test("fileCount", "Maximum 5 images allowed", (value) => {
+    // Validate the number of selected files (images)
+    return !value || value.length <= 5;
+  })
+  .required("Please upload at least one image");
+
+// Validation schema for videos (buildAdVideo)
+const videoValidationSchema = Yup.array()
+  .test("fileSize", "File size is too large", (value) => {
+    // Assuming you want to limit the file size to 1000MB for videos
+    return !value.some((file) => file.size > 1000 * 1024 * 1024);
+  })
+  .test("fileType", "Invalid file type", (value) => {
+    // Validate file type for videos
+    const acceptedVideoTypes = ["video/*"];
+    return !value.some((file) => !acceptedVideoTypes.includes(file.type));
+  })
+  .required("Please upload a video");
+
 export const buildAdValidationSchema = Yup.object().shape({
+  title: Yup.string().required("Title is required"),
+  subtitle: Yup.string().required("Subtitle is required"),
   make: Yup.string().required("Make is required"),
   model: Yup.string().required("Model is required"),
   condition: Yup.string().required("Condition is required"),
@@ -95,4 +127,9 @@ export const buildAdValidationSchema = Yup.object().shape({
   feature: Yup.string().required("Feature is required"),
   convenience: Yup.string().required("Convenience is required"),
   accessories: Yup.string().required("Accessories is required"),
+  description: Yup.string().required("Description is required"),
+  // buildAdImages: imageValidationSchema,
+  // buildAdVideo: videoValidationSchema,
+  currency: Yup.string().required("Currency is required"),
+  price: Yup.string().required("Price is required"),
 });
