@@ -14,7 +14,7 @@ import {
 } from "../../utils/ValidationSchema";
 
 const BuildAd = () => {
-  const [step, setStep] = useState(5);
+  const [step, setStep] = useState(6);
   const [selectedCategory, setSelectedCategory] = useState("Jet Skis");
   const stepLabels = [
     "Category",
@@ -43,13 +43,13 @@ const BuildAd = () => {
     length: "",
     hours: "",
     trailers: "",
-    modifications: "",
+    modification: [],
     feature: "",
     convenience: "",
     accessories: "",
     description: "",
     tags: [],
-    buildAdImages: "",
+    buildAdImages: [],
     buildAdVideo: [],
     priceOnInformation: "",
     currency: "",
@@ -143,7 +143,7 @@ const BuildAd = () => {
       />
       <Formik
         initialValues={initialValues}
-        validationSchema={buildAdValidationSchema}
+        // validationSchema={buildAdValidationSchema}
         onSubmit={handleSubmit}
       >
         {({

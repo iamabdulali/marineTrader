@@ -123,7 +123,7 @@ export const buildAdValidationSchema = Yup.object().shape({
   length: Yup.string().required("Length is required"),
   hours: Yup.string().required("Hours is required"),
   trailers: Yup.string().required("Trailers is required"),
-  modification: Yup.string().required("Modification is required"),
+  modification: Yup.array().min(1, "Select at least one option"),
   feature: Yup.string().required("Feature is required"),
   convenience: Yup.string().required("Convenience is required"),
   accessories: Yup.string().required("Accessories is required"),

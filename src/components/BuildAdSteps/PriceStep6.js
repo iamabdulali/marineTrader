@@ -4,6 +4,10 @@ import { Field } from "formik";
 import { CategorySelectDropdown } from "../CategorySelectDropdown";
 import { diamondImage, warningIcon } from "../../assets";
 import { FaArrowRight } from "react-icons/fa";
+import BundlesModal from "./BundlesModal";
+import { Link } from "react-router-dom";
+import CheckboxGroup from "../CheckboxGroup";
+import SpotlightModal from "./SpotlightModal";
 
 const PriceStep6 = () => {
   const initialFacilities = {
@@ -16,38 +20,24 @@ const PriceStep6 = () => {
   };
 
   const [facilities, setFacilities] = useState(initialFacilities.facilities);
-
-  const [newFacility, setNewFacility] = useState("");
-
-  const handleFacilityChange = (facility) => {
-    setFacilities((prevFacilities) => ({
-      ...prevFacilities,
-      [facility]: !prevFacilities[facility],
-    }));
-  };
-
-  const handleNewFacilityChange = (e) => {
-    setNewFacility(e.target.value);
-  };
-
-  useEffect(() => {}, [facilities]);
-
-  const handleAddFacility = () => {
-    if (newFacility.trim() !== "") {
-      setFacilities((prevFacilities) => ({
-        ...prevFacilities,
-        [newFacility]: false,
-      }));
-      setNewFacility("");
-    }
-  };
-
+  const [showModal, setShowModal] = useState(false);
+  const [showSpotlightModal, setShowSpotlightModal] = useState(false);
   const [priceInfoType, setPriceInfoType] = useState("enterInfo");
+
+  const handleShowModal = () => {
+    setShowModal(true);
+  };
+
+  const handleShowSpotlightModal = () => {
+    setShowSpotlightModal(true);
+  };
 
   return (
     <BuildLayout heading="Set Price">
       <div>
-        <p className="text-[#11133D] font-semibold">Set Your Price</p>
+        <p className="text-[#11133D] font-semibold border-t-2 pt-4">
+          Set Your Price
+        </p>
         <div className="flex mt-5 text-sm">
           <div className="radio">
             <Field
@@ -112,20 +102,32 @@ const PriceStep6 = () => {
           </div>
         )}
 
-        <div className="flex gap-5 text-sm font-medium text-[#11133D] mt-7">
-          {Object.keys(facilities).map((facility) => (
-            <div key={facility}>
-              <label className="flex text-[#11133D]">
-                <Field
-                  className="w-[20px] h-[20px] text-blue-600 bg-gray-100 border-gray-300 rounded mr-3"
-                  type="checkbox"
-                  name="facilities"
-                  value={facility}
-                />
-                {facility}
-              </label>
-            </div>
-          ))}
+        <CheckboxGroup
+          className="flex gap-5"
+          name="facilities"
+          facilities={facilities}
+          checkedProp={false}
+        />
+        <div className="mt-6 pt-6 border-t-2">
+          <div className="flex items-center justify-between">
+            <p className="text-[#0D1A8B] font-semibold capitalize text-lg">
+              Available Upgrades
+            </p>
+            <button
+              onClick={handleShowModal}
+              type="button"
+              className="bg-[#0D1A8B] text-sm font-medium text-white py-2 px-4 rounded-md"
+            >
+              Buy a Bundle
+            </button>
+          </div>
+          <p className="text-sm mt-3">
+            <Link className="text-[#0D1A8B] font-semibold underline ">
+              UPGRADE
+            </Link>{" "}
+            to premium or featured package for making your advert highlighted on
+            home page and category page
+          </p>
         </div>
         <div className="bg-[#1CBF73] flex mt-8 p-5 rounded-lg justify-between items-center ">
           <div className="flex items-center gap-5">
@@ -135,15 +137,29 @@ const PriceStep6 = () => {
             </p>
           </div>
           <div className="flex items-center gap-5">
-            <button className="bg-[#FFB800] text-[#11133D] font-semibold py-3 px-6 rounded-md">
+            <button
+              onClick={handleShowSpotlightModal}
+              type="button"
+              className="bg-[#FFB800] text-[#11133D] font-semibold py-3 px-6 rounded-md"
+            >
               Home Page Spotlight
             </button>
-            <button className="bg-white text-[#11133D] font-semibold py-3 px-6 rounded-md">
+            <button
+              onClick={handleShowSpotlightModal}
+              type="button"
+              className="bg-white text-[#11133D] font-semibold py-3 px-6 rounded-md"
+            >
               Category Page Spotlight
             </button>
           </div>
         </div>
       </div>
+      {showModal ? <BundlesModal onClick={() => setShowModal(false)} /> : ""}
+      {showSpotlightModal ? (
+        <SpotlightModal onClick={() => setShowSpotlightModal(false)} />
+      ) : (
+        ""
+      )}
     </BuildLayout>
   );
 };
