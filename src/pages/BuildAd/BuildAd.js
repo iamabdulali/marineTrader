@@ -143,7 +143,7 @@ const BuildAd = () => {
       />
       <Formik
         initialValues={initialValues}
-        // validationSchema={buildAdValidationSchema}
+        validationSchema={buildAdValidationSchema}
         onSubmit={handleSubmit}
       >
         {({
