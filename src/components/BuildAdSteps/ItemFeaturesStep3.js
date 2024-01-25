@@ -8,7 +8,7 @@ const ItemFeaturesStep3 = () => {
       <BuildLayout heading="Items Features">
         <div className="flex gap-4">
           <CategorySelectDropdown
-            multiple
+            // multiple
             label="Modification"
             name="modification"
             options={["Modification1", "Modification2", "Modification3"]}
