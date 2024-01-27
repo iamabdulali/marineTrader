@@ -15,7 +15,7 @@ import {
 import { AuthContext } from "../../Context/AuthContext";
 
 const BuildAd = () => {
-  const [step, setStep] = useState(6);
+  const [step, setStep] = useState(1);
 
   const [selectedCategory, setSelectedCategory] = useState("Jet Skis");
   const stepLabels = [
