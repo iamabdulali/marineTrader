@@ -1,3 +1,4 @@
+// CategoryList.jsx
 import React, { useState } from "react";
 import { ReactSVG } from "react-svg";
 import {
@@ -13,14 +14,28 @@ import {
 } from "../../assets";
 
 const CategoryList = ({
-  categories,
+  categories = [
+    "Jet Skis",
+    "Boat Home",
+    "Commercial",
+    "Motor/Yacht",
+    "Sailboat",
+    "Smallcraft",
+    "Fishing",
+    "Rib",
+    "Non-Motor",
+  ],
+  // categories,
   onCategoryClick,
   className,
   activeCategory,
   unActiveCategory,
   onCategoryChange,
+  defaultSelectedCategory,
 }) => {
-  const [selectedCategory, setSelectedCategory] = useState("Jet Skis");
+  const [selectedCategory, setSelectedCategory] = useState(
+    defaultSelectedCategory || (categories.length > 0 ? categories[0] : null)
+  );
 
   const categoryIcons = {
     "Jet Skis": jetskiIcon,
@@ -34,9 +49,10 @@ const CategoryList = ({
     "Non-Motor": nonMotorIcon,
   };
 
-  const setIconStyles = (svg, strokeColor, strokeOpacity) => {
-    svg.setAttribute("stroke", strokeColor);
-    svg.setAttribute("stroke-opacity", strokeOpacity);
+  const handleCategoryClick = (category) => {
+    setSelectedCategory(category);
+    onCategoryChange(category);
+    onCategoryClick(category);
   };
 
   const getCategoryIcon = (category) => {
@@ -44,8 +60,6 @@ const CategoryList = ({
     const strokeColor = isSelected ? "#0D1A8B" : "#8891B2";
     const beforeInjection = (svg) => {
       const paths = svg.querySelectorAll("path");
-      // svg.setAttribute("width", 90);
-      // svg.setAttribute("height", 90);
 
       paths.forEach((path) => {
         path.setAttribute("fill", strokeColor);
@@ -64,11 +78,7 @@ const CategoryList = ({
       {categories.map((category) => (
         <div
           key={category}
-          onClick={() => {
-            onCategoryChange(category);
-            onCategoryClick(category);
-            setSelectedCategory(category);
-          }}
+          onClick={() => handleCategoryClick(category)}
           className={`category-item cursor-pointer ${
             category === selectedCategory
               ? `${activeCategory}`
@@ -82,43 +92,4 @@ const CategoryList = ({
   );
 };
 
-const CategoryLists = ({
-  className,
-  activeCategory,
-  unActiveCategory,
-  onCategoryChange,
-}) => {
-  const [selectedCategory, setSelectedCategory] = useState("Jet Skis");
-
-  const categories = [
-    "Jet Skis",
-    "Boat Home",
-    "Commercial",
-    "Motor/Yacht",
-    "Sailboat",
-    "Smallcraft",
-    "Fishing",
-    "Rib",
-    "Non-Motor",
-  ];
-
-  const handleCategoryClick = (category) => {
-    setSelectedCategory(category);
-  };
-
-  return (
-    <div className="overflow-x-scroll lg:overflow-auto">
-      <CategoryList
-        className={className}
-        activeCategory={activeCategory}
-        unActiveCategory={unActiveCategory}
-        categories={categories}
-        onCategoryClick={handleCategoryClick}
-        onCategoryChange={onCategoryChange}
-        onCategoryChangeProp={onCategoryChange}
-      />
-    </div>
-  );
-};
-
-export default CategoryLists;
+export default CategoryList;

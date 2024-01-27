@@ -16,7 +16,7 @@ export default function Selling() {
         <div className="flex items-center justify-between">
           <Heading content="Selling" />
           <Link
-            to={"/adsubscription"}
+            to={"/selling/adsubscription"}
             className="flex items-center text-sm gap-2 bg-[#0D1A8B] text-white py-3 px-5 font-medium rounded-md"
           >
             <FaPlus size={15} /> Create New Listing

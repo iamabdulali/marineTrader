@@ -7,6 +7,7 @@ const CheckboxGroup = ({
   className,
   name,
   checkedProp,
+  values,
   onChangeProp,
 }) => {
   const handleCheckboxChange = (facility) => {

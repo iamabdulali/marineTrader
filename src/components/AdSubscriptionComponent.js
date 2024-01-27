@@ -74,7 +74,7 @@ const AdSubscriptionComponent = ({
         </p>
         <p className="text-[#171923] font-semibold text-4xl mb-7">{price}</p>
         <Link
-          to="/buildAd"
+          to="/selling/buildAd"
           className={`${variantStyles.buttonBg} text-white font-semibold inline-block py-3 w-9/12 rounded-lg`}
         >
           {buttonText}

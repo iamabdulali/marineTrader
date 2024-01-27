@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Layout from "../../components/Layout/Layout";
 import ProgressSteps from "../../components/ProgressSteps";
 import SelectCategoryStep1 from "../../components/BuildAdSteps/SelectCategoryStep1";
@@ -12,9 +12,11 @@ import {
   buildAdValidationSchema,
   imageValidationSchema,
 } from "../../utils/ValidationSchema";
+import { AuthContext } from "../../Context/AuthContext";
 
 const BuildAd = () => {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(6);
+
   const [selectedCategory, setSelectedCategory] = useState("Jet Skis");
   const stepLabels = [
     "Category",
@@ -55,6 +57,8 @@ const BuildAd = () => {
     currency: "",
     price: "",
     facilities: [],
+    packageName: "",
+    countries: [],
   };
   const prevStep = () => setStep(step - 1);
 
@@ -143,7 +147,7 @@ const BuildAd = () => {
       />
       <Formik
         initialValues={initialValues}
-        validationSchema={buildAdValidationSchema}
+        // validationSchema={buildAdValidationSchema}
         onSubmit={handleSubmit}
       >
         {({
@@ -167,7 +171,9 @@ const BuildAd = () => {
             {step === 3 && <ItemFeaturesStep3 />}
             {step === 4 && <NotesSteps4 />}
             {step === 5 && <GalleryStep5 />}
-            {step === 6 && <PriceStep6 />}
+            {step === 6 && (
+              <PriceStep6 values={values} setFieldValue={setFieldValue} />
+            )}
             {/* Navigation buttons */}
             <div className="flex align-center justify-between mt-10">
               <div>

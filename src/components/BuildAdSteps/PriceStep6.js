@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import BuildLayout from "./BuildLayout";
 import { Field } from "formik";
 import { CategorySelectDropdown } from "../CategorySelectDropdown";
@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 import CheckboxGroup from "../CheckboxGroup";
 import SpotlightModal from "./SpotlightModal";
 
-const PriceStep6 = () => {
+const PriceStep6 = ({ setFieldValue, values }) => {
   const initialFacilities = {
     facilities: {
       "Finance Available": false,
@@ -156,7 +156,11 @@ const PriceStep6 = () => {
       </div>
       {showModal ? <BundlesModal onClick={() => setShowModal(false)} /> : ""}
       {showSpotlightModal ? (
-        <SpotlightModal onClick={() => setShowSpotlightModal(false)} />
+        <SpotlightModal
+          value={values}
+          setFieldValue={setFieldValue}
+          onClick={() => setShowSpotlightModal(false)}
+        />
       ) : (
         ""
       )}

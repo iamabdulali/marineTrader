@@ -1,8 +1,16 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import CategoryLists from "../categoryList/CategoryList";
 import BuildLayout from "./BuildLayout";
+import { AuthContext } from "../../Context/AuthContext";
 
-const SelectCategoryStep1 = ({ onCategoryChange }) => {
+const SelectCategoryStep1 = () => {
+  const { selectedCategory, dispatch } = useContext(AuthContext);
+
+  const onCategoryChange = (category) => {
+    // Update selected category in the authentication context
+    dispatch({ type: "UPDATE_SELECTED_CATEGORY", payload: category });
+  };
+
   return (
     <>
       <BuildLayout heading="Select Category">
@@ -11,6 +19,8 @@ const SelectCategoryStep1 = ({ onCategoryChange }) => {
           activeCategory="border-2 px-11 py-6 rounded-lg border-[#0D1A8B] bg-[#EFF0FF]"
           unActiveCategory="border-2 px-11 py-6 rounded-lg border-[#D9DFF5]"
           onCategoryChange={onCategoryChange}
+          onCategoryClick={onCategoryChange}
+          defaultSelectedCategory={selectedCategory}
         />
       </BuildLayout>
     </>

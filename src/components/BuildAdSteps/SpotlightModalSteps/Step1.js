@@ -1,7 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import CheckboxGroup from "../../CheckboxGroup";
+import { FaTrash } from "react-icons/fa";
+import { AuthContext } from "../../../Context/AuthContext";
 
-const Step1 = () => {
+const Step1 = ({ showSpotlightSelection, setFieldValue, values }) => {
+  const { bundleName } = useContext(AuthContext);
+
   const initialData = {
     countries: {
       "United Kingdom ( + £9.99)": { selected: false, price: 9.99 },
@@ -76,34 +80,96 @@ const Step1 = () => {
     }));
   };
 
-  return (
-    <>
-      <div className="py-5">
-        <div className="text-[#0D1A8B] text-xl font-bold flex justify-between px-8">
-          <p>Select Countries From The List:</p>
+  const removeCountry = (item) => {
+    setSelectedCountries((prevCountries) => ({
+      ...prevCountries,
+      [item]: {
+        ...prevCountries[item],
+        selected: !prevCountries[item].selected,
+      },
+    }));
+  };
+
+  const renderSelectedCountriesTable = () => {
+    const selectedCountriesArray = Object.entries(selectedCountries)
+      .filter(([_, data]) => data.selected)
+      .map(([country, data]) => (
+        <tr key={country} className=" text-[#11133D]">
+          <td className="py-2 px-4 font-semibold">{country}</td>
+          <td className="py-2 px-4 font-semibold">£{data.price.toFixed(2)}</td>
+          <td className="py-2 px-4 font-semibold">
+            <button
+              className=" text-[#FC4040] flex items-center gap-3 px-3 py-1 rounded"
+              onClick={() => removeCountry(country)}
+            >
+              <FaTrash /> Remove
+            </button>
+          </td>
+        </tr>
+      ));
+
+    if (selectedCountriesArray.length === 0) {
+      return <p className="px-8">No countries selected.</p>;
+    }
+
+    return (
+      <div className="px-8">
+        <div className="text-[#0D1A8B] text-xl font-bold flex justify-between ">
+          <p>Your SpotLight Selections</p>
           <p className="uppercase">
             Total: £{calculateTotal(selectedCountries).toFixed(2)}
           </p>
         </div>
-        <div className="px-8">
-          <CheckboxGroup
-            className="grid grid-cols-4 gap-5"
-            facilities={selectedCountries}
-            name="countries"
-            checkedProp={true}
-            onChangeProp={handleCountryChange}
-          />
+        <table className="w-full text-left bg-[#f9f9f9] border-collapse border border-[#D8D8D8] mt-4">
+          <thead>
+            <tr className="text-[#8891B2] border-b-2">
+              <th className="py-2 px-4 font-medium">Countries</th>
+              <th className="py-2 px-4 font-medium">Price</th>
+              <th className="py-2 px-4 font-medium">Action</th>
+            </tr>
+          </thead>
+          <tbody>{selectedCountriesArray}</tbody>
+        </table>
+      </div>
+    );
+  };
+  return (
+    <>
+      <div className="py-5 ">
+        {showSpotlightSelection ? (
+          renderSelectedCountriesTable()
+        ) : (
+          <div className="py-5">
+            {}
+            <div className="text-[#0D1A8B] text-xl font-bold flex justify-between px-8">
+              <p>Select Countries From The List:</p>
+              <p className="uppercase">
+                Total: £{calculateTotal(selectedCountries).toFixed(2)}
+              </p>
+            </div>
+            <div className="px-8">
+              <CheckboxGroup
+                setFieldValue={setFieldValue}
+                values={values}
+                className="grid grid-cols-4 gap-5"
+                facilities={selectedCountries}
+                name="countries"
+                checkedProp={true}
+                onChangeProp={handleCountryChange}
+              />
 
-          <div className="text-[#0D1A8B] text-xl font-bold mt-12">
-            <p>Select Continents From The List:</p>
+              <div className="text-[#0D1A8B] text-xl font-bold mt-12">
+                <p>Select Continents From The List:</p>
+              </div>
+              <CheckboxGroup
+                className="grid grid-cols-4 gap-5"
+                facilities={selectedContinents}
+                name="continents"
+                onChange={handleContinentChange}
+              />
+            </div>
           </div>
-          <CheckboxGroup
-            className="grid grid-cols-4 gap-5"
-            facilities={selectedContinents}
-            name="continents"
-            onChange={handleContinentChange}
-          />
-        </div>
+        )}
       </div>
     </>
   );

@@ -1,5 +1,3 @@
-import logo from "./logo.svg";
-// import './App.css';
 import {
   BrowserRouter as Router,
   Outlet,
@@ -34,11 +32,11 @@ function App() {
         <Route path="/register" element={<Registration />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/selling" element={<Selling />} />
-        <Route path="/adsubscription" element={<AdSubscription />} />
+        <Route path="/selling/adsubscription" element={<AdSubscription />} />
         <Route path="/offers" element={<Offer />} />
         <Route path="/notifications" element={<Notifications />} />
         <Route path="/reset-password" element={<ResetPassword />} />
-        <Route path="/buildAd" element={<BuildAd />} />
+        <Route path="/selling/buildAd" element={<BuildAd />} />
         <Route path="/directory" element={<Directory />} />
         <Route path="/subscriptions" element={<Subscription />} />
         <Route path="/news" element={<News />} />

@@ -1,32 +1,39 @@
-import React, { createContext, useEffect, useReducer } from "react";
+// AuthContext.js
+import React, { createContext, useReducer } from "react";
 
 export const AuthContext = createContext();
 
 export const authReducer = (state, action) => {
   switch (action.type) {
-    case 'LOGIN':
-      return { user: action.payload };
-    case 'LOGOUT':
+    case "LOGIN":
+      return { ...state, user: action.payload };
+    case "LOGOUT":
       return { user: null };
+    case "UPDATE_SELECTED_CATEGORY":
+      return { ...state, selectedCategory: action.payload };
+    case "ADD_TAG":
+      return { ...state, listingTags: [...state.listingTags, action.payload] };
+    case "REMOVE_TAG":
+      return {
+        ...state,
+        listingTags: state.listingTags.filter((tag) => tag !== action.payload),
+      };
+    case "CLEAR_TAGS":
+      return { ...state, listingTags: [] };
     default:
       return state;
   }
 };
 
-// useEffect(() => {
-//     const user = JSON.parse(localStorage.getItem('user'))
-
-//     if(user){
-//         dispatch({type:'LOGIN'})
-//     }
-// })
-
 export const AuthContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, {
     user: null,
+    bundleName: "",
+    selectedCategory: null,
+    listingTags: [], // Include tags in the initial state
   });
 
-  console.log("Auth context state: ", state);
+  // console.log("Auth context state: ", state);
 
   return (
     <AuthContext.Provider value={{ ...state, dispatch }}>

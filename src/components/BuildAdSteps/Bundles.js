@@ -21,7 +21,7 @@ const Bundles = ({
       <p className="font-semibold">£{price}</p>
       <Field
         type="checkbox"
-        name={BundleName}
+        name="bundles"
         value={checkbox}
         className="w-[25px] h-[25px]"
       />
