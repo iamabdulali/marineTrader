@@ -23,7 +23,7 @@ export const TagsInput = ({ field, form }) => {
       if (newTag !== "") {
         setTags((prevTags) => {
           const updatedTags = [...prevTags, newTag];
-          form.setFieldValue(field.name, updatedTags.join(", "));
+          form.setFieldValue(field.name, updatedTags);
           return updatedTags;
         });
         dispatch({ type: "ADD_TAG", payload: newTag });
@@ -38,7 +38,7 @@ export const TagsInput = ({ field, form }) => {
   const handleTagRemoval = (tagToRemove) => {
     const updatedTags = tags.filter((tag) => tag !== tagToRemove);
     setTags(updatedTags);
-    form.setFieldValue(field.name, updatedTags.join(", "));
+    form.setFieldValue(field.name, updatedTags);
     dispatch({ type: "REMOVE_TAG", payload: tagToRemove });
   };
 
