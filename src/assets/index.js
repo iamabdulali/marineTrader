@@ -36,6 +36,8 @@ import base2 from "./Base-2.png";
 import whiteLogo from "./white-logo.png";
 import diamondImage from "./diamond.png";
 import warningIcon from "./warningIcon.png";
+import coverPhoto from "./cover-photo.png";
+import cameraIcon from "./camera-icon.png";
 
 export {
   jetskiIcon,
@@ -76,4 +78,6 @@ export {
   whiteLogo,
   diamondImage,
   warningIcon,
+  coverPhoto,
+  cameraIcon,
 };

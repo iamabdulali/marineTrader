@@ -7,8 +7,20 @@ import BuildLayout from "./BuildLayout";
 const ItemDescriptionStep2 = () => {
   return (
     <BuildLayout heading="Item Description">
-      <FormField name="title" label="Title" />
-      <FormField name="subtitle" label="Subtitle" />
+      <FormField
+        FieldType="text"
+        name="title"
+        inputField={true}
+        label="Title"
+        className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
+      />
+      <FormField
+        FieldType="text"
+        inputField={true}
+        name="subtitle"
+        label="Subtitle"
+        className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
+      />
       <UpdateSubtitleNotice />
       <div className="flex gap-4">
         <CategorySelectDropdown

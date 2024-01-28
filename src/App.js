@@ -21,6 +21,7 @@ import Directory from "./pages/Directory/Directory";
 import Subscription from "./pages/Subscription/Subscription";
 import News from "./pages/News/News";
 import Events from "./pages/Events/Events";
+import UserInfo from "./pages/UserProfile/UserProfile";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
       {/* <Header/> */}
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/userProfile" element={<UserInfo />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Registration />} />
         <Route path="/dashboard" element={<Dashboard />} />

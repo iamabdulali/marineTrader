@@ -117,7 +117,8 @@ const Header = () => {
         {/* User Picture and Menu */}
         {isLogged ? (
           <div className="relative inline-block">
-            <button
+            <Link
+              to="/userProfile"
               onClick={toggleUserMenu}
               className="flex items-center space-x-2 focus:outline-none"
             >
@@ -130,14 +131,7 @@ const Header = () => {
                   <span className="text-[#737791] text-sm">Trade Seller</span>
                 </div>
               </div>
-            </button>
-            {userMenuOpen && (
-              <div className="absolute z-10 mt-2 min-w-36 bg-white border rounded shadow-lg">
-                <button className="py-2 px-4 block">Profile</button>
-                <button className="py-2 px-4 block">Settings</button>
-                <button className="py-2 px-4 block">Logout</button>
-              </div>
-            )}
+            </Link>
           </div>
         ) : (
           ""
