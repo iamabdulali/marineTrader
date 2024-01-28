@@ -15,7 +15,6 @@ const ListingTable = ({
   sellingListing,
   tableFor,
 }) => {
-  console.log(dashboardListing);
   return (
     <div
       className={`mx-auto ${sidePadding ? "py-8 px-8" : ""} ${
@@ -145,7 +144,7 @@ const ListingTable = ({
                     </div>
                   </td>
                   <td className="py-4 px-4">{adExpireDate}</td>
-                  <td className="py-4 px-4">{packageName}</td>
+                  {/* <td className="py-4 px-4">{packageName}</td> */}
                   <td className="py-4 px-4">{views}</td>
                   <td className="py-4 px-4">
                     <p
