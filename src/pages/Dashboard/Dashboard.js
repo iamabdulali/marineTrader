@@ -6,7 +6,7 @@ import { jetski3d, packageIcon } from "../../assets";
 import { FaCross, FaTimes } from "react-icons/fa";
 import WelcomeMessage from "../../components/Notifications/WelcomeMessage";
 import ListingTable from "../../components/Tables/ListingTable";
-import { dashboardHeader } from "../../utils/DummyData";
+import { dashboardHeader, sellingHeader } from "../../utils/DummyData";
 import Layout from "../../components/Layout/Layout";
 
 export default function Dashboard() {
@@ -29,12 +29,19 @@ export default function Dashboard() {
         />
         <ListingTable
           tableFor="Your Listings"
+          hasSort={true}
+          hasPadding={true}
+          sellingListing={true}
+          tableHeader={sellingHeader}
+        />
+        {/* <ListingTable
+          tableFor="Your Listings"
           hasSearch={true}
           backgroundWhite={true}
           sidePadding={true}
           tableHeader={dashboardHeader}
           dashboardListing={true}
-        />
+        /> */}
       </Layout>
     </>
   );
