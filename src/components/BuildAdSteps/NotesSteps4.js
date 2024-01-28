@@ -8,13 +8,14 @@ const NotesSteps4 = () => {
   return (
     <>
       <BuildLayout heading="Notes">
+        <Field name="tags" component={TagsInput} />
         <Field
           name="description"
           children={({ field }) => (
             <>
               <label
                 htmlFor={field.name}
-                className="block text-[#11133D] text-sm font-medium mb-2"
+                className="block text-[#11133D] text-sm font-medium mb-2 mt-7"
               >
                 Description
               </label>
@@ -22,7 +23,7 @@ const NotesSteps4 = () => {
                 as="textarea"
                 id={field.name}
                 placeholder="Description"
-                className="border-[#CECED7] text-sm  text-[#8891B2] border-2 rounded-md p-3 w-full"
+                className="border-[#CECED7] text-sm min-h-[150px] text-[#8891B2] border-2 rounded-md p-3 w-full"
                 resize="vertical"
                 {...field}
               />
@@ -34,8 +35,6 @@ const NotesSteps4 = () => {
             </>
           )}
         />
-
-        <Field name="tags" component={TagsInput} />
       </BuildLayout>
     </>
   );

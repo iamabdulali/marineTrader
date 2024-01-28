@@ -164,7 +164,7 @@ const ListingTable = ({
                     <div className="flex font-semibold items-center justify-center">
                       <button
                         className={` ${
-                          ad == "Create"
+                          ad == "Edit"
                             ? "text-[#0D1A8B] border-2 border-[#0D1A8B]"
                             : ad == "Upgrade"
                             ? "text-[#FFB800] border-2 border-[#FFB800]"

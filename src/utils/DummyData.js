@@ -50,7 +50,7 @@ export const sellingData = [
     views: "2.8k",
     packageName: "Premium",
     image: jetski2,
-    ad: "Create",
+    ad: "Edit",
   },
   {
     id: 2,
@@ -72,7 +72,7 @@ export const sellingData = [
     views: "2.8k",
     packageName: "Premium",
     image: jetski2,
-    ad: "Create",
+    ad: "Edit",
   },
   {
     id: 3,
