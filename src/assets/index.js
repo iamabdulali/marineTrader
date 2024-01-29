@@ -38,6 +38,7 @@ import diamondImage from "./diamond.png";
 import warningIcon from "./warningIcon.png";
 import coverPhoto from "./cover-photo.png";
 import cameraIcon from "./camera-icon.png";
+import featuredRevert from "./featured-revert.png";
 
 export {
   jetskiIcon,
@@ -80,4 +81,5 @@ export {
   warningIcon,
   coverPhoto,
   cameraIcon,
+  featuredRevert,
 };

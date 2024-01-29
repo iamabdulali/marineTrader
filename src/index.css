@@ -84,3 +84,24 @@ code {
   background-color: #0c1673 !important;
   color: #fff;
 }
+
+.slick-next.slick-next {
+  right: 1em;
+  z-index: 1;
+  transform: translate(-1.1rem, -50%);
+}
+
+.slick-prev.slick-prev {
+  left: 1em;
+  z-index: 1;
+  transform: translate(0.5rem, -50%);
+}
+
+.slick-prev:before,
+.slick-next:before {
+  font-size: 2rem !important;
+}
+
+.custom-shadow {
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 15px;
+}

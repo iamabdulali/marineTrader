@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import BuildLayout from "./BuildLayout";
 import { ErrorMessage, Field } from "formik";
-import { FaTimes } from "react-icons/fa";
 import { TagsInput } from "../TagsInput";
 
 const NotesSteps4 = () => {
