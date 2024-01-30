@@ -8,6 +8,7 @@ export const FormField = ({
   FieldType,
   className,
   value,
+  as,
 }) => (
   <div className="mb-4 w-full text-sm">
     {inputField ? (
@@ -19,6 +20,7 @@ export const FormField = ({
           {label}
         </label>{" "}
         <Field
+          as={as}
           type={FieldType}
           name={name}
           onClick={onClick}

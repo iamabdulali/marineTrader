@@ -333,3 +333,87 @@ export const newsData = [
     thumbnail: base,
   },
 ];
+
+export const StandardTrade = [
+  {
+    id: 1,
+    featureName: "Cheaper advert costs",
+    standOut: false,
+  },
+];
+
+export const DealerPlus = [
+  {
+    id: 1,
+    featureName: "Picture Gallery",
+    standOut: false,
+  },
+  {
+    id: 2,
+    featureName: "Virtual Showroom",
+    standOut: false,
+  },
+  {
+    id: 3,
+    featureName: "Customer Reviews",
+    standOut: false,
+  },
+  {
+    id: 4,
+    featureName: "Website Link",
+    standOut: false,
+  },
+  {
+    id: 5,
+    featureName: "3x Listings in Business Plus+ Directory",
+    standOut: false,
+  },
+  {
+    id: 6,
+    featureName: "15 PREMIUM Adverts per Month",
+    standOut: true,
+  },
+  {
+    id: 7,
+    featureName: "Enables Promotional Discount Offers",
+    standOut: false,
+  },
+];
+
+export const ServicePlus = [
+  {
+    id: 1,
+    featureName: "Company Profile",
+    standOut: false,
+  },
+  {
+    id: 2,
+    featureName: "Picture Gallery",
+    standOut: false,
+  },
+  {
+    id: 3,
+    featureName: "Customer Reviews",
+    standOut: false,
+  },
+  {
+    id: 4,
+    featureName: "Website Link",
+    standOut: false,
+  },
+  {
+    id: 5,
+    featureName: "3x Listings in Business Plus+ Directory",
+    standOut: false,
+  },
+  {
+    id: 6,
+    featureName: "Access to list in News and Events",
+    standOut: false,
+  },
+  {
+    id: 7,
+    featureName: "Enables Promotional Discount Offers",
+    standOut: false,
+  },
+];
