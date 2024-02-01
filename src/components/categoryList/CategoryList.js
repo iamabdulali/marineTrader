@@ -25,16 +25,19 @@ const CategoryList = ({
     "Rib",
     "Non-Motor",
   ],
-  // categories,
   onCategoryClick,
   className,
   activeCategory,
   unActiveCategory,
   onCategoryChange,
   defaultSelectedCategory,
+  multiSelect = false, // Introduce multiSelect prop
 }) => {
-  const [selectedCategory, setSelectedCategory] = useState(
-    defaultSelectedCategory || (categories.length > 0 ? categories[0] : null)
+  const [selectedCategories, setSelectedCategories] = useState(
+    multiSelect
+      ? defaultSelectedCategory || []
+      : defaultSelectedCategory ||
+          (categories.length > 0 ? [categories[0]] : [])
   );
 
   const categoryIcons = {
@@ -50,13 +53,25 @@ const CategoryList = ({
   };
 
   const handleCategoryClick = (category) => {
-    setSelectedCategory(category);
-    onCategoryChange(category);
-    onCategoryClick(category);
+    let newSelectedCategories;
+
+    if (multiSelect) {
+      // Toggle selection for multiple categories
+      newSelectedCategories = selectedCategories.includes(category)
+        ? selectedCategories.filter((c) => c !== category)
+        : [...selectedCategories, category];
+    } else {
+      // Select a single category
+      newSelectedCategories = category;
+    }
+
+    setSelectedCategories(newSelectedCategories);
+    onCategoryChange(newSelectedCategories);
+    onCategoryClick(newSelectedCategories);
   };
 
   const getCategoryIcon = (category) => {
-    const isSelected = category === selectedCategory;
+    const isSelected = selectedCategories.includes(category);
     const strokeColor = isSelected ? "#0D1A8B" : "#8891B2";
     const beforeInjection = (svg) => {
       const paths = svg.querySelectorAll("path");
@@ -80,7 +95,7 @@ const CategoryList = ({
           key={category}
           onClick={() => handleCategoryClick(category)}
           className={`category-item cursor-pointer ${
-            category === selectedCategory
+            selectedCategories.includes(category)
               ? `${activeCategory}`
               : `${unActiveCategory}`
           }`}

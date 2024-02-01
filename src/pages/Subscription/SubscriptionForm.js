@@ -1,64 +1,33 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import Layout from "../../components/Layout/Layout";
 import ProgressSteps from "../../components/ProgressSteps";
 import SelectCategoryStep1 from "../../components/BuildAdSteps/SelectCategoryStep1";
 import { Formik, Form } from "formik";
-import ItemDescriptionStep2 from "../../components/BuildAdSteps/ItemDescriptionStep2";
-import ItemFeaturesStep3 from "../../components/BuildAdSteps/ItemFeaturesStep3";
-import NotesSteps4 from "../../components/BuildAdSteps/NotesSteps4";
-import PriceStep6 from "../../components/BuildAdSteps/PriceStep6";
-import GalleryStep5 from "../../components/BuildAdSteps/GalleryStep5";
-import {
-  buildAdValidationSchema,
-  imageValidationSchema,
-} from "../../utils/ValidationSchema";
-import { AuthContext } from "../../Context/AuthContext";
+import SubscriptionStep2 from "./SubscriptionStep2";
+import SubscriptionStep3 from "./SubscriptionStep3";
+import SubscriptionStep4 from "./SubscriptionStep4";
 
-const BuildAd = () => {
+const Subscription = () => {
   const [step, setStep] = useState(1);
+  const multiSelect = true;
 
-  const [selectedCategory, setSelectedCategory] = useState("Jet Skis");
+  const [selectedCategory, setSelectedCategory] = useState([]);
   const stepLabels = [
     "Category",
-    "Description",
-    "Features",
-    "Notes",
-    "Gallery",
-    "Price",
+    "Subscriptions",
+    "Company Info",
+    "Summary",
+    "Payment",
+    "Complete",
   ];
 
   const handleCategoryChange = (category, setFieldValue) => {
     setSelectedCategory(category);
-    setFieldValue("boatName", category);
+    setFieldValue("categories", category);
+    console.log(category);
   };
   const initialValues = {
-    boatName: "",
-    title: "",
-    subtitle: "",
-    make: "",
-    modal: "",
-    year: "",
-    condition: "",
-    color: "",
-    serviceHistory: "",
-    passenger: "",
-    length: "",
-    hours: "",
-    trailers: "",
-    modification: [],
-    feature: "",
-    convenience: "",
-    accessories: "",
-    description: "",
-    tags: [],
-    buildAdImages: [],
-    buildAdVideo: [],
-    priceOnInformation: "",
-    currency: "",
-    price: "",
-    facilities: [],
-    packageName: "",
-    countries: [],
+    categories: [],
   };
   const prevStep = () => setStep(step - 1);
   const nextStep = () => setStep(step + 1);
@@ -66,45 +35,30 @@ const BuildAd = () => {
   // const nextStep = (values, { setTouched, setErrors }) => {
   //   try {
   //     // Validate only the fields for steps 2 to 6
-  //     if (step > 1) {
-  //       const fieldsToValidate = Object.keys(
-  //         buildAdValidationSchema.fields
-  //       ).filter((field) => {
-  //         if (step === 2) {
-  //           return [
-  //             "title",
-  //             "subtitle",
-  //             "make",
-  //             "model",
-  //             "year",
-  //             "condition",
-  //             "color",
-  //             "serviceHistory",
-  //             "passenger",
-  //             "length",
-  //             "hours",
-  //             "trailers",
-  //           ].includes(field);
-  //         } else if (step === 3) {
-  //           return [
-  //             "modification",
-  //             "feature",
-  //             "convenience",
-  //             "accessories",
-  //           ].includes(field);
-  //         } else if (step === 4) {
-  //           return ["description", "tags"].includes(field);
-  //         } else if (step === 5) {
-  //           return ["buildAdImages", "buildAdVideo"].includes(field);
-  //         } else if (step === 6) {
-  //           return ["currency", "price"].includes(field);
-  //         }
-  //         return true; // Include all fields if not in a specific step
-  //       });
+  //     if (step > 2) {
+  //       const fieldsToValidate = Object
+  //         .keys
+  //         // buildAdValidationSchema.fields
+  //         ()
+  //         .filter((field) => {
+  //           if (step === 2) {
+  //             return ["title"].includes(field);
+  //           } else if (step === 3) {
+  //             return ["modification"].includes(field);
+  //           } else if (step === 4) {
+  //             return ["description", "tags"].includes(field);
+  //           } else if (step === 5) {
+  //             return ["buildAdImages", "buildAdVideo"].includes(field);
+  //           } else if (step === 6) {
+  //             return ["currency", "price"].includes(field);
+  //           }
+  //           return true; // Include all fields if not in a specific step
+  //         });
 
-  //       buildAdValidationSchema.pick(fieldsToValidate).validateSync(values, {
-  //         abortEarly: false,
-  //       });
+  //       // buildAdValidationSchema.pick(fieldsToValidate).validateSync(values, {
+  //       //   abortEarly: false,
+  //       // }
+  //       // );
   //     }
 
   //     // Increment the step
@@ -137,9 +91,6 @@ const BuildAd = () => {
   };
   return (
     <Layout>
-      <p className="rounded-lg shadow-[7px] bg-white font-semibold py-5 px-7">
-        Build Your Ad
-      </p>
       <ProgressSteps
         className="mt-7"
         totalSteps={stepLabels.length}
@@ -163,19 +114,17 @@ const BuildAd = () => {
             {" "}
             {step === 1 && (
               <SelectCategoryStep1
-                multiSelect={false}
+                multiSelect={true}
                 categoryChange={(category) =>
                   handleCategoryChange(category, setFieldValue)
                 }
               />
             )}
-            {step === 2 && <ItemDescriptionStep2 />}
-            {step === 3 && <ItemFeaturesStep3 />}
-            {step === 4 && <NotesSteps4 />}
-            {step === 5 && <GalleryStep5 />}
-            {step === 6 && (
-              <PriceStep6 values={values} setFieldValue={setFieldValue} />
-            )}
+            {step === 2 && <SubscriptionStep2 />}
+            {step === 3 && <SubscriptionStep3 />}
+            {step === 4 && <SubscriptionStep4 />}
+            {step === 5 && {}}
+            {step === 6 && {}}
             {/* Navigation buttons */}
             <div className="flex align-center justify-between mt-10">
               <div>
@@ -184,12 +133,6 @@ const BuildAd = () => {
                   className="bg-white border-2 border-[#8891B2] text-[#8891B2] p-3 rounded-md w-28 text-sm font-medium mr-5"
                 >
                   Cancel
-                </button>
-                <button
-                  type="button"
-                  className="bg-white border-2 border-[#0D1A8B] text-[#0D1A8B] font-medium p-3 rounded-md text-sm"
-                >
-                  Save To Draft
                 </button>
               </div>
               <div className="text-right mr-8">
@@ -231,4 +174,4 @@ const BuildAd = () => {
   );
 };
 
-export default BuildAd;
+export default Subscription;

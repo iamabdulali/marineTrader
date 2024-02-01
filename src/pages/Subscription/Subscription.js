@@ -1,170 +1,37 @@
-import React, { useState } from "react";
+import React from "react";
 import Layout from "../../components/Layout/Layout";
-import ProgressSteps from "../../components/ProgressSteps";
-import SelectCategoryStep1 from "../../components/BuildAdSteps/SelectCategoryStep1";
-import { Formik, Form } from "formik";
-import SubscriptionStep2 from "./SubscriptionStep2";
-import CompanyInfo from "./CompanyInfo";
+import CategoryList from "../../components/categoryList/CategoryList";
+import Heading from "../../components/Heading";
+import { Link } from "react-router-dom";
+import CurrentSubscription from "../../components/Subscriptions/CurrentSubscription";
+import { ServicePlus } from "../../utils/DummyData";
 
 const Subscription = () => {
-  const [step, setStep] = useState(1);
-
-  const [selectedCategory, setSelectedCategory] = useState("Jet Skis");
-  const stepLabels = [
-    "Category",
-    "Subscriptions",
-    "Company Info",
-    "Summary",
-    "Payment",
-    "Complete",
-  ];
-
-  // const handleCategoryChange = (category, setFieldValue) => {
-  //   setSelectedCategory(category);
-  //   setFieldValue("boatName", category);
-  // };
-  const initialValues = {
-    boatName: "",
-  };
-  const prevStep = () => setStep(step - 1);
-
-  const nextStep = (values, { setTouched, setErrors }) => {
-    try {
-      // Validate only the fields for steps 2 to 6
-      if (step > 2) {
-        const fieldsToValidate = Object
-          .keys
-          // buildAdValidationSchema.fields
-          ()
-          .filter((field) => {
-            if (step === 2) {
-              return ["title"].includes(field);
-            } else if (step === 3) {
-              return ["modification"].includes(field);
-            } else if (step === 4) {
-              return ["description", "tags"].includes(field);
-            } else if (step === 5) {
-              return ["buildAdImages", "buildAdVideo"].includes(field);
-            } else if (step === 6) {
-              return ["currency", "price"].includes(field);
-            }
-            return true; // Include all fields if not in a specific step
-          });
-
-        // buildAdValidationSchema.pick(fieldsToValidate).validateSync(values, {
-        //   abortEarly: false,
-        // }
-        // );
-      }
-
-      // Increment the step
-      setStep((prevStep) => prevStep + 1);
-    } catch (error) {
-      if (error.name === "ValidationError") {
-        console.error("Validation errors:", error.errors);
-
-        const allFields = Object.keys(values);
-        const touchedState = allFields.reduce((acc, field) => {
-          acc[field] = true;
-          return acc;
-        }, {});
-        setTouched(touchedState);
-
-        const errorState = error.errors.reduce((acc, error) => {
-          acc[error.path] = error.message;
-          return acc;
-        }, {});
-        setErrors(errorState);
-      } else {
-        console.error("Error:", error.message);
-      }
-    }
-  };
-
-  const handleSubmit = async (values, { setSubmitting }) => {
-    // alert(JSON.stringify(values));
-    console.log(values);
-  };
   return (
     <Layout>
-      <ProgressSteps
-        className="mt-7"
-        totalSteps={stepLabels.length}
-        currentStep={step}
-        stepLabels={stepLabels}
+      <div className="flex items-center justify-between">
+        <Heading content="Subscriptions" />
+        <Link
+          to={"/subscriptions/buySubscription"}
+          className="flex items-center text-sm gap-2 bg-[#0D1A8B] text-white py-3 px-5 font-medium rounded-md"
+        >
+          Buy New Subscription
+        </Link>
+      </div>
+      <p className="font-semibold text-sm text-[#11133D] mb-3">
+        Select A Category
+      </p>
+      <CategoryList
+        className="flex lg:w-full min-h-[80px] justify-between px-4 bg-white border-2 rounded-lg border-[#D9DFF5] w-[1300px]"
+        activeCategory="border-b-4 border-[#0D1A8B] py-3"
+        unActiveCategory="py-3"
+        onCategoryChange={() => {}}
+        onCategoryClick={() => {}}
       />
-      <Formik
-        initialValues={initialValues}
-        // validationSchema={buildAdValidationSchema}
-        onSubmit={handleSubmit}
-      >
-        {({
-          isSubmitting,
-          isValid,
-          values,
-          setErrors,
-          setTouched,
-          setFieldValue,
-        }) => (
-          <Form>
-            {" "}
-            {step === 1 && (
-              <SelectCategoryStep1
-              // onCategoryChange={(category) =>
-              //   handleCategoryChange(category, setFieldValue)
-              // }
-              />
-            )}
-            {step === 2 && <SubscriptionStep2 />}
-            {step === 3 && <CompanyInfo />}
-            {step === 4 && {}}
-            {step === 5 && {}}
-            {step === 6 && {}}
-            {/* Navigation buttons */}
-            <div className="flex align-center justify-between mt-10">
-              <div>
-                <button
-                  type="button"
-                  className="bg-white border-2 border-[#8891B2] text-[#8891B2] p-3 rounded-md w-28 text-sm font-medium mr-5"
-                >
-                  Cancel
-                </button>
-              </div>
-              <div className="text-right mr-8">
-                {step > 1 && (
-                  <button
-                    type="button"
-                    onClick={prevStep}
-                    className="bg-[#8891B2] text-white p-3 rounded-md w-28 mr-5"
-                  >
-                    Back
-                  </button>
-                )}
-
-                {step < 6 ? (
-                  <button
-                    type="button"
-                    onClick={() => nextStep(values, { setTouched, setErrors })}
-                    className={`bg-[#0D1A8B] text-white p-3 rounded-md w-28`}
-                  >
-                    Next
-                  </button>
-                ) : (
-                  <button
-                    type="submit"
-                    disabled={!isValid}
-                    className={`bg-[#0D1A8B] text-white p-3 rounded-md w-28  ${
-                      isValid ? "opacity-100" : "opacity-70"
-                    }`}
-                  >
-                    List Item
-                  </button>
-                )}
-              </div>
-            </div>
-          </Form>
-        )}
-      </Formik>
+      <p className="font-semibold text-[#11133D] my-5">
+        Subscription For Jet Ski's
+      </p>
+      <CurrentSubscription isStandard={true} featuresArray={ServicePlus} />
     </Layout>
   );
 };

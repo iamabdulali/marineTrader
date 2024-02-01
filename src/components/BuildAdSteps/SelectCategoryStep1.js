@@ -3,7 +3,7 @@ import CategoryLists from "../categoryList/CategoryList";
 import BuildLayout from "./BuildLayout";
 import { AuthContext } from "../../Context/AuthContext";
 
-const SelectCategoryStep1 = () => {
+const SelectCategoryStep1 = ({ categoryChange, multiSelect }) => {
   const { selectedCategory, dispatch } = useContext(AuthContext);
 
   const onCategoryChange = (category) => {
@@ -19,8 +19,9 @@ const SelectCategoryStep1 = () => {
           activeCategory="border-2 px-11 py-6 rounded-lg border-[#0D1A8B] bg-[#EFF0FF]"
           unActiveCategory="border-2 px-11 py-6 rounded-lg border-[#D9DFF5]"
           onCategoryChange={onCategoryChange}
-          onCategoryClick={onCategoryChange}
+          onCategoryClick={categoryChange}
           defaultSelectedCategory={selectedCategory}
+          multiSelect={multiSelect}
         />
       </BuildLayout>
     </>

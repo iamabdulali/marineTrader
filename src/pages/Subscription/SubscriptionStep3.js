@@ -10,7 +10,7 @@ import {
 import { ErrorMessage, Field } from "formik";
 import { FaChevronCircleDown } from "react-icons/fa";
 
-const CompanyInfo = () => {
+const SubscriptionStep3 = () => {
   const className =
     "border-[#CECED7] text-[#8891B2] text-sm rounded-md p-3 border-2 w-full";
   return (
@@ -160,4 +160,4 @@ const CompanyInfo = () => {
   );
 };
 
-export default CompanyInfo;
+export default SubscriptionStep3;

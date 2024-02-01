@@ -23,6 +23,7 @@ import News from "./pages/News/News";
 import Events from "./pages/Events/Events";
 import UserInfo from "./pages/UserProfile/UserProfile";
 import ListPage from "./pages/ListPage/ListPage";
+import SubscriptionForm from "./pages/Subscription/SubscriptionForm";
 
 function App() {
   return (
@@ -43,6 +44,10 @@ function App() {
         <Route path="/selling/buildAd" element={<BuildAd />} />
         <Route path="/directory" element={<Directory />} />
         <Route path="/subscriptions" element={<Subscription />} />
+        <Route
+          path="/subscriptions/buySubscription"
+          element={<SubscriptionForm />}
+        />
         <Route path="/news" element={<News />} />
         <Route path="/events" element={<Events />} />
 

@@ -39,12 +39,12 @@ const Subscriptions = ({
       <div className="mt-8 min-h-80">
         {featuresArray.map(({ id, featureName, standOut }) => {
           return (
-            <p key={id} className="flex gap-4 font-medium mt-5">
+            <div key={id} className="flex gap-4 font-medium mt-5">
               <p className="bg-[#e1f4ec] rounded-full  h-6 w-6 flex items-center justify-center">
                 <FaCheck color="#36B37E" size={10} />
               </p>
               {featureName}
-            </p>
+            </div>
           );
         })}
       </div>

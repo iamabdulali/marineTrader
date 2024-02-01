@@ -39,6 +39,7 @@ import warningIcon from "./warningIcon.png";
 import coverPhoto from "./cover-photo.png";
 import cameraIcon from "./camera-icon.png";
 import featuredRevert from "./featured-revert.png";
+import jetSkiText from "./jetski-text.png";
 
 export {
   jetskiIcon,
@@ -82,4 +83,5 @@ export {
   coverPhoto,
   cameraIcon,
   featuredRevert,
+  jetSkiText,
 };
