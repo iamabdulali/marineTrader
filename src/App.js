@@ -24,6 +24,9 @@ import Events from "./pages/Events/Events";
 import UserInfo from "./pages/UserProfile/UserProfile";
 import ListPage from "./pages/ListPage/ListPage";
 import SubscriptionForm from "./pages/Subscription/SubscriptionForm";
+import ItemDetailPage from "./pages/ItemsDetailPage/ItemDetailPage";
+import SwiperSlider from "./pages/ItemsDetailPage/SwiperSlider";
+import "swiper/swiper-bundle.css";
 
 function App() {
   return (
@@ -31,7 +34,9 @@ function App() {
       {/* <Header/> */}
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/slider" element={<SwiperSlider />} />
         <Route path="/list" element={<ListPage />} />
+        <Route path="/itemDetails" element={<ItemDetailPage />} />
         <Route path="/userProfile" element={<UserInfo />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Registration />} />

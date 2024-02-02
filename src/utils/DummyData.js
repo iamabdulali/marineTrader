@@ -7,6 +7,13 @@ import {
   jetski2,
   jetski3d,
   purpleNotification,
+  sliderImage,
+  thumb1,
+  thumb2,
+  thumb3,
+  thumb4,
+  thumb5,
+  thumb6,
   warning,
 } from "../assets";
 
@@ -415,5 +422,45 @@ export const ServicePlus = [
     id: 7,
     featureName: "Enables Promotional Discount Offers",
     standOut: false,
+  },
+];
+
+export const AfroStyles = [
+  {
+    id: 1,
+    title: "Model 1",
+    alt: "First Image",
+    src: sliderImage,
+  },
+  {
+    id: 2,
+    title: "Model 2",
+
+    alt: "Second Image",
+    src: thumb2,
+  },
+  {
+    id: 3,
+    title: "Model 3",
+    alt: "Third Image",
+    src: thumb3,
+  },
+  {
+    id: 4,
+    title: "Model 4",
+    alt: "Forth Image",
+    src: thumb4,
+  },
+  {
+    id: 5,
+    title: "Model 5",
+    alt: "Fifth Image",
+    src: thumb5,
+  },
+  {
+    id: 6,
+    title: "Model 6",
+    alt: "Sixth Image",
+    src: thumb6,
   },
 ];

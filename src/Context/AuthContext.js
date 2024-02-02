@@ -9,7 +9,7 @@ export const authReducer = (state, action) => {
       return { ...state, user: action.payload };
     case "LOGOUT":
       return { user: null };
-    case "UPDATE_SELECTED_CATEGORY":
+    case "UPDATE_SELECTED_CATEGORY_BUILD_AD":
       return { ...state, selectedCategory: action.payload };
     case "ADD_TAG":
       return { ...state, listingTags: [...state.listingTags, action.payload] };

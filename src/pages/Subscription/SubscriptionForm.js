@@ -12,6 +12,7 @@ const Subscription = () => {
   const multiSelect = true;
 
   const [selectedCategory, setSelectedCategory] = useState([]);
+
   const stepLabels = [
     "Category",
     "Subscriptions",

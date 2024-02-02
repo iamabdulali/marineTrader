@@ -40,6 +40,13 @@ import coverPhoto from "./cover-photo.png";
 import cameraIcon from "./camera-icon.png";
 import featuredRevert from "./featured-revert.png";
 import jetSkiText from "./jetski-text.png";
+import sliderImage from "./slider-image.png";
+import thumb1 from "./thumb1.png";
+import thumb2 from "./thumb2.png";
+import thumb3 from "./thumb3.png";
+import thumb4 from "./thumb4.png";
+import thumb5 from "./thumb5.png";
+import thumb6 from "./thumb6.png";
 
 export {
   jetskiIcon,
@@ -84,4 +91,11 @@ export {
   cameraIcon,
   featuredRevert,
   jetSkiText,
+  sliderImage,
+  thumb1,
+  thumb2,
+  thumb3,
+  thumb4,
+  thumb5,
+  thumb6,
 };

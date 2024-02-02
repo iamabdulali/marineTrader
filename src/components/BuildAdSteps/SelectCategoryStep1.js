@@ -8,7 +8,7 @@ const SelectCategoryStep1 = ({ categoryChange, multiSelect }) => {
 
   const onCategoryChange = (category) => {
     // Update selected category in the authentication context
-    dispatch({ type: "UPDATE_SELECTED_CATEGORY", payload: category });
+    dispatch({ type: "UPDATE_SELECTED_CATEGORY_BUILD_AD", payload: category });
   };
 
   return (

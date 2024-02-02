@@ -5,7 +5,7 @@ import BuyerLayout from "../../components/BuyerLayout/BuyerLayout";
 
 const HomePage = () => {
   return (
-    <BuyerLayout>
+    <BuyerLayout showCategoryList={true}>
       <HeroSection />
       <SpotLight />
     </BuyerLayout>

@@ -30,7 +30,7 @@ const ListPage = () => {
     sellerInfo: true,
   };
   return (
-    <BuyerLayout>
+    <BuyerLayout showCategoryList={true}>
       <div className="px-24">
         <SearchFilter />
         <div className="flex items-center justify-between mb-8">

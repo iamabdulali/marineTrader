@@ -85,7 +85,7 @@ code {
   color: #fff;
 }
 
-.slick-next.slick-next {
+/* .slick-next.slick-next {
   right: 1em;
   z-index: 1;
   transform: translate(-1.1rem, -50%);
@@ -104,4 +104,4 @@ code {
 
 .custom-shadow {
   box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 15px;
-}
+} */
