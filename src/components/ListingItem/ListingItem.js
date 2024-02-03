@@ -5,6 +5,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import {
   FaCalendarAlt,
+  FaChevronLeft,
+  FaChevronRight,
   FaCog,
   FaEnvelope,
   FaHeart,
@@ -31,6 +33,8 @@ const ListingItem = ({ itemData }) => {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
+    nextArrow: <FaChevronRight color="#fff" size={30} />,
+    prevArrow: <FaChevronLeft color="#fff" size={60} />,
   };
 
   return (
@@ -44,7 +48,7 @@ const ListingItem = ({ itemData }) => {
       >
         <div className={`flex  gap-5 `}>
           <div className="w-2/12 relative">
-            <Slider {...sliderSettings}>
+            <Slider {...sliderSettings} className="list-slider">
               <img
                 className="rounded-lg min-h-56 max-h-56 object-cover"
                 src={require("../../assets/jetski-3.png")}

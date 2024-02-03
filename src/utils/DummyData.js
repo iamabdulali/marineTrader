@@ -316,6 +316,36 @@ export const SpotLightListingsData = [
     isFeatured: false,
   },
 ];
+export const SpotLightListingsData2 = [
+  {
+    id: 1,
+    listingType: "Yacht",
+    listingName: "Princess 72 Elite",
+    listingPrice: "£55000000",
+    isFeatured: true,
+  },
+  {
+    id: 2,
+    listingType: "Sailboat",
+    listingName: "Oceanis 45",
+    listingPrice: "£250000",
+    isFeatured: false,
+  },
+  {
+    id: 3,
+    listingType: "Motorboat",
+    listingName: "Sunseeker Predator 57",
+    listingPrice: "£1200000",
+    isFeatured: true,
+  },
+  {
+    id: 4,
+    listingType: "Catamaran",
+    listingName: "Lagoon 450 F",
+    listingPrice: "£500000",
+    isFeatured: false,
+  },
+];
 
 export const newsData = [
   {
@@ -437,30 +467,30 @@ export const AfroStyles = [
     title: "Model 2",
 
     alt: "Second Image",
-    src: thumb2,
+    src: "https://images.unsplash.com/photo-1564633351631-e85bd59a91af?q=80&w=2048&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
   {
     id: 3,
     title: "Model 3",
     alt: "Third Image",
-    src: thumb3,
+    src: "https://images.unsplash.com/photo-1574863226228-0f7ad00fcfe0?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
   {
     id: 4,
     title: "Model 4",
     alt: "Forth Image",
-    src: thumb4,
+    src: "https://images.unsplash.com/photo-1635068255660-22c0cecdb922?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
   {
     id: 5,
     title: "Model 5",
     alt: "Fifth Image",
-    src: thumb5,
+    src: "https://images.unsplash.com/photo-1567709042753-4562f9928608?q=80&w=1931&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
   {
     id: 6,
     title: "Model 6",
     alt: "Sixth Image",
-    src: thumb6,
+    src: "https://images.unsplash.com/photo-1638100191048-33f8e6d07505?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
 ];

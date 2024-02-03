@@ -4,12 +4,30 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { AfroStyles } from "../../utils/DummyData";
-import { FaChevronCircleLeft, FaChevronCircleRight } from "react-icons/fa";
+import {
+  FaChevronCircleLeft,
+  FaChevronCircleRight,
+  FaChevronLeft,
+  FaChevronRight,
+  FaTimesCircle,
+} from "react-icons/fa";
 
 const SwiperSlider = () => {
   const [nav1, setNav1] = useState(null);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [slider1, setSlider1] = useState(null);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [modalIndex, setModalIndex] = useState(0);
+
+  const openModal = (index) => {
+    setModalIndex(index);
+    setModalIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
+
   useEffect(() => {
     setNav1(slider1);
   }, [slider1]);
@@ -23,8 +41,8 @@ const SwiperSlider = () => {
     autoplaySpeed: 1000,
     lazyLoad: true,
     asNavFor: ".slider-nav",
-    nextArrow: <FaChevronCircleRight color="#fff" size={30} />,
-    prevArrow: <FaChevronCircleLeft color="#fff" size={30} />,
+    nextArrow: <FaChevronRight color="#fff" />,
+    prevArrow: <FaChevronLeft color="#fff" />,
     responsive: [
       {
         breakpoint: 1024,
@@ -46,24 +64,28 @@ const SwiperSlider = () => {
     slidesToShow: 6,
     slidesToScroll: 1,
     infinite: false,
-    gap: 30,
   };
 
   return (
-    <>
+    <div className="relative">
       <div className="mt-3">
         <Slider
+          className="main-slider"
           {...settings}
           asNavFor={nav1}
           ref={(slider) => setSlider1(slider)}
         >
-          {AfroStyles.map((item) => (
-            <div key={item.id} className="max-h-[560px]">
+          {AfroStyles.map((item, idx) => (
+            <div
+              key={item.id}
+              className="max-h-[560px]"
+              onClick={() => openModal(idx)}
+            >
               <img className="w-full" src={item.src} alt={item.alt} />
             </div>
           ))}
         </Slider>
-        <Slider {...thumbSetting} className="mt-4">
+        <Slider {...thumbSetting} className="mt-4 thumb-slider">
           {AfroStyles.map((item, idx) => (
             <div
               key={item.id}
@@ -80,7 +102,37 @@ const SwiperSlider = () => {
           ))}
         </Slider>
       </div>
-    </>
+      {modalIsOpen && (
+        <div className="modal-overlay fixed z-[9999999] flex flex-col justify-center px-24 left-0 right-0 bg-black bg-opacity-85 top-0 bottom-0">
+          <div className="modal-content h-[95vh] overflow-hidden">
+            <Slider
+              {...settings}
+              className="modal-slider"
+              slidesToShow={1}
+              slidesToScroll={1}
+              infinite={false}
+              initialSlide={modalIndex}
+            >
+              {AfroStyles.map((item) => (
+                <div key={item.id}>
+                  <img
+                    className="w-full min-h-[95vh] object-contain"
+                    src={item.src}
+                    alt={item.alt}
+                  />
+                </div>
+              ))}
+            </Slider>
+            <button
+              onClick={closeModal}
+              className="absolute top-5 right-10 z-[99999999999] "
+            >
+              <FaTimesCircle color="#fff" size={35} />
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
   );
 };
 

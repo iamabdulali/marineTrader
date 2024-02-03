@@ -1,57 +1,57 @@
 import React, { useState } from "react";
 import BuyerLayout from "../../components/BuyerLayout/BuyerLayout";
-import { FaArrowLeft, FaHeart, FaShare } from "react-icons/fa";
-import { Link } from "react-router-dom";
 import {
-  sliderImage,
-  thumb1,
-  thumb2,
-  thumb3,
-  thumb4,
-  thumb5,
-  thumb6,
-} from "../../assets";
+  FaArrowLeft,
+  FaClipboardList,
+  FaHeart,
+  FaSearch,
+  FaShare,
+  FaVideo,
+} from "react-icons/fa";
+import { Link } from "react-router-dom";
+
 import SwiperSlider from "./SwiperSlider";
 import Tabs from "../../components/Tabs";
-import CompanyInfo from "../UserProfile/CompanyInfo";
-import BusinessDetails from "../UserProfile/BusinessDetails";
-import ContactPersonDetails from "../UserProfile/ContactPersonDetails";
+import ItemOverview from "./ItemOverview";
+import Specifications from "./Specifications";
+import ItemVideos from "./ItemVideos";
+
+import HomeHeading from "../../components/HomeHeading";
+import { SpotLightListingsData2 } from "../../utils/DummyData";
+import SpotLightListings from "../../components/SpotLightListings/SpotLightListings";
+import MakeOfferSection from "./MakeOfferSection";
 
 const ItemDetailPage = () => {
-  const [selectedTab, setSelectedTab] = useState("companyInfo");
+  const [selectedTab, setSelectedTab] = useState("itemOverview");
 
   const tabs = [
-    { id: "companyInfo", label: "Company Info" },
-    { id: "businessDetails", label: "Business Details" },
-    { id: "contactPersonDetails", label: "Contact Person Details" },
+    {
+      id: "itemOverview",
+      label: (
+        <div className="flex items-center gap-2 justify-center">
+          <FaClipboardList size={19} /> Overview
+        </div>
+      ),
+    },
+    {
+      id: "specifications",
+      label: (
+        <div className="flex items-center gap-2 justify-center">
+          <FaSearch size={19} /> Specifications
+        </div>
+      ),
+    },
+    {
+      id: "itemVideos",
+      label: (
+        <div className="flex items-center gap-2 justify-center">
+          <FaVideo size={19} /> Videos
+        </div>
+      ),
+    },
   ];
   const handleTabClick = (tab) => {
     setSelectedTab(tab);
-  };
-  const images = [
-    sliderImage,
-    thumb1,
-    thumb2,
-    thumb3,
-    thumb4,
-    thumb5,
-    thumb6,
-    // Add more image URLs as needed
-  ];
-  const [mainSlider, setMainSlider] = useState(0);
-
-  const mainSliderSettings = {
-    onSlideChange: (swiper) => setMainSlider(swiper.activeIndex),
-    spaceBetween: 10,
-    slidesPerView: 1,
-    navigation: true,
-  };
-
-  const thumbSliderSettings = {
-    onSlideChange: (swiper) => setMainSlider(swiper.activeIndex),
-    spaceBetween: 10,
-    slidesPerView: 3,
-    navigation: true,
   };
 
   return (
@@ -73,16 +73,36 @@ const ItemDetailPage = () => {
           Like New Condition
         </p>
         <SwiperSlider />
-        <div className="w-8/12">
-          <Tabs
-            tabs={tabs}
-            selectedTab={selectedTab}
-            handleTabClick={handleTabClick}
-          />
-          <div className="tab-content px-6 py-10">
-            {selectedTab === "companyInfo" && <CompanyInfo />}
-            {selectedTab === "businessDetails" && <BusinessDetails />}
-            {selectedTab === "contactPersonDetails" && <ContactPersonDetails />}
+        <div className="flex gap-6 mt-8 items-start">
+          <div className="w-8/12">
+            <Tabs
+              tabs={tabs}
+              selectedTab={selectedTab}
+              handleTabClick={handleTabClick}
+            />
+            <div className="tab-content px-6 py-10">
+              {selectedTab === "itemOverview" && <ItemOverview />}
+              {selectedTab === "specifications" && <Specifications />}
+              {selectedTab === "itemVideos" && <ItemVideos />}
+            </div>
+          </div>
+          <MakeOfferSection />
+        </div>
+        <div className="mt-28">
+          <HomeHeading heading="You May Also Like" />
+          <div className=" mt-5 grid grid-cols-4 gap-10">
+            {SpotLightListingsData2.map(
+              ({ listingType, listingName, listingPrice, isFeatured, id }) => (
+                <SpotLightListings
+                  id={id}
+                  key={id}
+                  listingType={listingType}
+                  listingName={listingName}
+                  listingPrice={listingPrice}
+                  isFeatured={isFeatured}
+                />
+              )
+            )}
           </div>
         </div>
       </div>
