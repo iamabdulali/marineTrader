@@ -1,18 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import Layout from "../../components/Layout/Layout";
 import CategoryList from "../../components/categoryList/CategoryList";
 import Heading from "../../components/Heading";
 import { Link } from "react-router-dom";
 import CurrentSubscription from "../../components/Subscriptions/CurrentSubscription";
 import { ServicePlus } from "../../utils/DummyData";
+import SubscriptionStep2 from "./SubscriptionStep2";
 
 const Subscription = () => {
+  const [hasSubscription, setHasSubscription] = useState(true);
+  const [category, setCategory] = useState("Jet Ski");
   return (
     <Layout>
       <div className="flex items-center justify-between">
         <Heading content="Subscriptions" />
         <Link
-          to={"/subscriptions/buySubscription"}
+          to={"/subscriptions"}
           className="flex items-center text-sm gap-2 bg-[#0D1A8B] text-white py-3 px-5 font-medium rounded-md"
         >
           Buy New Subscription
@@ -25,13 +28,20 @@ const Subscription = () => {
         className="flex lg:w-full min-h-[80px] justify-between px-4 bg-white border-2 rounded-lg border-[#D9DFF5] w-[1300px]"
         activeCategory="border-b-4 border-[#0D1A8B] py-3"
         unActiveCategory="py-3"
-        onCategoryChange={() => {}}
+        onCategoryChange={(category) => {
+          setHasSubscription(!hasSubscription);
+          setCategory(category);
+        }}
         onCategoryClick={() => {}}
       />
       <p className="font-semibold text-[#11133D] my-5">
-        Subscription For Jet Ski's
+        Subscription For {category}
       </p>
-      <CurrentSubscription isStandard={true} featuresArray={ServicePlus} />
+      {hasSubscription ? (
+        <CurrentSubscription isStandard={true} featuresArray={ServicePlus} />
+      ) : (
+        <SubscriptionStep2 />
+      )}
     </Layout>
   );
 };

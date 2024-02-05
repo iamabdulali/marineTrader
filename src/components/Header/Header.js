@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 const Header = () => {
   const [languageDropdownOpen, setLanguageDropdownOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
-  const [isLogged, setIsLogged] = useState(false);
+  const [isLogged, setIsLogged] = useState(true);
 
   const toggleLanguageDropdown = () => {
     setLanguageDropdownOpen(!languageDropdownOpen);
