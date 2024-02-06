@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Header from "../../components/Header/Header";
 import Footer from "../Footer/Footer";
 import CategoryList from "../categoryList/CategoryList";
+import { AuthContext } from "../../Context/AuthContext";
 
 const BuyerLayout = ({ children, showCategoryList }) => {
-  const [selectedCategory, setSelectedCategory] = useState("Jet Skis");
-  const handleCategoryChange = (category, setFieldValue) => {
-    setSelectedCategory(category);
+  const { selectedCategory, dispatch } = useContext(AuthContext);
+
+  const onCategoryChange = (category) => {
+    // Update selected category in the authentication context
+    dispatch({ type: "UPDATE_SELECTED_CATEGORY_BUILD_AD", payload: category });
   };
 
   return (
@@ -17,8 +20,8 @@ const BuyerLayout = ({ children, showCategoryList }) => {
           className="flex lg:w-full  justify-between px-24 mt-3 mb-6 w-[1300px]"
           activeCategory="border-b-4 border-[#0D1A8B] py-4"
           unActiveCategory="py-4"
-          onCategoryChange={() => handleCategoryChange(selectedCategory)}
-          onCategoryClick={() => handleCategoryChange(selectedCategory)}
+          onCategoryChange={onCategoryChange}
+          onCategoryClick={() => {}}
         />
       ) : (
         ""
