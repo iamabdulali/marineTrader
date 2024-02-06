@@ -6,7 +6,7 @@ import { DealerPlus, ServicePlus, StandardTrade } from "../../utils/DummyData";
 const SubscriptionStep2 = () => {
   return (
     <>
-      <Heading content="Select Subscription Plan" className="mt-14" />
+      <Heading content="Select Subscription Plan" className="mt-8" />
       <div className="flex gap-5 mt-10">
         <Subscriptions
           featuresArray={StandardTrade}

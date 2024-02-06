@@ -9,21 +9,22 @@ import SortDropdown from "../../components/SortDropdown";
 import { sellingHeader } from "../../utils/DummyData";
 import Layout from "../../components/Layout/Layout";
 import CategoryList from "../../components/categoryList/CategoryList";
+import SubscriptionStep2 from "../Subscription/SubscriptionStep2";
 
 export default function Selling() {
   const [hasListing, setHasListing] = useState(true);
-  const [category, setCategory] = useState("Jet Ski");
+  const [category, setCategory] = useState("Jet Skis");
   return (
     <>
       <Layout>
         <div className="flex items-center justify-between">
           <Heading content="Selling" />
-          <Link
+          {/* <Link
             to={"/selling/adsubscription"}
             className="flex items-center text-sm gap-2 bg-[#0D1A8B] text-white py-3 px-5 font-medium rounded-md"
           >
             <FaPlus size={15} /> Create New Listing
-          </Link>
+          </Link> */}
         </div>
 
         <CategoryList
@@ -32,7 +33,7 @@ export default function Selling() {
           unActiveCategory="py-3"
           onCategoryChange={(category) => {
             setCategory(category);
-            setHasListing(!hasListing);
+            setHasListing(category == "Jet Skis" ? true : false);
           }}
           onCategoryClick={() => {}}
         />
@@ -46,9 +47,7 @@ export default function Selling() {
             tableHeader={sellingHeader}
           />
         ) : (
-          <p className="mt-5 flex justify-center">
-            Ops! No Listing for {category}
-          </p>
+          <SubscriptionStep2 />
         )}
       </Layout>
     </>

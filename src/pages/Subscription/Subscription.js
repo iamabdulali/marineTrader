@@ -9,19 +9,19 @@ import SubscriptionStep2 from "./SubscriptionStep2";
 
 const Subscription = () => {
   const [hasSubscription, setHasSubscription] = useState(true);
-  const [category, setCategory] = useState("Jet Ski");
+  const [category, setCategory] = useState("Jet Skis");
   return (
     <Layout>
       <div className="flex items-center justify-between">
         <Heading content="Subscriptions" />
-        <Link
+        {/* <Link
           to={"/subscriptions"}
           className="flex items-center text-sm gap-2 bg-[#0D1A8B] text-white py-3 px-5 font-medium rounded-md"
         >
           Buy New Subscription
-        </Link>
+        </Link> */}
       </div>
-      <p className="font-semibold text-sm text-[#11133D] mb-3">
+      <p className="font-semibold text-sm text-[#11133D] my-3">
         Select A Category
       </p>
       <CategoryList
@@ -29,8 +29,9 @@ const Subscription = () => {
         activeCategory="border-b-4 border-[#0D1A8B] py-3"
         unActiveCategory="py-3"
         onCategoryChange={(category) => {
-          setHasSubscription(!hasSubscription);
+          setHasSubscription(category == "Jet Skis" ? true : false);
           setCategory(category);
+          console.log(category);
         }}
         onCategoryClick={() => {}}
       />
@@ -38,7 +39,7 @@ const Subscription = () => {
         Subscription For {category}
       </p>
       {hasSubscription ? (
-        <CurrentSubscription isStandard={true} featuresArray={ServicePlus} />
+        <CurrentSubscription isStandard={false} featuresArray={ServicePlus} />
       ) : (
         <SubscriptionStep2 />
       )}
