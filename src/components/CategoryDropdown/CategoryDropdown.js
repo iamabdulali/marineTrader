@@ -3,10 +3,19 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { categoryDropdownValidationSchema } from "../../utils/ValidationSchema";
 import { CategorySelectDropdown } from "../CategorySelectDropdown";
 
-const CategoryDropdown = ({ onSubmit }) => {
+const CategoryDropdown = ({ onSubmit, category }) => {
   const handleSubmit = (values) => {
     // Implement your search logic here using the form values
     onSubmit(values);
+  };
+
+  console.log(category);
+
+  const categoryOptions = {
+    "Jet Skis": ["Category1", "Category2", "Category3"],
+    "Boat Home": ["Boat Home1", "Boat Home2", "Boat Home3"],
+
+    // Add more categories and their background images as needed
   };
 
   return (
@@ -33,7 +42,7 @@ const CategoryDropdown = ({ onSubmit }) => {
             <CategorySelectDropdown
               label="Make"
               name="make"
-              options={["Make1", "Make2", "Make3"]}
+              options={categoryOptions[category] || ["Make1", "Make2", "Make3"]}
             />
           </div>
 

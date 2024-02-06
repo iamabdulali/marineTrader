@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import VerticalMenu from "../../components/verticalMenu/VerticalMenu";
 import Header from "../../components/Header/Header";
 import ListingTable from "../../components/Tables/ListingTable";
@@ -11,6 +11,8 @@ import Layout from "../../components/Layout/Layout";
 import CategoryList from "../../components/categoryList/CategoryList";
 
 export default function Selling() {
+  const [hasListing, setHasListing] = useState(true);
+  const [category, setCategory] = useState("Jet Ski");
   return (
     <>
       <Layout>
@@ -28,17 +30,26 @@ export default function Selling() {
           className="flex lg:w-full min-h-[80px] mt-5 justify-between px-4 bg-white border-2 rounded-lg border-[#D9DFF5] w-[1300px]"
           activeCategory="border-b-4 border-[#0D1A8B] py-3"
           unActiveCategory="py-3"
-          onCategoryChange={() => {}}
+          onCategoryChange={(category) => {
+            setCategory(category);
+            setHasListing(!hasListing);
+          }}
           onCategoryClick={() => {}}
         />
 
-        <ListingTable
-          tableFor="Your Listings"
-          hasSort={true}
-          hasPadding={true}
-          sellingListing={true}
-          tableHeader={sellingHeader}
-        />
+        {hasListing ? (
+          <ListingTable
+            tableFor="Your Listings"
+            hasSort={true}
+            hasPadding={true}
+            sellingListing={true}
+            tableHeader={sellingHeader}
+          />
+        ) : (
+          <p className="mt-5 flex justify-center">
+            Ops! No Listing for {category}
+          </p>
+        )}
       </Layout>
     </>
   );

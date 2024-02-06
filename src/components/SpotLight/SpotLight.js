@@ -6,7 +6,12 @@ import { SpotLightListingsData, newsData } from "../../utils/DummyData";
 const SpotLight = () => {
   return (
     <div className="mt-24">
-      <HomeHeading heading="In The Spotlight" buttonText="View All" to="/" />
+      <HomeHeading
+        heading="In The Spotlight"
+        buttonText="View All"
+        to="/"
+        className="px-24"
+      />
       <div className="px-24 mt-5 grid grid-cols-4 gap-10">
         {SpotLightListingsData.map(
           ({ listingType, listingName, listingPrice, isFeatured, id }) => (
@@ -30,7 +35,7 @@ const SpotLight = () => {
         heading="Latest News"
         buttonText="View All"
         to="/"
-        className="mt-16"
+        className="mt-16 px-24"
       />
       <div className="px-24 mt-10 grid grid-cols-3 gap-10">
         {newsData.map(({ id, newsDate, newsTitle, isNews, thumbnail }) => (
