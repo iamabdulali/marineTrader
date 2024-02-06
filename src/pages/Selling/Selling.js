@@ -38,6 +38,10 @@ export default function Selling() {
           onCategoryClick={() => {}}
         />
 
+        <p className="font-semibold text-[#11133D] my-5">
+          Subscription For {category}
+        </p>
+
         {hasListing ? (
           <ListingTable
             tableFor="Your Listings"
@@ -47,7 +51,7 @@ export default function Selling() {
             tableHeader={sellingHeader}
           />
         ) : (
-          <SubscriptionStep2 />
+          <SubscriptionStep2 selectedCategory={category} />
         )}
       </Layout>
     </>

@@ -41,7 +41,7 @@ const Subscription = () => {
       {hasSubscription ? (
         <CurrentSubscription isStandard={false} featuresArray={ServicePlus} />
       ) : (
-        <SubscriptionStep2 />
+        <SubscriptionStep2 selectedCategory={category} />
       )}
     </Layout>
   );

@@ -3,7 +3,22 @@ import Subscriptions from "../../components/Subscriptions/Subscriptions";
 import Heading from "../../components/Heading";
 import { DealerPlus, ServicePlus, StandardTrade } from "../../utils/DummyData";
 
-const SubscriptionStep2 = () => {
+const SubscriptionStep2 = ({ selectedCategory }) => {
+  // Define default values for packageName and price
+  let packageName = "Broker Plus";
+  let price = "£400";
+
+  // Check if the selected category matches any of the specified categories
+  if (
+    selectedCategory === "Jet Skis" ||
+    selectedCategory === "Smallcraft" ||
+    selectedCategory === "Rib" ||
+    selectedCategory === "Non-Motor"
+  ) {
+    packageName = "Dealer Plus";
+    price = "£200";
+  }
+
   return (
     <>
       <Heading content="Select Subscription Plan" className="mt-8" />
@@ -18,8 +33,8 @@ const SubscriptionStep2 = () => {
         />
         <Subscriptions
           featuresArray={DealerPlus}
-          packagePrice="£200"
-          packageName="Dealer Plus"
+          packagePrice={price}
+          packageName={packageName}
           subHeading="/12 months package"
           textColor="text-[#36B37E]"
           borderColor="border-[#36B37E]"

@@ -27,12 +27,14 @@ import SubscriptionForm from "./pages/Subscription/SubscriptionForm";
 import ItemDetailPage from "./pages/ItemsDetailPage/ItemDetailPage";
 import SwiperSlider from "./pages/ItemsDetailPage/SwiperSlider";
 import "swiper/swiper-bundle.css";
+import Example from "./Menu";
 
 function App() {
   return (
     <Router>
       {/* <Header/> */}
       <Routes>
+        <Route path="/example" element={<Example />} />
         <Route path="/" element={<Home />} />
         <Route path="/slider" element={<SwiperSlider />} />
         <Route path="/list" element={<ListPage />} />

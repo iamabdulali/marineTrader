@@ -3,6 +3,7 @@ import { FiSearch, FiEye, FiMoreVertical } from "react-icons/fi";
 import { jetski2, jetski3d } from "../../assets";
 import SortDropdown from "../SortDropdown";
 import { OffersData, listingData, sellingData } from "../../utils/DummyData";
+import Example from "../../Menu";
 
 const ListingTable = ({
   hasSort,
@@ -175,10 +176,14 @@ const ListingTable = ({
                     </div>
                   </td>
                   <td>
-                    <FiMoreVertical
-                      size={20}
-                      cursor="pointer"
-                      color="#0D1A8B"
+                    <Example
+                      buttonToOpenMenu={
+                        <FiMoreVertical
+                          size={20}
+                          cursor="pointer"
+                          color="#0D1A8B"
+                        />
+                      }
                     />
                   </td>
                 </tr>
