@@ -4,7 +4,7 @@ import { Field } from "formik";
 import { CategorySelectDropdown } from "../CategorySelectDropdown";
 import { diamondImage, warningIcon } from "../../assets";
 import { FaArrowRight } from "react-icons/fa";
-import BundlesModal from "./BundlesModal";
+import BundlesModal from "./AdComponents/BundlesModal";
 import { Link } from "react-router-dom";
 import CheckboxGroup from "../CheckboxGroup";
 import SpotlightModal from "./SpotlightModal";
@@ -78,6 +78,11 @@ const PriceStep6 = ({ setFieldValue, values }) => {
               label="Price"
               name="price"
               options={["Price1", "Price2", "Price3"]}
+            />
+            <CategorySelectDropdown
+              label="Tax"
+              name="tax"
+              options={["Tax1", "Tax2", "Tax3"]}
             />
           </div>
         ) : (

@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import {
   FaHome,
   FaStore,
@@ -19,7 +19,10 @@ const VerticalMenu = () => {
       className="w-72 p-4 pb-20 bg-white fixed top-0 bottom-0 overflow-y-scroll text-sm"
     >
       <div className="flex justify-center mb-16">
-        <img src={logo} className="w-28" />
+        <Link to="/">
+          {" "}
+          <img src={logo} className="w-28" />
+        </Link>
       </div>
       <nav>
         <ul>

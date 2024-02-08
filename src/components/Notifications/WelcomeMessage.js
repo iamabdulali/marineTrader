@@ -14,7 +14,7 @@ const WelcomeMessage = ({
         <p className="text-3xl font-semibold">{heading}</p>
         <p className="mt-2">{subHeading}</p>
         <Link
-          to="/selling/adSubscription"
+          to="/selling"
           className="bg-[#FFB800] inline-block text-[#11133D] font-semibold p-3 px-6 mt-7 rounded-xl"
         >
           {buttonText}

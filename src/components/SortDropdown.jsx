@@ -23,10 +23,12 @@ const SortDropdown = () => {
       >
         <p className="text-sm font-semibold flex items-center gap-2 text-[#696E9D]">
           <img src={sortIcon} className="w-6" />
-          Sort By Price:
+          Sort By:
         </p>
         <span className="text-[#696E9D] text-sm ml-2">
-          {selectedOption === "lowToHigh" ? "Low to High" : "High to Low"}
+          {selectedOption === "lowToHigh"
+            ? "Expiry Date Asc"
+            : "Expiry Date Desc"}
         </span>
       </button>
 
@@ -36,13 +38,25 @@ const SortDropdown = () => {
             onClick={() => handleSortOptionClick("lowToHigh")}
             className="block  w-full text-left px-4 py-2 hover:bg-gray-200 focus:outline-none"
           >
-            Low to High
+            Expiry Date Asc
           </button>
           <button
             onClick={() => handleSortOptionClick("highToLow")}
             className="block w-full text-left px-4 py-2 hover:bg-gray-200 focus:outline-none"
           >
-            High to Low
+            Expiry Date Desc
+          </button>
+          <button
+            onClick={() => handleSortOptionClick("lowToHigh")}
+            className="block  w-full text-left px-4 py-2 hover:bg-gray-200 focus:outline-none"
+          >
+            Price Asc
+          </button>
+          <button
+            onClick={() => handleSortOptionClick("highToLow")}
+            className="block w-full text-left px-4 py-2 hover:bg-gray-200 focus:outline-none"
+          >
+            Price Desc
           </button>
         </div>
       )}

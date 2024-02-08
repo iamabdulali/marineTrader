@@ -16,25 +16,27 @@ import Layout from "../../components/Layout/Layout";
 export default function AdSubscription() {
   return (
     <>
-      <Layout>
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <Heading content="Buy Ads" />
-            <div className="flex items-end gap-2 text-sm bg-[#0D1A8B] text-white py-3 px-3 font-medium rounded-md">
-              <img src={star} className="w-5" />
-              <p>Dealer Plus</p>
-            </div>
-          </div>
-          <Link className=" text-sm bg-[#0D1A8B] text-white py-3 px-5 font-medium rounded-md">
-            Renew Subscription
-          </Link>
+      {/* <Layout> */}
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <Heading content="Choose Your Ads" />
+          {/* <div className="flex items-end gap-2 text-sm bg-[#0D1A8B] text-white py-3 px-3 font-medium rounded-md">
+            <img src={star} className="w-5" />
+            <p>Dealer Plus</p>
+          </div> */}
         </div>
-        <p className="text-[#11133D] text-base font-semibold mt-5">
-          Subscriptions For Jet Ski
-        </p>
+        {/* <Link className=" text-sm bg-[#0D1A8B] text-white py-3 px-5 font-medium rounded-md">
+          Renew Subscription
+        </Link> */}
+      </div>
+      {/* <p className="text-[#11133D] text-base font-semibold mt-5">
+        Subscriptions For Jet Ski
+      </p> */}
+
+      <div className="flex gap-8">
         <AdSubscriptionComponent
           packageName="Standard"
-          price="$10.99"
+          price="£10.99"
           buttonText="Get Started"
           text="View Display Results"
           packageHeading="Standard package includes the following."
@@ -44,7 +46,7 @@ export default function AdSubscription() {
         />
         <AdSubscriptionComponent
           packageName="Premium"
-          price="$19.99"
+          price="£19.99"
           buttonText="Get Started"
           text="View Display Results"
           packageHeading="Premium package includes the following."
@@ -54,7 +56,7 @@ export default function AdSubscription() {
         />
         <AdSubscriptionComponent
           packageName="Featured"
-          price="$19.99"
+          price="£19.99"
           buttonText="Get Started"
           text="View Display Results"
           packageHeading="Featured package includes the following."
@@ -62,7 +64,9 @@ export default function AdSubscription() {
           isStandard={false}
           featuresArray={adsubscriptionFeaturedFeatures}
         />
-      </Layout>
+      </div>
+
+      {/* </Layout> */}
     </>
   );
 }

@@ -29,10 +29,10 @@ const CurrentSubscription = ({
         </Link>
       </div>
 
-      <div className="flex justify-between items-center my-3">
+      <div className="flex justify-end items-center my-3">
         <p className="font-semibold text-[#11133D] text-3xl">
           {" "}
-          {isStandard ? "Free" : "$200"}
+          {isStandard ? "Free" : ""}
         </p>
         {isStandard ? (
           ""

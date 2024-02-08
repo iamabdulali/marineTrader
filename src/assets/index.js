@@ -47,6 +47,10 @@ import thumb3 from "./thumb3.png";
 import thumb4 from "./thumb4.png";
 import thumb5 from "./thumb5.png";
 import thumb6 from "./thumb6.png";
+import adsImage from "./ads.png";
+import standardSearchResult from "./Standard.png";
+import premiumSearchResult from "./Premium.png";
+import featuredSearchResult from "./Feature.png";
 
 export {
   jetskiIcon,
@@ -98,4 +102,8 @@ export {
   thumb4,
   thumb5,
   thumb6,
+  adsImage,
+  standardSearchResult,
+  premiumSearchResult,
+  featuredSearchResult,
 };

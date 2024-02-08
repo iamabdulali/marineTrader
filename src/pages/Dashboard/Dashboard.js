@@ -24,7 +24,7 @@ export default function Dashboard() {
           className="text-white flex justify-between p-10 mt-5 rounded-xl"
           heading="Welcome to Trade Seller Dashboard"
           subHeading="Let’s get it started & Create your listings."
-          buttonText="Create New Listing"
+          buttonText="Start Selling Now"
           image={jetski3d}
         />
         <ListingTable

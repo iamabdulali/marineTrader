@@ -1,4 +1,12 @@
-import { FaCheck, FaTicketAlt, FaTimes } from "react-icons/fa";
+import {
+  FaCheck,
+  FaDollarSign,
+  FaEye,
+  FaPencilAlt,
+  FaTicketAlt,
+  FaTimes,
+  FaTrashAlt,
+} from "react-icons/fa";
 import {
   base,
   base1,
@@ -105,6 +113,7 @@ export const OffersData = [
     offerAmount: "£12,000",
     accept: <FaCheck />,
     reject: <FaTimes />,
+    counterOffer: <FaDollarSign />,
     image: jetski2,
     email: "johnwilliams@gmail.com",
   },
@@ -117,6 +126,7 @@ export const OffersData = [
     offerAmount: "£12,000",
     accept: <FaCheck />,
     reject: <FaTimes />,
+    counterOffer: <FaDollarSign />,
     image: jetski3d,
     email: "johnwilliams@gmail.com",
   },
@@ -129,6 +139,7 @@ export const OffersData = [
     offerAmount: "£12,000",
     accept: <FaCheck />,
     reject: <FaTimes />,
+    counterOffer: <FaDollarSign />,
     image: jetski2,
     email: "johnwilliams@gmail.com",
   },
@@ -141,6 +152,7 @@ export const OffersData = [
     offerAmount: "£12,000",
     accept: <FaCheck />,
     reject: <FaTimes />,
+    counterOffer: <FaDollarSign />,
     image: jetski3d,
     email: "johnwilliams@gmail.com",
   },
@@ -492,5 +504,35 @@ export const AfroStyles = [
     title: "Model 6",
     alt: "Sixth Image",
     src: "https://images.unsplash.com/photo-1638100191048-33f8e6d07505?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  },
+];
+
+export const links = [
+  {
+    href: "/list",
+    label: (
+      <>
+        <FaEye /> View
+      </>
+    ),
+    colorChange: false,
+  },
+  {
+    href: "/selling/buildAd",
+    label: (
+      <>
+        <FaPencilAlt /> Edit
+      </>
+    ),
+    colorChange: false,
+  },
+  {
+    href: "/selling",
+    label: (
+      <>
+        <FaTrashAlt /> Delete
+      </>
+    ),
+    colorChange: true,
   },
 ];

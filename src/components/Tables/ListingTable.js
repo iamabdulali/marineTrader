@@ -1,9 +1,10 @@
 import React from "react";
 import { FiSearch, FiEye, FiMoreVertical } from "react-icons/fi";
-import { jetski2, jetski3d } from "../../assets";
 import SortDropdown from "../SortDropdown";
 import { OffersData, listingData, sellingData } from "../../utils/DummyData";
-import Example from "../../Menu";
+import { Link } from "react-router-dom";
+import CustomDropdownMenu from "../CustomDropdownMenu";
+import ListingMenu from "../Selling/ListingMenu";
 
 const ListingTable = ({
   hasSort,
@@ -162,21 +163,22 @@ const ListingTable = ({
                   </td>
                   <td className="py-4 px-4">
                     <div className="flex font-semibold items-center justify-center">
-                      <button
+                      <Link
+                        to={ad == "Edit" ? "/selling/buildAd" : "/"}
                         className={` ${
                           ad == "Edit"
                             ? "text-[#0D1A8B] border-2 border-[#0D1A8B]"
                             : ad == "Upgrade"
                             ? "text-[#FFB800] border-2 border-[#FFB800]"
                             : "text-[#2AD18A] border-2 border-[#2AD18A]"
-                        } px-3 py-3 min-w-24 text-sm rounded-md`}
+                        } px-3 py-3 min-w-24 text-sm rounded-md block text-center`}
                       >
                         {ad}
-                      </button>
+                      </Link>
                     </div>
                   </td>
                   <td>
-                    <Example
+                    <CustomDropdownMenu
                       buttonToOpenMenu={
                         <FiMoreVertical
                           size={20}
@@ -184,6 +186,7 @@ const ListingTable = ({
                           color="#0D1A8B"
                         />
                       }
+                      children={<ListingMenu />}
                     />
                   </td>
                 </tr>
@@ -205,6 +208,7 @@ const ListingTable = ({
                 buyerName,
                 telephone,
                 email,
+                counterOffer,
               }) => (
                 <tr
                   key={id}
@@ -238,6 +242,9 @@ const ListingTable = ({
                       </button>
                       <button className="bg-[#FF4A6B] flex items-center justify-center w-9 h-9 text-white rounded-full">
                         {reject}
+                      </button>
+                      <button className="bg-[#FFB800] flex items-center justify-center w-9 h-9 text-white rounded-full">
+                        {counterOffer}
                       </button>
                     </div>
                   </td>

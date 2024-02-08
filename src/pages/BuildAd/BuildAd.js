@@ -19,7 +19,7 @@ const BuildAd = () => {
 
   const [selectedCategory, setSelectedCategory] = useState("Jet Skis");
   const stepLabels = [
-    "Category",
+    // "Category",
     "Description",
     "Features",
     "Notes",
@@ -161,19 +161,19 @@ const BuildAd = () => {
         }) => (
           <Form>
             {" "}
-            {step === 1 && (
+            {/* {step === 1 && (
               <SelectCategoryStep1
                 multiSelect={false}
                 categoryChange={(category) =>
                   handleCategoryChange(category, setFieldValue)
                 }
               />
-            )}
-            {step === 2 && <ItemDescriptionStep2 />}
-            {step === 3 && <ItemFeaturesStep3 />}
-            {step === 4 && <NotesSteps4 />}
-            {step === 5 && <GalleryStep5 />}
-            {step === 6 && (
+            )} */}
+            {step === 1 && <ItemDescriptionStep2 />}
+            {step === 2 && <ItemFeaturesStep3 />}
+            {step === 3 && <NotesSteps4 />}
+            {step === 4 && <GalleryStep5 />}
+            {step === 5 && (
               <PriceStep6 values={values} setFieldValue={setFieldValue} />
             )}
             {/* Navigation buttons */}

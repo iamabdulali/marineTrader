@@ -10,6 +10,7 @@ import { sellingHeader } from "../../utils/DummyData";
 import Layout from "../../components/Layout/Layout";
 import CategoryList from "../../components/categoryList/CategoryList";
 import SubscriptionStep2 from "../Subscription/SubscriptionStep2";
+import AdSubscription from "../AdSubscription/AdSubscription";
 
 export default function Selling() {
   const [hasListing, setHasListing] = useState(true);
@@ -51,7 +52,8 @@ export default function Selling() {
             tableHeader={sellingHeader}
           />
         ) : (
-          <SubscriptionStep2 selectedCategory={category} />
+          // <SubscriptionStep2 selectedCategory={category} />
+          <AdSubscription />
         )}
       </Layout>
     </>

@@ -20,6 +20,9 @@ export const authReducer = (state, action) => {
       };
     case "CLEAR_TAGS":
       return { ...state, listingTags: [] };
+    case "UPDATE_CHECKBOXES":
+      return { ...state, modificationCheckboxes: action.payload };
+
     default:
       return state;
   }
@@ -31,6 +34,7 @@ export const AuthContextProvider = ({ children }) => {
     bundleName: "",
     selectedCategory: null,
     listingTags: [], // Include tags in the initial state
+    modificationCheckboxes: [],
   });
 
   // console.log("Auth context state: ", state);

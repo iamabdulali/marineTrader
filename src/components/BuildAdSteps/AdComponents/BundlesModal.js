@@ -1,11 +1,20 @@
-import React from "react";
-import Modal from "../Modal";
+import React, { useState } from "react";
+import Modal from "../../Modal";
 import Bundles from "./Bundles";
 
 const BundlesModal = ({ onClick }) => {
+  let [isOpen, setIsOpen] = useState(false);
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+
+  function openModal() {
+    setIsOpen(true);
+  }
   return (
     <>
-      <Modal className="w-6/12">
+      <Modal isOpen={isOpen} onClose={closeModal} className="w-6/12">
         <div className="bg-gradient-to-t py-4 rounded-tr-lg rounded-tl-lg from-[#0d1a8b] to-[#3241cb]">
           <p className="text-white text-xl font-semibold text-center mb-1">
             BUNDLES : STANDARD Advert
