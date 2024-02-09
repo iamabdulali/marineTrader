@@ -1,12 +1,10 @@
 import React, { useContext } from "react";
-import { boatBg, jetski3d } from "../../assets";
+import { boatBg } from "../../assets";
 import CategoryDropdown from "../CategoryDropdown/CategoryDropdown";
 import { AuthContext } from "../../Context/AuthContext";
 
 const HeroSection = () => {
-  const { selectedCategory, dispatch } = useContext(AuthContext);
-
-  console.log(selectedCategory);
+  const { selectedCategory } = useContext(AuthContext);
 
   const handleFormSubmit = (values) => {
     // Your logic for handling form submission
