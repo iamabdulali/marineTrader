@@ -52,7 +52,6 @@ export default function Selling() {
             tableHeader={sellingHeader}
           />
         ) : (
-          // <SubscriptionStep2 selectedCategory={category} />
           <AdSubscription />
         )}
       </Layout>

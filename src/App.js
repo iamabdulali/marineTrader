@@ -13,7 +13,6 @@ import ResetPassword from "./pages/resetPassword/ResetPassword";
 import TradeSeller from "./pages/Sellers/TradeSeller/tradeSeller";
 import PrivateSeller from "./pages/Sellers/PrivateSeller/privateSeller";
 import Selling from "./pages/Selling/Selling";
-import AdSubscription from "./pages/AdSubscription/AdSubscription";
 import Offer from "./pages/Offers/Offer";
 import Notifications from "./pages/Notifications/Notifications";
 import BuildAd from "./pages/BuildAd/BuildAd";
@@ -42,7 +41,6 @@ function App() {
         <Route path="/register" element={<Registration />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/selling" element={<Selling />} />
-        <Route path="/selling/adsubscription" element={<AdSubscription />} />
         <Route path="/offers" element={<Offer />} />
         <Route path="/notifications" element={<Notifications />} />
         <Route path="/reset-password" element={<ResetPassword />} />

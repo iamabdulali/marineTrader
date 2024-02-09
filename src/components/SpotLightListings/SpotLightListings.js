@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import { FaArrowRight, FaHeart } from "react-icons/fa";
 import { boatImage, featuredImage } from "../../assets";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../Context/AuthContext";
 
 const SpotLightListings = ({
   id,
@@ -14,6 +15,8 @@ const SpotLightListings = ({
   newsDate,
   thumbnail,
 }) => {
+  const { selectedCategory } = useContext(AuthContext);
+
   return (
     <Link to={`/${id}`}>
       {isNews ? (
@@ -33,7 +36,7 @@ const SpotLightListings = ({
               ""
             )}
           </div>
-          <p className="text-[#8891B2] text-sm mt-2">{listingType}</p>
+          <p className="text-[#8891B2] text-sm mt-2">{selectedCategory}</p>
           <p className="text-[#11133D] font-semibold">{listingName}</p>
           <p className="text-[#0D1A8B] mt-2 font-semibold">{listingPrice}</p>
         </div>

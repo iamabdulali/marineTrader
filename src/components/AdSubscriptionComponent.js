@@ -110,7 +110,12 @@ const AdSubscriptionComponent = ({
           <FaEye />
           {text}
         </button>
-        <Modal isOpen={isOpen} onClose={closeModal} opacity="bg-opacity-40">
+        <Modal
+          isOpen={isOpen}
+          onClose={closeModal}
+          opacity="bg-opacity-40"
+          width="w-1/2"
+        >
           <img src={variantStyles.searchResult} />
         </Modal>
       </div>

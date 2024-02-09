@@ -35,7 +35,7 @@ const HeroSection = () => {
         <p className="text-white mb-3 flex items-center gap-3">
           {" "}
           <span className="bg-[#FFB800] h-[2px] w-12 inline-block"></span> Buy
-          and Sell Yatch
+          and Sell {selectedCategory || "Jet Skis"}
         </p>
         <p className="text-white text-5xl font-bold leading-tight">
           Freedom is Just <br /> An Anchor{" "}
