@@ -26,6 +26,8 @@ import SubscriptionForm from "./pages/Subscription/SubscriptionForm";
 import ItemDetailPage from "./pages/ItemsDetailPage/ItemDetailPage";
 import SwiperSlider from "./pages/ItemsDetailPage/SwiperSlider";
 import "swiper/swiper-bundle.css";
+import Payment from "./pages/Payment/Payment";
+import PaymentStatus from "./pages/Payment/PaymentStatus";
 
 function App() {
   return (
@@ -56,6 +58,11 @@ function App() {
 
         <Route path="/trade-seller" element={<TradeSeller />} />
         <Route path="/private-seller" element={<PrivateSeller />} />
+        <Route path="/payments" element={<Payment />} />
+        <Route
+          path="/paymentStatus"
+          element={<PaymentStatus successStatus={true} />}
+        />
       </Routes>
     </Router>
   );

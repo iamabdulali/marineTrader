@@ -51,6 +51,8 @@ import adsImage from "./ads.png";
 import standardSearchResult from "./Standard.png";
 import premiumSearchResult from "./Premium.png";
 import featuredSearchResult from "./Feature.png";
+import success from "./success.png";
+import error from "./error.png";
 
 export {
   jetskiIcon,
@@ -106,4 +108,6 @@ export {
   standardSearchResult,
   premiumSearchResult,
   featuredSearchResult,
+  success,
+  error,
 };
