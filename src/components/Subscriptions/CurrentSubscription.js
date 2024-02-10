@@ -24,7 +24,10 @@ const CurrentSubscription = ({
           </span>
         </p>
 
-        <Link className=" border-[3px] block rounded-md border-[#0D1A8B] text-[#0D1A8B] py-3 px-10 font-semibold ">
+        <Link
+          to="/payments"
+          className=" border-[3px] block rounded-md border-[#0D1A8B] text-[#0D1A8B] py-3 px-10 font-semibold "
+        >
           {isStandard ? "Upgrade Now" : "Renew"}
         </Link>
       </div>

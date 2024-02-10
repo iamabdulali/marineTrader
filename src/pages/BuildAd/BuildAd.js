@@ -13,6 +13,8 @@ import {
   imageValidationSchema,
 } from "../../utils/ValidationSchema";
 import { AuthContext } from "../../Context/AuthContext";
+import Payment from "../Payment/Payment";
+import { Link } from "react-router-dom";
 
 const BuildAd = () => {
   const [step, setStep] = useState(1);
@@ -203,7 +205,7 @@ const BuildAd = () => {
                   </button>
                 )}
 
-                {step < 6 ? (
+                {step < 5 ? (
                   <button
                     type="button"
                     onClick={() => nextStep(values, { setTouched, setErrors })}
@@ -212,15 +214,16 @@ const BuildAd = () => {
                     Next
                   </button>
                 ) : (
-                  <button
-                    type="submit"
-                    disabled={!isValid}
-                    className={`bg-[#0D1A8B] text-white p-3 rounded-md w-28  ${
+                  <Link
+                    to="/payments"
+                    // type="submit"
+                    // disabled={!isValid}
+                    className={`bg-[#0D1A8B] text-white p-3 rounded-md inline-block text-center w-28  ${
                       isValid ? "opacity-100" : "opacity-70"
                     }`}
                   >
                     List Item
-                  </button>
+                  </Link>
                 )}
               </div>
             </div>

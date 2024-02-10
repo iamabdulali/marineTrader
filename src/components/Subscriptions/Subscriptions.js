@@ -1,5 +1,6 @@
 import React from "react";
 import { FaCheck } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const Subscriptions = ({
   featuresArray,
@@ -48,9 +49,12 @@ const Subscriptions = ({
           );
         })}
       </div>
-      <button className="block w-11/12 mx-auto border-[3px] border-[#0D1A8B] rounded-lg p-2 text-[#0D1A8B] font-semibold">
+      <Link
+        to="/payments"
+        className="block text-center w-11/12 mx-auto border-[3px] border-[#0D1A8B] rounded-lg p-2 text-[#0D1A8B] font-semibold"
+      >
         Select
-      </button>
+      </Link>
     </div>
   );
 };
