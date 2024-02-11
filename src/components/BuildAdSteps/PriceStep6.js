@@ -8,6 +8,7 @@ import BundlesModal from "./AdComponents/BundlesModal";
 import { Link } from "react-router-dom";
 import CheckboxGroup from "../CheckboxGroup";
 import SpotlightModal from "./SpotlightModal";
+import Modal from "../Modal";
 
 const PriceStep6 = ({ setFieldValue, values }) => {
   const initialFacilities = {
@@ -20,17 +21,19 @@ const PriceStep6 = ({ setFieldValue, values }) => {
   };
 
   const [facilities, setFacilities] = useState(initialFacilities.facilities);
-  const [showModal, setShowModal] = useState(false);
   const [showSpotlightModal, setShowSpotlightModal] = useState(false);
   const [priceInfoType, setPriceInfoType] = useState("enterInfo");
 
-  const handleShowModal = () => {
-    setShowModal(true);
-  };
+  let [isBundleOpen, setIsBundleOpen] = useState(false);
+  let [isSpotlightOpen, setIsSpotlightOpen] = useState(false);
 
-  const handleShowSpotlightModal = () => {
-    setShowSpotlightModal(true);
-  };
+  function closeModal(modalToClose) {
+    modalToClose(false);
+  }
+
+  function openModal(modalToOpen) {
+    modalToOpen(true);
+  }
 
   return (
     <BuildLayout heading="Set Price">
@@ -119,7 +122,7 @@ const PriceStep6 = ({ setFieldValue, values }) => {
               Available Upgrades
             </p>
             <button
-              onClick={handleShowModal}
+              onClick={() => openModal(setIsBundleOpen)}
               type="button"
               className="bg-[#0D1A8B] text-sm font-medium text-white py-2 px-4 rounded-md"
             >
@@ -143,14 +146,14 @@ const PriceStep6 = ({ setFieldValue, values }) => {
           </div>
           <div className="flex items-center gap-5">
             <button
-              onClick={handleShowSpotlightModal}
+              onClick={() => openModal(setIsSpotlightOpen)}
               type="button"
               className="bg-[#FFB800] text-[#11133D] font-semibold py-3 px-6 rounded-md"
             >
               Home Page Spotlight
             </button>
             <button
-              onClick={handleShowSpotlightModal}
+              onClick={() => openModal(setIsSpotlightOpen)}
               type="button"
               className="bg-white text-[#11133D] font-semibold py-3 px-6 rounded-md"
             >
@@ -159,16 +162,26 @@ const PriceStep6 = ({ setFieldValue, values }) => {
           </div>
         </div>
       </div>
-      {showModal ? <BundlesModal onClick={() => setShowModal(false)} /> : ""}
-      {showSpotlightModal ? (
+      <Modal
+        isOpen={isBundleOpen}
+        onClose={() => closeModal(setIsBundleOpen)}
+        opacity="bg-opacity-40"
+        width="w-6/12"
+      >
+        <BundlesModal onClose={() => closeModal(setIsSpotlightOpen)} />
+      </Modal>
+      <Modal
+        isOpen={isSpotlightOpen}
+        onClose={() => closeModal(setIsSpotlightOpen)}
+        opacity="bg-opacity-40"
+        width="w-9/12"
+      >
         <SpotlightModal
           value={values}
           setFieldValue={setFieldValue}
           onClick={() => setShowSpotlightModal(false)}
         />
-      ) : (
-        ""
-      )}
+      </Modal>
     </BuildLayout>
   );
 };

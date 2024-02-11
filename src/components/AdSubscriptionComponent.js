@@ -115,6 +115,7 @@ const AdSubscriptionComponent = ({
           onClose={closeModal}
           opacity="bg-opacity-40"
           width="w-1/2"
+          padding="p-6"
         >
           <img src={variantStyles.searchResult} />
         </Modal>

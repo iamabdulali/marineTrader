@@ -1,14 +1,11 @@
 import React, { useState } from "react";
-import Modal from "../Modal";
 import Step1 from "./SpotlightModalSteps/Step1";
 
 const SpotlightModal = ({ onClick, setFieldValue, values }) => {
-  const [step, setStep] = useState(1);
-
   const [showSpotlightSelection, setShowSpotlightSelection] = useState(false);
 
   return (
-    <Modal className="w-9/12">
+    <>
       <Step1
         values={values}
         setFieldValue={setFieldValue}
@@ -41,7 +38,7 @@ const SpotlightModal = ({ onClick, setFieldValue, values }) => {
           {showSpotlightSelection ? "Confirm" : "Next"}
         </button>
       </div>
-    </Modal>
+    </>
   );
 };
 

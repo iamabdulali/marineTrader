@@ -271,7 +271,12 @@ const ListingTable = ({
           )}
         </table>
       </div>
-      <Modal isOpen={isOpen} onClose={closeModal} opacity="bg-opacity-40">
+      <Modal
+        isOpen={isOpen}
+        onClose={closeModal}
+        opacity="bg-opacity-40"
+        padding="p-6"
+      >
         <CounterOffer onClose={closeModal} />
       </Modal>
     </>
