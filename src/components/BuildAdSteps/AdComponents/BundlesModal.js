@@ -1,7 +1,7 @@
 import React from "react";
 import Bundles from "./Bundles";
 
-const BundlesModal = ({ onClose }) => {
+const BundlesModal = ({ onClick }) => {
   return (
     <>
       <div className="bg-gradient-to-t w-full py-4 rounded-tr-lg rounded-tl-lg from-[#0d1a8b] to-[#3241cb]">
@@ -65,7 +65,7 @@ const BundlesModal = ({ onClose }) => {
       <div className="text-right pr-6 pb-6">
         <button
           type="button"
-          onClick={onClose}
+          onClick={onClick}
           className="bg-[#8891B2] text-white py-3 px-7 rounded-md mr-3 min-w-[120px]"
         >
           Close

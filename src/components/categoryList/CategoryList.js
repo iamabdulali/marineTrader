@@ -26,6 +26,7 @@ const CategoryList = ({
     "Non-Motor",
   ],
   onCategoryClick,
+  initialCategory,
   className,
   activeCategory,
   unActiveCategory,
@@ -37,7 +38,7 @@ const CategoryList = ({
     multiSelect
       ? defaultSelectedCategory || []
       : defaultSelectedCategory ||
-          (categories.length > 0 ? [categories[0]] : [])
+          (categories.length > 0 ? [categories[initialCategory]] : [])
   );
 
   const categoryIcons = {

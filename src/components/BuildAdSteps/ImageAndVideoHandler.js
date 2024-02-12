@@ -15,6 +15,7 @@ const ImageAndVideoHandler = ({
 }) => {
   const [, , helpers] = useField(field.name);
   const [previews, setPreviews] = React.useState([]);
+  const [fileType, setFileType] = React.useState("");
 
   const handleChange = (event) => {
     const { setFieldValue } = form;
@@ -27,9 +28,10 @@ const ImageAndVideoHandler = ({
     }
 
     if (files.length > 0) {
-      const newPreviews = Array.from(files).map((file) =>
-        URL.createObjectURL(file)
-      );
+      const newPreviews = Array.from(files).map((file) => {
+        setFileType(file.type);
+        return URL.createObjectURL(file);
+      });
       setPreviews([...previews, ...newPreviews]);
 
       // Accumulate selected files in an array
@@ -88,6 +90,7 @@ const ImageAndVideoHandler = ({
           className="text-red-500"
         />
       </div>
+      {console.log(previews)}
       {previews.length > 0 ? (
         <div className="flex justify-start gap-7">
           {previews.map((preview, index) => (
@@ -95,11 +98,18 @@ const ImageAndVideoHandler = ({
               key={index}
               className="relative w-1/5 min-h-[154px] max-h-[154px] mt-5"
             >
-              <img
-                src={preview}
-                alt="preview"
-                className="object-cover rounded-lg w-full min-h-[154px] max-h-[154px]"
-              />
+              {fileType == "video/mp4" ? (
+                <video className="object-cover rounded-lg w-full min-h-[154px] max-h-[154px]">
+                  <source src={preview}></source>
+                </video>
+              ) : (
+                <img
+                  src={preview}
+                  alt="preview"
+                  className="object-cover rounded-lg w-full min-h-[154px] max-h-[154px]"
+                />
+              )}
+
               <button
                 type="button"
                 className="absolute top-2 right-2 bg-white rounded-full p-1"

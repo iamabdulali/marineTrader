@@ -4,7 +4,7 @@ import Layout from "../../components/Layout/Layout";
 import { FaArrowLeft } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
-const PaymentStatus = ({ successStatus }) => {
+const PaymentStatus = ({ successStatus, paymentType }) => {
   return (
     <Layout>
       <div className="absolute -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2 w-full mx-auto">
@@ -26,9 +26,14 @@ const PaymentStatus = ({ successStatus }) => {
               successStatus ? "w-2/5" : "w-1/2"
             }  text-center mx-auto`}
           >
-            {successStatus
-              ? "You have successfully listed your item."
-              : "The card details you have entered are incorrect, please try again. "}
+            {!successStatus &&
+              "The card details you have entered are incorrect, please try again."}
+            {successStatus &&
+              (paymentType === "list"
+                ? "You have successfully listed your item."
+                : paymentType === "subscription"
+                ? "You have successfully subscribed"
+                : "You have successfully listed your item.")}
           </p>
         </div>
         <Link

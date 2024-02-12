@@ -168,7 +168,7 @@ const PriceStep6 = ({ setFieldValue, values }) => {
         opacity="bg-opacity-40"
         width="w-6/12"
       >
-        <BundlesModal onClose={() => closeModal(setIsSpotlightOpen)} />
+        <BundlesModal onClick={() => closeModal(setIsBundleOpen)} />
       </Modal>
       <Modal
         isOpen={isSpotlightOpen}
@@ -179,7 +179,7 @@ const PriceStep6 = ({ setFieldValue, values }) => {
         <SpotlightModal
           value={values}
           setFieldValue={setFieldValue}
-          onClick={() => setShowSpotlightModal(false)}
+          onClick={() => closeModal(setIsSpotlightOpen)}
         />
       </Modal>
     </BuildLayout>
