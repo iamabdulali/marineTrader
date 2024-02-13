@@ -5,6 +5,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { Formik, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useSignup } from "../../Hooks/useSignUp";
+import FileInput from "./FormElements/FileInput";
 
 export default function PrivateSellerSignUpFormForm() {
   const [refresh, setRefresh] = useState(false);
@@ -191,62 +192,62 @@ export default function PrivateSellerSignUpFormForm() {
             </div>
 
             <div className="flex gap-4 sm:flex-row flex-col">
-            <Field
-              as="select"
-              name="country"
-              className="border-[#CECED7] border-2 rounded-md p-3 w-full"
-            >
-              {/* Add options for countries in Europe */}
-              <option value="" label="Select a country" />
-              <option value="AL" label="Albania" />
-              <option value="AD" label="Andorra" />
-              <option value="AT" label="Austria" />
-              <option value="BY" label="Belarus" />
-              <option value="BE" label="Belgium" />
-              <option value="BA" label="Bosnia and Herzegovina" />
-              <option value="BG" label="Bulgaria" />
-              <option value="HR" label="Croatia" />
-              <option value="CY" label="Cyprus" />
-              <option value="CZ" label="Czech Republic" />
-              <option value="DK" label="Denmark" />
-              <option value="EE" label="Estonia" />
-              <option value="FI" label="Finland" />
-              <option value="FR" label="France" />
-              <option value="DE" label="Germany" />
-              <option value="GR" label="Greece" />
-              <option value="HU" label="Hungary" />
-              <option value="IS" label="Iceland" />
-              <option value="IE" label="Ireland" />
-              <option value="IT" label="Italy" />
-              <option value="XK" label="Kosovo" />
-              <option value="LV" label="Latvia" />
-              <option value="LI" label="Liechtenstein" />
-              <option value="LT" label="Lithuania" />
-              <option value="LU" label="Luxembourg" />
-              <option value="MK" label="North Macedonia" />
-              <option value="MT" label="Malta" />
-              <option value="MD" label="Moldova" />
-              <option value="MC" label="Monaco" />
-              <option value="ME" label="Montenegro" />
-              <option value="NL" label="Netherlands" />
-              <option value="NO" label="Norway" />
-              <option value="PL" label="Poland" />
-              <option value="PT" label="Portugal" />
-              <option value="RO" label="Romania" />
-              <option value="RU" label="Russia" />
-              <option value="SM" label="San Marino" />
-              <option value="RS" label="Serbia" />
-              <option value="SK" label="Slovakia" />
-              <option value="SI" label="Slovenia" />
-              <option value="ES" label="Spain" />
-              <option value="SE" label="Sweden" />
-              <option value="CH" label="Switzerland" />
-              <option value="TR" label="Turkey" />
-              <option value="UA" label="Ukraine" />
-              <option value="GB" label="United Kingdom" />
-              <option value="VA" label="Vatican City" />
-              {/* ... */}
-            </Field>
+              <Field
+                as="select"
+                name="country"
+                className="border-[#CECED7] border-2 rounded-md p-3 w-full"
+              >
+                {/* Add options for countries in Europe */}
+                <option value="" label="Select a country" />
+                <option value="AL" label="Albania" />
+                <option value="AD" label="Andorra" />
+                <option value="AT" label="Austria" />
+                <option value="BY" label="Belarus" />
+                <option value="BE" label="Belgium" />
+                <option value="BA" label="Bosnia and Herzegovina" />
+                <option value="BG" label="Bulgaria" />
+                <option value="HR" label="Croatia" />
+                <option value="CY" label="Cyprus" />
+                <option value="CZ" label="Czech Republic" />
+                <option value="DK" label="Denmark" />
+                <option value="EE" label="Estonia" />
+                <option value="FI" label="Finland" />
+                <option value="FR" label="France" />
+                <option value="DE" label="Germany" />
+                <option value="GR" label="Greece" />
+                <option value="HU" label="Hungary" />
+                <option value="IS" label="Iceland" />
+                <option value="IE" label="Ireland" />
+                <option value="IT" label="Italy" />
+                <option value="XK" label="Kosovo" />
+                <option value="LV" label="Latvia" />
+                <option value="LI" label="Liechtenstein" />
+                <option value="LT" label="Lithuania" />
+                <option value="LU" label="Luxembourg" />
+                <option value="MK" label="North Macedonia" />
+                <option value="MT" label="Malta" />
+                <option value="MD" label="Moldova" />
+                <option value="MC" label="Monaco" />
+                <option value="ME" label="Montenegro" />
+                <option value="NL" label="Netherlands" />
+                <option value="NO" label="Norway" />
+                <option value="PL" label="Poland" />
+                <option value="PT" label="Portugal" />
+                <option value="RO" label="Romania" />
+                <option value="RU" label="Russia" />
+                <option value="SM" label="San Marino" />
+                <option value="RS" label="Serbia" />
+                <option value="SK" label="Slovakia" />
+                <option value="SI" label="Slovenia" />
+                <option value="ES" label="Spain" />
+                <option value="SE" label="Sweden" />
+                <option value="CH" label="Switzerland" />
+                <option value="TR" label="Turkey" />
+                <option value="UA" label="Ukraine" />
+                <option value="GB" label="United Kingdom" />
+                <option value="VA" label="Vatican City" />
+                {/* ... */}
+              </Field>
               <ErrorMessage
                 name="country"
                 component="p"
@@ -385,7 +386,7 @@ export default function PrivateSellerSignUpFormForm() {
             </li>
 
             <div className="w-full">
-              <p className="text-[#11133D] font-semibold mb-3">Main Picture</p>
+              {/* <p className="text-[#11133D] font-semibold mb-3">Main Picture</p>
               <div className="border-2 relative rounded border-[#0D1A8B] border-dashed flex flex-col items-center justify-center w-full p-8">
                 <p className="flex items-end mb-3">
                   <img src={cloud} alt="upload" className="w-6 mr-3" /> Drag &
@@ -401,7 +402,13 @@ export default function PrivateSellerSignUpFormForm() {
                   type="file"
                   className="absolute bg-slate-500 inset-0 opacity-0 cursor-pointer"
                 />
-              </div>
+              </div> */}
+              <Field
+                name="mainPicture"
+                component={FileInput}
+                label="Main Picture"
+                accept="image/jpeg, image/png"
+              />
             </div>
 
             {/* Submit button */}
