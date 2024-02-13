@@ -16,16 +16,19 @@ export default function Selling() {
       <Layout>
         <div className="flex items-center justify-between">
           <Heading content="Selling" />
-
-          <Link
-            onClick={() => {
-              setHasListing(true);
-            }}
-            className=" text-[#0D1A8B] flex items-center gap-2 font-medium underline"
-          >
-            <FaArrowLeft size={15} />
-            Back To Listings
-          </Link>
+          {hasListing ? (
+            ""
+          ) : (
+            <Link
+              onClick={() => {
+                setHasListing(true);
+              }}
+              className=" text-[#0D1A8B] flex items-center gap-2 font-medium underline"
+            >
+              <FaArrowLeft size={15} />
+              Back To Listings
+            </Link>
+          )}
         </div>
         <p className="font-semibold text-[#11133D] my-5">
           Select a category to list

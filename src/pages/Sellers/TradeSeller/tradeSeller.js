@@ -50,77 +50,78 @@ const TradeSeller = () => {
     "Contact Person Details",
   ];
 
-  const nextStep = (values, { setTouched, setErrors }) => {
-    try {
-      // Validate only the fields for the current step
-      const fieldsToValidate = Object.keys(validationSchema.fields).filter(
-        (field) => {
-          // Customize this condition based on your step logic
-          if (step === 1) {
-            return [
-              "username",
-              "companyInfo",
-              "buildingNumber",
-              "streetName",
-              "city",
-              "postcode",
-              "country",
-              "region",
-              "phoneNo",
-              "currency",
-              "email",
-              "confirmEmail",
-              "password",
-              "confirmPassword",
-            ].includes(field);
-          } else if (step === 2) {
-            return [
-              "timeZone",
-              // "daysAvailable",
-              "openPublicHolidays",
-              "companyLogo",
-              "mainPicture",
-            ].includes(field);
-          } else if (step === 3) {
-            return ["firstName", "lastName", "jobTitle"].includes(field);
-          }
-          return true; // Include all fields if not in a specific step
-        }
-      );
+  // const nextStep = (values, { setTouched, setErrors }) => {
+  //   try {
+  //     // Validate only the fields for the current step
+  //     const fieldsToValidate = Object.keys(validationSchema.fields).filter(
+  //       (field) => {
+  //         // Customize this condition based on your step logic
+  //         if (step === 1) {
+  //           return [
+  //             "username",
+  //             "companyInfo",
+  //             "buildingNumber",
+  //             "streetName",
+  //             "city",
+  //             "postcode",
+  //             "country",
+  //             "region",
+  //             "phoneNo",
+  //             "currency",
+  //             "email",
+  //             "confirmEmail",
+  //             "password",
+  //             "confirmPassword",
+  //           ].includes(field);
+  //         } else if (step === 2) {
+  //           return [
+  //             "timeZone",
+  //             // "daysAvailable",
+  //             "openPublicHolidays",
+  //             "companyLogo",
+  //             "mainPicture",
+  //           ].includes(field);
+  //         } else if (step === 3) {
+  //           return ["firstName", "lastName", "jobTitle"].includes(field);
+  //         }
+  //         return true; // Include all fields if not in a specific step
+  //       }
+  //     );
 
-      validationSchema
-        .pick(fieldsToValidate)
-        .validateSync(values, { abortEarly: false });
+  //     validationSchema
+  //       .pick(fieldsToValidate)
+  //       .validateSync(values, { abortEarly: false });
 
-      // Increment the step
-      setStep((prevStep) => prevStep + 1);
-    } catch (error) {
-      if (error.name === "ValidationError") {
-        // Display validation errors even if the user is trying to move to the next step
-        console.error("Validation errors:", error.errors);
+  //     // Increment the step
+  //     setStep((prevStep) => prevStep + 1);
+  //   } catch (error) {
+  //     if (error.name === "ValidationError") {
+  //       // Display validation errors even if the user is trying to move to the next step
+  //       console.error("Validation errors:", error.errors);
 
-        // Set touched for all fields to trigger error messages
-        const allFields = Object.keys(values);
-        const touchedState = allFields.reduce((acc, field) => {
-          acc[field] = true;
-          return acc;
-        }, {});
-        setTouched(touchedState);
+  //       // Set touched for all fields to trigger error messages
+  //       const allFields = Object.keys(values);
+  //       const touchedState = allFields.reduce((acc, field) => {
+  //         acc[field] = true;
+  //         return acc;
+  //       }, {});
+  //       setTouched(touchedState);
 
-        // Set errors to display them in the form
-        const errorState = error.errors.reduce((acc, error) => {
-          acc[error.path] = error.message;
-          return acc;
-        }, {});
-        setErrors(errorState);
-      } else {
-        // Handle other errors
-        console.error("Error:", error.message);
-      }
-    }
-  };
+  //       // Set errors to display them in the form
+  //       const errorState = error.errors.reduce((acc, error) => {
+  //         acc[error.path] = error.message;
+  //         return acc;
+  //       }, {});
+  //       setErrors(errorState);
+  //     } else {
+  //       // Handle other errors
+  //       console.error("Error:", error.message);
+  //     }
+  //   }
+  // };
 
   const prevStep = () => setStep(step - 1);
+  const nextStep = () => setStep(step + 1);
 
   const handleSubmit = async (values, { setSubmitting }) => {
     console.log(values);
@@ -161,7 +162,7 @@ const TradeSeller = () => {
     }
   };
 
-  console.log(user);
+  // console.log(user);
 
   if (user) return <Navigate to="/dashboard" />;
 
@@ -185,7 +186,7 @@ const TradeSeller = () => {
         {/* Form Content */}
         <Formik
           initialValues={initialValues}
-          validationSchema={validationSchema}
+          // validationSchema={validationSchema}
           onSubmit={handleSubmit}
         >
           {({ isSubmitting, isValid, values, setErrors, setTouched }) => (
@@ -217,7 +218,7 @@ const TradeSeller = () => {
                 ) : (
                   <button
                     type="submit"
-                    disabled={!isValid}
+                    // disabled={!isValid}
                     className={`bg-[#0D1A8B] text-white p-3 rounded-md w-28  ${
                       isValid ? "opacity-100" : "opacity-70"
                     }`}
