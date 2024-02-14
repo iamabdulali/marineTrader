@@ -24,14 +24,6 @@ const SubscriptionStep2 = ({ selectedCategory }) => {
       <Heading content="Select Subscription Plan" className="mt-8" />
       <div className="flex gap-5 mt-10">
         <Subscriptions
-          featuresArray={StandardTrade}
-          packagePrice="Free"
-          packageName="Standard Trade"
-          subHeading="/Pay as you list"
-          textColor="text-[#1565D8]"
-          borderColor="border-[#1565D8]"
-        />
-        <Subscriptions
           featuresArray={DealerPlus}
           packagePrice={price}
           packageName={packageName}

@@ -9,6 +9,10 @@ import { Link } from "react-router-dom";
 import CheckboxGroup from "../CheckboxGroup";
 import SpotlightModal from "./SpotlightModal";
 import Modal from "../Modal";
+import {
+  closeModal,
+  openModal,
+} from "../../utils/ModalOpeningClosingFunctions";
 
 const PriceStep6 = ({ setFieldValue, values }) => {
   const initialFacilities = {
@@ -26,14 +30,6 @@ const PriceStep6 = ({ setFieldValue, values }) => {
 
   let [isBundleOpen, setIsBundleOpen] = useState(false);
   let [isSpotlightOpen, setIsSpotlightOpen] = useState(false);
-
-  function closeModal(modalToClose) {
-    modalToClose(false);
-  }
-
-  function openModal(modalToOpen) {
-    modalToOpen(true);
-  }
 
   return (
     <BuildLayout heading="Set Price">

@@ -10,7 +10,7 @@ import {
 import Heading from "../Heading";
 import { useNavigate } from "react-router-dom";
 import { FaArrowRight } from "react-icons/fa";
-import { diamondImage } from "../../assets";
+import { diamondImage, stackIcon } from "../../assets";
 import PaymentSummary from "./PaymentSummary";
 
 const PaymentForm = () => {
@@ -55,6 +55,31 @@ const PaymentForm = () => {
     <Layout>
       <Heading content="Payment Details" />
       <div className="flex gap-7">
+        <div className="w-1/2">
+          <PaymentSummary />
+          <div className="bg-[#1CBF73] flex flex-col mt-8 p-5 rounded-lg w-full ">
+            <div className="flex items-center gap-5">
+              <img src={diamondImage} alt="diamond" className="w-14" />
+              <p className="flex text-xl items-center text-white font-semibold">
+                Available Upgrades <FaArrowRight className="ml-5" size={20} />
+              </p>
+            </div>
+            <div className="flex items-center mt-7 gap-5">
+              <button
+                type="button"
+                className="bg-[#FFB800] text-[#11133D] font-semibold w-full py-3 px-6 rounded-md"
+              >
+                Home Page Spotlight
+              </button>
+              <button
+                type="button"
+                className="bg-white text-[#11133D] font-semibold w-full py-3 px-6 rounded-md"
+              >
+                Category Page Spotlight
+              </button>
+            </div>
+          </div>
+        </div>
         <div className="w-1/2">
           <form
             onSubmit={handlePaymentSubmit}
@@ -159,31 +184,24 @@ const PaymentForm = () => {
               Pay
             </button>
           </form>
-          <div className="bg-[#1CBF73] flex flex-col mt-8 p-5 rounded-lg w-full ">
-            <div className="flex items-center gap-5">
-              <img src={diamondImage} alt="diamond" className="w-14" />
-              <p className="flex text-xl items-center text-white font-semibold">
-                Available Upgrades <FaArrowRight className="ml-5" size={20} />
-              </p>
+          <div className="bg-[#1C5DBF] text-white p-6 mt-8 shadow-[7px]">
+            <p className="text-2xl font-semibold">
+              <img
+                className="inline-block w-10"
+                src={stackIcon}
+                alt="stackIcon"
+              />{" "}
+              Allowances/Bundles
+            </p>
+            <div className="flex items-center justify-between border-b-2 border-white mt-4 pb-3">
+              <p>Inclusive Monthly Allowance</p>
+              <p className="font-medium text-lg">15</p>
             </div>
-            <div className="flex items-center mt-7 gap-5">
-              <button
-                type="button"
-                className="bg-[#FFB800] text-[#11133D] font-semibold w-full py-3 px-6 rounded-md"
-              >
-                Home Page Spotlight
-              </button>
-              <button
-                type="button"
-                className="bg-white text-[#11133D] font-semibold w-full py-3 px-6 rounded-md"
-              >
-                Category Page Spotlight
-              </button>
+            <div className="flex items-center justify-between mt-3">
+              <p>Bundle Balance</p>
+              <p className="font-medium text-lg">9</p>
             </div>
           </div>
-        </div>
-        <div className="w-1/2">
-          <PaymentSummary />
         </div>
       </div>
     </Layout>

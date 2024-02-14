@@ -9,6 +9,7 @@ import {
 } from "../assets";
 import { Link } from "react-router-dom";
 import Modal from "./Modal";
+import { closeModal, openModal } from "../utils/ModalOpeningClosingFunctions";
 
 const AdSubscriptionComponent = ({
   packageName,
@@ -21,15 +22,8 @@ const AdSubscriptionComponent = ({
   featuresArray,
 }) => {
   let variantStyles = {};
-  let [isOpen, setIsOpen] = useState(false);
+  let [isSearchResultOpen, setIsSearchResultOpen] = useState(false);
 
-  function closeModal() {
-    setIsOpen(false);
-  }
-
-  function openModal() {
-    setIsOpen(true);
-  }
   switch (variant) {
     case "green":
       variantStyles = {
@@ -38,6 +32,7 @@ const AdSubscriptionComponent = ({
         textColor: "text-[#36B37E]",
         ribbon: false,
         searchResult: standardSearchResult,
+        monthlyAllowance: false,
       };
       break;
     case "yellow":
@@ -45,9 +40,10 @@ const AdSubscriptionComponent = ({
         backgroundColor: "bg-[#fdf7e8]",
         buttonBg: "bg-[#E6AB13]",
         textColor: "text-[#E6AB13]",
-        ribbon: true,
+        ribbon: false,
         ribbonImage: adsImage,
         searchResult: premiumSearchResult,
+        monthlyAllowance: true,
       };
       break;
     case "purple":
@@ -58,6 +54,7 @@ const AdSubscriptionComponent = ({
         ribbon: true,
         ribbonImage: ribbon,
         searchResult: featuredSearchResult,
+        monthlyAllowance: true,
       };
       break;
     default:
@@ -92,10 +89,34 @@ const AdSubscriptionComponent = ({
         ) : (
           ""
         )}
-        <p className={`${variantStyles.textColor} text-xl mb-3 font-semibold`}>
+        <p className={`${variantStyles.textColor} text-3xl mb-3 font-semibold`}>
           {packageName}
         </p>
-        <p className="text-[#171923] font-semibold text-4xl mb-7">{price}</p>
+        <p className="text-[#171923] font-semibold text-4xl mb-3">{price}</p>
+        {variantStyles.monthlyAllowance ? (
+          <div className="text-sm text-[#11133D] font-medium">
+            <p>
+              Inclusive Monthly Allowance:{" "}
+              <span className="text-[#E6AB13] font-semibold">15 Remaining</span>
+            </p>
+            <p className="mt-2 mb-3">
+              Bundle Balance:{" "}
+              <span className="text-[#FF4A6B] font-semibold">9 Remaining</span>
+            </p>
+          </div>
+        ) : (
+          <div className="text-sm text-[#11133D] opacity-0">
+            <p>
+              Inclusive Monthly Allowance:{" "}
+              <span className="text-[#E6AB13] font-semibold">15 Remaining</span>
+            </p>
+            <p className="mt-2 mb-3">
+              Bundle Balance:{" "}
+              <span className="text-[#FF4A6B] font-semibold">9 Remaining</span>
+            </p>
+          </div>
+        )}
+
         <Link
           to="/selling/buildAd"
           className={`${variantStyles.buttonBg} text-white font-semibold inline-block py-3 w-9/12 rounded-lg`}
@@ -104,15 +125,15 @@ const AdSubscriptionComponent = ({
         </Link>
         <button
           type="button"
-          onClick={openModal}
+          onClick={() => openModal(setIsSearchResultOpen)}
           className={`${variantStyles.textColor} justify-center mt-4 mx-auto flex items-center gap-2 underline font-medium`}
         >
           <FaEye />
           {text}
         </button>
         <Modal
-          isOpen={isOpen}
-          onClose={closeModal}
+          isOpen={isSearchResultOpen}
+          onClose={() => closeModal(setIsSearchResultOpen)}
           opacity="bg-opacity-40"
           width="w-1/2"
           padding="p-6"

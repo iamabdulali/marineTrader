@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import VerticalMenu from "../../components/verticalMenu/VerticalMenu";
 import Header from "../../components/Header/Header";
 import PackageMessage from "../../components/Notifications/PackageMessage";
@@ -8,8 +8,16 @@ import WelcomeMessage from "../../components/Notifications/WelcomeMessage";
 import ListingTable from "../../components/Tables/ListingTable";
 import { dashboardHeader, sellingHeader } from "../../utils/DummyData";
 import Layout from "../../components/Layout/Layout";
+import VideoBtn from "../../components/VideoTutorial/VideoBtn";
+import Modal from "../../components/Modal";
+import VideoModal from "../../components/VideoTutorial/VideoModal";
+import {
+  closeModal,
+  openModal,
+} from "../../utils/ModalOpeningClosingFunctions";
 
 export default function Dashboard() {
+  let [isVideoOpen, setIsVideoOpen] = useState(false);
   return (
     <>
       <Layout>
@@ -27,13 +35,15 @@ export default function Dashboard() {
           buttonText="Start Selling Now"
           image={jetski3d}
         />
-        <ListingTable
-          tableFor="Your Listings"
-          hasSort={true}
-          hasPadding={true}
-          sellingListing={true}
-          tableHeader={sellingHeader}
-        />
+        <div className="pb-16">
+          <ListingTable
+            tableFor="Your Listings"
+            hasSort={true}
+            hasPadding={true}
+            sellingListing={true}
+            tableHeader={sellingHeader}
+          />
+        </div>
         {/* <ListingTable
           tableFor="Your Listings"
           hasSearch={true}
@@ -42,6 +52,15 @@ export default function Dashboard() {
           tableHeader={dashboardHeader}
           dashboardListing={true}
         /> */}
+        <VideoBtn onClick={() => openModal(setIsVideoOpen)} />
+        <Modal
+          isOpen={isVideoOpen}
+          onClose={() => closeModal(setIsVideoOpen)}
+          opacity="bg-opacity-40"
+          width="w-6/12"
+        >
+          <VideoModal />
+        </Modal>
       </Layout>
     </>
   );

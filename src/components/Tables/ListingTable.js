@@ -7,6 +7,11 @@ import CustomDropdownMenu from "../CustomDropdownMenu";
 import ListingMenu from "../Selling/ListingMenu";
 import Modal from "../Modal";
 import CounterOffer from "../Offers/CounterOffer";
+import {
+  closeModal,
+  openModal,
+} from "../../utils/ModalOpeningClosingFunctions";
+import DeleteListingModal from "../Selling/DeleteListingModal";
 
 const ListingTable = ({
   hasSort,
@@ -19,15 +24,13 @@ const ListingTable = ({
   sellingListing,
   tableFor,
 }) => {
-  let [isOpen, setIsOpen] = useState(false);
+  let [isOfferOpen, setIsOfferOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
-  function closeModal() {
-    setIsOpen(false);
-  }
-
-  function openModal() {
-    setIsOpen(true);
-  }
+  // Callback function to update isDeleteModalOpen state
+  const handleDeleteModalOpen = (isOpen) => {
+    setIsDeleteModalOpen(isOpen);
+  };
 
   return (
     <>
@@ -199,7 +202,11 @@ const ListingTable = ({
                             color="#0D1A8B"
                           />
                         }
-                        children={<ListingMenu />}
+                        children={
+                          <ListingMenu
+                            openDeleteModal={handleDeleteModalOpen}
+                          />
+                        }
                       />
                     </td>
                   </tr>
@@ -257,7 +264,7 @@ const ListingTable = ({
                           {reject}
                         </button>
                         <button
-                          onClick={openModal}
+                          onClick={() => openModal(setIsOfferOpen)}
                           className="bg-[#FFB800] flex items-center justify-center w-9 h-9 text-white rounded-full"
                         >
                           {counterOffer}
@@ -272,12 +279,20 @@ const ListingTable = ({
         </table>
       </div>
       <Modal
-        isOpen={isOpen}
-        onClose={closeModal}
+        isOpen={isOfferOpen}
+        onClose={() => closeModal(setIsOfferOpen)}
         opacity="bg-opacity-40"
         padding="p-6"
       >
-        <CounterOffer onClose={closeModal} />
+        <CounterOffer onClose={() => closeModal(setIsOfferOpen)} />
+      </Modal>
+      <Modal
+        isOpen={isDeleteModalOpen}
+        onClose={() => closeModal(setIsDeleteModalOpen)}
+        opacity="bg-opacity-40"
+        padding="p-6"
+      >
+        <DeleteListingModal onClick={() => closeModal(setIsDeleteModalOpen)} />
       </Modal>
     </>
   );

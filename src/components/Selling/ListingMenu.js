@@ -1,28 +1,55 @@
 import { Menu } from "@headlessui/react";
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
 import { links } from "../../utils/DummyData";
+import {
+  closeModal,
+  openModal,
+} from "../../utils/ModalOpeningClosingFunctions";
+import Modal from "../Modal";
+import DeleteListingModal from "./DeleteListingModal";
 
-const ListingMenu = () => {
+const ListingMenu = ({ openDeleteModal }) => {
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  console.log(isDeleteModalOpen);
+
+  // Function to open the delete modal
+  const handleDeleteButtonClick = () => {
+    // Invoke the callback function with the desired prop value
+    openDeleteModal(true);
+  };
   return (
     <>
-      <Menu.Items className="absolute bg-white custom-shadow rounded-lg px-4 pb-4 right-14 ">
-        {links.map((link) => (
-          /* Use the `active` state to conditionally style the active item. */
-          <Menu.Item key={link.href} as={Fragment}>
-            {({ active }) => (
-              <Link
-                to={link.href}
-                className={`flex items-center gap-4  ${
-                  link.colorChange ? "text-[#FC4040]" : "text-[#11133D]"
-                } text-base font-medium mt-4`}
-              >
-                {link.label}
-              </Link>
-            )}
-          </Menu.Item>
-        ))}
-      </Menu.Items>
+      <div>
+        <Menu.Items className="absolute bg-white custom-shadow rounded-lg px-4 pb-4 right-7 ">
+          {links.map(({ href, colorChange, label, onClick }) => (
+            /* Use the `active` state to conditionally style the active item. */
+            <Menu.Item key={href} as={Fragment}>
+              {({ active }) =>
+                onClick ? (
+                  <p
+                    onClick={handleDeleteButtonClick}
+                    className={`flex cursor-pointer items-center gap-4  ${
+                      colorChange ? "text-[#FC4040]" : "text-[#11133D]"
+                    } text-base font-medium mt-4`}
+                  >
+                    {label}
+                  </p>
+                ) : (
+                  <Link
+                    to={href}
+                    className={`flex items-center gap-4  ${
+                      colorChange ? "text-[#FC4040]" : "text-[#11133D]"
+                    } text-base font-medium mt-4`}
+                  >
+                    {label}
+                  </Link>
+                )
+              }
+            </Menu.Item>
+          ))}
+        </Menu.Items>
+      </div>
     </>
   );
 };

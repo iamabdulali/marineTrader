@@ -12,7 +12,7 @@ const Subscriptions = ({
 }) => {
   return (
     <div
-      className={`bg-white shadow-[7px] w-4/12 border-t-4 relative py-6 px-5 ${borderColor}`}
+      className={`bg-white shadow-[7px] w-6/12 border-t-4 relative py-6 px-5 ${borderColor}`}
     >
       <p className="text-[#11133D] font-bold text-3xl ">
         {packagePrice}

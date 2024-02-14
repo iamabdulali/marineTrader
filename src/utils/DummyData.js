@@ -516,6 +516,7 @@ export const links = [
       </>
     ),
     colorChange: false,
+    onClick: false,
   },
   {
     href: "/selling/buildAd",
@@ -525,6 +526,7 @@ export const links = [
       </>
     ),
     colorChange: false,
+    onClick: false,
   },
   {
     href: "/selling",
@@ -534,5 +536,6 @@ export const links = [
       </>
     ),
     colorChange: true,
+    onClick: true,
   },
 ];

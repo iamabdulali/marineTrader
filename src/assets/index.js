@@ -53,6 +53,8 @@ import premiumSearchResult from "./Premium.png";
 import featuredSearchResult from "./Feature.png";
 import success from "./success.png";
 import error from "./error.png";
+import stackIcon from "./stack-icon.png";
+import deleteIcon from "./delete-icon.png";
 
 export {
   jetskiIcon,
@@ -110,4 +112,6 @@ export {
   featuredSearchResult,
   success,
   error,
+  stackIcon,
+  deleteIcon,
 };
