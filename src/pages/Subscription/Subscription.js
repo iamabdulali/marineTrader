@@ -22,9 +22,10 @@ const Subscription = () => {
         </Link> */}
       </div>
       <p className="font-semibold text-sm text-[#11133D] my-3">
-        Select A Category
+        Select a category to see their plans
       </p>
       <CategoryList
+        initialCategory={-1}
         className="flex lg:w-full min-h-[80px] justify-between px-4 bg-white border-2 rounded-lg border-[#D9DFF5] w-[1300px]"
         activeCategory="border-b-4 border-[#0D1A8B] py-3"
         unActiveCategory="py-3"
@@ -39,8 +40,9 @@ const Subscription = () => {
         Subscription For {category}
       </p>
       {hasSubscription ? (
-        <CurrentSubscription isStandard={false} featuresArray={ServicePlus} />
+        <SubscriptionStep2 selectedCategory={category} />
       ) : (
+        // <CurrentSubscription isStandard={false} featuresArray={ServicePlus} />
         <SubscriptionStep2 selectedCategory={category} />
       )}
     </Layout>
