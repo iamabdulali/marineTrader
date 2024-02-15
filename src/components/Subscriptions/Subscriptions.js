@@ -1,6 +1,7 @@
 import React from "react";
 import { FaCheck } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { star } from "../../assets";
 
 const Subscriptions = ({
   featuresArray,
@@ -20,9 +21,19 @@ const Subscriptions = ({
           {subHeading}
         </span>
       </p>
-      <p className={`${textColor} font-semibold text-xl mt-3 mb-5`}>
+      <p className={`${textColor} font-semibold text-2xl mt-3 `}>
         {packageName}
       </p>
+      {packageName == "Dealer Plus" ? (
+        <span className="text-[#8891B2] font-medium text-sm my-2 block">
+          Includes 180 Ads/year
+        </span>
+      ) : (
+        <span className="text-[#8891B2] opacity-0 pointer-events-none font-medium text-sm my-2 block">
+          Includes 180 Ads/year
+        </span>
+      )}
+
       <div className="flex gap-4 border-t-2 pt-6 w-full">
         <div className="bg-[#1A84FF] w-full text-white rounded-lg p-4 text-center">
           <p>Standard</p>
@@ -40,11 +51,17 @@ const Subscriptions = ({
       <div className="mt-8 min-h-80">
         {featuresArray.map(({ id, featureName, standOut }) => {
           return (
-            <div key={id} className="flex gap-4 font-medium mt-5">
-              <p className="bg-[#e1f4ec] rounded-full  h-6 w-6 flex items-center justify-center">
+            <div
+              key={id}
+              className={`${standOut ? "font-semibold" : ""} flex gap-4  mt-5`}
+            >
+              <p
+                className={`bg-[#e1f4ec] rounded-full  h-6 w-6 flex items-center justify-center`}
+              >
                 <FaCheck color="#36B37E" size={10} />
               </p>
               {featureName}
+              {standOut ? <img className="w-6" src={star} /> : ""}
             </div>
           );
         })}
