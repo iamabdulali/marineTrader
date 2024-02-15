@@ -15,6 +15,12 @@ import {
 import { AuthContext } from "../../Context/AuthContext";
 import Payment from "../Payment/Payment";
 import { Link } from "react-router-dom";
+import Modal from "../../components/Modal";
+import PaymentOptionModal from "../../components/BuildAdSteps/AdComponents/PaymentOptionModal";
+import {
+  closeModal,
+  openModal,
+} from "../../utils/ModalOpeningClosingFunctions";
 
 const BuildAd = () => {
   const [step, setStep] = useState(1);
@@ -64,7 +70,7 @@ const BuildAd = () => {
   };
   const prevStep = () => setStep(step - 1);
   const nextStep = () => setStep(step + 1);
-
+  const [isPaymentOptionOpen, setIsPaymentOptionOpen] = useState(false);
   // const nextStep = (values, { setTouched, setErrors }) => {
   //   try {
   //     // Validate only the fields for steps 2 to 6
@@ -214,8 +220,9 @@ const BuildAd = () => {
                     Next
                   </button>
                 ) : (
-                  <Link
-                    to="/payments"
+                  <button
+                    to="/"
+                    onClick={() => openModal(setIsPaymentOptionOpen)}
                     // type="submit"
                     // disabled={!isValid}
                     className={`bg-[#0D1A8B] text-white p-3 rounded-md inline-block text-center w-28  ${
@@ -223,10 +230,18 @@ const BuildAd = () => {
                     }`}
                   >
                     List Item
-                  </Link>
+                  </button>
                 )}
               </div>
             </div>
+            <Modal
+              isOpen={isPaymentOptionOpen}
+              onClose={() => closeModal(setIsPaymentOptionOpen)}
+              opacity="bg-opacity-40"
+              width="w-1/3"
+            >
+              <PaymentOptionModal />
+            </Modal>
           </Form>
         )}
       </Formik>

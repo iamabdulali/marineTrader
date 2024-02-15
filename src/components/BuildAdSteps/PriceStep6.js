@@ -51,7 +51,6 @@ const PriceStep6 = ({ setFieldValue, values }) => {
               Enter Pricing information
             </label>
           </div>
-
           <div className="radio">
             <Field
               name="priceOnInformation"
