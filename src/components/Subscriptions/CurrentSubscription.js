@@ -7,6 +7,7 @@ const CurrentSubscription = ({
   packageDuration,
   isStandard,
   featuresArray,
+  category,
 }) => {
   const dynamicClasses = isStandard
     ? "border-[#1565D8] text-[#1565d8]"
@@ -46,7 +47,8 @@ const CurrentSubscription = ({
         )}
       </div>
       <p className="font-medium text-[#11133D] mb-5">
-        <span className="text-[#8891B2]  ">Category: </span>Jet Ski
+        <span className="text-[#8891B2]  ">Category: </span>
+        {category}
       </p>
       <div className="mb-8 mt-5 grid grid-cols-4 text-[#183B56] gap-y-3">
         {featuresArray.map(({ id, featureName, standOut }) => {

@@ -50,7 +50,11 @@ const Subscription = () => {
             Subscription For {category}
           </p>
 
-          <CurrentSubscription isStandard={false} featuresArray={ServicePlus} />
+          <CurrentSubscription
+            category={category}
+            isStandard={false}
+            featuresArray={ServicePlus}
+          />
         </div>
       ) : (
         <SubscriptionStep2 selectedCategory={category} />
