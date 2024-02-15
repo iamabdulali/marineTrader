@@ -2,6 +2,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import React from "react";
 import PaymentForm from "../../components/Payment/PaymentForm";
+import { Form, Formik } from "formik";
 
 const Payment = () => {
   const stripe = loadStripe(
@@ -9,7 +10,9 @@ const Payment = () => {
   );
   return (
     <Elements stripe={stripe}>
-      <PaymentForm></PaymentForm>
+      <Formik>
+        <PaymentForm></PaymentForm>
+      </Formik>
     </Elements>
   );
 };

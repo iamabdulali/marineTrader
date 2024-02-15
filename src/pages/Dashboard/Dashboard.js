@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import VerticalMenu from "../../components/verticalMenu/VerticalMenu";
 import Header from "../../components/Header/Header";
 import PackageMessage from "../../components/Notifications/PackageMessage";
-import { jetski3d, packageIcon } from "../../assets";
+import { jetski3d, packageIcon, speakerIcon } from "../../assets";
 import { FaCross, FaTimes } from "react-icons/fa";
 import WelcomeMessage from "../../components/Notifications/WelcomeMessage";
 import ListingTable from "../../components/Tables/ListingTable";
@@ -22,6 +22,16 @@ export default function Dashboard() {
     <>
       <Layout>
         {" "}
+        <PackageMessage
+          className="bg-[#E7F1FA] mb-3 border-l-[6px] border-[#0D1A8B] flex items-center justify-between p-4 rounded-xl font-medium shadow-[3px]"
+          image={speakerIcon}
+          content="We have just launched our Premium Pro Package! Go and explore it’s
+          benefits."
+          icon={<FaTimes color="#fff" />}
+          hasLink={true}
+          LinkText="Check Now!"
+          linkClass="underline font-bold text-[#0D1A8B]"
+        />
         <PackageMessage
           className="bg-white flex items-center justify-between p-4 rounded-xl font-medium shadow-[3px]"
           image={packageIcon}
