@@ -394,8 +394,9 @@ export const StandardTrade = [
 export const DealerPlus = [
   {
     id: 1,
-    featureName: "15 Ads/Month",
+    featureName: "Ads/Month",
     standOut: true,
+    numberOfAds: 15,
   },
   {
     id: 2,

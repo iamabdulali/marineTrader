@@ -24,7 +24,7 @@ const Subscriptions = ({
       <p className={`${textColor} font-semibold text-2xl mt-3 `}>
         {packageName}
       </p>
-      {packageName == "Dealer Plus" ? (
+      {packageName == "Dealer Plus" || "Broker Plus" ? (
         <span className="text-[#8891B2] font-medium text-sm my-2 block">
           Includes 180 Ads/year
         </span>
@@ -50,20 +50,40 @@ const Subscriptions = ({
       </div>
       <div className="mt-8 min-h-80">
         {featuresArray.map(({ id, featureName, standOut }) => {
-          return (
-            <div
-              key={id}
-              className={`${standOut ? "font-semibold" : ""} flex gap-4  mt-5`}
-            >
-              <p
-                className={`bg-[#e1f4ec] rounded-full  h-6 w-6 flex items-center justify-center`}
+          if (featureName === "Ads/Month") {
+            // If the feature is "Ads/Month", display the appropriate number of ads based on the package
+            return (
+              <div
+                key={id}
+                className={`${standOut ? "font-semibold" : ""} flex gap-4 mt-5`}
               >
-                <FaCheck color="#36B37E" size={10} />
-              </p>
-              {featureName}
-              {standOut ? <img className="w-6" src={star} /> : ""}
-            </div>
-          );
+                <p
+                  className={`bg-[#e1f4ec] rounded-full h-6 w-6 flex items-center justify-center`}
+                >
+                  <FaCheck color="#36B37E" size={10} />
+                </p>
+                {packageName === "Dealer Plus" ? 15 : 25} {featureName}
+                {/* Display the appropriate number of ads */}
+                {standOut ? <img className="w-6" src={star} alt="star" /> : ""}
+              </div>
+            );
+          } else {
+            // For other features, display them as usual
+            return (
+              <div
+                key={id}
+                className={`${standOut ? "font-semibold" : ""} flex gap-4 mt-5`}
+              >
+                <p
+                  className={`bg-[#e1f4ec] rounded-full h-6 w-6 flex items-center justify-center`}
+                >
+                  <FaCheck color="#36B37E" size={10} />
+                </p>
+                {featureName}
+                {standOut ? <img className="w-6" src={star} alt="star" /> : ""}
+              </div>
+            );
+          }
         })}
       </div>
       <Link
