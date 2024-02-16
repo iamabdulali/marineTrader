@@ -24,13 +24,17 @@ const Subscriptions = ({
       <p className={`${textColor} font-semibold text-2xl mt-3 `}>
         {packageName}
       </p>
-      {packageName == "Dealer Plus" || "Broker Plus" ? (
+      {packageName == "Dealer Plus" ? (
         <span className="text-[#8891B2] font-medium text-sm my-2 block">
           Includes 180 Ads/year
         </span>
+      ) : packageName == "Broker Plus" ? (
+        <span className="text-[#8891B2]  pointer-events-none font-medium text-sm my-2 block">
+          Includes 300 Ads/year
+        </span>
       ) : (
         <span className="text-[#8891B2] opacity-0 pointer-events-none font-medium text-sm my-2 block">
-          Includes 180 Ads/year
+          Includes 300 Ads/year
         </span>
       )}
 
