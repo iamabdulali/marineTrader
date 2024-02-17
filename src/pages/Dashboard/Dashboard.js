@@ -23,7 +23,7 @@ export default function Dashboard() {
       <Layout>
         {" "}
         <PackageMessage
-          className="bg-[#E7F1FA] mb-3 border-l-[6px] border-[#0D1A8B] flex items-center justify-between p-4 rounded-xl font-medium shadow-[3px]"
+          className="bg-[#E7F1FA] mb-3 border-l-[6px] border-[#0D1A8B] flex items-center justify-between p-4 rounded-xl font-medium shadow-[3px] "
           image={speakerIcon}
           content="We have just launched our Premium Pro Package! Go and explore it’s
           benefits."
@@ -39,13 +39,13 @@ export default function Dashboard() {
           icon={<FaTimes color="#fff" />}
         />
         <WelcomeMessage
-          className="text-white flex justify-between p-10 mt-5 rounded-xl"
+          className="text-white flex justify-between md:p-10 sm:py-7 sm:px-7 p-5 mt-5 rounded-xl md:items-stretch items-center"
           heading="Welcome to Trade Seller Dashboard"
           subHeading="Let’s get it started & Create your listings."
           buttonText="Start Selling Now"
           image={jetski3d}
         />
-        <div className="pb-16">
+        <div className="pb-40">
           <ListingTable
             tableFor="Your Listings"
             hasSort={true}
@@ -67,7 +67,7 @@ export default function Dashboard() {
           isOpen={isVideoOpen}
           onClose={() => closeModal(setIsVideoOpen)}
           opacity="bg-opacity-40"
-          width="w-6/12"
+          width="xl:w-6/12 sm:w-10/12 w-full"
         >
           <VideoModal />
         </Modal>

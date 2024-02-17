@@ -16,13 +16,15 @@ const BuyerLayout = ({ children, showCategoryList }) => {
     <>
       <Header />
       {showCategoryList ? (
-        <CategoryList
-          className="flex lg:w-full  justify-between px-24 mt-3 mb-6 w-[1300px]"
-          activeCategory="border-b-4 border-[#0D1A8B] py-4"
-          unActiveCategory="py-4"
-          onCategoryChange={onCategoryChange}
-          onCategoryClick={() => {}}
-        />
+        <div className="overflow-x-scroll category-menu">
+          <CategoryList
+            className="flex lg:w-full  justify-between px-24 mt-3 mb-6 smallLg:w-auto w-[1300px]"
+            activeCategory="border-b-4 border-[#0D1A8B] py-4"
+            unActiveCategory="py-4"
+            onCategoryChange={onCategoryChange}
+            onCategoryClick={() => {}}
+          />
+        </div>
       ) : (
         ""
       )}

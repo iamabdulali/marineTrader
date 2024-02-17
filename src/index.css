@@ -140,3 +140,8 @@ code {
 .modal-slider .slick-list {
   height: 95vh;
 }
+
+.category-menu::-webkit-scrollbar {
+  display: none;
+  width: 0;
+}

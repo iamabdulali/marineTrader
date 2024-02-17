@@ -14,17 +14,19 @@ const PackageMessage = ({
   return (
     <div className={className}>
       <div className="flex items-center gap-3">
-        <img src={image} className="w-10" />
-        <p>{content}</p>
-        {hasLink ? (
-          <Link to={LinkPath} className={linkClass}>
-            {LinkText}
-          </Link>
-        ) : (
-          ""
-        )}
+        <img src={image} className="sm:w-10 w-7 inline-block" />
+        <p className="inline-block mr-1 sm:text-base text-sm">
+          {content}{" "}
+          {hasLink ? (
+            <Link to={LinkPath} className={linkClass}>
+              {LinkText}
+            </Link>
+          ) : (
+            ""
+          )}
+        </p>
       </div>
-      <p className="w-7 h-7 cursor-pointer bg-[#ff0000] flex items-center justify-center rounded-full">
+      <p className="min-w-7 min-h-7 cursor-pointer bg-[#ff0000] flex items-center justify-center rounded-full">
         {icon}
       </p>
     </div>

@@ -56,6 +56,7 @@ import error from "./error.png";
 import stackIcon from "./stack-icon.png";
 import deleteIcon from "./delete-icon.png";
 import speakerIcon from "./speaker.png";
+import bars from "./bars.png";
 
 export {
   jetskiIcon,
@@ -116,4 +117,5 @@ export {
   stackIcon,
   deleteIcon,
   speakerIcon,
+  bars,
 };

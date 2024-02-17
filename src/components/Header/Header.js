@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { FaChevronDown, FaGlobe } from "react-icons/fa";
+import { FaBars, FaChevronDown, FaGlobe, FaHamburger } from "react-icons/fa";
 import {
+  bars,
   flagUsa,
   logo,
   notificationIcon,
@@ -25,11 +26,19 @@ const Header = () => {
   return (
     <div
       className={`bg-white  py-7 flex gap-6 items-center ${
-        isLogged ? "justify-end px-10" : "justify-between border-b-2 px-24"
+        isLogged
+          ? "justify-between sm:px-10 px-6"
+          : "justify-between border-b-2 px-24"
       }`}
     >
       {isLogged ? (
-        ""
+        <>
+          <img
+            className="sm:w-6 w-5 cursor-pointer"
+            src={bars}
+            alt="hamburger-menu"
+          />
+        </>
       ) : (
         <div className="flex items-center gap-16">
           <img src={logo} className="w-28" />
@@ -94,10 +103,10 @@ const Header = () => {
         {isLogged ? (
           <div className="flex items-center space-x-4 mr-7">
             <Link to="/offers">
-              <img src={offerIcon} className="w-10" />
+              <img src={offerIcon} className="sm:w-10 w-8" />
             </Link>
             <Link to="/notifications">
-              <img src={notificationIcon} className="w-10" />
+              <img src={notificationIcon} className="sm:w-10 w-8" />
             </Link>
           </div>
         ) : (
@@ -123,8 +132,11 @@ const Header = () => {
               className="flex items-center space-x-2 focus:outline-none"
             >
               <div className="flex items-center justify-start gap-3 text-left">
-                <img src={userProfile} className="w-10" />
-                <div>
+                <img
+                  src={userProfile}
+                  className="w-10 sm:rounded-none rounded-full"
+                />
+                <div className="hidden sm:block">
                   <span className="text-[#151D48] items-center font-semibold text-left flex">
                     Musfiq <FaChevronDown className="ml-16" size={12} />
                   </span>

@@ -7,7 +7,7 @@ const Layout = ({ children }) => {
     <div className="bg-[#f6f6f6] min-h-screen">
       <Header />
       <VerticalMenu />
-      <div className="ml-72 py-8 px-8">{children}</div>
+      <div className="xl:ml-72 ml-0 py-8 sm:px-8 px-4">{children}</div>
     </div>
   );
 };

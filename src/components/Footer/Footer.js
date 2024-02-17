@@ -11,10 +11,10 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-[#11133D] text-white mt-28 ">
-      <div className="px-24 mx-auto flex flex-wrap py-20 gap-4 justify-between">
+    <footer className="bg-[#11133D] text-white mt-28">
+      <div className="smallLg:px-24 px-5 mx-auto flex lg:flex-row flex-col smallLg:py-20 py-10 gap-4 justify-between">
         {/* Column 1 */}
-        <div className="w-full sm:w-1/2 md:w-1/4 lg:w-1/4 mb-4 sm:mb-0 text-left">
+        <div className="w-full lg:w-1/4 mb-4 sm:mb-0 text-left">
           <img src={whiteLogo} alt="Logo" className="mb-4 w-32" />
           <p className="text-sm leading-loose">
             MarineTrader is a website designed for boat sellers to list and
@@ -64,7 +64,7 @@ const Footer = () => {
         </div>
 
         {/* Column 4 */}
-        <div className="w-full sm:w-1/2 md:w-1/4 lg:w-1/3">
+        <div className="w-full lg:w-1/3 lg:mt-0 mt-2">
           <h4 className="text-lg font-semibold mb-4">Newsletter</h4>
           <div className="flex items-center relative mb-4">
             <input
@@ -78,13 +78,15 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      <div className="flex items-center justify-between px-24 py-7 border-t-[1px] border-white">
-        <p>© 2023 Copyright Marine Trader</p>
-        <div className="flex items-center gap-5">
-          <Link>Privacy</Link>
-          <Link>Terms Of Services</Link>
+      <div className="flex md:flex-row flex-col md:items-center justify-between smallLg:px-24 px-5 py-7 border-t-[1px] border-white">
+        <p className="md:order-[0] order-1">© 2023 Copyright Marine Trader</p>
+        <div className="flex items-center gap-5 md:justify-normal justify-between md:mb-0 mb-7">
+          <div className="flex md:flex-row flex-col gap-3">
+            <Link>Privacy</Link>
+            <Link>Terms Of Services</Link>
+          </div>
           <div className="relative inline-block mr-7">
-            <div className="flex items-center gap-7">
+            <div className="flex items-center gap-7 ">
               <button
                 onClick={toggleLanguageDropdown}
                 className="flex items-center space-x-2 focus:outline-none"

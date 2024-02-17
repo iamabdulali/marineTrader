@@ -33,27 +33,29 @@ export default function Selling() {
         <p className="font-semibold text-[#11133D] my-5">
           Select a category to list
         </p>
-
-        <CategoryList
-          initialCategory={-1}
-          className="flex lg:w-full min-h-[80px] mt-5 justify-between px-4 bg-white border-2 rounded-lg border-[#D9DFF5] w-[1300px]"
-          activeCategory="border-b-4 border-[#0D1A8B] py-3"
-          unActiveCategory="py-3"
-          onCategoryChange={(category) => {
-            setCategory(category);
-            setHasListing(false);
-          }}
-          onCategoryClick={() => {}}
-        />
-
-        {hasListing ? (
-          <ListingTable
-            tableFor="Your Listings"
-            hasSort={true}
-            hasPadding={true}
-            sellingListing={true}
-            tableHeader={sellingHeader}
+        <div className="overflow-x-scroll category-menu">
+          <CategoryList
+            initialCategory={-1}
+            className="flex lg:w-full min-h-[80px] mt-5 justify-between px-4 bg-white border-2 rounded-lg border-[#D9DFF5] smallLg:w-auto w-[1300px]"
+            activeCategory="border-b-4 border-[#0D1A8B] py-3"
+            unActiveCategory="py-3"
+            onCategoryChange={(category) => {
+              setCategory(category);
+              setHasListing(false);
+            }}
+            onCategoryClick={() => {}}
           />
+        </div>
+        {hasListing ? (
+          <div className="pb-40">
+            <ListingTable
+              tableFor="Your Listings"
+              hasSort={true}
+              hasPadding={true}
+              sellingListing={true}
+              tableHeader={sellingHeader}
+            />
+          </div>
         ) : (
           <div>
             <p className="font-semibold text-[#11133D] my-5">

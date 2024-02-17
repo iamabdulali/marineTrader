@@ -21,9 +21,9 @@ const SortDropdown = () => {
         onClick={toggleDropdown}
         className="flex items-center bg-white py-2 px-3 rounded-md"
       >
-        <p className="text-sm font-semibold flex items-center gap-2 text-[#696E9D]">
+        <p className="text-sm  font-semibold flex items-center gap-2 text-[#696E9D]">
           <img src={sortIcon} className="w-6" />
-          Sort By:
+          <span className="hidden sm:block"> Sort By:</span>
         </p>
         <span className="text-[#696E9D] text-sm ml-2">
           {selectedOption === "lowToHigh"
