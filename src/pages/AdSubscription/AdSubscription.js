@@ -68,14 +68,14 @@ export default function AdSubscription() {
           featuresArray={adsubscriptionFeaturedFeatures}
         />
       </div>
-      <div className="">
+      <div>
         <Tabs
-          className="lg:hidden block border-2 mt-8 border-b-0 rounded-md"
+          className="lg:hidden justify-between block border-2 mt-8  rounded-md"
           tabs={tabs}
           selectedTab={selectedTab}
           handleTabClick={handleTabClick}
         />
-        <div className=" py-10">
+        <div className="lg:hidden block py-10">
           {selectedTab === "standard" && (
             <AdSubscriptionComponent
               packageName="Standard"
