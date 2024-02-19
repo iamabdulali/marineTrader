@@ -83,7 +83,7 @@ const AdSubscriptionComponent = ({
       >
         {variantStyles.ribbon ? (
           <img
-            className="absolute w-32 -top-1 left-0"
+            className="absolute 2xl:w-32 sm:w-32 lg:w-20 w-20 -top-1 left-0"
             src={variantStyles.ribbonImage}
           />
         ) : (
@@ -135,7 +135,7 @@ const AdSubscriptionComponent = ({
           isOpen={isSearchResultOpen}
           onClose={() => closeModal(setIsSearchResultOpen)}
           opacity="bg-opacity-40"
-          width="w-1/2"
+          width="lg:w-1/2 sm:w-10/12 w-full"
           padding="p-6"
         >
           <img src={variantStyles.searchResult} />
@@ -143,7 +143,7 @@ const AdSubscriptionComponent = ({
       </div>
       <div className="py-10 px-10">
         <p className="text-[#171923] font-semibold">{packageHeading}</p>
-        <div className="mt-6  justify-between pr-20">
+        <div className="mt-6  justify-between 2xl:pr-20">
           <div>{renderFeatures(featuresArray.slice(0, 3))}</div>
           {featuresArray.length > 3 && (
             <div>{renderFeatures(featuresArray.slice(3, 6))}</div>
