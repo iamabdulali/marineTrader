@@ -59,7 +59,7 @@ const SubscriptionStep2 = ({ selectedCategory }) => {
       </div>
       <div>
         <Tabs
-          className="lg:hidden justify-around block border-2 mt-8  rounded-md"
+          className="lg:hidden bg-white justify-around block border-2 mt-8  rounded-md"
           tabs={tabs}
           selectedTab={selectedTab}
           handleTabClick={handleTabClick}

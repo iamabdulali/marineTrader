@@ -70,7 +70,7 @@ export default function AdSubscription() {
       </div>
       <div>
         <Tabs
-          className="lg:hidden justify-between block border-2 mt-8  rounded-md"
+          className="lg:hidden bg-white justify-between block border-2 mt-8  rounded-md"
           tabs={tabs}
           selectedTab={selectedTab}
           handleTabClick={handleTabClick}
