@@ -12,6 +12,7 @@ import {
   openModal,
 } from "../../utils/ModalOpeningClosingFunctions";
 import DeleteListingModal from "../Selling/DeleteListingModal";
+import { FaCheck, FaDollarSign, FaTimes } from "react-icons/fa";
 
 const ListingTable = ({
   hasSort,
@@ -217,7 +218,7 @@ const ListingTable = ({
                   )
                 )}
               </tbody>
-              <div className="smallLg:hidden grid  gap-4">
+              <div className="smallLg:hidden grid gap-4">
                 {sellingData.map(
                   ({
                     id,
@@ -247,7 +248,7 @@ const ListingTable = ({
                             {price}
                           </span>
                         </p>
-                        <p className="text-[#8891B2] font-medium mt-2">
+                        <p className="text-[#8891B2] font-medium mt-4">
                           {" "}
                           Ad Expires Date:{" "}
                           <span className="text-[#696E9D] font-semibold">
@@ -312,67 +313,148 @@ const ListingTable = ({
               </div>
             </>
           ) : (
-            <tbody>
-              {/* Map through the array to dynamically render rows */}
-              {OffersData.map(
-                ({
-                  id,
-                  image,
-                  itemName,
-                  accept,
-                  reject,
-                  offerAmount,
-                  price,
-                  buyerName,
-                  telephone,
-                  email,
-                  counterOffer,
-                }) => (
-                  <tr
-                    key={id}
-                    className="bg-white border-b-[20px] shadow-[25px] border-[#f6f6f6] text-sm text-[#696E9D]"
-                  >
-                    <td className="py-4 px-4 whitespace-nowrap">
-                      <div className="flex items-center gap-2">
-                        <img
-                          src={image}
-                          alt="Item"
-                          className="w-16 h-16 object-cover rounded-lg mr-2"
-                        />
-                        <div>
-                          <p className="text-[#11133D] font-semibold text-base mb-1">
-                            {itemName}
+            <>
+              <tbody className="smallLg:table-row-group hidden">
+                {/* Map through the array to dynamically render rows */}
+                {OffersData.map(
+                  ({
+                    id,
+                    image,
+                    itemName,
+                    offerAmount,
+                    price,
+                    buyerName,
+                    telephone,
+                    email,
+                  }) => (
+                    <tr
+                      key={id}
+                      className="bg-white border-b-[20px] shadow-[25px] border-[#f6f6f6] text-sm text-[#696E9D]"
+                    >
+                      <td className="py-4 px-4 whitespace-nowrap">
+                        <div className="flex items-center gap-2">
+                          <img
+                            src={image}
+                            alt="Item"
+                            className="w-16 h-16 object-cover rounded-lg mr-2"
+                          />
+                          <div>
+                            <p className="text-[#11133D] font-semibold text-base mb-1">
+                              {itemName}
+                            </p>
+                            <p>{price}</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="py-4 px-4">{buyerName}</td>
+                      <td className="py-4 px-4">{email}</td>
+                      <td className="py-4 px-4">{telephone}</td>
+                      <td className="py-4 px-4">
+                        <p className="font-semibold">{offerAmount}</p>
+                      </td>
+                      <td className="py-4 px-4">
+                        <div className="flex gap-3 font-semibold items-center justify-center">
+                          <button className="bg-[#36B37E] flex items-center justify-center w-9 h-9 text-white rounded-full">
+                            <FaCheck />
+                          </button>
+                          <button className="bg-[#FF4A6B] flex items-center justify-center w-9 h-9 text-white rounded-full">
+                            <FaTimes />
+                          </button>
+                          <button
+                            onClick={() => openModal(setIsOfferOpen)}
+                            className="bg-[#FFB800] flex items-center justify-center w-9 h-9 text-white rounded-full"
+                          >
+                            <FaDollarSign />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  )
+                )}
+              </tbody>
+              <div className="smallLg:hidden grid gap-4">
+                {OffersData.map(
+                  ({
+                    id,
+                    image,
+                    itemName,
+                    offerAmount,
+                    price,
+                    buyerName,
+                    telephone,
+                    email,
+                  }) => (
+                    <div
+                      key={id}
+                      className="bg-white sm:text-base text-sm block rounded-lg sm:flex gap-4 w-full p-4"
+                    >
+                      <img
+                        src={image}
+                        alt="Item"
+                        className="sm:w-4/12 w-full object-cover rounded-lg sm:mr-2 mb-4"
+                      />
+                      <div className="sm:w-8/12 w-full">
+                        <p className="text-[#11133D] font-semibold text-xl mb-2">
+                          {itemName}
+                        </p>
+                        <div className="flex justify-between items-center">
+                          <p className="text-[#8891B2] font-medium">
+                            Price:
+                            <span className="text-[#696E9D] font-semibold">
+                              {" "}
+                              {price}
+                            </span>
                           </p>
-                          <p>{price}</p>
+                          <p className="text-[#11133D] font-semibold">
+                            Offer Price:
+                            <span className="text-[#11133D] font-semibold">
+                              {" "}
+                              {offerAmount}
+                            </span>
+                          </p>
+                        </div>
+                        <p className="text-[#8891B2] font-medium mt-4">
+                          {" "}
+                          Buyer Name:{" "}
+                          <span className="text-[#696E9D] font-semibold">
+                            {buyerName}
+                          </span>
+                        </p>
+                        {/* <td className="py-4 px-4">{packageName}</td> */}
+                        <p className="text-[#8891B2] font-medium mt-4">
+                          Email:{" "}
+                          <span className="text-[#696E9D] font-semibold">
+                            {" "}
+                            {email}
+                          </span>
+                        </p>
+                        <p className="text-[#8891B2] font-medium mt-4">
+                          Telephone:{" "}
+                          <span className="text-[#696E9D] font-semibold">
+                            {" "}
+                            {telephone}
+                          </span>
+                        </p>
+                        <div className="flex gap-3 font-semibold items-center mt-4">
+                          <button className="bg-[#36B37E] p-3 rounded-md flex items-center justify-center text-white w-full">
+                            <FaCheck size={20} />
+                          </button>
+                          <button className="bg-[#FF4A6B] p-3 rounded-md flex items-center justify-center text-white w-full">
+                            <FaTimes size={20} />
+                          </button>
+                          <button
+                            onClick={() => openModal(setIsOfferOpen)}
+                            className="bg-[#FFB800] flex p-3 rounded-md items-center justify-center text-white w-full"
+                          >
+                            <FaDollarSign size={20} />
+                          </button>
                         </div>
                       </div>
-                    </td>
-                    <td className="py-4 px-4">{buyerName}</td>
-                    <td className="py-4 px-4">{email}</td>
-                    <td className="py-4 px-4">{telephone}</td>
-                    <td className="py-4 px-4">
-                      <p className="font-semibold">{offerAmount}</p>
-                    </td>
-                    <td className="py-4 px-4">
-                      <div className="flex gap-3 font-semibold items-center justify-center">
-                        <button className="bg-[#36B37E] flex items-center justify-center w-9 h-9 text-white rounded-full">
-                          {accept}
-                        </button>
-                        <button className="bg-[#FF4A6B] flex items-center justify-center w-9 h-9 text-white rounded-full">
-                          {reject}
-                        </button>
-                        <button
-                          onClick={() => openModal(setIsOfferOpen)}
-                          className="bg-[#FFB800] flex items-center justify-center w-9 h-9 text-white rounded-full"
-                        >
-                          {counterOffer}
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                )
-              )}
-            </tbody>
+                    </div>
+                  )
+                )}
+              </div>
+            </>
           )}
         </table>
       </div>
