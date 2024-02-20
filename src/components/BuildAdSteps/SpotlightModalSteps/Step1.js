@@ -113,14 +113,14 @@ const Step1 = ({ showSpotlightSelection, setFieldValue, values }) => {
     }
 
     return (
-      <div className="px-8">
-        <div className="text-[#0D1A8B] text-xl font-bold flex justify-between ">
+      <div className="sm:px-8 px-5">
+        <div className="text-[#0D1A8B] smallLg:text-xl text-base font-bold flex justify-between ">
           <p>Your SpotLight Selections</p>
           <p className="uppercase">
             Total: £{calculateTotal(selectedCountries).toFixed(2)}
           </p>
         </div>
-        <table className="w-full text-left bg-[#f9f9f9] border-collapse border border-[#D8D8D8] mt-4">
+        <table className="w-full sm:text-base text-sm text-left bg-[#f9f9f9] border-collapse border border-[#D8D8D8] mt-4">
           <thead>
             <tr className="text-[#8891B2] border-b-2">
               <th className="py-2 px-4 font-medium">Countries</th>
@@ -141,28 +141,29 @@ const Step1 = ({ showSpotlightSelection, setFieldValue, values }) => {
         ) : (
           <div className="py-5">
             {}
-            <div className="text-[#0D1A8B] text-xl font-bold flex justify-between px-8">
-              <p>Select Countries From The List:</p>
+            <div className="text-[#0D1A8B] smallLg:text-xl text-base font-bold flex justify-between sm:px-8 px-5">
+              <p className="pr-3">Select Countries From The List:</p>
               <p className="uppercase">
-                Total: £{calculateTotal(selectedCountries).toFixed(2)}
+                <span className="sm:inline-block hidden">Total:</span> £
+                {calculateTotal(selectedCountries).toFixed(2)}
               </p>
             </div>
-            <div className="px-8">
+            <div className="sm:px-8 px-5">
               <CheckboxGroup
                 setFieldValue={setFieldValue}
                 values={values}
-                className="grid grid-cols-4 gap-5"
+                className="grid smallLg:grid-cols-4 sm:grid-cols-2 gap-5"
                 facilities={selectedCountries}
                 name="countries"
                 checkedProp={true}
                 onChangeProp={handleCountryChange}
               />
 
-              <div className="text-[#0D1A8B] text-xl font-bold mt-12">
+              <div className="text-[#0D1A8B] smallLg:text-xl text-base font-bold mt-12">
                 <p>Select Continents From The List:</p>
               </div>
               <CheckboxGroup
-                className="grid grid-cols-4 gap-5"
+                className="grid smallLg:grid-cols-4 sm:grid-cols-2 gap-5"
                 facilities={selectedContinents}
                 name="continents"
                 onChange={handleContinentChange}

@@ -63,17 +63,21 @@ const PaymentForm = ({ setFieldValue, values }) => {
     <>
       <Layout>
         <Heading content="Payment Details" />
-        <div className="flex gap-7">
-          <div className="w-1/2">
+        <div className="flex smallLg:flex-row flex-col gap-7">
+          <div className="smallLg:w-1/2 w-full">
             <PaymentSummary />
             <div className="bg-[#1CBF73] flex flex-col mt-8 p-5 rounded-lg w-full ">
               <div className="flex items-center gap-5">
-                <img src={diamondImage} alt="diamond" className="w-14" />
-                <p className="flex text-xl items-center text-white font-semibold">
+                <img
+                  src={diamondImage}
+                  alt="diamond"
+                  className="sm:w-14 w-10"
+                />
+                <p className="flex sm:text-xl text-base items-center text-white font-semibold">
                   Available Upgrades <FaArrowRight className="ml-5" size={20} />
                 </p>
               </div>
-              <div className="flex items-center mt-7 gap-5">
+              <div className="flex sm:flex-row flex-col items-center mt-7 gap-5 sm:text-base text-sm">
                 <button
                   onClick={() => openModal(setIsSpotlightOpen)}
                   type="button"
@@ -91,7 +95,7 @@ const PaymentForm = ({ setFieldValue, values }) => {
               </div>
             </div>
           </div>
-          <div className="w-1/2">
+          <div className="smallLg:w-1/2 w-full">
             <form
               onSubmit={handlePaymentSubmit}
               className="bg-white shadow-[7px] rounded-md p-6 mt-6 w-full"
@@ -196,21 +200,21 @@ const PaymentForm = ({ setFieldValue, values }) => {
               </button>
             </form>
             <div className="bg-[#1C5DBF] text-white p-6 mt-8 shadow-[7px]">
-              <p className="text-2xl font-semibold">
+              <p className="sm:text-2xl text-base font-semibold">
                 <img
-                  className="inline-block w-10"
+                  className="inline-block w-10 sm:mr-0 mr-3"
                   src={stackIcon}
                   alt="stackIcon"
                 />{" "}
                 Allowances/Bundles
               </p>
-              <div className="flex items-center justify-between border-b-2 border-white mt-4 pb-3">
+              <div className="flex items-center sm:text-base text-sm justify-between border-b-2 border-white mt-4 pb-3">
                 <p>Inclusive Monthly Allowance</p>
-                <p className="font-medium text-lg">15</p>
+                <p className="font-medium sm:text-lg text-base">15</p>
               </div>
-              <div className="flex items-center justify-between mt-3">
+              <div className="flex items-center sm:text-base text-sm justify-between mt-3">
                 <p>Bundle Balance</p>
-                <p className="font-medium text-lg">9</p>
+                <p className="font-medium sm:text-lg text-base">9</p>
               </div>
             </div>
           </div>
@@ -220,7 +224,7 @@ const PaymentForm = ({ setFieldValue, values }) => {
         isOpen={isSpotlightOpen}
         onClose={() => closeModal(setIsSpotlightOpen)}
         opacity="bg-opacity-40"
-        width="w-9/12"
+        width="xl:w-9/12 w-full"
       >
         <SpotlightModal
           value={values}

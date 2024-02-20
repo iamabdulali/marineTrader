@@ -36,9 +36,9 @@ const CategoryDropdown = ({ onSubmit, category }) => {
       validationSchema={categoryDropdownValidationSchema}
       onSubmit={handleSubmit}
     >
-      <Form className="bg-white shadow-md rounded-lg px-8 w-full py-8 mb-4">
+      <Form className="bg-white shadow-md rounded-lg sm:px-8 px-4 w-full py-8 mb-4">
         <div className="mb-4">
-          <div className="flex gap-4">
+          <div className="flex lg:flex-row flex-col lg:gap-4 gap-0">
             <CategorySelectDropdown
               label="Category"
               name="category"
@@ -51,7 +51,7 @@ const CategoryDropdown = ({ onSubmit, category }) => {
             />
           </div>
 
-          <div className="flex gap-4">
+          <div className="flex lg:flex-row flex-col lg:gap-4 gap-0">
             <CategorySelectDropdown
               label="Model"
               name="model"
@@ -63,7 +63,7 @@ const CategoryDropdown = ({ onSubmit, category }) => {
               options={["Type1", "Type2", "Type3"]}
             />
           </div>
-          <div className="flex gap-4">
+          <div className="flex lg:flex-row flex-col lg:gap-4 gap-0">
             <CategorySelectDropdown
               label="Condition"
               name="condition"

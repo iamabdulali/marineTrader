@@ -27,24 +27,27 @@ const HeroSection = () => {
   }
 
   return (
-    <div className="relative">
-      <img src={backgroundImg} className="max-h-[670px] object-cover w-full" />
-      <div className="absolute top-1/4  pl-24">
+    <div className="relative hero-section-div bg-cover w-full lg:bg-top">
+      <img
+        src={backgroundImg}
+        className="min-h-[657px] object-cover w-full lg:block hidden"
+      />
+      <div className="lg:absolute top-1/4 2xl:px-24 sm:px-10 px-6 lg:py-0 py-10">
         <p className="text-white mb-3 flex items-center gap-3">
           {" "}
           <span className="bg-[#FFB800] h-[2px] w-12 inline-block"></span> Buy
           and Sell {selectedCategory || "Jet Skis"}
         </p>
-        <p className="text-white text-5xl font-bold leading-tight">
+        <p className="text-white sm:text-5xl text-4xl font-bold sm:leading-tight">
           Freedom is Just <br /> An Anchor{" "}
           <span className="text-[#FFB800]">Away</span>
         </p>
-        <p className="text-white w-6/12 mt-3">
+        <p className="text-white lg:w-6/12 w-full mt-3">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit
           tellus, luctus nec ullamcorper mattis.
         </p>
       </div>
-      <div className="absolute right-20 top-[17%] w-5/12">
+      <div className="lg:absolute right-20 top-[17%] lg:w-5/12 w-full lg:px-0 sm:px-10 px-6 lg:py-0 sm:py-10 pb-10 pt-0">
         <CategoryDropdown
           onSubmit={handleFormSubmit}
           category={selectedCategory}

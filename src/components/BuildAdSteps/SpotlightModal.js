@@ -11,11 +11,11 @@ const SpotlightModal = ({ onClick, setFieldValue, values }) => {
         setFieldValue={setFieldValue}
         showSpotlightSelection={showSpotlightSelection}
       />
-      <div className="text-right pr-8 py-8">
+      <div className="text-right sm:pl-0 pl-4 sm:pr-8 pr-4 py-8 flex justify-end sm:flex-row flex-col gap-5">
         <button
           type="button"
           onClick={onClick}
-          className="bg-[#8891B2] text-white py-3 px-7 mr-5 rounded-md min-w-[120px]"
+          className="bg-[#8891B2] text-white py-3 px-7  rounded-md min-w-[120px]"
         >
           Close
         </button>
@@ -23,7 +23,7 @@ const SpotlightModal = ({ onClick, setFieldValue, values }) => {
           <button
             type="button"
             onClick={() => setShowSpotlightSelection(false)}
-            className="bg-[#8891B2] text-white py-3 px-7 mr-5 rounded-md min-w-[120px]"
+            className="bg-[#8891B2] text-white py-3 px-7  rounded-md min-w-[120px]"
           >
             Add More
           </button>

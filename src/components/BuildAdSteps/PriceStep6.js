@@ -169,7 +169,7 @@ const PriceStep6 = ({ setFieldValue, values }) => {
         isOpen={isSpotlightOpen}
         onClose={() => closeModal(setIsSpotlightOpen)}
         opacity="bg-opacity-40"
-        width="w-9/12"
+        width="xl:w-9/12 w-full"
       >
         <SpotlightModal
           value={values}

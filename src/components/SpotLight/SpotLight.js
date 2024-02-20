@@ -10,9 +10,9 @@ const SpotLight = () => {
         heading="In The Spotlight"
         buttonText="View All"
         to="/"
-        className="px-24"
+        className="2xl:px-24 sm:px-10 px-6"
       />
-      <div className="px-24 mt-5 grid grid-cols-4 gap-10">
+      <div className="2xl:px-24 sm:px-10 px-6 mt-5 grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-10">
         {SpotLightListingsData.map(
           ({ listingType, listingName, listingPrice, isFeatured, id }) => (
             <SpotLightListings
@@ -35,9 +35,9 @@ const SpotLight = () => {
         heading="Latest News"
         buttonText="View All"
         to="/"
-        className="mt-16 px-24"
+        className="mt-16 2xl:px-24 sm:px-10 px-6"
       />
-      <div className="px-24 mt-10 grid grid-cols-3 gap-10">
+      <div className="2xl:px-24 sm:px-10 px-6 mt-10 grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-10">
         {newsData.map(({ id, newsDate, newsTitle, isNews, thumbnail }) => (
           <SpotLightListings
             key={id}

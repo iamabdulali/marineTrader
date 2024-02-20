@@ -231,7 +231,10 @@ const ListingTable = ({
                     views,
                     ad,
                   }) => (
-                    <div className="bg-white sm:text-base text-sm block rounded-lg sm:flex gap-4 w-full p-4">
+                    <div
+                      key={id}
+                      className="bg-white sm:text-base text-sm block rounded-lg sm:flex gap-4 w-full p-4"
+                    >
                       <img
                         src={image}
                         alt="Item"

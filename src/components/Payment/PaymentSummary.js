@@ -4,7 +4,7 @@ const PaymentSummary = () => {
   return (
     <div className="bg-white shadow-[7px] rounded-md p-6 mt-6 w-full">
       <p className="text-[#11133D] font-semibold text-xl">Summary</p>
-      <div className="mt-4">
+      <div className="mt-4 sm:text-base text-sm">
         <div className=" flex items-center justify-between">
           <p className="text-[#696E9D]">Subscription:</p>
           <p className="text-[#11133D] font-semibold">Broker Plus</p>
