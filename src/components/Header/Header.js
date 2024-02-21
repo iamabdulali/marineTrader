@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { FaBars, FaChevronDown, FaGlobe, FaHamburger } from "react-icons/fa";
 import {
   bars,
@@ -9,11 +9,19 @@ import {
   userProfile,
 } from "../../assets";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../Context/AuthContext";
 
-const Header = () => {
+const Header = ({ menuState, setMenuState }) => {
   const [languageDropdownOpen, setLanguageDropdownOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [isLogged, setIsLogged] = useState(true);
+  const { sidebarOpen, dispatch } = useContext(AuthContext);
+
+  // Function to toggle sidebarOpen
+  const toggleSidebar = () => {
+    // Dispatching the action to toggle sidebarOpen
+    dispatch({ type: "TOGGLE_SIDEBAR" });
+  };
 
   const toggleLanguageDropdown = () => {
     setLanguageDropdownOpen(!languageDropdownOpen);
@@ -21,6 +29,11 @@ const Header = () => {
 
   const toggleUserMenu = () => {
     setUserMenuOpen(!userMenuOpen);
+  };
+
+  const toggleMenu = () => {
+    // Example logic to toggle menu state
+    setMenuState(!menuState);
   };
 
   return (
@@ -34,6 +47,10 @@ const Header = () => {
       {isLogged ? (
         <>
           <img
+            onClick={() => {
+              toggleSidebar();
+              toggleMenu();
+            }}
             className="sm:w-6 w-5 cursor-pointer"
             src={bars}
             alt="hamburger-menu"
