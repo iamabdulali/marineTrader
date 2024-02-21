@@ -3,7 +3,11 @@ import React from "react";
 
 const SelectDropdown = ({ label, id, options, options2, name }) => {
   return (
-    <div className={`flex flex-col ${label == "Price" ? "w-6/12" : "w-3/12"}`}>
+    <div
+      className={`flex flex-col ${
+        label == "Price" ? "smallLg:w-6/12" : "smallLg:w-3/12"
+      }`}
+    >
       <label className="text-[#8891B2] mb-2 text-sm" htmlFor={id}>
         {label}
       </label>

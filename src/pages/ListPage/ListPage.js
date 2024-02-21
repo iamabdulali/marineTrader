@@ -31,15 +31,15 @@ const ListPage = () => {
   };
   return (
     <BuyerLayout showCategoryList={true}>
-      <div className="px-24">
+      <div className="2xl:px-24 sm:px-10 px-4">
         <SearchFilter />
         <div className="flex items-center justify-between mb-8">
-          <p className="text-2xl text-[#11133D] font-semibold">
+          <p className="md:text-2xl text-xl text-[#11133D] font-semibold">
             Jet Ski For Sale
           </p>
           <select
             id="sort-dropdown"
-            className="border-2  text-sm border-[#C8C8C8] rounded-lg px-5 py-3 text-[#8891B2]"
+            className="border-2  text-sm border-[#C8C8C8] rounded-lg md:px-5 md:py-3 px-3 py-2 text-[#8891B2]"
             name="sortLists"
           >
             <option>Sort By</option>

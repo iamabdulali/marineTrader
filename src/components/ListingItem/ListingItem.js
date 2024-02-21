@@ -44,10 +44,10 @@ const ListingItem = ({ itemData }) => {
           itemData.featured
             ? "bg-[#FEF9EE] border-4 mt-11 border-[#FFB800]"
             : "bg-[#F9FBFE]"
-        } rounded-lg px-5 py-5 block`}
+        } rounded-lg sm:px-5 sm:py-5 p-4 block`}
       >
-        <div className={`flex  gap-5 `}>
-          <div className="w-2/12 relative">
+        <div className={`flex md:flex-row flex-col gap-5 `}>
+          <div className="lg:w-2/12 md:w-4/12 w-full relative">
             <Slider {...sliderSettings} className="list-slider">
               <img
                 className="rounded-lg min-h-56 max-h-56 object-cover"
@@ -72,60 +72,76 @@ const ListingItem = ({ itemData }) => {
           </div>
 
           {/* Right Side - Item Details */}
-          <div className="w-10/12 ">
+          <div className="lg:w-10/12 md:w-8/12">
             {/* Item Heading */}
             <div className="flex justify-between items-center">
               <div className="flex items-center gap-4">
-                <h2 className="text-xl text-[#11133D] font-semibold">
+                <h2 className="md:text-xl text-base text-[#11133D] font-semibold">
                   {itemData.heading}
                 </h2>
-                <p className="bg-white shadow-2xl flex items-center justify-center custom-shadow rounded-full w-7 h-7">
+                <p className="bg-white md:flex hidden shadow-2xl  items-center justify-center custom-shadow rounded-full w-7 h-7">
                   <FaHeart color="#8891B2" />
                 </p>
               </div>
               <div>
-                <p className="font-semibold text-[#11133D] text-xl">$12,000</p>
-                <p className="text-[#8891B2]">Tax Not Paid</p>
+                <p className="font-semibold text-[#11133D] md:text-xl text-base">
+                  $12,000
+                </p>
+                <p className="text-[#8891B2] md:text-base text-sm">
+                  Tax Not Paid
+                </p>
               </div>
             </div>
 
             {/* Item Description */}
-            <p className="text-[#696E9D] w-9/12">{itemData.description}</p>
+            <p className="text-[#696E9D] lg:w-9/12 lg:mt-0 mt-5 w-full md:text-base text-sm">
+              {itemData.description}
+            </p>
 
             {/* List of Features */}
-            <div className="flex mt-6 gap-5 w-full">
+            <div className="flex mt-6 gap-5 w-full lg:flex-nowrap flex-wrap">
               <div className="flex gap-3">
                 <FaTools size={20} color="#8891B2" />
                 <div>
-                  <p className="text-[#11133D] font-medium">Make</p>
+                  <p className="text-[#11133D] font-medium md:text-base text-sm">
+                    Make
+                  </p>
                   <p className="text-[#696E9D] text-sm">{itemData.make}</p>
                 </div>
               </div>
               <div className="flex gap-3">
                 <FaShip size={20} color="#8891B2" />
                 <div>
-                  <p className="text-[#11133D] font-medium">Model</p>
+                  <p className="text-[#11133D] font-medium md:text-base text-sm">
+                    Model
+                  </p>
                   <p className="text-[#696E9D] text-sm">{itemData.model}</p>
                 </div>
               </div>
               <div className="flex gap-3">
                 <FaCog size={20} color="#8891B2" />
                 <div>
-                  <p className="text-[#11133D] font-medium">Condition</p>
+                  <p className="text-[#11133D] font-medium md:text-base text-sm">
+                    Condition
+                  </p>
                   <p className="text-[#696E9D] text-sm">{itemData.condition}</p>
                 </div>
               </div>
               <div className="flex gap-3">
                 <FaCalendarAlt size={20} color="#8891B2" />
                 <div>
-                  <p className="text-[#11133D] font-medium">Year</p>
+                  <p className="text-[#11133D] font-medium md:text-base text-sm">
+                    Year
+                  </p>
                   <p className="text-[#696E9D] text-sm">{itemData.year}</p>
                 </div>
               </div>
               <div className="flex gap-3">
                 <FaCalendarAlt size={20} color="#8891B2" />
                 <div>
-                  <p className="text-[#11133D] font-medium">Hours</p>
+                  <p className="text-[#11133D] font-medium md:text-base text-sm">
+                    Hours
+                  </p>
                   <p className="text-[#696E9D] text-sm">{itemData.hours} Hrs</p>
                 </div>
               </div>
@@ -133,7 +149,7 @@ const ListingItem = ({ itemData }) => {
             </div>
 
             {/* Tags */}
-            <div className="flex mt-8 gap-4">
+            <div className="flex lg:flex-nowrap flex-wrap mt-8 gap-4">
               {itemData.tags.map((tag, index) => (
                 <span
                   key={index}
@@ -146,7 +162,7 @@ const ListingItem = ({ itemData }) => {
           </div>
         </div>
         <div
-          className={`flex justify-between items-center mt-8 ${
+          className={`flex justify-between sm:items-center mt-8 sm:flex-row flex-col ${
             itemData.sellerInfo ? "border-t-2 pt-6 pb-3" : ""
           }`}
         >
@@ -170,7 +186,7 @@ const ListingItem = ({ itemData }) => {
             ""
           )}
           <div
-            className={`flex justify-end items-center gap-3 ${
+            className={`flex justify-end items-center gap-3 sm:mt-0 mt-5 ${
               itemData.sellerInfo ? "" : "w-full"
             }`}
           >
