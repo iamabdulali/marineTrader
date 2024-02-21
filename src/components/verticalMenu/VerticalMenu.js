@@ -39,7 +39,12 @@ const VerticalMenu = ({ menuState, setMenuState }) => {
             </Link>
           </div>
           <nav>
-            <ul>
+            <ul
+              onClick={() => {
+                toggleSidebar();
+                toggleMenu();
+              }}
+            >
               <li className="mb-4">
                 <NavLink
                   to="/dashboard"
