@@ -1,19 +1,3 @@
-// import React from "react";
-
-// const Modal = ({ children, className, opacity }) => {
-//   return (
-//     <div className={`fixed inset-0 w-full h-screen bg-black z-10 ${opacity}`}>
-//       <div
-//         className={`max-h-screen overflow-y-auto absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 ${className} bg-white z-20 rounded-tr-lg rounded-tl-lg rounded-br-lg rounded-bl-lg`}
-//       >
-//         {children}
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Modal;
-
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 
@@ -21,7 +5,7 @@ export default function Modal({ children, isOpen, onClose, width, padding }) {
   return (
     <>
       <Transition appear show={isOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={onClose}>
+        <Dialog as="div" className="relative z-[30]" onClose={onClose}>
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"

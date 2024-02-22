@@ -22,8 +22,10 @@ const BundlesModal = ({ onClick }) => {
           bgColor="bg-[#F7FAFF]"
           BundleName="BASIC"
           adverts="20"
-          price="19.79"
+          price="16.79"
           checkbox="basic-bundle"
+          hasDiscount={true}
+          oldPrice="19.79"
         />
         <Bundles
           bundleNameColor="text-[#36B37E]"
@@ -40,8 +42,10 @@ const BundlesModal = ({ onClick }) => {
           bgColor="bg-[#FFFCF6]"
           BundleName="ADVANCED"
           adverts="100"
-          price="99.00"
+          price="79.00"
           checkbox="advanced-bundle"
+          hasDiscount={true}
+          oldPrice="99.00"
         />
         <Bundles
           bundleNameColor="text-[#9D13B4]"

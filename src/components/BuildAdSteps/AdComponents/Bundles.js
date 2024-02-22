@@ -9,21 +9,39 @@ const Bundles = ({
   price,
   checkbox,
   bundleBorder,
+  hasDiscount,
+  oldPrice,
 }) => {
   return (
     <div
-      className={`${bgColor} mb-5 flex items-center justify-between py-7 px-7 border-l-[6px] ${bundleBorder} rounded-lg`}
+      className={`${bgColor} mb-5 flex items-center justify-between py-9 sm:px-7 px-4 sm:border-l-[6px] border-l-[4px] ${bundleBorder} rounded-lg`}
     >
-      <p className={`${bundleNameColor} text-lg font-semibold min-w-44`}>
+      <p
+        className={`${bundleNameColor} sm:text-lg text-sm font-semibold  sm:min-w-44 sm:mr-0 mr-2`}
+      >
         {BundleName} Bundle
       </p>
-      <p className="text-[#11133D] font-semibold">{adverts} Adverts</p>
-      <p className="font-semibold">£{price}</p>
+      <p className="text-[#11133D] font-semibold sm:text-base text-xs">
+        {adverts} Adverts
+      </p>
+      {hasDiscount ? (
+        <div className="flex items-center gap-3 relative">
+          <p className="text-xs text-[#8891B2] font-medium line-through">
+            {oldPrice}
+          </p>
+          <p className="font-semibold sm:text-sm text-xs">£{price}</p>
+          <p className="bg-[#FFB800] absolute text-[#11133D] min-w-16 right-0 -top-8 font-semibold text-xs py-1 px-2 rounded-md">
+            20% Off
+          </p>
+        </div>
+      ) : (
+        <p className="font-semibold sm:text-base text-xs">£{price}</p>
+      )}
       <Field
         type="checkbox"
         name="bundles"
         value={checkbox}
-        className="w-[25px] h-[25px]"
+        className="sm:w-[25px] sm:h-[25px] w-[20px] h-[20px] sm:ml-0 ml-2"
       />
     </div>
   );

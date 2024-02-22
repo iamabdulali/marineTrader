@@ -30,7 +30,7 @@ const VerticalMenu = ({ menuState, setMenuState }) => {
       {menuState ? (
         <div
           id="sidebar-menu"
-          className={`w-72 p-4 pb-20 bg-white fixed top-0 bottom-0 overflow-y-scroll z-20 text-sm xl:block `}
+          className={`w-72 p-4 pb-20 bg-white fixed top-0 bottom-0 overflow-y-scroll z-[20] text-sm xl:block `}
         >
           <div className="flex justify-center mb-16">
             <Link to="/">

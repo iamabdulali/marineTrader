@@ -22,7 +22,7 @@ const ItemDescriptionStep2 = () => {
         className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
       />
       <UpdateSubtitleNotice />
-      <div className="flex gap-4">
+      <div className="flex sm:flex-row flex-col gap-4">
         <CategorySelectDropdown
           label="Make"
           name="make"
@@ -35,7 +35,7 @@ const ItemDescriptionStep2 = () => {
         />
       </div>
 
-      <div className="flex gap-4">
+      <div className="flex sm:flex-row flex-col  gap-4">
         <CategorySelectDropdown
           label="Year"
           name="year"
@@ -47,7 +47,7 @@ const ItemDescriptionStep2 = () => {
           options={["Condition1", "Condition2", "Condition3"]}
         />
       </div>
-      <div className="flex gap-4">
+      <div className="flex sm:flex-row flex-col gap-4">
         <CategorySelectDropdown
           label="Color"
           name="color"
@@ -59,7 +59,7 @@ const ItemDescriptionStep2 = () => {
           options={["Service1", "Service2", "Service3"]}
         />
       </div>
-      <div className="flex gap-4">
+      <div className="flex sm:flex-row flex-col  gap-4">
         <CategorySelectDropdown
           label="Passenger"
           name="passenger"
@@ -71,7 +71,7 @@ const ItemDescriptionStep2 = () => {
           options={["Length1", "Length2", "Length3"]}
         />
       </div>
-      <div className="flex gap-4">
+      <div className="flex sm:flex-row flex-col  gap-4">
         <CategorySelectDropdown
           label="Hours"
           name="hours"

@@ -37,7 +37,7 @@ const PriceStep6 = ({ setFieldValue, values }) => {
         <p className="text-[#11133D] font-semibold border-t-2 pt-4">
           Set Your Price
         </p>
-        <div className="flex mt-5 text-sm">
+        <div className="flex sm:flex-row flex-col gap-5 mt-5 text-sm ">
           <div className="radio">
             <Field
               name="priceOnInformation"
@@ -66,7 +66,7 @@ const PriceStep6 = ({ setFieldValue, values }) => {
           </div>
         </div>
         {priceInfoType === "enterInfo" ? (
-          <div className="flex mt-5 gap-4">
+          <div className="flex mt-5 md:gap-4 gap-0 md:flex-row flex-col">
             <CategorySelectDropdown
               label="Currency"
               name="currency"
@@ -84,8 +84,8 @@ const PriceStep6 = ({ setFieldValue, values }) => {
             />
           </div>
         ) : (
-          <div className="text-sm mt-5  text-[#11133D] bg-[#FFE8E8] py-7 px-7 rounded-lg">
-            <p className="flex items-center gap-4 text-[#FC4040] font-bold text-xl">
+          <div className="text-sm mt-5  text-[#11133D] bg-[#FFE8E8] py-7 sm:px-7 px-4 rounded-lg">
+            <p className="flex items-center gap-4 text-[#FC4040] font-bold sm:text-xl text-base">
               <img src={warningIcon} className="w-10" alt="warningIcon" />
               Please Note By Selecting POA:
             </p>
@@ -106,14 +106,14 @@ const PriceStep6 = ({ setFieldValue, values }) => {
         )}
 
         <CheckboxGroup
-          className="flex gap-5"
+          className="flex gap-5 smallLg:flex-nowrap flex-wrap"
           name="facilities"
           facilities={facilities}
           checkedProp={false}
         />
         <div className="mt-6 pt-6 border-t-2">
           <div className="flex items-center justify-between">
-            <p className="text-[#0D1A8B] font-semibold capitalize text-lg">
+            <p className="text-[#0D1A8B] font-semibold capitalize sm:text-lg text-sm">
               Available Upgrades
             </p>
             <button
@@ -132,25 +132,25 @@ const PriceStep6 = ({ setFieldValue, values }) => {
             home page and category page
           </p>
         </div>
-        <div className="bg-[#1CBF73] flex mt-8 p-5 rounded-lg justify-between items-center ">
+        <div className="bg-[#1CBF73] flex smallLg:flex-row flex-col mt-8 p-5 rounded-lg justify-between smallLg:items-center ">
           <div className="flex items-center gap-5">
             <img src={diamondImage} alt="diamond" className="w-14" />
-            <p className="flex items-center text-white font-semibold">
+            <p className="flex items-center text-white font-semibold ">
               Available Upgrades <FaArrowRight className="ml-5" size={20} />
             </p>
           </div>
-          <div className="flex items-center gap-5">
+          <div className="flex sm:flex-row flex-col items-center gap-5 smallLg:mt-0 mt-6">
             <button
               onClick={() => openModal(setIsSpotlightOpen)}
               type="button"
-              className="bg-[#FFB800] text-[#11133D] font-semibold py-3 px-6 rounded-md"
+              className="bg-[#FFB800] text-[#11133D] font-semibold py-3 rounded-md xl:px-6 px-4 smallLg:w-auto w-full sm:text-base text-sm"
             >
               Home Page Spotlight
             </button>
             <button
               onClick={() => openModal(setIsSpotlightOpen)}
               type="button"
-              className="bg-white text-[#11133D] font-semibold py-3 px-6 rounded-md"
+              className="bg-white text-[#11133D] sm:text-base text-sm font-semibold py-3 xl:px-6 px-4 rounded-md smallLg:w-auto w-full"
             >
               Category Page Spotlight
             </button>
@@ -161,7 +161,7 @@ const PriceStep6 = ({ setFieldValue, values }) => {
         isOpen={isBundleOpen}
         onClose={() => closeModal(setIsBundleOpen)}
         opacity="bg-opacity-40"
-        width="w-6/12"
+        width="xl:w-6/12 w-full"
       >
         <BundlesModal onClick={() => closeModal(setIsBundleOpen)} />
       </Modal>

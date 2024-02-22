@@ -168,15 +168,6 @@ const BuildAd = () => {
           setFieldValue,
         }) => (
           <Form>
-            {" "}
-            {/* {step === 1 && (
-              <SelectCategoryStep1
-                multiSelect={false}
-                categoryChange={(category) =>
-                  handleCategoryChange(category, setFieldValue)
-                }
-              />
-            )} */}
             {step === 1 && <ItemDescriptionStep2 />}
             {step === 2 && <ItemFeaturesStep3 />}
             {step === 3 && <NotesSteps4 />}
@@ -185,27 +176,27 @@ const BuildAd = () => {
               <PriceStep6 values={values} setFieldValue={setFieldValue} />
             )}
             {/* Navigation buttons */}
-            <div className="flex align-center justify-between mt-10">
-              <div>
+            <div className="flex sm:flex-row flex-col-reverse align-center justify-between mt-10">
+              <div className="sm:w-auto w-full flex gap-5 items-center sm:flex-row flex-col sm:mt-0 mt-5">
                 <button
                   type="button"
-                  className="bg-white border-2 border-[#8891B2] text-[#8891B2] p-3 rounded-md w-28 text-sm font-medium mr-5"
+                  className="bg-white sm:order-none order-1 border-2 sm:w-28 w-full border-[#8891B2] text-[#8891B2] p-3 rounded-md  text-sm font-medium "
                 >
                   Cancel
                 </button>
                 <button
                   type="button"
-                  className="bg-white border-2 border-[#0D1A8B] text-[#0D1A8B] font-medium p-3 rounded-md text-sm"
+                  className="bg-white border-2 sm:w-auto w-full border-[#0D1A8B] text-[#0D1A8B] font-medium p-3 rounded-md text-sm"
                 >
                   Save To Draft
                 </button>
               </div>
-              <div className="text-right mr-8">
+              <div className="text-right flex items-center gap-5">
                 {step > 1 && (
                   <button
                     type="button"
                     onClick={prevStep}
-                    className="bg-[#8891B2] text-white p-3 rounded-md w-28 mr-5"
+                    className="bg-[#8891B2] sm:w-28 w-full  text-white p-3 rounded-md "
                   >
                     Back
                   </button>
@@ -215,7 +206,7 @@ const BuildAd = () => {
                   <button
                     type="button"
                     onClick={() => nextStep(values, { setTouched, setErrors })}
-                    className={`bg-[#0D1A8B] text-white p-3 rounded-md w-28`}
+                    className={`bg-[#0D1A8B] text-white p-3 rounded-md sm:w-28 w-full`}
                   >
                     Next
                   </button>
@@ -225,7 +216,7 @@ const BuildAd = () => {
                     onClick={() => openModal(setIsPaymentOptionOpen)}
                     // type="submit"
                     // disabled={!isValid}
-                    className={`bg-[#0D1A8B] text-white p-3 rounded-md inline-block text-center w-28  ${
+                    className={`bg-[#0D1A8B] text-white p-3 rounded-md inline-block text-center sm:w-28 w-full  ${
                       isValid ? "opacity-100" : "opacity-70"
                     }`}
                   >

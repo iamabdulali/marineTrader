@@ -8,7 +8,7 @@ const ItemFeaturesStep3 = () => {
   return (
     <>
       <BuildLayout heading="Items Features">
-        <div className="flex gap-4">
+        <div className="flex sm:flex-row flex-col  gap-4">
           <div className="w-full">
             <label className="block text-[#11133D] text-sm font-medium mb-2">
               Modifications
@@ -32,7 +32,7 @@ const ItemFeaturesStep3 = () => {
           />
         </div>
 
-        <div className="flex gap-4">
+        <div className="flex sm:flex-row flex-col  gap-4">
           <CategorySelectDropdown
             label="Convenience"
             name="convenience"
