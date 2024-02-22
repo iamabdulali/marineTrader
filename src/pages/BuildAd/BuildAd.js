@@ -229,7 +229,7 @@ const BuildAd = () => {
               isOpen={isPaymentOptionOpen}
               onClose={() => closeModal(setIsPaymentOptionOpen)}
               opacity="bg-opacity-40"
-              width="w-1/3"
+              width="lg:w-1/3"
             >
               <PaymentOptionModal />
             </Modal>

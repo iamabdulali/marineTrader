@@ -57,11 +57,11 @@ const ImageAndVideoHandler = ({
         <p className="text-[#11133D] font-semibold mb-3">{label}</p>
 
         {previews.length > 0 ? (
-          <div className="flex justify-start gap-7">
+          <div className="flex smallLg:flex-nowrap flex-wrap justify-start gap-7">
             {previews.map((preview, index) => (
               <div
                 key={index}
-                className="relative w-1/5 min-h-[154px] max-h-[154px] mt-5"
+                className="relative smallLg:w-1/5 sm:w-1/3 w-full min-h-[154px] max-h-[154px] mt-5"
               >
                 {fileType == "video/mp4" ? (
                   <video className="object-cover rounded-lg w-full min-h-[154px] max-h-[154px]">
@@ -84,7 +84,7 @@ const ImageAndVideoHandler = ({
                 </button>
               </div>
             ))}
-            <div className="border-2 relative rounded mt-5 border-[#0D1A8B] border-dashed flex items-center justify-center w-1/5 min-h-[154px] max-h-[154px]">
+            <div className="border-2 relative rounded mt-5 border-[#0D1A8B] border-dashed flex items-center justify-center smallLg:w-1/5 sm:w-1/3 w-full min-h-[154px] max-h-[154px]">
               {/* <p className="flex items-end text-[#8891B2]  mb-3 w-full justify-center">
             <img src={cloud} alt="upload" className="w-6 mr-3" /> Drag & drop{" "}
             {uploadingText}{" "}
