@@ -16,14 +16,16 @@ const Bundles = ({
     <div
       className={`${bgColor} mb-5 flex items-center justify-between py-9 sm:px-7 px-4 sm:border-l-[6px] border-l-[4px] ${bundleBorder} rounded-lg`}
     >
-      <p
-        className={`${bundleNameColor} sm:text-lg text-sm font-semibold  sm:min-w-44 sm:mr-0 mr-2`}
-      >
-        {BundleName} Bundle
-      </p>
-      <p className="text-[#11133D] font-semibold sm:text-base text-xs">
-        {adverts} Adverts
-      </p>
+      <div className="flex sm:items-center sm:gap-0 gap-2 sm:flex-row flex-col">
+        <p
+          className={`${bundleNameColor} sm:text-lg text-sm font-semibold  sm:min-w-56 sm:mr-0 mr-2`}
+        >
+          {BundleName} Bundle
+        </p>
+        <p className="text-[#11133D] font-semibold sm:text-base text-xs">
+          {adverts} Adverts
+        </p>
+      </div>
       {hasDiscount ? (
         <div className="flex items-center gap-3 relative">
           <p className="text-xs text-[#8891B2] font-medium line-through">
@@ -41,7 +43,7 @@ const Bundles = ({
         type="checkbox"
         name="bundles"
         value={checkbox}
-        className="sm:w-[25px] sm:h-[25px] w-[20px] h-[20px] sm:ml-0 ml-2"
+        className="sm:w-[25px] sm:h-[25px] min-w-[20px] min-h-[20px] sm:ml-0 ml-2"
       />
     </div>
   );
