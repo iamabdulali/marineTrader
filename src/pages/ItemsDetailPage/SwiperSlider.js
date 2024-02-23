@@ -109,7 +109,7 @@ const SwiperSlider = () => {
         </div>
       </div>
       {modalIsOpen && (
-        <div className="modal-overlay fixed z-[9999999] flex flex-col justify-center px-24 left-0 right-0 bg-black bg-opacity-85 top-0 bottom-0">
+        <div className="modal-overlay fixed z-[9999999] flex flex-col justify-center 2xl:px-24 sm:px-10 px-4 left-0 right-0 bg-black bg-opacity-85 top-0 bottom-0">
           <div className="modal-content h-[95vh] overflow-hidden">
             <Slider
               {...settings}
