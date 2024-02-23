@@ -15,10 +15,10 @@ const BusinessDetails = () => {
       <label className="block text-[#8891B2] text-sm font-medium">
         Selected Days
       </label>
-      <div className="flex gap-4 items-center mt-4">
+      <div className="flex gap-4 items-center mt-4 flex-wrap">
         {["Mon", "Tues", "Wed"].map((days) => {
           return (
-            <p className="bg-[#0D1A8B] text-white py-2 text-center min-w-24 px-4 rounded-lg">
+            <p className="bg-[#0D1A8B] smallLg:text-base text-sm text-white py-2 text-center min-w-24 px-4 rounded-lg">
               {days}
             </p>
           );
@@ -27,7 +27,7 @@ const BusinessDetails = () => {
       <label className="block mt-6 text-[#8891B2] text-sm font-medium">
         Opening Hours
       </label>
-      <div className="grid grid-cols-2 gap-4 mt-4">
+      <div className="grid sm:grid-cols-2 gap-4 mt-4 smallLg:text-base text-sm">
         <div className="flex items-center gap-6 font-medium">
           <p className="uppercase">MON</p>
           <p>12:00PM - 08:00PM</p>
@@ -52,11 +52,11 @@ const BusinessDetails = () => {
       <label className="block mt-6 text-[#8891B2] text-sm font-medium">
         Facilities
       </label>
-      <div className="grid grid-cols-3 mt-3 gap-4">
+      <div className="grid sm:grid-cols-3 mt-3 gap-4">
         {["Accmodation", "Delivery", "Showroom", "Shop", "Counter"].map(
           (facilities) => {
             return (
-              <p className="flex items-center gap-2 font-medium">
+              <p className="flex items-center gap-2 font-medium smallLg:text-base text-sm">
                 <FaCheck color="#0D1A8B" /> {facilities}
               </p>
             );

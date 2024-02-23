@@ -4,7 +4,7 @@ import { FormField } from "../../components/FormField";
 const ContactPersonDetails = () => {
   return (
     <>
-      <div className="flex gap-6 items-center">
+      <div className="flex sm:gap-6 items-center sm:flex-row flex-col">
         <FormField
           label="First Name"
           FieldType="text"

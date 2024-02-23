@@ -61,12 +61,12 @@ const UserInfo = () => {
           Edit
         </p>
       </div>
-      <div className="mt-6 flex rounded-lg bg-white min-h-screen">
-        <div className="w-4/12 bg-[#EDF1FE] rounded-tl-lg rounded-bl-lg">
+      <div className="mt-6 flex smallLg:flex-row flex-col rounded-lg bg-white min-h-screen">
+        <div className="smallLg:w-4/12 w-full bg-[#EDF1FE] smallLg:rounded-tl-lg smallLg:rounded-bl-lg smallLg:mb-0 mb-4">
           <div className="relative">
             <img
               src={coverPhotoSrc || coverPhoto}
-              className="min-h-[270px] object-cover"
+              className="min-h-[270px] smallLg:max-h-[270px] max-h-[450px] w-full object-cover"
             />
             <label
               htmlFor="coverPhotoInput"
@@ -104,12 +104,15 @@ const UserInfo = () => {
             />
           </div>
         </div>
-        <div className="w-8/12">
-          <Tabs
-            tabs={tabs}
-            selectedTab={selectedTab}
-            handleTabClick={handleTabClick}
-          />
+        <div className="smallLg:w-8/12 w-full overflow-x-hidden">
+          <div className="sm:overflow-x-hidden overflow-x-scroll userProfileTab">
+            <Tabs
+              tabs={tabs}
+              selectedTab={selectedTab}
+              handleTabClick={handleTabClick}
+              className="xl:text-base text-sm sm:w-auto w-[700px]"
+            />
+          </div>
           <div className="tab-content px-6 py-10">
             {selectedTab === "companyInfo" && <CompanyInfo />}
             {selectedTab === "businessDetails" && <BusinessDetails />}

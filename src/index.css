@@ -157,7 +157,8 @@ code {
 }
 
 .category-menu::-webkit-scrollbar,
-.tabs-div::-webkit-scrollbar {
+.tabs-div::-webkit-scrollbar,
+.userProfileTab::-webkit-scrollbar {
   display: none;
   width: 0;
 }

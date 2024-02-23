@@ -4,7 +4,7 @@ import { FormField } from "../../components/FormField";
 const CompanyInfo = () => {
   return (
     <>
-      <div className="flex gap-6 items-center">
+      <div className="flex sm:gap-6 items-center sm:flex-row flex-col">
         <FormField
           label="Username"
           FieldType="text"
@@ -20,7 +20,7 @@ const CompanyInfo = () => {
           name="companyName"
         />
       </div>
-      <div className="flex gap-6 items-center">
+      <div className="flex sm:gap-6 items-center sm:flex-row flex-col">
         <FormField
           label="Building Number"
           FieldType="text"
@@ -36,7 +36,7 @@ const CompanyInfo = () => {
           name="streetName"
         />
       </div>
-      <div className="flex gap-6 items-center">
+      <div className="flex sm:gap-6 items-center sm:flex-row flex-col">
         <FormField
           label="Town/City"
           FieldType="text"
@@ -52,7 +52,7 @@ const CompanyInfo = () => {
           name="postalCode"
         />
       </div>
-      <div className="flex gap-6 items-center">
+      <div className="flex sm:gap-6 items-center sm:flex-row flex-col">
         <FormField
           label="Country"
           FieldType="text"
@@ -68,7 +68,7 @@ const CompanyInfo = () => {
           name="region"
         />
       </div>
-      <div className="flex gap-6 items-center">
+      <div className="flex sm:gap-6 items-center sm:flex-row flex-col">
         <FormField
           label="Phone Number"
           FieldType="tel"
@@ -84,7 +84,7 @@ const CompanyInfo = () => {
           name="currency"
         />
       </div>
-      <div className="flex gap-6 items-center">
+      <div className="flex sm:gap-6 items-center sm:flex-row flex-col">
         <FormField
           label="Email"
           FieldType="email"
