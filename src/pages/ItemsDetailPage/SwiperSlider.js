@@ -43,20 +43,20 @@ const SwiperSlider = () => {
     asNavFor: ".slider-nav",
     nextArrow: <FaChevronRight color="#fff" />,
     prevArrow: <FaChevronLeft color="#fff" />,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 2,
-        },
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 1,
-        },
-      },
-    ],
+    // responsive: [
+    //   {
+    //     breakpoint: 1024,
+    //     settings: {
+    //       slidesToShow: 2,
+    //     },
+    //   },
+    //   {
+    //     breakpoint: 600,
+    //     settings: {
+    //       slidesToShow: 1,
+    //     },
+    //   },
+    // ],
   };
 
   const thumbSetting = {
@@ -81,26 +81,32 @@ const SwiperSlider = () => {
               className="max-h-[560px]"
               onClick={() => openModal(idx)}
             >
-              <img className="w-full" src={item.src} alt={item.alt} />
-            </div>
-          ))}
-        </Slider>
-        <Slider {...thumbSetting} className="mt-4 thumb-slider">
-          {AfroStyles.map((item, idx) => (
-            <div
-              key={item.id}
-              onClick={() => {
-                slider1?.slickGoTo(idx);
-              }}
-            >
               <img
+                className="w-full sm:min-h-[560px] sm:max-h-[560px] min-h-[211px] max-h-[211px] object-cover"
                 src={item.src}
-                className="max-h-[128px] w-full min-h-[128px] object-cover"
                 alt={item.alt}
               />
             </div>
           ))}
         </Slider>
+        <div className="md:block hidden">
+          <Slider {...thumbSetting} className="mt-4 thumb-slider">
+            {AfroStyles.map((item, idx) => (
+              <div
+                key={item.id}
+                onClick={() => {
+                  slider1?.slickGoTo(idx);
+                }}
+              >
+                <img
+                  src={item.src}
+                  className="max-h-[128px] w-full min-h-[128px] object-cover"
+                  alt={item.alt}
+                />
+              </div>
+            ))}
+          </Slider>
+        </div>
       </div>
       {modalIsOpen && (
         <div className="modal-overlay fixed z-[9999999] flex flex-col justify-center px-24 left-0 right-0 bg-black bg-opacity-85 top-0 bottom-0">

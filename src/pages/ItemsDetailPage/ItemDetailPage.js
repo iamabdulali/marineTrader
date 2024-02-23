@@ -3,7 +3,10 @@ import BuyerLayout from "../../components/BuyerLayout/BuyerLayout";
 import {
   FaArrowLeft,
   FaClipboardList,
+  FaEnvelope,
+  FaFlag,
   FaHeart,
+  FaPhone,
   FaSearch,
   FaShare,
   FaVideo,
@@ -20,6 +23,7 @@ import HomeHeading from "../../components/HomeHeading";
 import { SpotLightListingsData2 } from "../../utils/DummyData";
 import SpotLightListings from "../../components/SpotLightListings/SpotLightListings";
 import MakeOfferSection from "./MakeOfferSection";
+import OfferSectionHeader from "./OfferSectionHeader";
 
 const ItemDetailPage = () => {
   const [selectedTab, setSelectedTab] = useState("itemOverview");
@@ -56,7 +60,7 @@ const ItemDetailPage = () => {
 
   return (
     <BuyerLayout showCategoryList={false}>
-      <div className="px-24">
+      <div className="2xl:px-24 sm:px-10 px-4">
         <Link className="text-[#696E9D] text-sm flex gap-3 items-center mt-4">
           <FaArrowLeft /> Back
         </Link>
@@ -73,14 +77,20 @@ const ItemDetailPage = () => {
           Like New Condition
         </p>
         <SwiperSlider />
-        <div className="flex gap-6 mt-8 items-start">
-          <div className="w-8/12">
-            <Tabs
-              tabs={tabs}
-              selectedTab={selectedTab}
-              handleTabClick={handleTabClick}
-            />
-            <div className="tab-content px-6 py-10">
+        <div className="sm:hidden block">
+          <OfferSectionHeader />
+        </div>
+        <div className="flex xl:flex-row flex-col gap-6 mt-8 items-start ">
+          <div className="xl:w-8/12 w-full overflow-x-hidden">
+            <div className="sm:overflow-x-hidden overflow-x-scroll tabs-div">
+              <Tabs
+                tabs={tabs}
+                selectedTab={selectedTab}
+                handleTabClick={handleTabClick}
+                className="w-[700px] sm:text-base text-sm sm:w-full"
+              />
+            </div>
+            <div className="tab-content xl:px-6 py-10">
               {selectedTab === "itemOverview" && <ItemOverview />}
               {selectedTab === "specifications" && <Specifications />}
               {selectedTab === "itemVideos" && <ItemVideos />}
@@ -90,7 +100,7 @@ const ItemDetailPage = () => {
         </div>
         <div className="mt-28">
           <HomeHeading heading="You May Also Like" />
-          <div className=" mt-5 grid grid-cols-4 gap-10">
+          <div className=" mt-5 grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-10">
             {SpotLightListingsData2.map(
               ({ listingType, listingName, listingPrice, isFeatured, id }) => (
                 <SpotLightListings

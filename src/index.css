@@ -137,11 +137,27 @@ code {
   padding: 10px;
 }
 
+@media (max-width: 768px) {
+  .main-slider .slick-next,
+  .modal-slider .slick-next {
+    right: 1rem;
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+  .main-slider .slick-prev,
+  .modal-slider .slick-prev {
+    left: 1rem;
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+}
+
 .modal-slider .slick-list {
   height: 95vh;
 }
 
-.category-menu::-webkit-scrollbar {
+.category-menu::-webkit-scrollbar,
+.tabs-div::-webkit-scrollbar {
   display: none;
   width: 0;
 }

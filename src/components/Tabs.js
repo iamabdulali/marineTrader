@@ -3,7 +3,7 @@ import React from "react";
 
 const Tabs = ({ tabs, selectedTab, handleTabClick, className }) => {
   return (
-    <div className={`flex w-full ${className}`}>
+    <div className={`flex  ${className}`}>
       {tabs.map((tab) => (
         <div
           key={tab.id}

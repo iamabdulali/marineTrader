@@ -16,7 +16,9 @@ const ContentToggle = ({ title, setShowContent }) => {
       } `}
       onClick={handleToggle}
     >
-      <p className="font-semibold text-xl text-[#11133D]">{title}</p>
+      <p className="font-semibold md:text-xl text-base text-[#11133D]">
+        {title}
+      </p>
       {showFacilities ? <FaChevronUp size={24} /> : <FaChevronDown size={24} />}
     </div>
   );
