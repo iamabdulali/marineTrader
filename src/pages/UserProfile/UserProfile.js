@@ -62,7 +62,7 @@ const UserInfo = () => {
         </p>
       </div>
       <div className="mt-6 flex smallLg:flex-row flex-col rounded-lg bg-white min-h-screen">
-        <div className="smallLg:w-4/12 w-full bg-[#EDF1FE] smallLg:rounded-tl-lg smallLg:rounded-bl-lg smallLg:mb-0 mb-4">
+        <div className="smallLg:w-4/12  w-full bg-[#EDF1FE] smallLg:rounded-tl-lg smallLg:rounded-bl-lg smallLg:mb-0 mb-4">
           <div className="relative">
             <img
               src={coverPhotoSrc || coverPhoto}
