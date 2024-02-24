@@ -18,6 +18,7 @@ import {
   closeModal,
   openModal,
 } from "../../utils/ModalOpeningClosingFunctions";
+import AvailableUpgrades from "../BuildAdSteps/AdComponents/AvailableUpgrades";
 
 const PaymentForm = ({ setFieldValue, values }) => {
   const [postalCode, setPostalCode] = useState("");
@@ -66,34 +67,10 @@ const PaymentForm = ({ setFieldValue, values }) => {
         <div className="flex smallLg:flex-row flex-col gap-7">
           <div className="smallLg:w-1/2 w-full">
             <PaymentSummary />
-            <div className="bg-[#1CBF73] flex flex-col mt-8 p-5 rounded-lg w-full ">
-              <div className="flex items-center gap-5">
-                <img
-                  src={diamondImage}
-                  alt="diamond"
-                  className="sm:w-14 w-10"
-                />
-                <p className="flex sm:text-xl text-base items-center text-white font-semibold">
-                  Available Upgrades <FaArrowRight className="ml-5" size={20} />
-                </p>
-              </div>
-              <div className="flex sm:flex-row flex-col items-center mt-7 gap-5 sm:text-base text-sm">
-                <button
-                  onClick={() => openModal(setIsSpotlightOpen)}
-                  type="button"
-                  className="bg-[#FFB800] text-[#11133D] font-semibold w-full py-3 px-6 rounded-md"
-                >
-                  Home Page Spotlight
-                </button>
-                <button
-                  onClick={() => openModal(setIsSpotlightOpen)}
-                  type="button"
-                  className="bg-white text-[#11133D] font-semibold w-full py-3 px-6 rounded-md"
-                >
-                  Category Page Spotlight
-                </button>
-              </div>
-            </div>
+            <AvailableUpgrades
+              className="bg-[#1CBF73] flex flex-col gap-5 mt-8 p-5 rounded-lg w-full"
+              openModal={() => openModal(setIsSpotlightOpen)}
+            />
           </div>
           <div className="smallLg:w-1/2 w-full">
             <form
@@ -194,7 +171,7 @@ const PaymentForm = ({ setFieldValue, values }) => {
                 </div>
               </div>
               <button
-                className={`bg-[#0D1A8B] text-white p-3 rounded-md mt-4 w-full`}
+                className={`bg-[#0D1A8B] hover:bg-[#0a1dbd] text-white p-3 rounded-md mt-4 w-full`}
               >
                 Pay
               </button>

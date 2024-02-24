@@ -190,13 +190,13 @@ const ListingItem = ({ itemData }) => {
               itemData.sellerInfo ? "" : "w-full"
             }`}
           >
-            <p className="bg-[#0D1A8B] w-12 h-12 rounded-xl flex items-center justify-center">
+            <p className="bg-[#0D1A8B] hover:bg-[#0a1dbd] w-12 h-12 rounded-xl flex items-center justify-center">
               <FaEnvelope size={24} color="#fff" />
             </p>
-            <p className="bg-[#0D1A8B] w-12 h-12 rounded-xl flex items-center justify-center">
+            <p className="bg-[#0D1A8B] hover:bg-[#0a1dbd] w-12 h-12 rounded-xl flex items-center justify-center">
               <FaSms size={24} color="#fff" />
             </p>
-            <p className="bg-[#0D1A8B] w-12 h-12 rounded-xl flex items-center justify-center">
+            <p className="bg-[#0D1A8B] hover:bg-[#0a1dbd] w-12 h-12 rounded-xl flex items-center justify-center">
               <FaPhone size={24} color="#fff" />
             </p>
           </div>

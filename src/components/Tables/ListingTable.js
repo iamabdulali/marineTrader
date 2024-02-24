@@ -188,10 +188,10 @@ const ListingTable = ({
                             to={ad == "Edit" ? "/selling/buildAd" : "/"}
                             className={` ${
                               ad == "Edit"
-                                ? "text-[#0D1A8B] border-2 border-[#0D1A8B]"
+                                ? "text-[#0D1A8B] border-2 border-[#0D1A8B] hover:bg-[#0D1A8B] hover:text-white"
                                 : ad == "Upgrade"
-                                ? "text-[#FFB800] border-2 border-[#FFB800]"
-                                : "text-[#2AD18A] border-2 border-[#2AD18A]"
+                                ? "text-[#FFB800] border-2 border-[#FFB800] hover:bg-[#FFB800] hover:text-white"
+                                : "text-[#2AD18A] border-2 border-[#2AD18A] hover:bg-[#2AD18A] hover:text-white"
                             } px-3 py-3 min-w-24 text-sm rounded-md block text-center`}
                           >
                             {ad}
@@ -286,10 +286,10 @@ const ListingTable = ({
                             to={ad == "Edit" ? "/selling/buildAd" : "/"}
                             className={` ${
                               ad == "Edit"
-                                ? "text-[#0D1A8B] border-2 border-[#0D1A8B]"
+                                ? "text-[#0D1A8B] border-2 border-[#0D1A8B] hover:bg-[#0D1A8B] hover:text-white"
                                 : ad == "Upgrade"
-                                ? "text-[#FFB800] border-2 border-[#FFB800]"
-                                : "text-[#2AD18A] border-2 border-[#2AD18A]"
+                                ? "text-[#FFB800] border-2 border-[#FFB800]  hover:bg-[#FFB800] hover:text-white"
+                                : "text-[#2AD18A] border-2 border-[#2AD18A] hover:bg-[#2AD18A] hover:text-white"
                             } px-3 py-3 min-w-24 text-sm rounded-md block text-center w-full`}
                           >
                             {ad}

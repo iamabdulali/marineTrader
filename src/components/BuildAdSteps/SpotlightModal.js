@@ -15,7 +15,7 @@ const SpotlightModal = ({ onClick, setFieldValue, values }) => {
         <button
           type="button"
           onClick={onClick}
-          className="bg-[#8891B2] text-white py-3 px-7  rounded-md min-w-[120px]"
+          className="bg-[#8891B2] hover:bg-[#a3aac4] text-white py-3 px-7  rounded-md min-w-[120px]"
         >
           Close
         </button>
@@ -23,7 +23,7 @@ const SpotlightModal = ({ onClick, setFieldValue, values }) => {
           <button
             type="button"
             onClick={() => setShowSpotlightSelection(false)}
-            className="bg-[#8891B2] text-white py-3 px-7  rounded-md min-w-[120px]"
+            className="bg-[#8891B2] hover:bg-[#a3aac4] text-white py-3 px-7  rounded-md min-w-[120px]"
           >
             Add More
           </button>
@@ -33,7 +33,7 @@ const SpotlightModal = ({ onClick, setFieldValue, values }) => {
         <button
           onClick={() => setShowSpotlightSelection(true)}
           type="button"
-          className="bg-[#0D1A8B] text-white py-3 px-7  rounded-md min-w-[120px]"
+          className="bg-[#0D1A8B] hover:bg-[#0a1dbd] text-white py-3 px-7  rounded-md min-w-[120px]"
         >
           {showSpotlightSelection ? "Confirm" : "Next"}
         </button>

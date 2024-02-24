@@ -4,7 +4,7 @@ import React from "react";
 const TradeSellerFacilitiesForm = () => {
   return (
     <div>
-      <div className="sm:mx-8 mx-3 text-sm">
+      <div className="md:mx-8 mx-3 text-sm">
         <div className="flex gap-4 sm:flex-row flex-col mt-20">
           <div className="w-full">
             <Field

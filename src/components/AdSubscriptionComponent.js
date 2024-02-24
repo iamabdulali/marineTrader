@@ -119,7 +119,7 @@ const AdSubscriptionComponent = ({
 
         <Link
           to="/selling/buildAd"
-          className={`${variantStyles.buttonBg} text-white font-semibold inline-block py-3 w-9/12 rounded-lg`}
+          className={`${variantStyles.buttonBg} hover:bg-opacity-85 text-white font-semibold inline-block py-3 w-9/12 rounded-lg`}
         >
           {buttonText}
         </Link>

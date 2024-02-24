@@ -23,7 +23,7 @@ export default function TradeSellerCompanyInfoForm() {
   };
 
   return (
-    <div className="sm:mx-8 mx-0 ">
+    <div className="md:mx-8 mx-0 ">
       <Heading content="Company Info" />
       {/* Left side (Form) */}
       <div className="flex flex-col gap-4 text-[#8891B2] text-sm my-8">

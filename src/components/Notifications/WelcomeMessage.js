@@ -17,7 +17,7 @@ const WelcomeMessage = ({
         <p className="mt-2 sm:text-base text-sm">{subHeading}</p>
         <Link
           to="/selling"
-          className="bg-[#FFB800] sm:text-base text-xs inline-block text-[#11133D] font-semibold p-3 sm:px-6 px-3 mt-7 rounded-xl"
+          className="bg-[#FFB800] hover:bg-[#edab00] sm:text-base text-xs inline-block text-[#11133D] font-semibold p-3 sm:px-6 px-3 mt-7 rounded-xl"
         >
           {buttonText}
         </Link>

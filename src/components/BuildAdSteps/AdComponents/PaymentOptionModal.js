@@ -17,14 +17,9 @@ const PaymentOptionModal = ({ onClose }) => {
       </div>
       <div className="mt-6">
         <div className="radio">
-          <Field
-            name="paymentMethod"
-            id="priceInfoRadio"
-            type="radio"
-            value="paypal"
-          />
+          <Field name="paymentMethod" id="paypal" type="radio" value="paypal" />
           <label
-            htmlFor="priceInfoRadio"
+            htmlFor="paypal"
             className="radio-label mr-5 font-medium text-[#11133D]"
           >
             Paypal
@@ -61,7 +56,7 @@ const PaymentOptionModal = ({ onClose }) => {
       </div>
       <Link
         to="/payments"
-        className="py-3 w-full text-center block mt-7 mb-4 text-white bg-[#0D1A8B] rounded-md"
+        className="py-3 w-full text-center block mt-7 mb-4 text-white hover:bg-[#0a1dbd] bg-[#0D1A8B] rounded-md"
       >
         Submit
       </Link>

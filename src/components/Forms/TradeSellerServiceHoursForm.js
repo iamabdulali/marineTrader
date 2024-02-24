@@ -104,7 +104,7 @@ export default function TradeSellerServiceHoursForm() {
   };
 
   return (
-    <div className="sm:mx-8 mx-3 text-sm">
+    <div className="md:mx-8 mx-3 text-sm">
       <Heading content="Business Details" />
       <div className="2xl:w-1/2  mt-5">
         <label className=" inline-block w-full">
@@ -265,7 +265,7 @@ export default function TradeSellerServiceHoursForm() {
         />
         <button
           type="button"
-          className="bg-[#0D1A8B] text-white p-3 rounded-md min-w-20"
+          className="bg-[#0D1A8B] text-white p-3 rounded-md min-w-20 sm:w-auto w-full"
           onClick={handleAddFacility}
         >
           Add

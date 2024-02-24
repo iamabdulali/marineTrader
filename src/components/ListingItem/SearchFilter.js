@@ -63,7 +63,7 @@ const SearchFilter = () => {
             label="Price"
             name="Price"
           />
-          <button className="bg-[#0D1A8B] text-white py-3 px-6 font-medium rounded-lg smallLg:mt-0 mt-4">
+          <button className="bg-[#0D1A8B] hover:bg-[#0a1dbd] text-white py-3 px-6 font-medium rounded-lg smallLg:mt-0 mt-4">
             Search
           </button>
         </form>

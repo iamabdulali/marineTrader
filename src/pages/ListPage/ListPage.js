@@ -39,7 +39,7 @@ const ListPage = () => {
           </p>
           <select
             id="sort-dropdown"
-            className="border-2  text-sm border-[#C8C8C8] rounded-lg md:px-5 md:py-3 px-3 py-2 text-[#8891B2]"
+            className="border-2 hover:bg-[#8891B2] hover:text-white hover:border-[#8891B2] text-sm border-[#C8C8C8] rounded-lg md:px-5 md:py-3 px-3 py-2 text-[#8891B2]"
             name="sortLists"
           >
             <option>Sort By</option>

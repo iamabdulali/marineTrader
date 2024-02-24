@@ -79,7 +79,7 @@ const CategoryDropdown = ({ onSubmit, category }) => {
 
         <button
           type="submit"
-          className="bg-[#0D1A8B] w-full text-white font-medium py-3 px-4 rounded focus:outline-none focus:shadow-outline"
+          className="bg-[#0D1A8B] hover:bg-[#0a1dbd] w-full text-white font-medium py-3 px-4 rounded focus:outline-none focus:shadow-outline"
         >
           Search
         </button>

@@ -29,7 +29,7 @@ const PaymentSummary = () => {
             className="uppercase w-full border-[#8891B2] text-[#8891b2] border-2 py-4 rounded-md px-3"
             placeholder="Promo Code"
           />
-          <button className="text-white bg-[#0D1A8B] py-2 rounded-md px-6 font-semibold top-1/2 -translate-y-1/2 absolute right-3">
+          <button className="text-white bg-[#0D1A8B] hover:bg-[#0a1dbd] py-2 rounded-md px-6 font-semibold top-1/2 -translate-y-1/2 absolute right-3">
             Apply
           </button>
         </div>

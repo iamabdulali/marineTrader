@@ -13,6 +13,7 @@ import {
   closeModal,
   openModal,
 } from "../../utils/ModalOpeningClosingFunctions";
+import AvailableUpgrades from "./AdComponents/AvailableUpgrades";
 
 const PriceStep6 = ({ setFieldValue, values }) => {
   const initialFacilities = {
@@ -119,7 +120,7 @@ const PriceStep6 = ({ setFieldValue, values }) => {
             <button
               onClick={() => openModal(setIsBundleOpen)}
               type="button"
-              className="bg-[#0D1A8B] text-sm font-medium text-white py-2 px-4 rounded-md"
+              className="bg-[#0D1A8B] hover:bg-[#0a1dbd] text-sm font-medium text-white py-2 px-4 rounded-md"
             >
               Buy a Bundle
             </button>
@@ -132,30 +133,11 @@ const PriceStep6 = ({ setFieldValue, values }) => {
             home page and category page
           </p>
         </div>
-        <div className="bg-[#1CBF73] flex smallLg:flex-row flex-col mt-8 p-5 rounded-lg justify-between smallLg:items-center ">
-          <div className="flex items-center gap-5">
-            <img src={diamondImage} alt="diamond" className="w-14" />
-            <p className="flex items-center text-white font-semibold ">
-              Available Upgrades <FaArrowRight className="ml-5" size={20} />
-            </p>
-          </div>
-          <div className="flex sm:flex-row flex-col items-center gap-5 smallLg:mt-0 mt-6">
-            <button
-              onClick={() => openModal(setIsSpotlightOpen)}
-              type="button"
-              className="bg-[#FFB800] text-[#11133D] font-semibold py-3 rounded-md xl:px-6 px-4 smallLg:w-auto w-full sm:text-base text-sm"
-            >
-              Home Page Spotlight
-            </button>
-            <button
-              onClick={() => openModal(setIsSpotlightOpen)}
-              type="button"
-              className="bg-white text-[#11133D] sm:text-base text-sm font-semibold py-3 xl:px-6 px-4 rounded-md smallLg:w-auto w-full"
-            >
-              Category Page Spotlight
-            </button>
-          </div>
-        </div>
+        <AvailableUpgrades
+          className="bg-[#1CBF73] flex smallLg:flex-row flex-col mt-8 p-5 rounded-lg justify-between smallLg:items-center"
+          width="smallLg:w-auto"
+          openModal={() => openModal(setIsSpotlightOpen)}
+        />
       </div>
       <Modal
         isOpen={isBundleOpen}

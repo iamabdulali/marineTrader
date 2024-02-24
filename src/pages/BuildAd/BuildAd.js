@@ -180,13 +180,13 @@ const BuildAd = () => {
               <div className="sm:w-auto w-full flex gap-5 items-center sm:flex-row flex-col sm:mt-0 mt-5">
                 <button
                   type="button"
-                  className="bg-white sm:order-none order-1 border-2 sm:w-28 w-full border-[#8891B2] text-[#8891B2] p-3 rounded-md  text-sm font-medium "
+                  className="bg-white sm:order-none order-1 hover:bg-[#8891B2] hover:text-white border-2 sm:w-28 w-full border-[#8891B2] text-[#8891B2] p-3 rounded-md  text-sm font-medium "
                 >
                   Cancel
                 </button>
                 <button
                   type="button"
-                  className="bg-white border-2 sm:w-auto w-full border-[#0D1A8B] text-[#0D1A8B] font-medium p-3 rounded-md text-sm"
+                  className="bg-white border-2 sm:w-auto w-full hover:bg-[#0D1A8B] hover:text-white border-[#0D1A8B] text-[#0D1A8B] font-medium p-3 rounded-md text-sm"
                 >
                   Save To Draft
                 </button>
@@ -196,7 +196,7 @@ const BuildAd = () => {
                   <button
                     type="button"
                     onClick={prevStep}
-                    className="bg-[#8891B2] sm:w-28 w-full  text-white p-3 rounded-md "
+                    className="bg-[#8891B2] hover:bg-[#a3aac4] sm:w-28 w-full  text-white p-3 rounded-md "
                   >
                     Back
                   </button>
@@ -206,7 +206,7 @@ const BuildAd = () => {
                   <button
                     type="button"
                     onClick={() => nextStep(values, { setTouched, setErrors })}
-                    className={`bg-[#0D1A8B] text-white p-3 rounded-md sm:w-28 w-full`}
+                    className={`bg-[#0D1A8B] hover:bg-[#0a1dbd] text-white p-3 rounded-md sm:w-28 w-full`}
                   >
                     Next
                   </button>
@@ -216,7 +216,7 @@ const BuildAd = () => {
                     onClick={() => openModal(setIsPaymentOptionOpen)}
                     // type="submit"
                     // disabled={!isValid}
-                    className={`bg-[#0D1A8B] text-white p-3 rounded-md inline-block text-center sm:w-28 w-full  ${
+                    className={`bg-[#0D1A8B] hover:bg-[#0a1dbd] text-white p-3 rounded-md inline-block text-center sm:w-28 w-full  ${
                       isValid ? "opacity-100" : "opacity-70"
                     }`}
                   >
@@ -231,7 +231,9 @@ const BuildAd = () => {
               opacity="bg-opacity-40"
               width="lg:w-1/3"
             >
-              <PaymentOptionModal />
+              <PaymentOptionModal
+                onClose={() => closeModal(setIsPaymentOptionOpen)}
+              />
             </Modal>
           </Form>
         )}

@@ -26,7 +26,7 @@ const CounterOffer = ({ onClose }) => {
           type="number"
           className="border-[#CECED7] rounded-md font-semibold outline-none border-2 py-2 px-3 text-[#11133D] w-full"
         />
-        <button className="bg-[#0D1A8B] text-white w-full rounded-lg font-semibold py-3 mt-5">
+        <button className="bg-[#0D1A8B] hover:bg-[#0a1dbd] text-white w-full rounded-lg font-semibold py-3 mt-5">
           Submit
         </button>
       </form>

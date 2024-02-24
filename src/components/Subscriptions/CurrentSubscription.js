@@ -27,7 +27,7 @@ const CurrentSubscription = ({
 
         <Link
           to="/payments"
-          className=" border-[3px] sm:w-auto w-full text-center block rounded-md border-[#0D1A8B] text-[#0D1A8B] py-3 px-10 font-semibold "
+          className=" border-[3px] sm:w-auto hover:bg-[#0D1A8B] hover:text-white w-full text-center block rounded-md border-[#0D1A8B] text-[#0D1A8B] py-3 px-10 font-semibold "
         >
           {isStandard ? "Upgrade Now" : "Renew"}
         </Link>

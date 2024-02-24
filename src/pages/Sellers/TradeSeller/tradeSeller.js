@@ -172,13 +172,13 @@ const TradeSeller = () => {
       <div className="lg:w-7/12 p-4 w-full">
         {/* Title */}
         <img className="w-32 sm:mx-0 mx-auto" src={logo} alt="logo" />
-        <h1 className="capitalize font-bold text-[#11133D] sm:ml-8 mt-10 ml-3">
+        <h1 className="capitalize font-bold text-[#11133D] md:ml-8 mt-10 ml-3">
           Sign up as Trade
         </h1>
 
         {/* Progress Indicator */}
         <ProgressSteps
-          className="mt-10 sm:w-8/12 w-full mx-auto"
+          className="mt-10 md:w-8/12 w-full mx-auto md:my-0 my-6"
           totalSteps={stepLabels.length}
           currentStep={step}
           stepLabels={stepLabels}

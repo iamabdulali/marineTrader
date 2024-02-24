@@ -38,7 +38,7 @@ const MakeOfferForm = ({ initialValues, handleFormSubmit }) => {
           />
           <button
             type="submit"
-            className="w-full bg-[#0D1A8B] my-5 text-white rounded-md p-3 font-medium "
+            className="w-full bg-[#0D1A8B] hover:bg-[#0a1dbd] my-5 text-white rounded-md p-3 font-medium "
           >
             Make Offer
           </button>
