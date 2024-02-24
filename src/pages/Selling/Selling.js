@@ -30,7 +30,10 @@ export default function Selling() {
             </Link>
           )}
         </div>
-        <p className="font-semibold text-[#11133D] my-5">
+        <p className="font-semibold text-[#11133D] mt-5">
+          Select a new listing
+        </p>
+        <p className="font-semibold text-[#11133D] mt-5">
           Select a category to list
         </p>
         <div className="overflow-x-scroll category-menu">

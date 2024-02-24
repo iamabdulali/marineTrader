@@ -166,3 +166,12 @@ code {
 .hero-section-div {
   background-image: url(/src/assets/boat-bg.png);
 }
+
+.category-item:hover .category-icon path {
+  fill: #0d1a8b;
+}
+
+.category-item:hover {
+  background-color: #eef0ff;
+  border-top: 4px solid #0d1a8b;
+}

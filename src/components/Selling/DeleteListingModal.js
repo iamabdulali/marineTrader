@@ -14,11 +14,11 @@ const DeleteListingModal = ({ onClick }) => {
       <div className="flex items-center gap-3 mt-4">
         <button
           onClick={onClick}
-          className="rounded-lg text-white bg-[#8891B2] py-3 w-full"
+          className="rounded-lg text-white bg-[#8891B2] hover:bg-[#a3aac4] py-3 w-full"
         >
           No
         </button>
-        <button className="rounded-lg text-white bg-[#FC4040] py-3 w-full">
+        <button className="rounded-lg text-white bg-[#FC4040] hover:bg-[#ff2626] py-3 w-full">
           Yes
         </button>
       </div>
