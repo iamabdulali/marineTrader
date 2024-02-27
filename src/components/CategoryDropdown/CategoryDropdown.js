@@ -42,7 +42,13 @@ const CategoryDropdown = ({ onSubmit, category }) => {
             <CategorySelectDropdown
               label="Category"
               name="category"
-              options={["Category1", "Category2", "Category3"]}
+              options={
+                categoryOptions[category] || [
+                  "Category1",
+                  "Category2",
+                  "Category3",
+                ]
+              }
             />
             <CategorySelectDropdown
               label="Make"

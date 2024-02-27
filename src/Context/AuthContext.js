@@ -22,8 +22,6 @@ export const authReducer = (state, action) => {
       return { ...state, listingTags: [] };
     case "UPDATE_CHECKBOXES":
       return { ...state, modificationCheckboxes: action.payload };
-    case "TOGGLE_SIDEBAR":
-      return { ...state, sidebarOpen: !state.sidebarOpen };
     default:
       return state;
   }
@@ -36,7 +34,6 @@ export const AuthContextProvider = ({ children }) => {
     selectedCategory: null,
     listingTags: [], // Include tags in the initial state
     modificationCheckboxes: [],
-    sidebarOpen: false,
   });
 
   // console.log("Auth context state: ", state);

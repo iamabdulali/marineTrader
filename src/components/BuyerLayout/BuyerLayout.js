@@ -3,6 +3,7 @@ import Header from "../../components/Header/Header";
 import Footer from "../Footer/Footer";
 import CategoryList from "../categoryList/CategoryList";
 import { AuthContext } from "../../Context/AuthContext";
+import VerticalMenu from "../../components/verticalMenu/VerticalMenu";
 
 const BuyerLayout = ({ children, showCategoryList }) => {
   const { selectedCategory, dispatch } = useContext(AuthContext);
@@ -15,10 +16,11 @@ const BuyerLayout = ({ children, showCategoryList }) => {
   return (
     <>
       <Header />
+      {/* <VerticalMenu /> */}
       {showCategoryList ? (
         <div className="overflow-x-scroll category-menu">
           <CategoryList
-            className="flex lg:w-full  justify-between 2xl:px-24 sm:px-10 px-6 mt-3 mb-6 smallLg:w-auto w-[1300px]"
+            className="flex lg:w-full min-h-[88px] justify-between 2xl:px-24 sm:px-10 px-6 mt-3 mb-6 smallLg:w-auto w-[1300px]"
             activeCategory="border-b-4 border-[#0D1A8B] py-4"
             unActiveCategory="py-4"
             onCategoryChange={onCategoryChange}

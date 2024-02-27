@@ -1,16 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Header from "../../components/Header/Header";
 import VerticalMenu from "../../components/verticalMenu/VerticalMenu";
-import { useWindowSize } from "../../Hooks/windowResize";
 
 const Layout = ({ children }) => {
-  const [width] = useWindowSize();
-  const [menuState, setMenuState] = useState(width >= 1250);
-
-  useEffect(() => {
-    // Update showFilterMenu state when the window width changes
-    setMenuState(width > 1250);
-  }, [width]);
+  const [menuState, setMenuState] = useState(true);
 
   // Function to update menu state
   const handleMenuStateChange = (newState) => {
