@@ -14,7 +14,7 @@ export const CategorySelectDropdown = ({ label, name, options, multiple }) => (
       name={name}
       className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full sm:appearance-auto appearance-none"
     >
-      <option value="" label={`Select a ${label.toLowerCase()}`} />
+      {/* <option value="" label={`Select a ${label.toLowerCase()}`} /> */}
       {options.map((option) => (
         <option key={option} value={option}>
           {option}
