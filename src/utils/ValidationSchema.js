@@ -72,8 +72,8 @@ export const validationSchema = Yup.object().shape({
 });
 
 export const categoryDropdownValidationSchema = Yup.object().shape({
-  category: Yup.string().required("Category is required"),
-  make: Yup.string().required("Make is required"),
+  // category: Yup.string().required("Category is required"),
+  // make: Yup.string().required("Make is required"),
   model: Yup.string().required("Model is required"),
   type: Yup.string().required("Type is required"),
   condition: Yup.string().required("Condition is required"),

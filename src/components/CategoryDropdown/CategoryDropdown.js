@@ -12,15 +12,15 @@ const CategoryDropdown = ({ onSubmit, category }) => {
   console.log(category);
 
   const categoryOptions = {
-    "Jet Skis": ["Category1", "Category2", "Category3"],
-    "Boat Home": ["Boat Home1", "Boat Home2", "Boat Home3"],
-    "Motor/Yacht": ["Motor/Yacht1", "Motor/Yacht2", "Motor/Yacht3"],
-    Sailboat: ["Sailboat1", "Sailboat2", "Sailboat3"],
-    Smallcraft: ["Smallcraft1", "Smallcraft2", "Smallcraft3"],
-    Fishing: ["Fishing1", "Fishing2", "Fishing3"],
-    Rib: ["Rib1", "Rib2", "Rib3"],
-    "Non-Motor": ["Non-Motor1", "Non-Motor2", "Non-Motor3"],
-    Commercial: ["Commercial1", "Commercial2", "Commercial3"],
+    "Jet Skis": ["Jet Skis"],
+    "Boat Home": ["Boat Home"],
+    "Motor/Yacht": ["Motor/Yacht"],
+    Sailboat: ["Sailboat"],
+    Smallcraft: ["Smallcraft"],
+    Fishing: ["Fishing"],
+    Rib: ["Rib"],
+    "Non-Motor": ["Non-Motor"],
+    Commercial: ["Commercial"],
   };
 
   return (
@@ -42,13 +42,7 @@ const CategoryDropdown = ({ onSubmit, category }) => {
             <CategorySelectDropdown
               label="Category"
               name="category"
-              options={
-                categoryOptions[category] || [
-                  "Category1",
-                  "Category2",
-                  "Category3",
-                ]
-              }
+              options={categoryOptions[category] || ["Category"]}
             />
             <CategorySelectDropdown
               label="Make"
