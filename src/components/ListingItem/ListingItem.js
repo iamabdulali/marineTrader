@@ -40,6 +40,7 @@ const ListingItem = ({ itemData }) => {
   return (
     <>
       <Link
+        to="/itemDetails"
         className={`${
           itemData.featured
             ? "bg-[#FEF9EE] border-4 mt-11 border-[#FFB800]"

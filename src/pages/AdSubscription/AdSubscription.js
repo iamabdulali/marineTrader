@@ -33,7 +33,7 @@ export default function AdSubscription() {
     <>
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <Heading content="Choose Your Ads" />
+          <Heading content="Choose An Ad" />
         </div>
       </div>
       <div className="lg:flex gap-8 hidden">

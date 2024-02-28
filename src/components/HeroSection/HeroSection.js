@@ -2,13 +2,16 @@ import React, { useContext } from "react";
 import { boatBg } from "../../assets";
 import CategoryDropdown from "../CategoryDropdown/CategoryDropdown";
 import { AuthContext } from "../../Context/AuthContext";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const HeroSection = () => {
+  const Navigate = useNavigate();
   const { selectedCategory } = useContext(AuthContext);
 
   const handleFormSubmit = (values) => {
     // Your logic for handling form submission
     console.log("Form submitted with values:", values);
+    Navigate("/list");
   };
 
   const categoryBackgrounds = {

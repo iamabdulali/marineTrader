@@ -387,6 +387,11 @@ export const DealerPlus = [
     numberOfAds: 15,
   },
   {
+    id: 5,
+    featureName: "3x Listings in Business Plus+ Directory",
+    standOut: true,
+  },
+  {
     id: 2,
     featureName: "Virtual Showroom",
     standOut: false,
@@ -399,11 +404,6 @@ export const DealerPlus = [
   {
     id: 4,
     featureName: "Website Link",
-    standOut: false,
-  },
-  {
-    id: 5,
-    featureName: "3x Listings in Business Plus+ Directory",
     standOut: false,
   },
   {

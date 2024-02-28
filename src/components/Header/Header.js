@@ -72,9 +72,9 @@ const Header = ({ menuState, setMenuState }) => {
             <div className="lg:flex hidden items-center gap-16">
               <img src={logo} className="w-28" />
               <ul className="flex items-center gap-10">
-                <li className="text-[#696E9D]">
+                {/* <li className="text-[#696E9D]">
                   <Link to="/watercraft">WaterCraft</Link>
-                </li>
+                </li> */}
                 <li className="text-[#696E9D]">
                   <Link to="/directory">Directory</Link>
                 </li>
@@ -93,9 +93,9 @@ const Header = ({ menuState, setMenuState }) => {
             >
               <img src={logo} className="w-28 my-4 mx-8" />
               <ul className="flex flex-col mt-10 w-full">
-                <li className="text-[#696E9D] font-semibold  hover:bg-[#F0F1FA] hover:text-[#0D1A8B] py-4 px-8">
+                {/* <li className="text-[#696E9D] font-semibold  hover:bg-[#F0F1FA] hover:text-[#0D1A8B] py-4 px-8">
                   <Link to="/watercraft">WaterCraft</Link>
-                </li>
+                </li> */}
                 <li className="text-[#696E9D] font-semibold hover:bg-[#F0F1FA] hover:text-[#0D1A8B] py-4 px-8">
                   <Link to="/directory">Directory</Link>
                 </li>
@@ -106,7 +106,7 @@ const Header = ({ menuState, setMenuState }) => {
                   <Link to="/events">Events</Link>
                 </li>
                 <li className="text-[#696E9D] font-semibold hover:bg-[#F0F1FA] hover:text-[#0D1A8B] py-4 px-8 sm:hidden block">
-                  <Link to="/register">Log In</Link>
+                  <Link to="/login">Log In</Link>
                 </li>
               </ul>
             </div>
@@ -166,7 +166,7 @@ const Header = ({ menuState, setMenuState }) => {
           ) : (
             <div className="flex items-center gap-7">
               <Link
-                to="/register"
+                to="/login"
                 className="text-[#0D1A8B] font-medium sm:block hidden"
               >
                 Log In

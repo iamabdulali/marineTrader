@@ -98,7 +98,7 @@ const VerticalMenu = ({ menuState, setMenuState }) => {
             </li>
             <li className="mb-4">
               <NavLink
-                to="/sign-out"
+                to="/"
                 className="flex items-center py-4 px-4 text-[#8891B2] rounded-xl hover:bg-gray-200"
               >
                 <FaSignOutAlt className="mr-3" size={18} />

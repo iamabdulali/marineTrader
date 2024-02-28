@@ -36,7 +36,7 @@ const Subscription = () => {
       <div className="overflow-x-scroll category-menu">
         <CategoryList
           initialCategory={-1}
-          className="flex lg:w-full min-h-[80px] mt-5 justify-between px-4 bg-white border-2 rounded-lg border-[#D9DFF5] smallLg:w-auto w-[1300px]"
+          className="flex lg:w-full min-h-[88px] mt-5 justify-between px-4 bg-white border-2 rounded-lg border-[#D9DFF5] smallLg:w-auto w-[1300px]"
           activeCategory="border-b-4 border-[#0D1A8B] py-3"
           unActiveCategory="py-3"
           onCategoryChange={(category) => {

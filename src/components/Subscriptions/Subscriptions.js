@@ -1,7 +1,8 @@
 import React from "react";
-import { FaCheck } from "react-icons/fa";
+import { FaCheck, FaInfo } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { star } from "../../assets";
+import { Tooltip } from "react-tooltip";
 
 const Subscriptions = ({
   featuresArray,
@@ -21,9 +22,18 @@ const Subscriptions = ({
           {subHeading}
         </span>
       </p>
-      <p className={`${textColor} font-semibold text-2xl mt-3 `}>
+      <p className={`${textColor} relative w-fit font-semibold text-2xl mt-3 `}>
         {packageName}
+        {/* <span className="absolute bg-black text-white text-sm">i</span> */}
+        <span
+          data-tooltip-id="my-tooltip-1"
+          className="bg-black absolute -right-8 cursor-pointer top-0 rounded-full p-[0.3rem]"
+        >
+          <FaInfo className=" text-white " size={12} />
+        </span>
       </p>
+
+      <Tooltip id="my-tooltip-1" place="bottom" content="Recommend For X" />
       {packageName == "Dealer Plus" ? (
         <span className="text-[#8891B2] font-medium text-sm my-2 block">
           Includes 180 Ads/year

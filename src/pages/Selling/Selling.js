@@ -15,7 +15,7 @@ export default function Selling() {
     <>
       <Layout>
         <div className="flex items-center justify-between">
-          <Heading content="Selling" />
+          <Heading content={hasListing ? "Selling" : "Create a New Listing"} />
           {hasListing ? (
             ""
           ) : (
@@ -30,16 +30,16 @@ export default function Selling() {
             </Link>
           )}
         </div>
-        <p className="font-semibold text-[#11133D] mt-5">
+        {/* <p className="font-semibold text-[#11133D] mt-5">
           Select a new listing
-        </p>
+        </p> */}
         <p className="font-semibold text-[#11133D] mt-5">
-          Select a category to list
+          {hasListing ? "Select a category to start" : ""}
         </p>
         <div className="overflow-x-scroll category-menu">
           <CategoryList
             initialCategory={-1}
-            className="flex lg:w-full min-h-[80px] mt-5 justify-between px-4 bg-white border-2 rounded-lg border-[#D9DFF5] smallLg:w-auto w-[1300px]"
+            className="flex lg:w-full min-h-[88px] mt-5 justify-between px-4 bg-white border-2 rounded-lg border-[#D9DFF5] smallLg:w-auto w-[1300px]"
             activeCategory="border-b-4 border-[#0D1A8B] py-3"
             unActiveCategory="py-3"
             onCategoryChange={(category) => {
@@ -60,10 +60,10 @@ export default function Selling() {
             />
           </div>
         ) : (
-          <div>
-            <p className="font-semibold text-[#11133D] my-5">
+          <div className={hasListing ? "" : "mt-7"}>
+            {/* <p className="font-semibold text-[#11133D] my-5">
               Subscription For {category}
-            </p>
+            </p> */}
             <AdSubscription />
           </div>
         )}
