@@ -26,9 +26,7 @@ const SortDropdown = () => {
           <span className="hidden sm:block"> Sort By:</span>
         </p>
         <span className="text-[#696E9D] text-sm ml-2">
-          {selectedOption === "lowToHigh"
-            ? "Expiry Date Asc"
-            : "Expiry Date Desc"}
+          {selectedOption === "lowToHigh" ? "Date Asc" : "Date Desc"}
         </span>
       </button>
 
@@ -38,25 +36,25 @@ const SortDropdown = () => {
             onClick={() => handleSortOptionClick("lowToHigh")}
             className="block  w-full text-left px-4 py-2 hover:bg-gray-200 focus:outline-none"
           >
-            Expiry Date Asc
+            Date Asc
           </button>
           <button
             onClick={() => handleSortOptionClick("highToLow")}
             className="block w-full text-left px-4 py-2 hover:bg-gray-200 focus:outline-none"
           >
-            Expiry Date Desc
+            Date Desc
           </button>
           <button
             onClick={() => handleSortOptionClick("lowToHigh")}
             className="block  w-full text-left px-4 py-2 hover:bg-gray-200 focus:outline-none"
           >
-            Price Asc
+            Price Highest
           </button>
           <button
             onClick={() => handleSortOptionClick("highToLow")}
             className="block w-full text-left px-4 py-2 hover:bg-gray-200 focus:outline-none"
           >
-            Price Desc
+            Price Lowest
           </button>
         </div>
       )}

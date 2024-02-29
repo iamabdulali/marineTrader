@@ -2,7 +2,13 @@ import React from "react";
 import { FaArrowRight } from "react-icons/fa";
 import { diamondImage } from "../../../assets";
 
-const AvailableUpgrades = ({ openModal, className, width }) => {
+const AvailableUpgrades = ({
+  openModal,
+  className,
+  width,
+  addButton,
+  openBundle,
+}) => {
   return (
     <div className={className}>
       <div className="flex items-center gap-5">
@@ -27,6 +33,17 @@ const AvailableUpgrades = ({ openModal, className, width }) => {
           Category Page Spotlight
         </button>
       </div>
+      {addButton ? (
+        <button
+          onClick={openBundle}
+          type="button"
+          className="bg-[#0D1A8B] hover:bg-[#0a1dbd] sm:text-base text-sm font-medium text-white py-3 px-4 rounded-md"
+        >
+          Buy a Bundle
+        </button>
+      ) : (
+        ""
+      )}
     </div>
   );
 };

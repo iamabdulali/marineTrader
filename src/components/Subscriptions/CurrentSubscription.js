@@ -17,7 +17,7 @@ const CurrentSubscription = ({
     <div
       className={`bg-white shadow-[7px] px-5 py-4 border-l-4 ${dynamicClasses}`}
     >
-      <div className="flex sm:flex-row sm:gap-0 gap-4 flex-col justify-between items-center">
+      <div className="flex sm:flex-row sm:gap-0 gap-4 flex-col justify-between sm:items-center">
         <p className="font-semibold text-2xl">
           {isStandard ? "Standard Trader" : "Dealer Plus"}
           <span className="text-[#8891B2] font-medium text-sm ml-1">

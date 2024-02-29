@@ -7,10 +7,19 @@ import { sellingHeader } from "../../utils/DummyData";
 import Layout from "../../components/Layout/Layout";
 import CategoryList from "../../components/categoryList/CategoryList";
 import AdSubscription from "../AdSubscription/AdSubscription";
+import VideoBtn from "../../components/VideoTutorial/VideoBtn";
+import Modal from "../../components/Modal";
+import {
+  closeModal,
+  openModal,
+} from "../../utils/ModalOpeningClosingFunctions";
+import VideoModal from "../../components/VideoTutorial/VideoModal";
 
 export default function Selling() {
   const [hasListing, setHasListing] = useState(true);
   const [category, setCategory] = useState("Jet Skis");
+  let [isVideoOpen, setIsVideoOpen] = useState(false);
+
   return (
     <>
       <Layout>
@@ -67,6 +76,15 @@ export default function Selling() {
             <AdSubscription />
           </div>
         )}
+        <VideoBtn onClick={() => openModal(setIsVideoOpen)} />
+        <Modal
+          isOpen={isVideoOpen}
+          onClose={() => closeModal(setIsVideoOpen)}
+          opacity="bg-opacity-40"
+          width="xl:w-6/12 sm:w-10/12 w-full"
+        >
+          <VideoModal />
+        </Modal>
       </Layout>
     </>
   );

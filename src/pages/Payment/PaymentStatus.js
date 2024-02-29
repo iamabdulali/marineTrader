@@ -8,7 +8,7 @@ const PaymentStatus = ({ successStatus, paymentType }) => {
   return (
     <Layout>
       <div className="absolute -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2 w-full mx-auto">
-        <div className="bg-white w-1/3 min-h-[40vh] flex flex-col justify-center text-center shadow-[7px] rounded-md mx-auto">
+        <div className="bg-white xl:w-1/3 sm:w-10/12 w-11/12 min-h-[40vh] flex flex-col justify-center text-center shadow-[7px] rounded-md mx-auto">
           <img
             className="w-48 mx-auto"
             src={successStatus ? success : error}

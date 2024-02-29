@@ -420,6 +420,11 @@ export const DealerPlus = [
 
 export const ServicePlus = [
   {
+    id: 5,
+    featureName: "3x Listings in Business Plus+ Directory",
+    standOut: true,
+  },
+  {
     id: 1,
     featureName: "Company Profile",
     standOut: false,
@@ -439,11 +444,7 @@ export const ServicePlus = [
     featureName: "Website Link",
     standOut: false,
   },
-  {
-    id: 5,
-    featureName: "3x Listings in Business Plus+ Directory",
-    standOut: false,
-  },
+
   {
     id: 6,
     featureName: "Access to list in News and Events",

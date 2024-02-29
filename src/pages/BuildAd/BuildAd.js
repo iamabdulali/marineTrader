@@ -21,6 +21,8 @@ import {
   closeModal,
   openModal,
 } from "../../utils/ModalOpeningClosingFunctions";
+import VideoModal from "../../components/VideoTutorial/VideoModal";
+import VideoBtn from "../../components/VideoTutorial/VideoBtn";
 
 const BuildAd = () => {
   const [step, setStep] = useState(1);
@@ -71,6 +73,8 @@ const BuildAd = () => {
   const prevStep = () => setStep(step - 1);
   const nextStep = () => setStep(step + 1);
   const [isPaymentOptionOpen, setIsPaymentOptionOpen] = useState(false);
+  let [isVideoOpen, setIsVideoOpen] = useState(false);
+
   // const nextStep = (values, { setTouched, setErrors }) => {
   //   try {
   //     // Validate only the fields for steps 2 to 6
@@ -176,7 +180,7 @@ const BuildAd = () => {
               <PriceStep6 values={values} setFieldValue={setFieldValue} />
             )}
             {/* Navigation buttons */}
-            <div className="flex sm:flex-row flex-col-reverse align-center justify-between mt-10">
+            <div className="flex sm:flex-row flex-col-reverse align-center justify-between mt-10 mb-24">
               <div className="sm:w-auto w-full flex gap-5 items-center sm:flex-row flex-col sm:mt-0 mt-5">
                 <button
                   type="button"
@@ -238,6 +242,15 @@ const BuildAd = () => {
           </Form>
         )}
       </Formik>
+      <VideoBtn onClick={() => openModal(setIsVideoOpen)} />
+      <Modal
+        isOpen={isVideoOpen}
+        onClose={() => closeModal(setIsVideoOpen)}
+        opacity="bg-opacity-40"
+        width="xl:w-6/12 sm:w-10/12 w-full"
+      >
+        <VideoModal />
+      </Modal>
     </Layout>
   );
 };

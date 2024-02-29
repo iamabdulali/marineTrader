@@ -6,6 +6,7 @@ import Heading from "../../components/Heading";
 import { notificationsData, offersHeader } from "../../utils/DummyData";
 import { warning } from "../../assets";
 import Layout from "../../components/Layout/Layout";
+import { Link } from "react-router-dom";
 
 export default function Notifications() {
   return (
@@ -16,9 +17,12 @@ export default function Notifications() {
         </p>
         <div className="mt-6 shadow-[7px] bg-white rounded-lg p-7">
           {notificationsData.map(
-            ({ notificationIcon, notificationText, timeAgo }) => {
+            ({ notificationIcon, notificationText, timeAgo }, index) => {
               return (
-                <div className="flex border-b-[1px] py-5 items-center gap-3">
+                <Link
+                  key={index}
+                  className="flex border-b-[1px] py-5 items-center gap-3"
+                >
                   <img className="w-10" src={notificationIcon} />
                   <div>
                     <p className="text-[#11133D] font-medium mb-2">
@@ -26,7 +30,7 @@ export default function Notifications() {
                     </p>
                     <p className="text-[#8891B2] text-xs">{timeAgo}</p>
                   </div>
-                </div>
+                </Link>
               );
             }
           )}

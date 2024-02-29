@@ -39,11 +39,16 @@ const CategoryDropdown = ({ onSubmit, category }) => {
       <Form className="bg-white shadow-md rounded-lg sm:px-8 px-4 w-full py-8 mb-4">
         <div className="mb-4">
           <div className="flex lg:flex-row flex-col lg:gap-4 gap-0">
-            <CategorySelectDropdown
-              label="Category"
-              name="category"
-              options={categoryOptions[category] || ["Category"]}
-            />
+            {category ? (
+              ""
+            ) : (
+              <CategorySelectDropdown
+                label="Category"
+                name="category"
+                options={categoryOptions[category] || ["Category"]}
+              />
+            )}
+
             <CategorySelectDropdown
               label="Make"
               name="make"

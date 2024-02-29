@@ -24,16 +24,28 @@ const Subscriptions = ({
       </p>
       <p className={`${textColor} relative w-fit font-semibold text-2xl mt-3 `}>
         {packageName}
-        {/* <span className="absolute bg-black text-white text-sm">i</span> */}
         <span
-          data-tooltip-id="my-tooltip-1"
+          data-tooltip-id={
+            packageName === "Dealer Plus" || packageName === "Broker Plus"
+              ? "my-tooltip-1"
+              : "my-tooltip-2"
+          }
           className="bg-black absolute -right-8 cursor-pointer top-0 rounded-full p-[0.3rem]"
         >
           <FaInfo className=" text-white " size={12} />
         </span>
       </p>
 
-      <Tooltip id="my-tooltip-1" place="bottom" content="Recommend For X" />
+      <Tooltip
+        id="my-tooltip-1"
+        place="bottom"
+        content="Recommended for Dealers and Brokers"
+      />
+      <Tooltip
+        id="my-tooltip-2"
+        place="bottom"
+        content="Recommended for Service Providers"
+      />
       {packageName == "Dealer Plus" ? (
         <span className="text-[#8891B2] font-medium text-sm my-2 block">
           Includes 180 Ads/year

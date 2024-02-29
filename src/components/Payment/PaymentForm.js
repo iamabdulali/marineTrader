@@ -19,6 +19,7 @@ import {
   openModal,
 } from "../../utils/ModalOpeningClosingFunctions";
 import AvailableUpgrades from "../BuildAdSteps/AdComponents/AvailableUpgrades";
+import BundlesModal from "../BuildAdSteps/AdComponents/BundlesModal";
 
 const PaymentForm = ({ setFieldValue, values }) => {
   const [postalCode, setPostalCode] = useState("");
@@ -59,6 +60,7 @@ const PaymentForm = ({ setFieldValue, values }) => {
   };
 
   let [isSpotlightOpen, setIsSpotlightOpen] = useState(false);
+  let [isBundleOpen, setIsBundleOpen] = useState(false);
 
   return (
     <>
@@ -70,6 +72,8 @@ const PaymentForm = ({ setFieldValue, values }) => {
             <AvailableUpgrades
               className="bg-[#1CBF73] flex flex-col gap-5 mt-8 p-5 rounded-lg w-full"
               openModal={() => openModal(setIsSpotlightOpen)}
+              addButton={true}
+              openBundle={() => openModal(setIsBundleOpen)}
             />
           </div>
           <div className="smallLg:w-1/2 w-full">
@@ -208,6 +212,14 @@ const PaymentForm = ({ setFieldValue, values }) => {
           setFieldValue={setFieldValue}
           onClick={() => closeModal(setIsSpotlightOpen)}
         />
+      </Modal>
+      <Modal
+        isOpen={isBundleOpen}
+        onClose={() => closeModal(setIsBundleOpen)}
+        opacity="bg-opacity-40"
+        width="xl:w-6/12 w-full"
+      >
+        <BundlesModal onClick={() => closeModal(setIsBundleOpen)} />
       </Modal>
     </>
   );

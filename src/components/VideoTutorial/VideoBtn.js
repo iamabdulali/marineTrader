@@ -8,7 +8,7 @@ const VideoBtn = ({ onClick }) => {
       className="bg-[#0D1A8B] hover:bg-[#0a1dbd] flex items-center gap-3 text-white custom-shadow rounded-lg py-4 w-fit cursor-pointer fixed bottom-7 right-7 px-5"
     >
       <FaPlayCircle size={24} />
-      <p className="font-semibold">Video Tutorial</p>
+      <p className="sm:block hidden font-semibold">Video Tutorial</p>
     </div>
   );
 };
