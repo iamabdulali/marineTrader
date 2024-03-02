@@ -19,7 +19,7 @@ const Registration = () => {
         alt="logo"
         className="sm:w-36 w-24 block sm:m-6 sm:mb-0 mx-auto my-6"
       />
-      <div className="flex min-h-[85vh] justify-center xl:justify-normal xl:items-center">
+      <div className="flex sm:min-h-[85vh] justify-center xl:justify-normal xl:items-center">
         {/* Left side (Registration options) */}
         <div className="w-full lg:w-1/2 flex flex-col justify-center xl:items-baseline items-center ">
           <div className="sm:mb-16 mb-8 mx-[4.5em]">
