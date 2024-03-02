@@ -206,7 +206,6 @@ const TradeSeller = () => {
                     Back
                   </button>
                 )}
-
                 {step < 3 ? (
                   <button
                     type="button"

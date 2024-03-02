@@ -1,97 +1,115 @@
 import React, { useState } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
-import { useFormik } from "formik";
-import * as Yup from "yup";
-import Header from "../../components/Header/Header";
-import { useLogin } from "../../Hooks/useLogin";
+import { Link, useNavigate } from "react-router-dom";
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import { logo } from "../../assets";
+import { loginValidationSchema } from "../../utils/ValidationSchema";
+import { toast } from "react-toastify";
+import { displayErrorMessages } from "../../utils/displayErrors";
+import axios from "axios";
+import { Oval } from "react-loader-spinner";
 
 const Login = () => {
-  const navigate = useNavigate();
-  const { login, error } = useLogin(); // Use the custom hook
-  const user = localStorage.getItem("user");
-  console.log(user);
+  const [spinner, setSpinner] = useState(false);
+  const NavigateTo = useNavigate();
 
-  const validationSchema = Yup.object({
-    email: Yup.string().required("email or email is required"),
-    password: Yup.string().required("Password is required"),
-  });
+  const initialValues = {
+    email: "",
+    password: "",
+  };
 
-  const formik = useFormik({
-    initialValues: {
-      email: "",
-      password: "",
-    },
-    validationSchema,
-    onSubmit: async (values) => {
-      try {
-        // Use the login function from the custom hook
-        await login(values.email, values.password);
-      } catch (error) {
-        console.error("Login Error:", error);
-      }
-    },
-  });
-
-  if (user) return <Navigate to="/dashboard" />;
+  const onSubmit = async (values) => {
+    setSpinner(true);
+    try {
+      const { data } = await axios.post(
+        "https://marine.takhleeqsoft.com/api/login",
+        values,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      toast.success(data.message);
+      setSpinner(false);
+      NavigateTo("/dashboard");
+    } catch (error) {
+      console.error("An unexpected error occurred:", error);
+      toast.error(error.response.data.message);
+      setSpinner(false);
+    }
+  };
 
   return (
     <>
-      <Header />
+      <img className="w-32 mt-4 ml-4 block" src={logo} alt="logo" />
       <div className="flex flex-row h-screen">
         {/* Left side */}
         <div className="md:w-1/2 w-full flex flex-col justify-center items-center bg-white text-white">
           <div className="w-4/5">
-            <h2 className="text-2xl font-bold mb-4 text-black">
+            <h2 className="text-2xl font-bold text-black">
               Log in to your account
             </h2>
 
-            <form onSubmit={formik.handleSubmit}>
-              <input
-                type="text"
-                name="email"
-                placeholder="email or email address"
-                className={`w-full px-4 py-2 border rounded mb-4 text-gray-600 ${
-                  formik.errors.email && formik.touched.email
-                    ? "border-red-500"
-                    : ""
-                }`}
-                {...formik.getFieldProps("email")}
-              />
-              {formik.errors.email && formik.touched.email && (
-                <p className="text-red-500">{formik.errors.email}</p>
-              )}
-
-              <input
-                type="password"
-                name="password"
-                placeholder="Password"
-                className={`w-full px-4 py-2 border rounded mb-4 text-gray-600 ${
-                  formik.errors.password && formik.touched.password
-                    ? "border-red-500"
-                    : ""
-                }`}
-                {...formik.getFieldProps("password")}
-              />
-              {formik.errors.password && formik.touched.password && (
-                <p className="text-red-500">{formik.errors.password}</p>
-              )}
-
-              {error && <p className="text-red-500">{error}</p>}
-
-              <button
-                type="submit"
-                className="w-full bg-blue-700 text-white px-6 py-3 rounded cursor-pointer"
-              >
-                Login
-              </button>
-            </form>
-
-            <p className="text-gray-300 text-center mt-4">
-              Don't have an account?{" "}
-              <Link to="/register" className="text-gray-100">
-                Sign up
-              </Link>
-            </p>
+            <Formik
+              initialValues={initialValues}
+              validationSchema={loginValidationSchema}
+              onSubmit={onSubmit}
+            >
+              <Form>
+                <div>
+                  <Field
+                    type="email"
+                    name="email"
+                    placeholder="Enter your Email Address"
+                    className={`border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full mt-6`}
+                  />
+                  <ErrorMessage
+                    name="email"
+                    component="p"
+                    className="text-red-500 mt-1 ml-2"
+                  />
+                </div>
+                <div>
+                  <Field
+                    type="password"
+                    name="password"
+                    placeholder="Password"
+                    className={`border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full mt-6`}
+                  />
+                  <ErrorMessage
+                    name="password"
+                    component="p"
+                    className="text-red-500 mt-1 ml-2"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  disabled={spinner}
+                  className="w-full mt-6 bg-[#0D1A8B] font-medium text-white px-6 py-3 rounded cursor-pointer"
+                >
+                  {spinner ? (
+                    <Oval
+                      secondaryColor="#fff"
+                      color="#fff"
+                      width={20}
+                      height={20}
+                      wrapperClass="justify-center"
+                    />
+                  ) : (
+                    "Login"
+                  )}
+                </button>
+                <p className="text-[#696E9D] text-center mt-4">
+                  Don't have an account?{" "}
+                  <Link
+                    to="/register"
+                    className="text-[#0D1A8B] font-medium underline"
+                  >
+                    Sign up
+                  </Link>
+                </p>
+              </Form>
+            </Formik>
           </div>
         </div>
 

@@ -11,7 +11,6 @@ import Registration from "./pages/Registration/Registration";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import ResetPassword from "./pages/resetPassword/ResetPassword";
 import TradeSeller from "./pages/Sellers/TradeSeller/tradeSeller";
-import PrivateSeller from "./pages/Sellers/PrivateSeller/privateSeller";
 import Selling from "./pages/Selling/Selling";
 import Offer from "./pages/Offers/Offer";
 import Notifications from "./pages/Notifications/Notifications";
@@ -28,6 +27,9 @@ import SwiperSlider from "./pages/ItemsDetailPage/SwiperSlider";
 import "swiper/swiper-bundle.css";
 import Payment from "./pages/Payment/Payment";
 import PaymentStatus from "./pages/Payment/PaymentStatus";
+import PrivateSeller from "./pages/Sellers/PrivateSeller/privateSeller";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
@@ -64,6 +66,7 @@ function App() {
           element={<PaymentStatus successStatus={true} />}
         />
       </Routes>
+      <ToastContainer />
     </Router>
   );
 }

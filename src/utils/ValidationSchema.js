@@ -133,3 +133,39 @@ export const buildAdValidationSchema = Yup.object().shape({
   currency: Yup.string().required("Currency is required"),
   price: Yup.string().required("Price is required"),
 });
+
+export const privateSellerValidationSchema = Yup.object({
+  name: Yup.string().required("Please enter your Full Name"),
+  user_name: Yup.string().required("Please enter your User Name"),
+  email: Yup.string()
+    .email("Enter a valid email address")
+    .required("Email Address is required"),
+  building_number: Yup.string().required("Please enter your Building Number"),
+  street_name: Yup.string().required("Please enter your Street Name"),
+  city: Yup.string().required("Please enter your Town/city"),
+  postcode: Yup.string().required("Please enter your Postcode"),
+  country: Yup.string().required("Please select your Country"),
+  currency: Yup.string().required("Please select your Currency"),
+  region: Yup.string().required("Please select your Region"),
+  phone_no: Yup.string()
+    .length(11, "Phone Number must be of 11 characters")
+    .required("Phone Number is required"),
+  timezone: Yup.string().required("Please enter your Timezone"),
+  password: Yup.string()
+    .required("Password is required")
+    .matches(
+      /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+      "Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character"
+    ),
+  confirmEmail: Yup.string()
+    .email("Enter a valid email address")
+    .required("Confirm Email Address is required")
+    .oneOf([Yup.ref("email"), null], "Emails must match"),
+});
+
+export const loginValidationSchema = Yup.object({
+  email: Yup.string()
+    .email("Enter a valid email address")
+    .required("Email Address is required"),
+  password: Yup.string().required("Password is required"),
+});
