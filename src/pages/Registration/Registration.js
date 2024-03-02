@@ -65,7 +65,7 @@ const Registration = () => {
           </div>
           <Link
             to="/login"
-            className="mt-10 text-sm text-center text-[#0D1A8B] font-semibold underline"
+            className="mt-10 text-sm sm:pb-0 pb-10 text-center text-[#0D1A8B] font-semibold underline"
           >
             Already a member?
           </Link>
