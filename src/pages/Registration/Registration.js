@@ -17,7 +17,7 @@ const Registration = () => {
       <img
         src={logo}
         alt="logo"
-        className="sm:w-36 w-24 block sm:m-6 sm:mb-0 mx-auto my-6"
+        className="sm:w-36 w-28 block sm:m-6 sm:mb-0 mx-auto my-6"
       />
       <div className="flex sm:min-h-[85vh] justify-center xl:justify-normal xl:items-center">
         {/* Left side (Registration options) */}

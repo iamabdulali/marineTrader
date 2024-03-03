@@ -33,13 +33,13 @@ export default function TradeSellerCompanyInfoForm() {
             <Field
               type="text"
               placeholder="User Name"
-              name="username"
+              name="user_name"
               className="border-[#CECED7] border-2 rounded-md p-3 w-full"
             />
             <div>
               <ErrorMessage
                 component="span"
-                name="username"
+                name="user_name"
                 className="text-red-500"
               />
             </div>
@@ -49,10 +49,10 @@ export default function TradeSellerCompanyInfoForm() {
               className="border-[#CECED7] border-2 rounded-md p-3 w-full"
               type="text"
               placeholder="Company Info"
-              name="companyInfo"
+              name="company_name"
             />
             <ErrorMessage
-              name="companyInfo"
+              name="company_name"
               component="span"
               className="text-red-500"
             />
@@ -61,26 +61,26 @@ export default function TradeSellerCompanyInfoForm() {
         <div className="flex gap-4 sm:flex-row flex-col">
           <div className="w-full">
             <Field
-              name="buildingNumber"
+              name="building_number"
               type="text"
               placeholder="Building Number"
               className="border-[#CECED7] border-2 rounded-md p-3 w-full"
             />
             <ErrorMessage
-              name="buildingNumber"
+              name="building_number"
               component="span"
               className="text-red-500"
             />
           </div>
           <div className="w-full">
             <Field
-              name="streetName"
+              name="street_name"
               type="text"
               placeholder="Street Name"
               className="border-[#CECED7] border-2 rounded-md p-3 w-full"
             />
             <ErrorMessage
-              name="streetName"
+              name="street_name"
               component="span"
               className="text-red-500"
             />
@@ -173,14 +173,14 @@ export default function TradeSellerCompanyInfoForm() {
               <div className="w-full">
                 <Field
                   type="tel"
-                  name="phoneNo"
+                  name="phone_no"
                   placeholder="00000000000"
                   className="border-[#CECED7] border-2 rounded-md p-3 pl-24 sm:pl-28 w-full bg-white"
                 />
               </div>
             </div>
             <ErrorMessage
-              name="phoneNo"
+              name="phone_no"
               component="span"
               className="text-red-500"
             />

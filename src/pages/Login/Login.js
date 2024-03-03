@@ -45,7 +45,7 @@ const Login = () => {
       <div className="flex flex-row h-screen">
         {/* Left side */}
         <div className="md:w-1/2 w-full flex flex-col justify-center items-center bg-white text-white">
-          <div className="w-4/5">
+          <div className="sm:w-4/5 w-full sm:p-0 px-6">
             <h2 className="text-2xl font-bold text-black">
               Log in to your account
             </h2>

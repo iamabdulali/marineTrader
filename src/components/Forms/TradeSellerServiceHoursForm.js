@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Field, ErrorMessage, useFormikContext } from "formik";
-import { cloud, plusSign } from "../../assets";
+import { plusSign } from "../../assets";
 import SelectDropdown from "./FormElements/SelectDropdown";
 import { timeZoneOptions } from "../../utils/DropdownOptions";
 import FileInput from "./FormElements/FileInput";
@@ -29,69 +29,45 @@ export default function TradeSellerServiceHoursForm() {
     },
   };
 
-  const [serviceType, setServiceType] = useState("open12Hours");
-  const [contactNumber, setContactNumber] = useState("");
-  const [areaCode, setAreaCode] = useState("");
-  const [selectedDays, setSelectedDays] = useState([]);
-  const [dayTimes, setDayTimes] = useState({});
-  const [publicHolidays, setPublicHolidays] = useState("no"); // State to manage the selected value
-  const { values, setFieldValue } = useFormikContext();
-  const { daysAvailable } = values;
-
-  const handlePublicHolidaysChange = (event) => {
-    setPublicHolidays(event.target.value);
-    console.log(event.target.value);
-  };
-
-  const handleServiceTypeChange = (event) => {
-    setServiceType(event.target.value);
-  };
-
-  const handleContactNumberChange = (event) => {
-    setContactNumber(event.target.value);
-  };
-
-  const handleAreaCodeChange = (event) => {
-    setAreaCode(event.target.value);
-  };
+  const { values, setValues } = useFormikContext();
 
   const handleDayClick = (day) => {
-    const isSelected = selectedDays.includes(day);
+    const { selectedDays } = values;
+    const selectedIndex = selectedDays.indexOf(day);
+    const newSelectedDays = [...selectedDays];
 
-    if (isSelected) {
-      setSelectedDays(
-        selectedDays.filter((selectedDay) => selectedDay !== day)
-      );
-      setDayTimes({ ...dayTimes, [day]: null });
+    if (selectedIndex === -1) {
+      newSelectedDays.push(day);
     } else {
-      setSelectedDays([...selectedDays, day]);
+      newSelectedDays.splice(selectedIndex, 1);
     }
 
-    setFieldValue("daysAvailable", day);
+    setValues({ ...values, selectedDays: newSelectedDays });
   };
 
-  const handleTimeChange = (day, event) => {
-    setDayTimes({ ...dayTimes, [day]: event.target.value });
+  const handleTimeChange = (selectedDay, fieldName, value) => {
+    const { service_hours2 } = values;
+
+    const updatedservice_hours2 = service_hours2.map((day) => {
+      if (day.day === selectedDay) {
+        return {
+          ...day,
+          [fieldName]: value,
+        };
+      }
+      return day;
+    });
+
+    setValues({ ...values, service_hours2: updatedservice_hours2 });
   };
 
   const [facilities, setFacilities] = useState(initialFacilities.facilities);
 
   const [newFacility, setNewFacility] = useState("");
 
-  const handleFacilityChange = (facility) => {
-    setFacilities((prevFacilities) => ({
-      ...prevFacilities,
-      [facility]: !prevFacilities[facility],
-    }));
-  };
-
   const handleNewFacilityChange = (e) => {
     setNewFacility(e.target.value);
   };
-
-  useEffect(() => {
-    console.log("Facilities state:", facilities);
-  }, [facilities]);
 
   const handleAddFacility = () => {
     if (newFacility.trim() !== "") {
@@ -110,21 +86,20 @@ export default function TradeSellerServiceHoursForm() {
         <label className=" inline-block w-full">
           Time Zone
           <SelectDropdown
-            name="timeZone"
+            name="timezone"
             options={timeZoneOptions}
             className="border-[#CECED7] border-2 text-[#8891B2] rounded-md p-3 w-full mt-3 mb-2"
           />
         </label>
         <ErrorMessage
-          name="timeZone"
+          name="timezone"
           component="span"
           className="text-red-500"
         />
       </div>
-
       {/* Select Days */}
       <div>
-        <p className=" font-semibold my-5">Select Days:</p>
+        <p className="font-semibold my-5">Select Days:</p>
         <div className="flex gap-3 2xl:flex-nowrap flex-wrap">
           {["Mon", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun"].map((day) => (
             <div key={day}>
@@ -132,7 +107,7 @@ export default function TradeSellerServiceHoursForm() {
                 type="button"
                 name="daysAvailable"
                 className={`${
-                  selectedDays.includes(day)
+                  values.selectedDays.includes(day)
                     ? "bg-[#0D1A8B] text-white"
                     : "bg-white text-[#8891B2] border-2 border-[#e0deee] rounded-md"
                 } p-3 rounded-md w-28`}
@@ -143,21 +118,28 @@ export default function TradeSellerServiceHoursForm() {
             </div>
           ))}
         </div>
-        <div
-          className={`text-red-500 mt-3 ${
-            selectedDays.length == 0 ? "block" : "hidden"
-          }`}
-        >
-          Select One Day At Least
-        </div>
-        <div className="flex items-center gap-1 mt-8">
-          <p className="text-[#0D1A8B] font-semibold  min-w-44">
-            Select Opening Hours
-          </p>
-          <p className="bg-[#CECED7] w-full h-[2px]"></p>
-        </div>
-        <div>
-          {selectedDays.map((selectedDay) => (
+        <ErrorMessage
+          name="selectedDays"
+          component="div"
+          className="text-red-500 mt-3"
+        />
+      </div>
+
+      <div className="flex items-center gap-1 mt-8">
+        <p className="text-[#0D1A8B] font-semibold min-w-44">
+          Select Opening Hours
+        </p>
+        <p className="bg-[#CECED7] w-full h-[2px]"></p>
+      </div>
+
+      <div>
+        {values.selectedDays.map((selectedDay) => {
+          // Find the object in service_hours2 array corresponding to the selected day
+          const selectedDayObject = values.service_hours2.find(
+            (day) => day.day === selectedDay
+          );
+
+          return (
             <div key={selectedDay} className="mt-10">
               <label className="flex items-center gap-4">
                 <span className="text-[#11133D] font-medium min-w-14">
@@ -165,9 +147,15 @@ export default function TradeSellerServiceHoursForm() {
                 </span>
                 <Field
                   as="select"
-                  value={dayTimes[selectedDay] || ""}
-                  name="startTime"
-                  onChange={(event) => handleTimeChange(selectedDay, event)}
+                  value={selectedDayObject.startTime || ""}
+                  name={`service_hours2.${selectedDay}.startTime`}
+                  onChange={(event) =>
+                    handleTimeChange(
+                      selectedDay,
+                      "startTime",
+                      event.target.value
+                    )
+                  }
                   className="border-[#CECED7] border-2 rounded-md p-3 w-48 block text-[#8891B2]"
                 >
                   <option value="12:00pm">12:00 PM</option>
@@ -178,21 +166,24 @@ export default function TradeSellerServiceHoursForm() {
                 <span className="text-[#11133D] font-medium">To</span>
                 <Field
                   as="select"
-                  name="endTime"
-                  value={dayTimes[selectedDay] || ""}
-                  onChange={(event) => handleTimeChange(selectedDay, event)}
+                  value={selectedDayObject.endTime || ""}
+                  name={`service_hours2.${selectedDay}.endTime`}
+                  onChange={(event) =>
+                    handleTimeChange(selectedDay, "endTime", event.target.value)
+                  }
                   className="border-[#CECED7] border-2 rounded-md p-3 w-48 block text-[#8891B2]"
                 >
-                  <option value="12">12:00 AM</option>
-                  <option value="13">12:30 AM</option>
-                  <option value="14">12:45 AM</option>
+                  <option value="12:00pm">12:00 PM</option>
+                  <option value="12:30pm">12:30 PM</option>
+                  <option value="12:45pm">12:45 PM</option>
                   {/* Add more options as needed */}
                 </Field>
               </label>
             </div>
-          ))}
-        </div>
+          );
+        })}
       </div>
+
       <div className="mt-10">
         <p className="text-[#0D1A8B] font-semibold  min-w-28">
           Open Public Holidays:
@@ -202,7 +193,7 @@ export default function TradeSellerServiceHoursForm() {
             <Field
               id="yes-checkbox"
               type="radio"
-              name="openPublicHolidays"
+              name="open_public_holidays"
               value="yes"
             />
             <label htmlFor="yes-checkbox" className="radio-label mr-5">
@@ -211,7 +202,7 @@ export default function TradeSellerServiceHoursForm() {
           </div>
           <div className="radio">
             <Field
-              name="openPublicHolidays"
+              name="open_public_holidays"
               id="no-checkbox"
               type="radio"
               value="no"
@@ -222,7 +213,7 @@ export default function TradeSellerServiceHoursForm() {
           </div>
         </div>
         <ErrorMessage
-          name="openPublicHolidays"
+          name="open_public_holidays"
           component="span"
           className="text-red-500 mt-3 block"
         />
@@ -277,13 +268,13 @@ export default function TradeSellerServiceHoursForm() {
       </h2>
       <div className="w-full flex gap-5 mt-6 md:flex-row flex-col text-[#8891B2] ">
         <Field
-          name="companyLogo"
+          name="company_logo"
           component={FileInput}
           label="Company Logo"
           accept="image/jpeg, image/png"
         />
         <Field
-          name="mainPicture"
+          name="main_picture"
           component={FileInput}
           label="Main Picture"
           accept="image/jpeg, image/png"

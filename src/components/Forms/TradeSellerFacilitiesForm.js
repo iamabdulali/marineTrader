@@ -10,13 +10,13 @@ const TradeSellerFacilitiesForm = () => {
             <Field
               type="text"
               placeholder="First Name"
-              name="firstName"
+              name="first_name"
               className="border-[#CECED7] border-2 rounded-md p-3 w-full"
             />
             <div>
               <ErrorMessage
                 component="span"
-                name="firstName"
+                name="first_name"
                 className="text-red-500"
               />
             </div>
@@ -26,10 +26,10 @@ const TradeSellerFacilitiesForm = () => {
               className="border-[#CECED7] border-2 rounded-md p-3 w-full"
               type="text"
               placeholder="Last Name"
-              name="lastName"
+              name="last_name"
             />
             <ErrorMessage
-              name="lastName"
+              name="last_name"
               component="span"
               className="text-red-500"
             />
@@ -40,10 +40,10 @@ const TradeSellerFacilitiesForm = () => {
             className="border-[#CECED7] border-2 rounded-md p-3 w-full"
             type="text"
             placeholder="Job Title"
-            name="jobTitle"
+            name="job_title"
           />
           <ErrorMessage
-            name="jobTitle"
+            name="job_title"
             component="span"
             className="text-red-500"
           />

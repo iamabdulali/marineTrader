@@ -2,15 +2,15 @@
 import * as Yup from "yup";
 
 export const validationSchema = Yup.object().shape({
-  username: Yup.string().required("User Name is required"),
-  companyInfo: Yup.string().required("Company Info is required"),
-  buildingNumber: Yup.string().required("Building Number is required"),
-  streetName: Yup.string().required("Street Name is required"),
+  user_name: Yup.string().required("User Name is required"),
+  company_name: Yup.string().required("Company Info is required"),
+  building_number: Yup.string().required("Building Number is required"),
+  street_name: Yup.string().required("Street Name is required"),
   city: Yup.string().required("Town/City is required"),
   postcode: Yup.string().required("Postcode is required"),
   country: Yup.string().required("Country is required"),
   region: Yup.string().required("Region is required"),
-  phoneNo: Yup.string()
+  phone_no: Yup.string()
     .length(11, "Phone Number must be of 11 characters")
     .required("Phone Number is required"),
   currency: Yup.string().required("Currency is required"),
@@ -30,9 +30,9 @@ export const validationSchema = Yup.object().shape({
   confirmPassword: Yup.string()
     .oneOf([Yup.ref("password"), null], "Passwords must match")
     .required("Confirm Password is required"),
-  timeZone: Yup.string().required("Timezone is required"),
-  openPublicHolidays: Yup.string().required("Public Holiday Required"),
-  companyLogo: Yup.mixed()
+  timezone: Yup.string().required("Timezone is required"),
+  open_public_holidays: Yup.string().required("Public Holiday Required"),
+  company_logo: Yup.mixed()
     .test(
       "fileSize",
       "File size is too large (max 1 MB)",
@@ -49,7 +49,7 @@ export const validationSchema = Yup.object().shape({
       "Please upload a picture",
       (value) => value !== undefined && value !== null
     ),
-  mainPicture: Yup.mixed()
+  main_picture: Yup.mixed()
     .test(
       "fileSize",
       "File size is too large (max 1 MB)",
@@ -66,9 +66,10 @@ export const validationSchema = Yup.object().shape({
       "Please upload a picture",
       (value) => value !== undefined && value !== null
     ),
-  firstName: Yup.string().required("First Name is required"),
-  lastName: Yup.string().required("Last Name is required"),
-  jobTitle: Yup.string().required("Job Title is required"),
+  selectedDays: Yup.array().min(1, "Select at least one day"),
+  first_name: Yup.string().required("First Name is required"),
+  last_name: Yup.string().required("Last Name is required"),
+  job_title: Yup.string().required("Job Title is required"),
 });
 
 export const categoryDropdownValidationSchema = Yup.object().shape({
