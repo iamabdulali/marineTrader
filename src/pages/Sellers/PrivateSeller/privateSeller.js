@@ -10,6 +10,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { displayErrorMessages } from "../../../utils/displayErrors.js";
 import { Oval } from "react-loader-spinner";
+import { SERVER_BASE_URL } from "../../../index.js";
 
 const PrivateSeller = () => {
   const [spinner, setSpinner] = useState(false);
@@ -36,7 +37,7 @@ const PrivateSeller = () => {
     setSpinner(true);
     try {
       const { data } = await axios.post(
-        "https://marine.takhleeqsoft.com/api/private/register",
+        `${SERVER_BASE_URL}/private/register`,
         values,
         {
           headers: {
@@ -45,6 +46,7 @@ const PrivateSeller = () => {
         }
       );
       toast.success(data.message);
+      localStorage.setItem("token", data.token);
       setSpinner(false);
       NavigateTo("/dashboard");
     } catch (error) {

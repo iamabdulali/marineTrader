@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { displayErrorMessages } from "../../utils/displayErrors";
 import axios from "axios";
 import { Oval } from "react-loader-spinner";
+import { SERVER_BASE_URL } from "../..";
 
 const Login = () => {
   const [spinner, setSpinner] = useState(false);
@@ -20,16 +21,13 @@ const Login = () => {
   const onSubmit = async (values) => {
     setSpinner(true);
     try {
-      const { data } = await axios.post(
-        "https://marine.takhleeqsoft.com/api/login",
-        values,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      const { data } = await axios.post(`${SERVER_BASE_URL}/login`, values, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
       toast.success(data.message);
+      localStorage.setItem("token", data.token);
       setSpinner(false);
       NavigateTo("/dashboard");
     } catch (error) {

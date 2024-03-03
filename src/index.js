@@ -6,6 +6,9 @@ import reportWebVitals from "./reportWebVitals";
 import { AuthContextProvider } from "./Context/AuthContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
+
+export const SERVER_BASE_URL = "https://marine.takhleeqsoft.com/api";
+
 root.render(
   <React.StrictMode>
     <AuthContextProvider>

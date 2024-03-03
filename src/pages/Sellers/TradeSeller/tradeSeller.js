@@ -13,6 +13,7 @@ import { displayErrorMessages } from "../../../utils/displayErrors";
 import { useNavigate } from "react-router-dom";
 import { Oval } from "react-loader-spinner";
 import axios from "axios";
+import { SERVER_BASE_URL } from "../../..";
 
 const initialValues = {
   name: "dummy3",
@@ -138,7 +139,7 @@ const TradeSeller = () => {
     setSpinner(true);
     try {
       const { data } = await axios.post(
-        "https://marine.takhleeqsoft.com/api/trade-seller/register",
+        `${SERVER_BASE_URL}/trade-seller/register`,
         values,
         {
           headers: {
