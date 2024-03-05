@@ -17,7 +17,7 @@ import { SERVER_BASE_URL } from "../../..";
 import { AuthContext } from "../../../Context/AuthContext";
 
 const initialValues = {
-  name: "dummy4",
+  name: "dummy10",
   user_name: "",
   company_name: "",
   building_number: "",
@@ -41,7 +41,7 @@ const initialValues = {
   last_name: "",
   job_title: "",
   selectedDays: [],
-  service_hours2: [
+  service_hours: [
     { day: "Mon", startTime: "", endTime: "" },
     { day: "Tues", startTime: "", endTime: "" },
     { day: "Wed", startTime: "", endTime: "" },
@@ -50,7 +50,6 @@ const initialValues = {
     { day: "Sat", startTime: "", endTime: "" },
     { day: "Sun", startTime: "", endTime: "" },
   ],
-  service_hours: "12:30pm",
 };
 
 const TradeSeller = () => {
@@ -137,12 +136,15 @@ const TradeSeller = () => {
   const prevStep = () => setStep(step - 1);
 
   const onSubmit = async (values) => {
-    console.log(values);
+    const updatedValues = {
+      ...values,
+      service_hours: JSON.stringify(values.service_hours),
+    };
     setSpinner(true);
     try {
       const { data } = await axios.post(
         `${SERVER_BASE_URL}/trade-seller/register`,
-        values,
+        updatedValues,
         {
           headers: {
             "Content-Type": "multipart/form-data",
@@ -200,7 +202,7 @@ const TradeSeller = () => {
                   <button
                     type="button"
                     onClick={() => nextStep(values, { setTouched, setErrors })}
-                    className={`bg-[#0D1A8B] text-white p-3 rounded-md w-28`}
+                    className={`bg-[#0D1A8B] hover:bg-[#0a1dbd] text-white p-3 rounded-md w-28`}
                   >
                     Next
                   </button>
@@ -209,7 +211,7 @@ const TradeSeller = () => {
                     type={submit ? "submit" : "button"}
                     onClick={() => setSubmit(true)}
                     disabled={spinner}
-                    className={`bg-[#0D1A8B] text-white p-3 min-h-12 rounded-md w-28  ${
+                    className={`bg-[#0D1A8B] hover:bg-[#0a1dbd] text-white p-3 min-h-12 rounded-md w-28  ${
                       isValid ? "opacity-100" : "opacity-70"
                     }`}
                   >

@@ -46,9 +46,9 @@ export default function TradeSellerServiceHoursForm() {
   };
 
   const handleTimeChange = (selectedDay, fieldName, value) => {
-    const { service_hours2 } = values;
+    const { service_hours } = values;
 
-    const updatedservice_hours2 = service_hours2.map((day) => {
+    const updatedservice_hours = service_hours.map((day) => {
       if (day.day === selectedDay) {
         return {
           ...day,
@@ -58,7 +58,7 @@ export default function TradeSellerServiceHoursForm() {
       return day;
     });
 
-    setValues({ ...values, service_hours2: updatedservice_hours2 });
+    setValues({ ...values, service_hours: updatedservice_hours });
   };
 
   const [facilities, setFacilities] = useState(initialFacilities.facilities);
@@ -134,8 +134,8 @@ export default function TradeSellerServiceHoursForm() {
 
       <div>
         {values.selectedDays.map((selectedDay) => {
-          // Find the object in service_hours2 array corresponding to the selected day
-          const selectedDayObject = values.service_hours2.find(
+          // Find the object in service_hours array corresponding to the selected day
+          const selectedDayObject = values?.service_hours.find(
             (day) => day.day === selectedDay
           );
 
@@ -148,7 +148,7 @@ export default function TradeSellerServiceHoursForm() {
                 <Field
                   as="select"
                   value={selectedDayObject.startTime || ""}
-                  name={`service_hours2.${selectedDay}.startTime`}
+                  name={`service_hours.${selectedDay}.startTime`}
                   onChange={(event) =>
                     handleTimeChange(
                       selectedDay,
@@ -167,7 +167,7 @@ export default function TradeSellerServiceHoursForm() {
                 <Field
                   as="select"
                   value={selectedDayObject.endTime || ""}
-                  name={`service_hours2.${selectedDay}.endTime`}
+                  name={`service_hours.${selectedDay}.endTime`}
                   onChange={(event) =>
                     handleTimeChange(selectedDay, "endTime", event.target.value)
                   }
