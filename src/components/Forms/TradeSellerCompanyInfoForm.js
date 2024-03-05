@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { eye } from "../../assets";
-import { FaArrowDown, FaChevronCircleDown, FaEye } from "react-icons/fa";
+import { FaChevronDown, FaEye } from "react-icons/fa";
 import { Field, ErrorMessage } from "formik";
 import SelectDropdown from "./FormElements/SelectDropdown";
 import {
@@ -117,9 +117,9 @@ export default function TradeSellerCompanyInfoForm() {
         <div className="flex gap-4 sm:flex-row flex-col">
           <div className="w-full ">
             <div className="flex items-center">
-              <FaChevronCircleDown
+              <FaChevronDown
                 className="absolute right-6 block sm:hidden"
-                size={16}
+                size={12}
               />
               <SelectDropdown
                 name="country"
@@ -136,9 +136,9 @@ export default function TradeSellerCompanyInfoForm() {
 
           <div className="w-full ">
             <div className="items-center flex">
-              <FaChevronCircleDown
+              <FaChevronDown
                 className="absolute right-6 block sm:hidden"
-                size={16}
+                size={12}
               />
               <SelectDropdown
                 name="region"
@@ -166,7 +166,7 @@ export default function TradeSellerCompanyInfoForm() {
                   <option value="+1">+1 (USA)</option>
                   <option value="+44">+44 (UK)</option>
                 </Field>
-                <FaChevronCircleDown className=" block sm:hidden" size={16} />
+                <FaChevronDown className=" block sm:hidden" size={12} />
               </div>
 
               {/* Phone Number Input */}
@@ -188,9 +188,9 @@ export default function TradeSellerCompanyInfoForm() {
 
           <div className="w-full">
             <div className="flex items-center">
-              <FaChevronCircleDown
+              <FaChevronDown
                 className="absolute right-6 block sm:hidden"
-                size={16}
+                size={12}
               />
               <SelectDropdown
                 name="currency"

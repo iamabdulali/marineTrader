@@ -172,7 +172,7 @@ const TradeSeller = () => {
           Sign up as Trade
         </h1>
         <ProgressSteps
-          className="mt-10 md:w-8/12 w-full mx-auto md:my-0 my-6"
+          className="mt-10 md:w-8/12 w-full mx-auto md:my-6 my-6"
           totalSteps={stepLabels.length}
           currentStep={step}
           stepLabels={stepLabels}
@@ -188,7 +188,7 @@ const TradeSeller = () => {
               {step === 1 && <TradeSellerCompanyInfoForm />}
               {step === 2 && <TradeSellerServiceHoursForm values={values} />}
               {step === 3 && <TradeSellerFacilitiesForm />}
-              <div className="text-right mr-8 mt-10 flex items-center gap-5 justify-end">
+              <div className="text-right sm:mr-8 mt-10 flex items-center gap-5 justify-end">
                 {step > 1 && (
                   <button
                     type="button"

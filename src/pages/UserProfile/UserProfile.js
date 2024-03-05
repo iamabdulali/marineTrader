@@ -52,7 +52,7 @@ const UserInfo = () => {
     }
   }, [user]);
 
-  const { seller_type, image_field } = Object(user);
+  const { seller_type, image_field, main_picture, company_logo } = Object(user);
 
   const isPrivateSeller = seller_type == "private seller";
 
@@ -83,7 +83,7 @@ const UserInfo = () => {
             ) : (
               <div className="relative">
                 <img
-                  src={coverPhotoSrc || coverPhoto}
+                  src={company_logo || coverPhoto}
                   className="min-h-[270px] smallLg:max-h-[270px] max-h-[450px] w-full object-cover"
                 />
                 <label
@@ -109,7 +109,7 @@ const UserInfo = () => {
               }  w-40 mx-auto`}
             >
               <img
-                src={image_field}
+                src={image_field || main_picture}
                 alt="Profile Photo"
                 className="rounded-full w-40 h-40 object-cover object-top border-4 border-[#CDD0F0]"
               />
@@ -144,9 +144,11 @@ const UserInfo = () => {
 
             <div className="tab-content px-6 py-10">
               {selectedTab === "companyInfo" && (
-                <CompanyInfo editable={editing} />
+                <CompanyInfo editable={editing} user={user} />
               )}
-              {selectedTab === "businessDetails" && <BusinessDetails />}
+              {selectedTab === "businessDetails" && (
+                <BusinessDetails user={user} />
+              )}
               {selectedTab === "contactPersonDetails" && (
                 <ContactPersonDetails />
               )}

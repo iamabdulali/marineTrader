@@ -2,9 +2,7 @@ import React, { useContext, useState } from "react";
 import { FormField } from "../../components/FormField";
 import { AuthContext } from "../../Context/AuthContext";
 
-const CompanyInfo = ({ editable }) => {
-  const { user } = useContext(AuthContext);
-
+const CompanyInfo = ({ editable, user }) => {
   const [userData, setUserData] = useState(user);
 
   const handleInputChange = (e) => {

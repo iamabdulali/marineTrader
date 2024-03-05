@@ -20,7 +20,7 @@ const Header = ({ menuState, setMenuState }) => {
   const [homePageMenu, setHomePageMenu] = useState(false);
   const { user } = useContext(AuthContext);
 
-  const { user_name, seller_type, image_field } = Object(user);
+  const { user_name, seller_type, image_field, main_picture } = Object(user);
 
   const toggleLanguageDropdown = () => {
     setLanguageDropdownOpen(!languageDropdownOpen);
@@ -185,9 +185,9 @@ const Header = ({ menuState, setMenuState }) => {
                 className="flex items-center space-x-2 focus:outline-none"
               >
                 <div className="flex items-center justify-start gap-3 text-left">
-                  {image_field ? (
+                  {image_field || main_picture ? (
                     <img
-                      src={image_field}
+                      src={image_field || main_picture}
                       className="w-10 h-10  rounded-full object-cover object-top"
                     />
                   ) : (
