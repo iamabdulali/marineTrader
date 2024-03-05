@@ -6,17 +6,25 @@ import { AuthContext } from "../../Context/AuthContext";
 import VerticalMenu from "../../components/verticalMenu/VerticalMenu";
 
 const BuyerLayout = ({ children, showCategoryList }) => {
-  const { selectedCategory, dispatch } = useContext(AuthContext);
+  const [menuState, setMenuState] = useState(true);
+  const { dispatch } = useContext(AuthContext);
 
   const onCategoryChange = (category) => {
     // Update selected category in the authentication context
     dispatch({ type: "UPDATE_SELECTED_CATEGORY_BUILD_AD", payload: category });
   };
 
+  const handleMenuStateChange = (newState) => {
+    setMenuState(newState);
+  };
+
   return (
     <>
-      <Header />
-      {/* <VerticalMenu /> */}
+      <Header menuState={menuState} setMenuState={handleMenuStateChange} />
+      <VerticalMenu
+        menuState={menuState}
+        setMenuState={handleMenuStateChange}
+      />
       {showCategoryList ? (
         <div className="overflow-x-scroll category-menu">
           <CategoryList

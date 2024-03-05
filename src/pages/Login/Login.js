@@ -4,19 +4,18 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import { logo } from "../../assets";
 import { loginValidationSchema } from "../../utils/ValidationSchema";
 import { toast } from "react-toastify";
-import { displayErrorMessages } from "../../utils/displayErrors";
 import axios from "axios";
 import { Oval } from "react-loader-spinner";
 import { SERVER_BASE_URL } from "../..";
 
 const Login = () => {
-  const [spinner, setSpinner] = useState(false);
-  const NavigateTo = useNavigate();
-
   const initialValues = {
     email: "",
     password: "",
   };
+
+  const [spinner, setSpinner] = useState(false);
+  const NavigateTo = useNavigate();
 
   const onSubmit = async (values) => {
     setSpinner(true);
@@ -39,7 +38,10 @@ const Login = () => {
 
   return (
     <>
-      <img className="w-32 mt-4 ml-4 block" src={logo} alt="logo" />
+      <Link to="/">
+        {" "}
+        <img className="w-32 mt-4 ml-4 block" src={logo} alt="logo" />
+      </Link>
       <div className="flex flex-row h-screen">
         {/* Left side */}
         <div className="md:w-1/2 w-full flex flex-col justify-center items-center bg-white text-white">

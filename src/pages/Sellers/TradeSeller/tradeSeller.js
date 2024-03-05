@@ -1,5 +1,5 @@
 // TradeSeller.js
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Formik, Form } from "formik";
 import TradeSellerCompanyInfoForm from "../../../components/Forms/TradeSellerCompanyInfoForm";
 import TradeSellerServiceHoursForm from "../../../components/Forms/TradeSellerServiceHoursForm";
@@ -14,9 +14,10 @@ import { useNavigate } from "react-router-dom";
 import { Oval } from "react-loader-spinner";
 import axios from "axios";
 import { SERVER_BASE_URL } from "../../..";
+import { AuthContext } from "../../../Context/AuthContext";
 
 const initialValues = {
-  name: "dummy3",
+  name: "dummy4",
   user_name: "",
   company_name: "",
   building_number: "",
@@ -53,6 +54,7 @@ const initialValues = {
 };
 
 const TradeSeller = () => {
+  const { dispatch } = useContext(AuthContext);
   const [spinner, setSpinner] = useState(false);
   const [submit, setSubmit] = useState(false);
   const NavigateTo = useNavigate();
@@ -149,6 +151,7 @@ const TradeSeller = () => {
       );
       toast.success(data.message);
       localStorage.setItem("token", data.token);
+      dispatch({ type: "SET_USER", payload: data.data });
       setSpinner(false);
       NavigateTo("/dashboard");
     } catch (error) {

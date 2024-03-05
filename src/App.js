@@ -1,9 +1,4 @@
-import {
-  BrowserRouter as Router,
-  Outlet,
-  Route,
-  Routes,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
@@ -28,10 +23,22 @@ import "swiper/swiper-bundle.css";
 import Payment from "./pages/Payment/Payment";
 import PaymentStatus from "./pages/Payment/PaymentStatus";
 import PrivateSeller from "./pages/Sellers/PrivateSeller/privateSeller";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useContext, useEffect } from "react";
+import { AuthContext } from "./Context/AuthContext";
+import ProtectedRoute from "./utils/ProtectedRoute";
+import GuestRoute from "./utils/GuestRoute";
+import { getUserData } from "./utils/getUserData";
+import "react-loading-skeleton/dist/skeleton.css";
 
 function App() {
+  const { user, dispatch } = useContext(AuthContext);
+
+  useEffect(() => {
+    getUserData(user, dispatch);
+  }, []);
+
   return (
     <Router>
       {/* <Header/> */}
@@ -41,16 +48,73 @@ function App() {
         <Route path="/list" element={<ListPage />} />
         <Route path="/itemDetails" element={<ItemDetailPage />} />
         <Route path="/userProfile" element={<UserInfo />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Registration />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/selling" element={<Selling />} />
-        <Route path="/offers" element={<Offer />} />
-        <Route path="/notifications" element={<Notifications />} />
+        <Route
+          path="/login"
+          element={
+            <GuestRoute>
+              <Login />
+            </GuestRoute>
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <GuestRoute>
+              <Registration />
+            </GuestRoute>
+          }
+        />
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/selling"
+          element={
+            <ProtectedRoute>
+              <Selling />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/offers"
+          element={
+            <ProtectedRoute>
+              <Offer />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/notifications"
+          element={
+            <ProtectedRoute>
+              <Notifications />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/reset-password" element={<ResetPassword />} />
-        <Route path="/selling/buildAd" element={<BuildAd />} />
+        <Route
+          path="/selling/buildAd"
+          element={
+            <ProtectedRoute>
+              <BuildAd />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/directory" element={<Directory />} />
-        <Route path="/subscriptions" element={<Subscription />} />
+        <Route
+          path="/subscriptions"
+          element={
+            <ProtectedRoute>
+              <Subscription />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/subscriptions/buySubscription"
           element={<SubscriptionForm />}

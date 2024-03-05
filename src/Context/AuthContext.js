@@ -5,10 +5,6 @@ export const AuthContext = createContext();
 
 export const authReducer = (state, action) => {
   switch (action.type) {
-    case "LOGIN":
-      return { ...state, user: action.payload };
-    case "LOGOUT":
-      return { user: null };
     case "UPDATE_SELECTED_CATEGORY_BUILD_AD":
       return { ...state, selectedCategory: action.payload };
     case "ADD_TAG":
@@ -22,6 +18,8 @@ export const authReducer = (state, action) => {
       return { ...state, listingTags: [] };
     case "UPDATE_CHECKBOXES":
       return { ...state, modificationCheckboxes: action.payload };
+    case "SET_USER":
+      return { ...state, user: action.payload };
     default:
       return state;
   }
@@ -29,10 +27,10 @@ export const authReducer = (state, action) => {
 
 export const AuthContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, {
-    user: null,
     bundleName: "",
+    user: null, // Updated user initialization
     selectedCategory: null,
-    listingTags: [], // Include tags in the initial state
+    listingTags: [],
     modificationCheckboxes: [],
   });
 

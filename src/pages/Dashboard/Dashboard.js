@@ -1,12 +1,10 @@
-import React, { useState } from "react";
-import VerticalMenu from "../../components/verticalMenu/VerticalMenu";
-import Header from "../../components/Header/Header";
+import React, { useContext, useState } from "react";
 import PackageMessage from "../../components/Notifications/PackageMessage";
 import { jetski3d, packageIcon, speakerIcon } from "../../assets";
-import { FaCross, FaTimes } from "react-icons/fa";
+import { FaTimes } from "react-icons/fa";
 import WelcomeMessage from "../../components/Notifications/WelcomeMessage";
 import ListingTable from "../../components/Tables/ListingTable";
-import { dashboardHeader, sellingHeader } from "../../utils/DummyData";
+import { sellingHeader } from "../../utils/DummyData";
 import Layout from "../../components/Layout/Layout";
 import VideoBtn from "../../components/VideoTutorial/VideoBtn";
 import Modal from "../../components/Modal";
@@ -15,9 +13,15 @@ import {
   closeModal,
   openModal,
 } from "../../utils/ModalOpeningClosingFunctions";
+import { AuthContext } from "../../Context/AuthContext";
 
 export default function Dashboard() {
   let [isVideoOpen, setIsVideoOpen] = useState(false);
+
+  const { user } = useContext(AuthContext);
+
+  const { seller_type } = Object(user);
+
   return (
     <>
       <Layout>
@@ -40,7 +44,11 @@ export default function Dashboard() {
         />
         <WelcomeMessage
           className="text-white flex justify-between md:p-10 sm:py-7 sm:px-7 p-5 mt-5 rounded-xl md:items-stretch items-center"
-          heading="Welcome to Trade Seller Dashboard"
+          heading={
+            seller_type == "private seller"
+              ? "Welcome to Private Seller Dashboard"
+              : "Welcome to Trade Seller Dashboard"
+          }
           subHeading="Let’s get it started & Create your listings."
           buttonText="Start Selling Now"
           image={jetski3d}

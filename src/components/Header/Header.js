@@ -8,23 +8,19 @@ import {
   offerIcon,
   userProfile,
 } from "../../assets";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { isUserLoggedIn } from "../../utils/isLoggedIn.js";
+import { AuthContext } from "../../Context/AuthContext.js";
+import Skeleton from "react-loading-skeleton";
 
 const Header = ({ menuState, setMenuState }) => {
   const [languageDropdownOpen, setLanguageDropdownOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
-  const [isLogged, setIsLogged] = useState(false);
+  const isLogged = isUserLoggedIn();
   const [homePageMenu, setHomePageMenu] = useState(false);
-  const location = useLocation();
+  const { user } = useContext(AuthContext);
 
-  useEffect(() => {
-    // Check if the user is on the home page
-    if (location.pathname === "/") {
-      setIsLogged(false);
-    } else {
-      setIsLogged(true);
-    }
-  }, [location]);
+  const { user_name, seller_type, image_field } = Object(user);
 
   const toggleLanguageDropdown = () => {
     setLanguageDropdownOpen(!languageDropdownOpen);
@@ -189,15 +185,29 @@ const Header = ({ menuState, setMenuState }) => {
                 className="flex items-center space-x-2 focus:outline-none"
               >
                 <div className="flex items-center justify-start gap-3 text-left">
-                  <img
-                    src={userProfile}
-                    className="w-10 sm:rounded-none rounded-full"
-                  />
+                  {image_field ? (
+                    <img
+                      src={image_field}
+                      className="w-10 h-10  rounded-full object-cover object-top"
+                    />
+                  ) : (
+                    <Skeleton
+                      className="w-10 h-10 block"
+                      circle={true}
+                      containerClassName="w-10 h-10 block"
+                    />
+                  )}
+
                   <div className="hidden sm:block">
-                    <span className="text-[#151D48] items-center font-semibold text-left flex">
-                      Musfiq <FaChevronDown className="ml-16" size={12} />
+                    <p className="text-[#151D48] items-center font-semibold text-left flex gap-2">
+                      <span className="min-w-20">
+                        {user_name || <Skeleton />}
+                      </span>
+                      <FaChevronDown size={12} />
+                    </p>
+                    <span className="text-[#737791] text-sm capitalize">
+                      {seller_type || <Skeleton />}
                     </span>
-                    <span className="text-[#737791] text-sm">Trade Seller</span>
                   </div>
                 </div>
               </Link>

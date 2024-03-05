@@ -1,16 +1,31 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { FormField } from "../../components/FormField";
+import { AuthContext } from "../../Context/AuthContext";
 
-const CompanyInfo = () => {
+const CompanyInfo = ({ editable }) => {
+  const { user } = useContext(AuthContext);
+
+  const [userData, setUserData] = useState(user);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setUserData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
   return (
-    <>
+    <form>
       <div className="flex sm:gap-6 items-center sm:flex-row flex-col">
         <FormField
           label="Username"
           FieldType="text"
           inputField={false}
-          value="John Smith"
-          name="username"
+          value={userData.user_name}
+          name="user_name"
+          onChange={(e) => handleInputChange(e)}
+          readOnly={true}
         />
         <FormField
           label="Company Name"
@@ -18,6 +33,8 @@ const CompanyInfo = () => {
           inputField={false}
           value="john23"
           name="companyName"
+          onChange={(e) => handleInputChange(e)}
+          readOnly={editable}
         />
       </div>
       <div className="flex sm:gap-6 items-center sm:flex-row flex-col">
@@ -25,15 +42,19 @@ const CompanyInfo = () => {
           label="Building Number"
           FieldType="text"
           inputField={false}
-          value="23"
-          name="buildingNumber"
+          value={userData.building_number}
+          name="building_number"
+          onChange={(e) => handleInputChange(e)}
+          readOnly={editable}
         />
         <FormField
           label="Street Name"
           FieldType="text"
           inputField={false}
-          value="NY Street"
-          name="streetName"
+          value={userData.street_name}
+          name="street_name"
+          onChange={(e) => handleInputChange(e)}
+          readOnly={editable}
         />
       </div>
       <div className="flex sm:gap-6 items-center sm:flex-row flex-col">
@@ -41,15 +62,19 @@ const CompanyInfo = () => {
           label="Town/City"
           FieldType="text"
           inputField={false}
-          value="New York"
+          value={userData.city}
           name="city"
+          onChange={(e) => handleInputChange(e)}
+          readOnly={editable}
         />
         <FormField
           label="Postal Code"
           FieldType="text"
           inputField={false}
-          value="232323"
-          name="postalCode"
+          value={userData.postcode}
+          name="postcode"
+          onChange={(e) => handleInputChange(e)}
+          readOnly={editable}
         />
       </div>
       <div className="flex sm:gap-6 items-center sm:flex-row flex-col">
@@ -57,15 +82,19 @@ const CompanyInfo = () => {
           label="Country"
           FieldType="text"
           inputField={false}
-          value="USA"
+          value={userData.country}
           name="country"
+          onChange={(e) => handleInputChange(e)}
+          readOnly={editable}
         />
         <FormField
           label="Region"
           FieldType="text"
           inputField={false}
-          value="NY"
+          value={userData.region}
           name="region"
+          onChange={(e) => handleInputChange(e)}
+          readOnly={editable}
         />
       </div>
       <div className="flex sm:gap-6 items-center sm:flex-row flex-col">
@@ -73,14 +102,18 @@ const CompanyInfo = () => {
           label="Phone Number"
           FieldType="tel"
           inputField={false}
-          value="+1 2252 5588"
-          name="phoneNumber"
+          value={userData.phone_no}
+          name="phone_no"
+          onChange={(e) => handleInputChange(e)}
+          readOnly={editable}
         />
         <FormField
           label="Currency"
           FieldType="text"
           inputField={false}
           value="USD"
+          onChange={(e) => handleInputChange(e)}
+          readOnly={editable}
           name="currency"
         />
       </div>
@@ -89,8 +122,10 @@ const CompanyInfo = () => {
           label="Email"
           FieldType="email"
           inputField={false}
-          value="johnsmith@gmail.com"
+          value={userData.email}
           name="email"
+          onChange={(e) => handleInputChange(e)}
+          readOnly={true}
         />
         <FormField
           label="Password"
@@ -98,9 +133,11 @@ const CompanyInfo = () => {
           inputField={false}
           value="password"
           name="password"
+          onChange={(e) => handleInputChange(e)}
+          readOnly={editable}
         />
       </div>
-    </>
+    </form>
   );
 };
 

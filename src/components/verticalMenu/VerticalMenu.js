@@ -11,8 +11,10 @@ import {
   FaSignOutAlt,
 } from "react-icons/fa";
 import { blueBg, logo, msgIcon, phoneIcon } from "../../assets";
+import { AuthContext } from "../../Context/AuthContext";
 
 const VerticalMenu = ({ menuState, setMenuState }) => {
+  const { dispatch } = useContext(AuthContext);
   const toggleMenu = () => {
     setMenuState(!menuState);
   };
@@ -96,9 +98,15 @@ const VerticalMenu = ({ menuState, setMenuState }) => {
                 Contact MT
               </NavLink>
             </li>
-            <li className="mb-4">
+            <li
+              className="mb-4"
+              onClick={() => {
+                localStorage.removeItem("token");
+                dispatch({ type: "SET_AUTHENTICATED", payload: false });
+              }}
+            >
               <NavLink
-                to="/"
+                to="/login"
                 className="flex items-center py-4 px-4 text-[#8891B2] rounded-xl hover:bg-gray-200"
               >
                 <FaSignOutAlt className="mr-3" size={18} />

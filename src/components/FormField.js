@@ -8,6 +8,8 @@ export const FormField = ({
   FieldType,
   className,
   value,
+  onChange,
+  readOnly,
   as,
 }) => (
   <div className="mb-4 w-full text-sm">
@@ -41,8 +43,10 @@ export const FormField = ({
           type={FieldType}
           name={name}
           value={value}
+          onChange={onChange}
           onClick={onClick}
           placeholder={label}
+          readOnly={readOnly}
           className="border-[#f1f1f1] font-semibold outline-none border-b-2 py-2 px-0 text-[#11133D] w-full"
         />
       </div>

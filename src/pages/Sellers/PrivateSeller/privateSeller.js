@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Formik, Form } from "formik";
 import { privateSellerValidationSchema } from "../../../utils/ValidationSchema.js";
@@ -11,8 +11,10 @@ import { toast } from "react-toastify";
 import { displayErrorMessages } from "../../../utils/displayErrors.js";
 import { Oval } from "react-loader-spinner";
 import { SERVER_BASE_URL } from "../../../index.js";
+import { AuthContext } from "../../../Context/AuthContext.js";
 
 const PrivateSeller = () => {
+  const { dispatch } = useContext(AuthContext);
   const [spinner, setSpinner] = useState(false);
   const NavigateTo = useNavigate();
   const initialValues = {
@@ -47,6 +49,7 @@ const PrivateSeller = () => {
       );
       toast.success(data.message);
       localStorage.setItem("token", data.token);
+      dispatch({ type: "SET_USER", payload: data.data });
       setSpinner(false);
       NavigateTo("/dashboard");
     } catch (error) {
