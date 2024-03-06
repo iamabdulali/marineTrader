@@ -1,7 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import { FormField } from "../../components/FormField";
+import { useFormikContext } from "formik";
 
-const ContactPersonDetails = () => {
+const ContactPersonDetails = ({ editable, user }) => {
+  const [userData, setUserData] = useState(user);
+  const { values, setFieldValue } = useFormikContext();
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    // setUserData((prevData) => ({
+    //   ...prevData,
+    //   [name]: value,
+    // }));
+    setFieldValue(`user.${name}`, value);
+  };
   return (
     <>
       <div className="flex sm:gap-6 items-center sm:flex-row flex-col">
@@ -9,23 +21,29 @@ const ContactPersonDetails = () => {
           label="First Name"
           FieldType="text"
           inputField={false}
-          value="John"
-          name="firstName"
+          value={values.user.first_name}
+          name="first_name"
+          readOnly={editable}
+          onChange={(e) => handleInputChange(e)}
         />
         <FormField
           label="Last Name"
           FieldType="text"
           inputField={false}
-          value="Smith"
-          name="lastName"
+          value={values.user.last_name}
+          name="last_name"
+          readOnly={editable}
+          onChange={(e) => handleInputChange(e)}
         />
       </div>
       <FormField
         label="Job Title"
         FieldType="text"
         inputField={false}
-        value="Sales Man"
-        name="jobTitle"
+        value={values.user.job_title}
+        name="job_title"
+        readOnly={editable}
+        onChange={(e) => handleInputChange(e)}
       />
     </>
   );

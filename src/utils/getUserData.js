@@ -1,9 +1,7 @@
 import axios from "axios";
 import { SERVER_BASE_URL } from "..";
 
-const token = localStorage.getItem("token");
-
-export const getUserData = async (user, dispatch) => {
+export const getUserData = async (user, dispatch, token) => {
   if (token) {
     try {
       const { data } = await axios.get(`${SERVER_BASE_URL}/user`, {

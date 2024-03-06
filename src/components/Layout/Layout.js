@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Header from "../../components/Header/Header";
 import VerticalMenu from "../../components/verticalMenu/VerticalMenu";
 
 const Layout = ({ children }) => {
-  const [menuState, setMenuState] = useState(true);
+  const [menuState, setMenuState] = useState(false);
 
   // Function to update menu state
   const handleMenuStateChange = (newState) => {

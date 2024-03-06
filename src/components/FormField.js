@@ -28,7 +28,7 @@ export const FormField = ({
           onClick={onClick}
           placeholder={label}
           className={className}
-        />
+        ></Field>
         <ErrorMessage component="span" name={name} className="text-[red]" />
       </div>
     ) : (

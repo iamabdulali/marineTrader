@@ -33,11 +33,11 @@ import { getUserData } from "./utils/getUserData";
 import "react-loading-skeleton/dist/skeleton.css";
 
 function App() {
-  const { user, dispatch } = useContext(AuthContext);
-
+  const { user, dispatch, isAuthenticated } = useContext(AuthContext);
+  const token = localStorage.getItem("token");
   useEffect(() => {
-    getUserData(user, dispatch);
-  }, []);
+    getUserData(user, dispatch, token);
+  }, [isAuthenticated]);
 
   return (
     <Router>
@@ -47,7 +47,14 @@ function App() {
         <Route path="/slider" element={<SwiperSlider />} />
         <Route path="/list" element={<ListPage />} />
         <Route path="/itemDetails" element={<ItemDetailPage />} />
-        <Route path="/userProfile" element={<UserInfo />} />
+        <Route
+          path="/userProfile"
+          element={
+            <ProtectedRoute>
+              <UserInfo />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/login"
           element={

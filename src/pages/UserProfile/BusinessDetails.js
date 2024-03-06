@@ -1,16 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 import { FormField } from "../../components/FormField";
 import { FaCheck } from "react-icons/fa";
+import { useFormikContext } from "formik";
 
-const BusinessDetails = ({ user }) => {
+const BusinessDetails = ({ editable, user }) => {
+  const [userData, setUserData] = useState(user);
+  const { values, setFieldValue } = useFormikContext();
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    // setUserData((prevData) => ({
+    //   ...prevData,
+    //   [name]: value,
+    // }));
+    setFieldValue(`user.${name}`, value);
+  };
   return (
     <>
       <FormField
         label="Time Zone"
         FieldType="text"
         inputField={false}
-        value={user?.timezone}
+        value={values.user.timezone}
         name="timezone"
+        readOnly={editable}
+        onChange={(e) => handleInputChange(e)}
       />
       <label className="block text-[#8891B2] text-sm font-medium">
         Selected Days
@@ -30,29 +44,11 @@ const BusinessDetails = ({ user }) => {
       <label className="block mt-6 text-[#8891B2] text-sm font-medium">
         Opening Hours
       </label>
-      {/* <div className="grid sm:grid-cols-2 gap-4 mt-4 smallLg:text-base text-sm">
-        <div className="flex items-center gap-6 font-medium">
-          <p className="uppercase">MON</p>
-          <p>12:00PM - 08:00PM</p>
-        </div>
-        <div className="flex items-center gap-6 font-medium">
-          <p className="uppercase">Tues</p>
-          <p>12:00PM - 08:00PM</p>
-        </div>
-        <div className="flex items-center gap-6 font-medium">
-          <p className="uppercase">Wed</p>
-          <p>12:00PM - 08:00PM</p>
-        </div>
-        <div className="flex items-center gap-6 font-medium">
-          <p className="uppercase">Thru</p>
-          <p>12:00PM - 08:00PM</p>
-        </div>
-      </div> */}
       <div className="grid sm:grid-cols-2 gap-4 mt-4 smallLg:text-base text-sm">
-        {user?.service_hours.map((item) => {
+        {values.user.service_hours.map((item, index) => {
           {
             return item.start_time !== null && item.end_time !== null ? (
-              <div className="flex items-center gap-6 font-medium">
+              <div key={index} className="flex items-center gap-6 font-medium">
                 <p className="uppercase">{item.day}</p>
                 <p>
                   {item.start_time} - {item.end_time}
@@ -65,7 +61,9 @@ const BusinessDetails = ({ user }) => {
       <label className="block mt-6 text-[#8891B2] text-sm font-medium">
         Public Holidays
       </label>
-      <p className="font-medium mt-2 capitalize">{user?.public_holiday}</p>
+      <p className="font-medium mt-2 capitalize">
+        {values.user.public_holiday}
+      </p>
       <label className="block mt-6 text-[#8891B2] text-sm font-medium">
         Facilities
       </label>

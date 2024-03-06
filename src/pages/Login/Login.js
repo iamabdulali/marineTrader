@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { logo } from "../../assets";
@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { Oval } from "react-loader-spinner";
 import { SERVER_BASE_URL } from "../..";
+import { AuthContext } from "../../Context/AuthContext";
 
 const Login = () => {
   const initialValues = {
@@ -15,6 +16,7 @@ const Login = () => {
   };
 
   const [spinner, setSpinner] = useState(false);
+  const { dispatch } = useContext(AuthContext);
   const NavigateTo = useNavigate();
 
   const onSubmit = async (values) => {
@@ -27,6 +29,7 @@ const Login = () => {
       });
       toast.success(data.message);
       localStorage.setItem("token", data.token);
+      dispatch({ type: "SET_USER", payload: data.data });
       setSpinner(false);
       NavigateTo("/dashboard");
     } catch (error) {

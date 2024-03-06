@@ -19,7 +19,9 @@ export const authReducer = (state, action) => {
     case "UPDATE_CHECKBOXES":
       return { ...state, modificationCheckboxes: action.payload };
     case "SET_USER":
-      return { ...state, user: action.payload };
+      return { ...state, user: action.payload, isAuthenticated: true };
+    case "LOGOUT":
+      return { ...state, user: null, isAuthenticated: false };
     default:
       return state;
   }
@@ -32,6 +34,7 @@ export const AuthContextProvider = ({ children }) => {
     selectedCategory: null,
     listingTags: [],
     modificationCheckboxes: [],
+    isAuthenticated: false,
   });
 
   // console.log("Auth context state: ", state);

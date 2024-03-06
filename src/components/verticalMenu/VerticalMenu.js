@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import {
   FaHome,
   FaStore,
@@ -19,12 +19,21 @@ const VerticalMenu = ({ menuState, setMenuState }) => {
     setMenuState(!menuState);
   };
 
+  const IsHomePage = () => {
+    const location = useLocation();
+
+    // Check if the current location pathname is "/"
+    return location.pathname === "/";
+  };
+
   return (
     <>
       <div
         id="sidebar-menu"
-        className={`w-72 p-4 pb-20 bg-white fixed top-0 bottom-0 overflow-y-scroll z-[20] text-sm xl:-translate-x-0 transition-transform ${
-          menuState ? "-translate-x-96" : "-translate-x-0"
+        className={`w-72 ${
+          IsHomePage() ? "" : "dashboard-page"
+        } p-4 pb-20 bg-white fixed top-0 bottom-0 overflow-y-scroll z-[20] text-sm  transition-transform ${
+          menuState ? "-translate-x-0" : " -translate-x-96"
         } `}
       >
         <div className="flex justify-center mb-16">
@@ -102,7 +111,7 @@ const VerticalMenu = ({ menuState, setMenuState }) => {
               className="mb-4"
               onClick={() => {
                 localStorage.removeItem("token");
-                dispatch({ type: "SET_AUTHENTICATED", payload: false });
+                dispatch({ type: "LOGOUT" });
               }}
             >
               <NavLink
@@ -127,14 +136,14 @@ const VerticalMenu = ({ menuState, setMenuState }) => {
       </div>
 
       {menuState ? (
-        ""
-      ) : (
         <div
           onClick={() => {
             toggleMenu();
           }}
-          className="fixed inset-0 w-full bg-black bg-opacity-40 z-10 xl:hidden block"
+          className="fixed inset-0 w-full bg-black bg-opacity-40 z-10  block"
         ></div>
+      ) : (
+        ""
       )}
     </>
   );

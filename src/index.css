@@ -175,3 +175,9 @@ code {
   background-color: #eef0ff;
   border-top: 4px solid #0d1a8b;
 }
+
+@media (min-width: 1250px) {
+  .dashboard-page {
+    transform: translateX(0) !important;
+  }
+}

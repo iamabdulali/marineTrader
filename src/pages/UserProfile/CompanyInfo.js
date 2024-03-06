@@ -1,26 +1,30 @@
 import React, { useContext, useState } from "react";
 import { FormField } from "../../components/FormField";
 import { AuthContext } from "../../Context/AuthContext";
+import { Form, Formik, useFormikContext } from "formik";
+import { countryOptions } from "../../utils/DropdownOptions";
 
 const CompanyInfo = ({ editable, user }) => {
   const [userData, setUserData] = useState(user);
+  const { values, setFieldValue } = useFormikContext();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setUserData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+    // setUserData((prevData) => ({
+    //   ...prevData,
+    //   [name]: value,
+    // }));
+    setFieldValue(`user.${name}`, value);
   };
 
   return (
-    <form>
+    <>
       <div className="flex sm:gap-6 items-center sm:flex-row flex-col">
         <FormField
           label="Username"
           FieldType="text"
           inputField={false}
-          value={userData.user_name}
+          value={values.user.user_name}
           name="user_name"
           onChange={(e) => handleInputChange(e)}
           readOnly={true}
@@ -40,7 +44,7 @@ const CompanyInfo = ({ editable, user }) => {
           label="Building Number"
           FieldType="text"
           inputField={false}
-          value={userData.building_number}
+          value={values.user.building_number}
           name="building_number"
           onChange={(e) => handleInputChange(e)}
           readOnly={editable}
@@ -49,7 +53,7 @@ const CompanyInfo = ({ editable, user }) => {
           label="Street Name"
           FieldType="text"
           inputField={false}
-          value={userData.street_name}
+          value={values.user.street_name}
           name="street_name"
           onChange={(e) => handleInputChange(e)}
           readOnly={editable}
@@ -60,7 +64,7 @@ const CompanyInfo = ({ editable, user }) => {
           label="Town/City"
           FieldType="text"
           inputField={false}
-          value={userData.city}
+          value={values.user.city}
           name="city"
           onChange={(e) => handleInputChange(e)}
           readOnly={editable}
@@ -69,7 +73,7 @@ const CompanyInfo = ({ editable, user }) => {
           label="Postal Code"
           FieldType="text"
           inputField={false}
-          value={userData.postcode}
+          value={values.user.postcode}
           name="postcode"
           onChange={(e) => handleInputChange(e)}
           readOnly={editable}
@@ -80,7 +84,7 @@ const CompanyInfo = ({ editable, user }) => {
           label="Country"
           FieldType="text"
           inputField={false}
-          value={userData.country}
+          value={values.user.country}
           name="country"
           onChange={(e) => handleInputChange(e)}
           readOnly={editable}
@@ -89,7 +93,7 @@ const CompanyInfo = ({ editable, user }) => {
           label="Region"
           FieldType="text"
           inputField={false}
-          value={userData.region}
+          value={values.user.region}
           name="region"
           onChange={(e) => handleInputChange(e)}
           readOnly={editable}
@@ -100,7 +104,7 @@ const CompanyInfo = ({ editable, user }) => {
           label="Phone Number"
           FieldType="tel"
           inputField={false}
-          value={userData.phone_no}
+          value={values.user.phone_no}
           name="phone_no"
           onChange={(e) => handleInputChange(e)}
           readOnly={editable}
@@ -120,7 +124,7 @@ const CompanyInfo = ({ editable, user }) => {
           label="Email"
           FieldType="email"
           inputField={false}
-          value={userData.email}
+          value={values.user.email}
           name="email"
           onChange={(e) => handleInputChange(e)}
           readOnly={true}
@@ -135,7 +139,7 @@ const CompanyInfo = ({ editable, user }) => {
           readOnly={editable}
         />
       </div>
-    </form>
+    </>
   );
 };
 

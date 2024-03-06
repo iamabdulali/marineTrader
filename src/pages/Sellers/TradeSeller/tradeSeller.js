@@ -140,6 +140,7 @@ const TradeSeller = () => {
       ...values,
       service_hours: JSON.stringify(values.service_hours),
     };
+    console.log(updatedValues);
     setSpinner(true);
     try {
       const { data } = await axios.post(

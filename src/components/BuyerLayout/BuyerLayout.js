@@ -6,7 +6,7 @@ import { AuthContext } from "../../Context/AuthContext";
 import VerticalMenu from "../../components/verticalMenu/VerticalMenu";
 
 const BuyerLayout = ({ children, showCategoryList }) => {
-  const [menuState, setMenuState] = useState(true);
+  const [menuState, setMenuState] = useState(false);
   const { dispatch } = useContext(AuthContext);
 
   const onCategoryChange = (category) => {
