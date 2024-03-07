@@ -3,7 +3,6 @@ import React, { useContext, useEffect, useState } from "react";
 import Layout from "../../components/Layout/Layout";
 import { FaPencilAlt } from "react-icons/fa";
 import Tabs from "../../components/Tabs";
-import { cameraIcon, coverPhoto } from "../../assets";
 import BusinessDetails from "./BusinessDetails";
 import ContactPersonDetails from "./ContactPersonDetails";
 import CompanyInfo from "./CompanyInfo";
@@ -14,13 +13,13 @@ import { SERVER_BASE_URL } from "../..";
 import { toast } from "react-toastify";
 import { displayErrorMessages } from "../../utils/displayErrors";
 import axios from "axios";
+import { Oval } from "react-loader-spinner";
+import ImageSection from "./ImageSection";
 
 const UserInfo = () => {
   const [loading, setLoading] = useState(true);
   const [selectedTab, setSelectedTab] = useState("companyInfo");
   const [spinner, setSpinner] = useState(false);
-  const [coverPhotoSrc, setCoverPhotoSrc] = useState(null);
-  const [profilePhotoSrc, setProfilePhotoSrc] = useState(null);
 
   const [editing, setEditing] = useState(true);
   const { user, dispatch } = useContext(AuthContext);
@@ -33,27 +32,6 @@ const UserInfo = () => {
 
   const handleTabClick = (tab) => {
     setSelectedTab(tab);
-  };
-
-  const handleFileUpload = (type, e, setFieldValue) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        if (type === "cover") {
-          setCoverPhotoSrc(reader.result);
-          setFieldValue("user.company_logo", file);
-          console.log(reader);
-        } else if (type === "profile") {
-          setProfilePhotoSrc(reader.result);
-          setFieldValue(
-            `${isPrivateSeller ? "user.image_field" : "user.main_picture"}`,
-            file
-          );
-        }
-      };
-      reader.readAsDataURL(file);
-    }
   };
 
   useEffect(() => {
@@ -72,13 +50,16 @@ const UserInfo = () => {
     user,
   };
 
-  console.log(user);
+  const arrayOfDays = user?.working_days.map((obj) => obj.day);
+  const arrayOfFacilities = user?.facilities.map((obj) => obj.name);
 
   const onSubmit = async (values) => {
     const updatedValues = {
       ...values.user,
-      service_hours: JSON.stringify(values.user?.service_hours),
+      service_hours: JSON.stringify(values.user.service_hours),
       open_public_holidays: "yes",
+      working_days: arrayOfDays,
+      facilities: arrayOfFacilities,
     };
     console.log(updatedValues);
     setSpinner(true);
@@ -96,10 +77,8 @@ const UserInfo = () => {
         }
       );
       toast.success(data.message);
-      // localStorage.setItem("token", data.token);
       dispatch({ type: "SET_USER", payload: data.data });
       setSpinner(false);
-      // NavigateTo("/dashboard");
     } catch (error) {
       console.error("An unexpected error occurred:", error);
       const { errors } = error.response.data;
@@ -125,69 +104,13 @@ const UserInfo = () => {
           {({ isValid, values, setErrors, setTouched, setFieldValue }) => (
             <Form>
               <div className="mt-6 flex smallLg:flex-row flex-col rounded-lg bg-white min-h-screen">
-                <div className="smallLg:w-4/12  w-full bg-[#EDF1FE] smallLg:rounded-tl-lg smallLg:rounded-bl-lg smallLg:mb-0 mb-4">
-                  {isPrivateSeller ? (
-                    ""
-                  ) : (
-                    <div className="relative">
-                      <img
-                        src={coverPhotoSrc || values.user.company_logo}
-                        className="min-h-[270px] smallLg:max-h-[270px] max-h-[450px] w-full object-cover"
-                      />
-                      <label
-                        htmlFor="coverPhotoInput"
-                        className="flex items-center absolute top-5 right-5 gap-2 underline text-[#fff] cursor-pointer"
-                      >
-                        <FaPencilAlt />
-                        Edit
-                      </label>
-                      <input
-                        type="file"
-                        id="coverPhotoInput"
-                        accept="image/*"
-                        name="company_logo"
-                        onChange={(e) =>
-                          handleFileUpload("cover", e, setFieldValue)
-                        }
-                        className="hidden"
-                      />
-                    </div>
-                  )}
-
-                  <div
-                    className={`relative ${
-                      isPrivateSeller ? "top-10" : "-top-20"
-                    }  w-40 mx-auto`}
-                  >
-                    <img
-                      src={
-                        profilePhotoSrc ||
-                        values.user.image_field ||
-                        values.user.main_picture
-                      }
-                      alt="Profile Photo"
-                      className="rounded-full w-40 h-40 object-cover object-top border-4 border-[#CDD0F0]"
-                    />
-                    <label
-                      htmlFor="profilePhotoInput"
-                      className="absolute w-14 bottom-0 right-0 cursor-pointer"
-                    >
-                      <img src={cameraIcon} alt="camera-icon" />
-                    </label>
-                    <input
-                      type="file"
-                      id="profilePhotoInput"
-                      accept="image/*"
-                      name={`${
-                        isPrivateSeller ? "image_field" : "main_picture"
-                      }`}
-                      onChange={(e) =>
-                        handleFileUpload("profile", e, setFieldValue)
-                      }
-                      className="hidden"
-                    />
-                  </div>
-                </div>
+                <ImageSection
+                  setFieldValue={setFieldValue}
+                  company_logo={values.user.company_logo}
+                  image_field={values.user.image_field}
+                  main_picture={values.user.main_picture}
+                  isPrivateSeller={isPrivateSeller}
+                />
                 <div className="smallLg:w-8/12 w-full overflow-x-hidden">
                   {isPrivateSeller ? (
                     ""
@@ -216,9 +139,20 @@ const UserInfo = () => {
               </div>
               <button
                 type="submit"
-                className="hover:bg-[#0a1dbd] mt-6 block ml-auto bg-[#0D1A8B] hover:text-white font-medium text-white px-6 py-3 rounded cursor-pointer"
+                disabled={spinner}
+                className="hover:bg-[#0a1dbd] mt-6 block ml-auto bg-[#0D1A8B] hover:text-white font-medium text-white px-6 py-3 rounded cursor-pointer min-w-44 min-h-12"
               >
-                Save Changes
+                {spinner ? (
+                  <Oval
+                    secondaryColor="#fff"
+                    color="#fff"
+                    width={20}
+                    height={20}
+                    wrapperClass="justify-center"
+                  />
+                ) : (
+                  " Save Changes"
+                )}
               </button>
             </Form>
           )}

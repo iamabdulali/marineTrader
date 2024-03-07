@@ -1,19 +1,12 @@
-import React, { useContext, useState } from "react";
+import React from "react";
 import { FormField } from "../../components/FormField";
-import { AuthContext } from "../../Context/AuthContext";
-import { Form, Formik, useFormikContext } from "formik";
-import { countryOptions } from "../../utils/DropdownOptions";
+import { useFormikContext } from "formik";
 
 const CompanyInfo = ({ editable, user }) => {
-  const [userData, setUserData] = useState(user);
   const { values, setFieldValue } = useFormikContext();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    // setUserData((prevData) => ({
-    //   ...prevData,
-    //   [name]: value,
-    // }));
     setFieldValue(`user.${name}`, value);
   };
 

@@ -32,9 +32,9 @@ export default function TradeSellerServiceHoursForm() {
   const { values, setValues } = useFormikContext();
 
   const handleDayClick = (day) => {
-    const { selectedDays } = values;
-    const selectedIndex = selectedDays.indexOf(day);
-    const newSelectedDays = [...selectedDays];
+    const { working_days } = values;
+    const selectedIndex = working_days.indexOf(day);
+    const newSelectedDays = [...working_days];
 
     if (selectedIndex === -1) {
       newSelectedDays.push(day);
@@ -42,7 +42,7 @@ export default function TradeSellerServiceHoursForm() {
       newSelectedDays.splice(selectedIndex, 1);
     }
 
-    setValues({ ...values, selectedDays: newSelectedDays });
+    setValues({ ...values, working_days: newSelectedDays });
   };
 
   const handleTimeChange = (selectedDay, fieldName, value) => {
@@ -107,7 +107,7 @@ export default function TradeSellerServiceHoursForm() {
                 type="button"
                 name="daysAvailable"
                 className={`${
-                  values.selectedDays.includes(day)
+                  values.working_days.includes(day)
                     ? "bg-[#0D1A8B] text-white"
                     : "bg-white text-[#8891B2] border-2 border-[#e0deee] rounded-md"
                 } p-3 rounded-md w-28`}
@@ -119,7 +119,7 @@ export default function TradeSellerServiceHoursForm() {
           ))}
         </div>
         <ErrorMessage
-          name="selectedDays"
+          name="working_days"
           component="div"
           className="text-red-500 mt-3"
         />
@@ -133,7 +133,7 @@ export default function TradeSellerServiceHoursForm() {
       </div>
 
       <div>
-        {values.selectedDays.map((selectedDay) => {
+        {values.working_days.map((selectedDay) => {
           // Find the object in service_hours array corresponding to the selected day
           const selectedDayObject = values?.service_hours.find(
             (day) => day.day === selectedDay
@@ -147,12 +147,12 @@ export default function TradeSellerServiceHoursForm() {
                 </span>
                 <Field
                   as="select"
-                  value={selectedDayObject.startTime || ""}
-                  name={`service_hours.${selectedDay}.startTime`}
+                  value={selectedDayObject.start_time || ""}
+                  name={`service_hours.${selectedDay}.start_time`}
                   onChange={(event) =>
                     handleTimeChange(
                       selectedDay,
-                      "startTime",
+                      "start_time",
                       event.target.value
                     )
                   }
@@ -166,10 +166,14 @@ export default function TradeSellerServiceHoursForm() {
                 <span className="text-[#11133D] font-medium">To</span>
                 <Field
                   as="select"
-                  value={selectedDayObject.endTime || ""}
-                  name={`service_hours.${selectedDay}.endTime`}
+                  value={selectedDayObject.end_time || ""}
+                  name={`service_hours.${selectedDay}.end_time`}
                   onChange={(event) =>
-                    handleTimeChange(selectedDay, "endTime", event.target.value)
+                    handleTimeChange(
+                      selectedDay,
+                      "end_time",
+                      event.target.value
+                    )
                   }
                   className="border-[#CECED7] border-2 rounded-md p-3 w-48 block text-[#8891B2]"
                 >

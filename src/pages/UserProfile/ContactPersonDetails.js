@@ -1,17 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import { FormField } from "../../components/FormField";
 import { useFormikContext } from "formik";
 
 const ContactPersonDetails = ({ editable, user }) => {
-  const [userData, setUserData] = useState(user);
   const { values, setFieldValue } = useFormikContext();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    // setUserData((prevData) => ({
-    //   ...prevData,
-    //   [name]: value,
-    // }));
     setFieldValue(`user.${name}`, value);
   };
   return (

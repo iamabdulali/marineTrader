@@ -4,17 +4,13 @@ import { FaCheck } from "react-icons/fa";
 import { useFormikContext } from "formik";
 
 const BusinessDetails = ({ editable, user }) => {
-  const [userData, setUserData] = useState(user);
   const { values, setFieldValue } = useFormikContext();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    // setUserData((prevData) => ({
-    //   ...prevData,
-    //   [name]: value,
-    // }));
     setFieldValue(`user.${name}`, value);
   };
+
   return (
     <>
       <FormField
@@ -30,13 +26,13 @@ const BusinessDetails = ({ editable, user }) => {
         Selected Days
       </label>
       <div className="flex gap-4 items-center mt-4 flex-wrap">
-        {["Mon", "Tues", "Wed"].map((days, index) => {
+        {values.user.working_days.map(({ day, id }) => {
           return (
             <p
-              key={index}
+              key={id}
               className="bg-[#0D1A8B] smallLg:text-base text-sm text-white py-2 text-center min-w-24 px-4 rounded-lg"
             >
-              {days}
+              {day}
             </p>
           );
         })}
@@ -68,18 +64,16 @@ const BusinessDetails = ({ editable, user }) => {
         Facilities
       </label>
       <div className="grid sm:grid-cols-3 mt-3 gap-4">
-        {["Accmodation", "Delivery", "Showroom", "Shop", "Counter"].map(
-          (facilities, index) => {
-            return (
-              <p
-                key={index}
-                className="flex items-center gap-2 font-medium smallLg:text-base text-sm"
-              >
-                <FaCheck color="#0D1A8B" /> {facilities}
-              </p>
-            );
-          }
-        )}
+        {values.user.facilities.map(({ name, id }) => {
+          return (
+            <p
+              key={id}
+              className="flex items-center gap-2 font-medium smallLg:text-base text-sm"
+            >
+              <FaCheck color="#0D1A8B" /> {name}
+            </p>
+          );
+        })}
       </div>
     </>
   );
