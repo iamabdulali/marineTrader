@@ -14,7 +14,7 @@ import { blueBg, logo, msgIcon, phoneIcon } from "../../assets";
 import { AuthContext } from "../../Context/AuthContext";
 
 const VerticalMenu = ({ menuState, setMenuState }) => {
-  const { dispatch } = useContext(AuthContext);
+  const { dispatch, user } = useContext(AuthContext);
   const toggleMenu = () => {
     setMenuState(!menuState);
   };
@@ -25,6 +25,8 @@ const VerticalMenu = ({ menuState, setMenuState }) => {
     // Check if the current location pathname is "/"
     return location.pathname === "/";
   };
+
+  const { phone_no, email } = Object(user);
 
   return (
     <>
@@ -128,9 +130,9 @@ const VerticalMenu = ({ menuState, setMenuState }) => {
           <img src={blueBg} className="rounded-3xl" />
           <div className="absolute flex flex-col items-center top-1/2 -translate-y-1/2">
             <img src={phoneIcon} className="w-10 mb-3" />
-            <p>+44 7700 900077</p>
+            <p>{phone_no}</p>
             <img src={msgIcon} className="w-10 my-3" />
-            <a href="mailto:dealer@example.com">dealer@example.com</a>
+            <a href={`mailto:${email}`}>{email}</a>
           </div>
         </div>
       </div>
