@@ -53,7 +53,7 @@ const ModificationMenu = () => {
           <Field
             type="checkbox"
             className="w-[20px] h-[20px]"
-            name="modifications"
+            name="modification"
             value={checkbox}
           />
           {editedCheckboxIndex === index ? (

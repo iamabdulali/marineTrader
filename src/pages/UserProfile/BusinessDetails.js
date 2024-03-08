@@ -58,7 +58,7 @@ const BusinessDetails = ({ editable, user }) => {
         Public Holidays
       </label>
       <p className="font-medium mt-2 capitalize">
-        {values.user.public_holiday}
+        {values.user.open_public_holidays}
       </p>
       <label className="block mt-6 text-[#8891B2] text-sm font-medium">
         Facilities

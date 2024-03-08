@@ -129,8 +129,22 @@ function App() {
         <Route path="/news" element={<News />} />
         <Route path="/events" element={<Events />} />
 
-        <Route path="/trade-seller" element={<TradeSeller />} />
-        <Route path="/private-seller" element={<PrivateSeller />} />
+        <Route
+          path="/trade-seller"
+          element={
+            <GuestRoute>
+              <TradeSeller />
+            </GuestRoute>
+          }
+        />
+        <Route
+          path="/private-seller"
+          element={
+            <GuestRoute>
+              <PrivateSeller />
+            </GuestRoute>
+          }
+        />
         <Route path="/payments" element={<Payment />} />
         <Route
           path="/paymentStatus"

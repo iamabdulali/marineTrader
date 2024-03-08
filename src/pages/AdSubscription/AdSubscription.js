@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Heading from "../../components/Heading";
 import AdSubscriptionComponent from "../../components/AdSubscriptionComponent";
 import {
@@ -7,9 +7,16 @@ import {
   adsubscriptionStandardFeatures,
 } from "../../utils/DummyData";
 import Tabs from "../../components/Tabs";
+import { displayErrorMessages } from "../../utils/displayErrors";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { SERVER_BASE_URL } from "../..";
+import LoadingWrapper from "../../utils/LoadingWrapper";
 
 export default function AdSubscription() {
   const [selectedTab, setSelectedTab] = useState("standard");
+  const [loading, setLoading] = useState(true);
+  const [packages, setPackages] = useState([]);
 
   const tabs = [
     {
@@ -29,6 +36,29 @@ export default function AdSubscription() {
     setSelectedTab(tab);
   };
 
+  const getPackages = async () => {
+    try {
+      const { data } = await axios.get(`${SERVER_BASE_URL}/advert-packages`);
+      setLoading(false);
+      setPackages(data.data);
+    } catch (error) {
+      console.error("An unexpected error occurred:", error);
+      const { errors } = error.response.data;
+      displayErrorMessages(errors);
+      setLoading(true);
+    }
+  };
+
+  useEffect(() => {
+    getPackages();
+  }, []);
+
+  const featuresArray = [
+    adsubscriptionStandardFeatures,
+    adsubscriptionPremiumFeatures,
+    adsubscriptionFeaturedFeatures,
+  ];
+
   return (
     <>
       <div className="flex items-center justify-between">
@@ -37,7 +67,24 @@ export default function AdSubscription() {
         </div>
       </div>
       <div className="lg:flex gap-8 hidden">
-        <AdSubscriptionComponent
+        <LoadingWrapper className="top-44" loading={loading}>
+          {packages.map(({ name, amount, id, ...props }) => {
+            // console.log(props);
+            return (
+              <AdSubscriptionComponent
+                featuresArray={featuresArray[id - 1]}
+                packageName={name}
+                variant={name}
+                price={`£${amount}`}
+                buttonText="Get Started"
+                text="View Display Results"
+                key={id}
+              />
+            );
+          })}
+        </LoadingWrapper>
+
+        {/* <AdSubscriptionComponent
           packageName="Standard"
           price="£10.99"
           buttonText="Get Started"
@@ -66,7 +113,7 @@ export default function AdSubscription() {
           variant="purple"
           isStandard={false}
           featuresArray={adsubscriptionFeaturedFeatures}
-        />
+        /> */}
       </div>
       <div>
         <Tabs
@@ -75,7 +122,7 @@ export default function AdSubscription() {
           selectedTab={selectedTab}
           handleTabClick={handleTabClick}
         />
-        <div className="lg:hidden block py-10">
+        {/* <div className="lg:hidden block py-10">
           {selectedTab === "standard" && (
             <AdSubscriptionComponent
               packageName="Standard"
@@ -112,7 +159,7 @@ export default function AdSubscription() {
               featuresArray={adsubscriptionFeaturedFeatures}
             />
           )}
-        </div>
+        </div> */}
       </div>
     </>
   );

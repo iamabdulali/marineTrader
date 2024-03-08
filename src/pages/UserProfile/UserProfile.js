@@ -50,17 +50,26 @@ const UserInfo = () => {
     user,
   };
 
-  const arrayOfDays = user?.working_days.map((obj) => obj.day);
-  const arrayOfFacilities = user?.facilities.map((obj) => obj.name);
+  let arrayOfDays = [];
+  let arrayOfFacilities = [];
+
+  if (!isPrivateSeller) {
+    arrayOfDays = user?.working_days.map((obj) => obj.day);
+    arrayOfFacilities = user?.facilities.map((obj) => obj.name);
+  }
 
   const onSubmit = async (values) => {
-    const updatedValues = {
+    let updatedValues = {
       ...values.user,
-      service_hours: JSON.stringify(values.user.service_hours),
-      open_public_holidays: "yes",
-      working_days: arrayOfDays,
-      facilities: arrayOfFacilities,
     };
+    if (!isPrivateSeller) {
+      updatedValues = {
+        ...updatedValues,
+        service_hours: JSON.stringify(values.user.service_hours),
+        working_days: arrayOfDays,
+        facilities: arrayOfFacilities,
+      };
+    }
     console.log(updatedValues);
     setSpinner(true);
     try {
@@ -87,9 +96,11 @@ const UserInfo = () => {
     }
   };
 
+  console.log(user);
+
   return (
     <Layout>
-      <LoadingWrapper loading={loading}>
+      <LoadingWrapper loading={loading} className="top-0">
         <div className="flex items-center justify-between rounded-lg  shadow-[7px] bg-white font-semibold py-5 px-7">
           <p className="">User Profile</p>
           <p

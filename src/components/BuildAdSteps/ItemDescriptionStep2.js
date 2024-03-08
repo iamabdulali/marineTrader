@@ -17,7 +17,7 @@ const ItemDescriptionStep2 = () => {
       <FormField
         FieldType="text"
         inputField={true}
-        name="subtitle"
+        name="sub_title"
         label="Subtitle"
         className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
       />
@@ -55,7 +55,7 @@ const ItemDescriptionStep2 = () => {
         />
         <CategorySelectDropdown
           label="Service History"
-          name="serviceHistory"
+          name="service_history"
           options={["Service1", "Service2", "Service3"]}
         />
       </div>

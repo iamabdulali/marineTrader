@@ -25,7 +25,7 @@ const AdSubscriptionComponent = ({
   let [isSearchResultOpen, setIsSearchResultOpen] = useState(false);
 
   switch (variant) {
-    case "green":
+    case "Standard":
       variantStyles = {
         backgroundColor: "bg-[#ebf8f3]",
         buttonBg: "bg-[#36B37E]",
@@ -35,7 +35,7 @@ const AdSubscriptionComponent = ({
         monthlyAllowance: false,
       };
       break;
-    case "yellow":
+    case "Premium":
       variantStyles = {
         backgroundColor: "bg-[#fdf7e8]",
         buttonBg: "bg-[#E6AB13]",
@@ -46,7 +46,7 @@ const AdSubscriptionComponent = ({
         monthlyAllowance: true,
       };
       break;
-    case "purple":
+    case "Featured":
       variantStyles = {
         backgroundColor: "bg-[#E5FFFF]",
         buttonBg: "bg-[#00CFCF]",
