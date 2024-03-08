@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import BuildLayout from "./BuildLayout";
 import { Field } from "formik";
 import ImageAndVideoHandler from "./ImageAndVideoHandler";
+import { AuthContext } from "../../Context/AuthContext";
 
 const GalleryStep5 = () => {
+  const { selectedPackage } = useContext(AuthContext);
+
   return (
     <>
       {" "}
@@ -17,16 +20,20 @@ const GalleryStep5 = () => {
           maxFiles={5} // Set the maximum number of files
         />
       </BuildLayout>
-      <BuildLayout heading="Video">
-        <Field
-          uploadingText="Video"
-          name="buildAdVideo"
-          component={ImageAndVideoHandler}
-          accept="video/*" // You can customize the accepted file types
-          allowMultiple={false} // Set to true if you want to allow multiple files
-          maxFiles={1} // Set the maximum number of files
-        />
-      </BuildLayout>
+      {selectedPackage != "Standard" ? (
+        <BuildLayout heading="Video">
+          <Field
+            uploadingText="Video"
+            name="buildAdVideo"
+            component={ImageAndVideoHandler}
+            accept="video/*" // You can customize the accepted file types
+            allowMultiple={false} // Set to true if you want to allow multiple files
+            maxFiles={1} // Set the maximum number of files
+          />
+        </BuildLayout>
+      ) : (
+        ""
+      )}
     </>
   );
 };

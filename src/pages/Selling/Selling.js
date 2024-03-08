@@ -39,9 +39,6 @@ export default function Selling() {
             </Link>
           )}
         </div>
-        {/* <p className="font-semibold text-[#11133D] mt-5">
-          Select a new listing
-        </p> */}
         <p className="font-semibold text-[#11133D] mt-5">
           {hasListing ? "Select a category to start" : ""}
         </p>
@@ -70,9 +67,6 @@ export default function Selling() {
           </div>
         ) : (
           <div className={hasListing ? "" : "mt-7"}>
-            {/* <p className="font-semibold text-[#11133D] my-5">
-              Subscription For {category}
-            </p> */}
             <AdSubscription />
           </div>
         )}

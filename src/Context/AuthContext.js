@@ -22,6 +22,8 @@ export const authReducer = (state, action) => {
       return { ...state, user: action.payload, isAuthenticated: true };
     case "LOGOUT":
       return { ...state, user: null, isAuthenticated: false };
+    case "SELECT_PACKAGE":
+      return { ...state, selectedPackage: action.payload };
     default:
       return state;
   }
@@ -35,6 +37,7 @@ export const AuthContextProvider = ({ children }) => {
     listingTags: [],
     modificationCheckboxes: [],
     isAuthenticated: false,
+    selectedPackage: null, // Adding selectedPackage state
   });
 
   // console.log("Auth context state: ", state);

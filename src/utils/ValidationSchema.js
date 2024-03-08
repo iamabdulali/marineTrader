@@ -113,13 +113,13 @@ const videoValidationSchema = Yup.array()
 
 export const buildAdValidationSchema = Yup.object().shape({
   title: Yup.string().required("Title is required"),
-  subtitle: Yup.string().required("Subtitle is required"),
+  sub_title: Yup.string().required("Subtitle is required"),
   make: Yup.string().required("Make is required"),
   model: Yup.string().required("Model is required"),
   condition: Yup.string().required("Condition is required"),
   year: Yup.string().required("Year is required"),
   color: Yup.string().required("Color is required"),
-  serviceHistory: Yup.string().required("Service History is required"),
+  service_history: Yup.string().required("Service History is required"),
   passenger: Yup.string().required("Passenger is required"),
   length: Yup.string().required("Length is required"),
   hours: Yup.string().required("Hours is required"),

@@ -9,26 +9,25 @@ import {
 import Tabs from "../../components/Tabs";
 import { displayErrorMessages } from "../../utils/displayErrors";
 import axios from "axios";
-import { toast } from "react-toastify";
 import { SERVER_BASE_URL } from "../..";
 import LoadingWrapper from "../../utils/LoadingWrapper";
 
 export default function AdSubscription() {
-  const [selectedTab, setSelectedTab] = useState("standard");
+  const [selectedTab, setSelectedTab] = useState("Standard");
   const [loading, setLoading] = useState(true);
   const [packages, setPackages] = useState([]);
 
   const tabs = [
     {
-      id: "standard",
+      id: "Standard",
       label: "Standard",
     },
     {
-      id: "premium",
+      id: "Premium",
       label: "Premium",
     },
     {
-      id: "featured",
+      id: "Featured",
       label: "Featured",
     },
   ];
@@ -69,7 +68,6 @@ export default function AdSubscription() {
       <div className="lg:flex gap-8 hidden">
         <LoadingWrapper className="top-44" loading={loading}>
           {packages.map(({ name, amount, id, ...props }) => {
-            // console.log(props);
             return (
               <AdSubscriptionComponent
                 featuresArray={featuresArray[id - 1]}
@@ -83,37 +81,6 @@ export default function AdSubscription() {
             );
           })}
         </LoadingWrapper>
-
-        {/* <AdSubscriptionComponent
-          packageName="Standard"
-          price="£10.99"
-          buttonText="Get Started"
-          text="View Display Results"
-          packageHeading="Standard package includes the following."
-          variant="green"
-          isStandard={true}
-          featuresArray={adsubscriptionStandardFeatures}
-        />
-        <AdSubscriptionComponent
-          packageName="Premium"
-          price="£19.99"
-          buttonText="Get Started"
-          text="View Display Results"
-          packageHeading="Premium package includes the following."
-          variant="yellow"
-          isStandard={false}
-          featuresArray={adsubscriptionPremiumFeatures}
-        />
-        <AdSubscriptionComponent
-          packageName="Featured"
-          price="£19.99"
-          buttonText="Get Started"
-          text="View Display Results"
-          packageHeading="Featured package includes the following."
-          variant="purple"
-          isStandard={false}
-          featuresArray={adsubscriptionFeaturedFeatures}
-        /> */}
       </div>
       <div>
         <Tabs
@@ -122,44 +89,40 @@ export default function AdSubscription() {
           selectedTab={selectedTab}
           handleTabClick={handleTabClick}
         />
-        {/* <div className="lg:hidden block py-10">
-          {selectedTab === "standard" && (
-            <AdSubscriptionComponent
-              packageName="Standard"
-              price="£10.99"
-              buttonText="Get Started"
-              text="View Display Results"
-              packageHeading="Standard package includes the following."
-              variant="green"
-              isStandard={true}
-              featuresArray={adsubscriptionStandardFeatures}
-            />
-          )}
-          {selectedTab === "premium" && (
-            <AdSubscriptionComponent
-              packageName="Premium"
-              price="£19.99"
-              buttonText="Get Started"
-              text="View Display Results"
-              packageHeading="Premium package includes the following."
-              variant="yellow"
-              isStandard={false}
-              featuresArray={adsubscriptionPremiumFeatures}
-            />
-          )}
-          {selectedTab === "featured" && (
-            <AdSubscriptionComponent
-              packageName="Featured"
-              price="£19.99"
-              buttonText="Get Started"
-              text="View Display Results"
-              packageHeading="Featured package includes the following."
-              variant="purple"
-              isStandard={false}
-              featuresArray={adsubscriptionFeaturedFeatures}
-            />
-          )}
-        </div> */}
+        <div className="lg:hidden block py-10">
+          <LoadingWrapper loading={loading}>
+            {packages.map(({ name, amount, id, ...props }) => {
+              let featuresArray = [];
+              switch (name) {
+                case "Standard":
+                  featuresArray = adsubscriptionStandardFeatures;
+                  break;
+                case "Premium":
+                  featuresArray = adsubscriptionPremiumFeatures;
+                  break;
+                case "Featured":
+                  featuresArray = adsubscriptionFeaturedFeatures;
+                  break;
+                default:
+                  featuresArray = [];
+              }
+              return (
+                selectedTab === name && (
+                  <AdSubscriptionComponent
+                    packageName={name}
+                    price={`£${amount}`}
+                    buttonText="Get Started"
+                    text="View Display Results"
+                    packageHeading={`${name} package includes the following.`}
+                    variant={name}
+                    featuresArray={featuresArray}
+                    key={id}
+                  />
+                )
+              );
+            })}
+          </LoadingWrapper>
+        </div>
       </div>
     </>
   );

@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { CategorySelectDropdown } from "../CategorySelectDropdown";
 import { FormField } from "../FormField";
 import UpdateSubtitleNotice from "../UpdateSubtitleNotice";
 import BuildLayout from "./BuildLayout";
+import { AuthContext } from "../../Context/AuthContext";
 
 const ItemDescriptionStep2 = () => {
+  const { selectedPackage } = useContext(AuthContext);
   return (
     <BuildLayout heading="Item Description">
       <FormField
@@ -21,7 +23,8 @@ const ItemDescriptionStep2 = () => {
         label="Subtitle"
         className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
       />
-      <UpdateSubtitleNotice />
+      {selectedPackage == "Standard" ? <UpdateSubtitleNotice /> : ""}
+
       <div className="flex sm:flex-row flex-col gap-4">
         <CategorySelectDropdown
           label="Make"

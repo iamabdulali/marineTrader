@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { FaCheckCircle, FaEye } from "react-icons/fa";
 import {
   adsImage,
@@ -10,6 +10,7 @@ import {
 import { Link } from "react-router-dom";
 import Modal from "./Modal";
 import { closeModal, openModal } from "../utils/ModalOpeningClosingFunctions";
+import { AuthContext } from "../Context/AuthContext";
 
 const AdSubscriptionComponent = ({
   packageName,
@@ -23,6 +24,7 @@ const AdSubscriptionComponent = ({
 }) => {
   let variantStyles = {};
   let [isSearchResultOpen, setIsSearchResultOpen] = useState(false);
+  const { dispatch } = useContext(AuthContext);
 
   switch (variant) {
     case "Standard":
@@ -118,6 +120,9 @@ const AdSubscriptionComponent = ({
         )}
 
         <Link
+          onClick={() => {
+            dispatch({ type: "SELECT_PACKAGE", payload: packageName });
+          }}
           to="/selling/buildAd"
           className={`${variantStyles.buttonBg} hover:bg-opacity-85 text-white font-semibold inline-block py-3 w-9/12 rounded-lg`}
         >

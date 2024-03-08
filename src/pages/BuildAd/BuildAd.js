@@ -46,7 +46,7 @@ const BuildAd = () => {
     title: "",
     sub_title: "",
     make: "",
-    modal: "",
+    model: "",
     year: "",
     condition: "",
     color: "",
@@ -71,77 +71,75 @@ const BuildAd = () => {
     countries: [],
   };
   const prevStep = () => setStep(step - 1);
-  const nextStep = () => setStep(step + 1);
+  // const nextStep = () => setStep(step + 1);
   const [isPaymentOptionOpen, setIsPaymentOptionOpen] = useState(false);
   let [isVideoOpen, setIsVideoOpen] = useState(false);
 
-  // const nextStep = (values, { setTouched, setErrors }) => {
-  //   try {
-  //     // Validate only the fields for steps 2 to 6
-  //     if (step > 1) {
-  //       const fieldsToValidate = Object.keys(
-  //         buildAdValidationSchema.fields
-  //       ).filter((field) => {
-  //         if (step === 2) {
-  //           return [
-  //             "title",
-  //             "subtitle",
-  //             "make",
-  //             "model",
-  //             "year",
-  //             "condition",
-  //             "color",
-  //             "serviceHistory",
-  //             "passenger",
-  //             "length",
-  //             "hours",
-  //             "trailers",
-  //           ].includes(field);
-  //         } else if (step === 3) {
-  //           return [
-  //             "modification",
-  //             "feature",
-  //             "convenience",
-  //             "accessories",
-  //           ].includes(field);
-  //         } else if (step === 4) {
-  //           return ["description", "tags"].includes(field);
-  //         } else if (step === 5) {
-  //           return ["buildAdImages", "buildAdVideo"].includes(field);
-  //         } else if (step === 6) {
-  //           return ["currency", "price"].includes(field);
-  //         }
-  //         return true; // Include all fields if not in a specific step
-  //       });
+  const nextStep = (values, { setTouched, setErrors }) => {
+    try {
+      // Validate only the fields for steps 2 to 6
+      const fieldsToValidate = Object.keys(
+        buildAdValidationSchema.fields
+      ).filter((field) => {
+        if (step === 1) {
+          return [
+            "title",
+            "sub_title",
+            "make",
+            "model",
+            "year",
+            "condition",
+            "color",
+            "service_history",
+            "passenger",
+            "length",
+            "hours",
+            "trailers",
+          ].includes(field);
+        } else if (step === 2) {
+          return [
+            "modification",
+            "feature",
+            "convenience",
+            "accessories",
+          ].includes(field);
+        } else if (step === 3) {
+          return ["description", "tags"].includes(field);
+        } else if (step === 4) {
+          return ["buildAdImages", "buildAdVideo"].includes(field);
+        } else if (step === 5) {
+          return ["currency", "price"].includes(field);
+        }
+        return true; // Include all fields if not in a specific step
+      });
 
-  //       buildAdValidationSchema.pick(fieldsToValidate).validateSync(values, {
-  //         abortEarly: false,
-  //       });
-  //     }
+      buildAdValidationSchema.pick(fieldsToValidate).validateSync(values, {
+        abortEarly: false,
+      });
 
-  //     // Increment the step
-  //     setStep((prevStep) => prevStep + 1);
-  //   } catch (error) {
-  //     if (error.name === "ValidationError") {
-  //       console.error("Validation errors:", error.errors);
+      // Increment the step
+      setStep((prevStep) => prevStep + 1);
+    } catch (error) {
+      if (error.name === "ValidationError") {
+        console.error("Validation errors:", error.errors);
 
-  //       const allFields = Object.keys(values);
-  //       const touchedState = allFields.reduce((acc, field) => {
-  //         acc[field] = true;
-  //         return acc;
-  //       }, {});
-  //       setTouched(touchedState);
+        const allFields = Object.keys(values);
+        const touchedState = allFields.reduce((acc, field) => {
+          acc[field] = true;
+          return acc;
+        }, {});
+        setTouched(touchedState);
 
-  //       const errorState = error.errors.reduce((acc, error) => {
-  //         acc[error.path] = error.message;
-  //         return acc;
-  //       }, {});
-  //       setErrors(errorState);
-  //     } else {
-  //       console.error("Error:", error.message);
-  //     }
-  //   }
-  // };
+        const errorState = error.errors.reduce((acc, error) => {
+          acc[error.path] = error.message;
+          return acc;
+        }, {});
+        setErrors(errorState);
+      } else {
+        console.error("Error:", error.message);
+      }
+    }
+  };
 
   const handleSubmit = async (values, { setSubmitting }) => {
     // alert(JSON.stringify(values));
@@ -160,7 +158,7 @@ const BuildAd = () => {
       />
       <Formik
         initialValues={initialValues}
-        // validationSchema={buildAdValidationSchema}
+        validationSchema={buildAdValidationSchema}
         onSubmit={handleSubmit}
       >
         {({
@@ -182,12 +180,13 @@ const BuildAd = () => {
             {/* Navigation buttons */}
             <div className="flex sm:flex-row flex-col-reverse align-center justify-between mt-10 mb-24">
               <div className="sm:w-auto w-full flex gap-5 items-center sm:flex-row flex-col sm:mt-0 mt-5">
-                <button
+                <Link
+                  to={"/selling"}
                   type="button"
-                  className="bg-white sm:order-none order-1 hover:bg-[#8891B2] hover:text-white border-2 sm:w-28 w-full border-[#8891B2] text-[#8891B2] p-3 rounded-md  text-sm font-medium "
+                  className="bg-white text-center sm:order-none order-1 hover:bg-[#8891B2] hover:text-white border-2 sm:w-28 w-full border-[#8891B2] text-[#8891B2] p-3 rounded-md  text-sm font-medium "
                 >
                   Cancel
-                </button>
+                </Link>
                 <button
                   type="button"
                   className="bg-white border-2 sm:w-auto w-full hover:bg-[#0D1A8B] hover:text-white border-[#0D1A8B] text-[#0D1A8B] font-medium p-3 rounded-md text-sm"
