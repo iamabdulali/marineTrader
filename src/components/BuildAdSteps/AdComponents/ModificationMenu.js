@@ -1,34 +1,36 @@
 import { Menu } from "@headlessui/react";
 import { Field } from "formik";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaPlus } from "react-icons/fa";
-import { AuthContext } from "../../../Context/AuthContext";
 
-const ModificationMenu = () => {
-  const { modificationCheckboxes, dispatch } = useContext(AuthContext);
-  const [newCheckboxText, setNewCheckboxText] = useState("Modification No 1");
+const ModificationMenu = ({
+  menuLabel,
+  MenuFor,
+  dispatch,
+  actionType,
+  name,
+}) => {
+  const [newCheckboxText, setNewCheckboxText] = useState(menuLabel);
   const [editedCheckboxIndex, setEditedCheckboxIndex] = useState(null);
 
   useEffect(() => {
-    setNewCheckboxText(`Modification No ${modificationCheckboxes.length + 1}`);
-  }, [modificationCheckboxes]);
+    setNewCheckboxText(`${menuLabel} ${MenuFor.length + 1}`);
+  }, [MenuFor]);
 
   const handleAddCheckbox = () => {
     if (newCheckboxText.trim() !== "") {
       dispatch({
-        type: "UPDATE_CHECKBOXES",
-        payload: [...modificationCheckboxes, newCheckboxText],
+        type: actionType,
+        payload: [...MenuFor, newCheckboxText],
       });
-      setNewCheckboxText(
-        `Modification No ${modificationCheckboxes.length + 2}`
-      );
+      setNewCheckboxText(`${menuLabel} ${MenuFor.length + 2}`);
     }
   };
 
   const handleCheckboxTextChange = (index, newText) => {
-    const updatedCheckboxes = [...modificationCheckboxes];
+    const updatedCheckboxes = [...MenuFor];
     updatedCheckboxes[index] = newText;
-    dispatch({ type: "UPDATE_CHECKBOXES", payload: updatedCheckboxes });
+    dispatch({ type: actionType, payload: updatedCheckboxes });
   };
 
   const startEditingCheckboxText = (index) => {
@@ -41,7 +43,7 @@ const ModificationMenu = () => {
 
   return (
     <Menu.Items className="absolute bg-white custom-shadow rounded-lg p-4 w-full max-h-[200px] overflow-y-auto">
-      {modificationCheckboxes.map((checkbox, index) => (
+      {MenuFor.map((checkbox, index) => (
         <div
           key={index}
           className="flex items-center mb-4"
@@ -53,7 +55,7 @@ const ModificationMenu = () => {
           <Field
             type="checkbox"
             className="w-[20px] h-[20px]"
-            name="modification"
+            name={name}
             value={checkbox}
           />
           {editedCheckboxIndex === index ? (

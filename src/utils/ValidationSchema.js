@@ -83,20 +83,20 @@ export const categoryDropdownValidationSchema = Yup.object().shape({
 
 // Validation schema for images (buildAdImages)
 const imageValidationSchema = Yup.array()
-  .test("fileSize", "File size is too large", (value) => {
-    // Assuming you want to limit the file size to 5MB for images
-    return !value.some((file) => file.size > 5 * 1024 * 1024);
-  })
-  .test("fileType", "Invalid file type", (value) => {
-    // Validate file type for images
-    const acceptedImageTypes = ["image/jpeg", "image/png"];
-    return !value.some((file) => !acceptedImageTypes.includes(file.type));
-  })
-  .test("fileCount", "Maximum 5 images allowed", (value) => {
-    // Validate the number of selected files (images)
-    return !value || value.length <= 5;
-  })
-  .required("Please upload at least one image");
+  // .test("fileSize", "File size is too large", (value) => {
+  //   // Assuming you want to limit the file size to 5MB for images
+  //   return !value.some((file) => file.size > 5 * 1024 * 1024);
+  // })
+  // .test("fileType", "Invalid file type", (value) => {
+  //   // Validate file type for images
+  //   const acceptedImageTypes = ["image/jpeg", "image/png"];
+  //   return !value.some((file) => !acceptedImageTypes.includes(file.type));
+  // })
+  // .test("fileCount", "Maximum 5 images allowed", (value) => {
+  //   // Validate the number of selected files (images)
+  //   return !value || value.length <= 5;
+  // })
+  .min("Please upload at least one image");
 
 // Validation schema for videos (buildAdVideo)
 const videoValidationSchema = Yup.array()
@@ -109,7 +109,7 @@ const videoValidationSchema = Yup.array()
     const acceptedVideoTypes = ["video/*"];
     return !value.some((file) => !acceptedVideoTypes.includes(file.type));
   })
-  .required("Please upload a video");
+  .min("Please upload a video");
 
 export const buildAdValidationSchema = Yup.object().shape({
   title: Yup.string().required("Title is required"),
@@ -124,13 +124,15 @@ export const buildAdValidationSchema = Yup.object().shape({
   length: Yup.string().required("Length is required"),
   hours: Yup.string().required("Hours is required"),
   trailers: Yup.string().required("Trailers is required"),
-  // modification: Yup.array().min(1, "Select at least one option"),
-  feature: Yup.string().required("Feature is required"),
-  convenience: Yup.string().required("Convenience is required"),
-  accessories: Yup.string().required("Accessories is required"),
+  modification: Yup.array().min(1, "Select at least one option"),
+  features: Yup.array().min(1, "Select at least one option"),
+  convenience: Yup.array().min(1, "Select at least one option"),
+  accessories: Yup.array().min(1, "Select at least one option"),
   description: Yup.string().required("Description is required"),
-  // buildAdImages: imageValidationSchema,
+  // buildAdImages: Yup.array().min("Select At One Photo"),
   // buildAdVideo: videoValidationSchema,
+  images: Yup.array().min(1, "Please upload at least one image"),
+  video: Yup.mixed().required("Video is Required"),
   currency: Yup.string().required("Currency is required"),
   price: Yup.string().required("Price is required"),
 });

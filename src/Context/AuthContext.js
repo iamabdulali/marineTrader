@@ -16,8 +16,14 @@ export const authReducer = (state, action) => {
       };
     case "CLEAR_TAGS":
       return { ...state, listingTags: [] };
-    case "UPDATE_CHECKBOXES":
+    case "UPDATE_MODIFICATIONS":
       return { ...state, modificationCheckboxes: action.payload };
+    case "UPDATE_FEATURES":
+      return { ...state, featuresCheckboxes: action.payload };
+    case "UPDATE_ACCESSORIES":
+      return { ...state, accessoriesCheckboxes: action.payload };
+    case "UPDATE_CONVENIENCE":
+      return { ...state, convenienceCheckboxes: action.payload };
     case "SET_USER":
       return { ...state, user: action.payload, isAuthenticated: true };
     case "LOGOUT":
@@ -36,6 +42,9 @@ export const AuthContextProvider = ({ children }) => {
     selectedCategory: null,
     listingTags: [],
     modificationCheckboxes: [],
+    featuresCheckboxes: [],
+    convenienceCheckboxes: [],
+    accessoriesCheckboxes: [],
     isAuthenticated: false,
     selectedPackage: null, // Adding selectedPackage state
   });

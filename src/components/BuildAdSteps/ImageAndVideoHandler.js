@@ -1,6 +1,5 @@
 import React from "react";
 import { ErrorMessage, useField } from "formik";
-import { cloud } from "../../assets"; // Assuming crossIcon is imported
 import { FaPlus, FaTimes } from "react-icons/fa";
 
 const ImageAndVideoHandler = ({
@@ -150,7 +149,7 @@ const ImageAndVideoHandler = ({
             <ErrorMessage
               name={field.name}
               component="div"
-              className="text-red-500"
+              className="text-red-500 mt-2"
             />
           </>
         )}

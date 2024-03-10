@@ -4,6 +4,7 @@ import { FormField } from "../FormField";
 import UpdateSubtitleNotice from "../UpdateSubtitleNotice";
 import BuildLayout from "./BuildLayout";
 import { AuthContext } from "../../Context/AuthContext";
+import { years } from "../../utils/DummyData";
 
 const ItemDescriptionStep2 = () => {
   const { selectedPackage } = useContext(AuthContext);
@@ -29,7 +30,17 @@ const ItemDescriptionStep2 = () => {
         <CategorySelectDropdown
           label="Make"
           name="make"
-          options={["Make1", "Make2", "Make3"]}
+          options={[
+            "Yamaha",
+            "Tiger Shark",
+            "Seadoo",
+            "Polaris",
+            "Kawasaki",
+            "Huson",
+            "Honda",
+            "Benelli",
+            "Nitro",
+          ]}
         />
         <CategorySelectDropdown
           label="Model"
@@ -39,27 +50,46 @@ const ItemDescriptionStep2 = () => {
       </div>
 
       <div className="flex sm:flex-row flex-col  gap-4">
-        <CategorySelectDropdown
-          label="Year"
-          name="year"
-          options={["Year1", "Year2", "Year3"]}
-        />
+        <CategorySelectDropdown label="Year" name="year" options={years} />
         <CategorySelectDropdown
           label="Condition"
           name="condition"
-          options={["Condition1", "Condition2", "Condition3"]}
+          options={[
+            "New",
+            "Like New",
+            "Excellent",
+            "Good",
+            "Average",
+            "Worn",
+            "Spares or Repairs",
+          ]}
         />
       </div>
       <div className="flex sm:flex-row flex-col gap-4">
         <CategorySelectDropdown
           label="Color"
           name="color"
-          options={["Color1", "Color2", "Color3"]}
+          options={[
+            "Black",
+            "Blue",
+            "Red",
+            "Yellow",
+            "Orange",
+            "Grey",
+            "Purple",
+            "White",
+            "Cream",
+            "Brown",
+            "Green",
+            "Pink",
+            "Silver",
+            "Gold",
+          ]}
         />
         <CategorySelectDropdown
           label="Service History"
           name="service_history"
-          options={["Service1", "Service2", "Service3"]}
+          options={["None", "Part", "Full", "Month", "Repaired"]}
         />
       </div>
       <div className="flex sm:flex-row flex-col  gap-4">
@@ -68,22 +98,26 @@ const ItemDescriptionStep2 = () => {
           name="passenger"
           options={["Passenger1", "Passenger2", "Passenger3"]}
         />
-        <CategorySelectDropdown
-          label="Length"
+        <FormField
+          FieldType="number"
+          inputField={true}
           name="length"
-          options={["Length1", "Length2", "Length3"]}
+          label="Length (FT)"
+          className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
         />
       </div>
       <div className="flex sm:flex-row flex-col  gap-4">
-        <CategorySelectDropdown
-          label="Hours"
+        <FormField
+          FieldType="number"
+          inputField={true}
           name="hours"
-          options={["Hours1", "Hours2", "Hours3"]}
+          label="Hours (HRS)"
+          className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
         />
         <CategorySelectDropdown
           label="Trailers"
           name="trailers"
-          options={["Trailers", "Trailers2", "Trailers3"]}
+          options={["Yes", "No", "Sold Separately"]}
         />
       </div>
     </BuildLayout>

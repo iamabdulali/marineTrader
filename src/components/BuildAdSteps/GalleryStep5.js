@@ -13,7 +13,7 @@ const GalleryStep5 = () => {
       <BuildLayout heading="Images">
         <Field
           uploadingText="Upto 5 Photos"
-          name="buildAdImages"
+          name="images"
           component={ImageAndVideoHandler}
           accept="image/jpeg, image/png" // You can customize the accepted file types
           allowMultiple={true} // Set to true if you want to allow multiple files
@@ -24,7 +24,7 @@ const GalleryStep5 = () => {
         <BuildLayout heading="Video">
           <Field
             uploadingText="Video"
-            name="buildAdVideo"
+            name="video"
             component={ImageAndVideoHandler}
             accept="video/*" // You can customize the accepted file types
             allowMultiple={false} // Set to true if you want to allow multiple files

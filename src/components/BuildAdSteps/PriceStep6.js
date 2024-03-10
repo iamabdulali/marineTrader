@@ -14,6 +14,7 @@ import {
   openModal,
 } from "../../utils/ModalOpeningClosingFunctions";
 import AvailableUpgrades from "./AdComponents/AvailableUpgrades";
+import { FormField } from "../FormField";
 
 const PriceStep6 = ({ setFieldValue, values }) => {
   const initialFacilities = {
@@ -71,17 +72,41 @@ const PriceStep6 = ({ setFieldValue, values }) => {
             <CategorySelectDropdown
               label="Currency"
               name="currency"
-              options={["currency1", "currency2", "currency3"]}
+              options={[
+                "$ (USD)",
+                "€ (EUR)",
+                "£ (GBP)",
+                "¥ (JPY)",
+                "CHF (Swiss Franc)",
+                "C$ (CAD)",
+                "A$ (AUD)",
+                "CN¥ (CNY)",
+                "₹ (INR)",
+                "₽ (RUB)",
+                "R$ (BRL)",
+                "Mex$ (MXN)",
+                "₩ (KRW)",
+                "₺ (TRY)",
+                "R (ZAR)",
+              ]}
             />
-            <CategorySelectDropdown
-              label="Price"
+            <FormField
+              FieldType="number"
+              inputField={true}
               name="price"
-              options={["Price1", "Price2", "Price3"]}
+              label="Price"
+              className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
             />
             <CategorySelectDropdown
               label="Tax"
               name="tax"
-              options={["Tax1", "Tax2", "Tax3"]}
+              options={[
+                "Tax Exempt",
+                "Tax Not Paid",
+                "Inc. VAT",
+                "Ex. VAT",
+                "No VAT",
+              ]}
             />
           </div>
         ) : (

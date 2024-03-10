@@ -23,9 +23,16 @@ import {
 } from "../../utils/ModalOpeningClosingFunctions";
 import VideoModal from "../../components/VideoTutorial/VideoModal";
 import VideoBtn from "../../components/VideoTutorial/VideoBtn";
+import { SERVER_BASE_URL } from "../..";
+import { toast } from "react-toastify";
+import { displayErrorMessages } from "../../utils/displayErrors";
+import axios from "axios";
+import { Oval } from "react-loader-spinner";
 
 const BuildAd = () => {
   const [step, setStep] = useState(1);
+  const [submit, setSubmit] = useState(false);
+  const [spinner, setSpinner] = useState(false);
 
   const [selectedCategory, setSelectedCategory] = useState("Jet Skis");
   const stepLabels = [
@@ -41,6 +48,9 @@ const BuildAd = () => {
     setSelectedCategory(category);
     setFieldValue("boatName", category);
   };
+
+  const { selectedPackage } = useContext(AuthContext);
+
   const initialValues = {
     boatName: "",
     title: "",
@@ -56,18 +66,18 @@ const BuildAd = () => {
     hours: "",
     trailers: "",
     modification: [],
-    feature: "",
-    convenience: "",
-    accessories: "",
+    features: [],
+    convenience: [],
+    accessories: [],
     description: "",
     tags: [],
-    buildAdImages: [],
-    buildAdVideo: [],
+    images: [],
+    video: null,
     priceOnInformation: "",
     currency: "",
     price: "",
     facilities: [],
-    packageName: "",
+    packageName: selectedPackage,
     countries: [],
   };
   const prevStep = () => setStep(step - 1);
@@ -106,7 +116,7 @@ const BuildAd = () => {
         } else if (step === 3) {
           return ["description", "tags"].includes(field);
         } else if (step === 4) {
-          return ["buildAdImages", "buildAdVideo"].includes(field);
+          return ["images", "video"].includes(field);
         } else if (step === 5) {
           return ["currency", "price"].includes(field);
         }
@@ -141,9 +151,23 @@ const BuildAd = () => {
     }
   };
 
-  const handleSubmit = async (values, { setSubmitting }) => {
-    // alert(JSON.stringify(values));
-    console.log(values);
+  const handleSubmit = async (values) => {
+    setSpinner(true);
+    try {
+      const { data } = await axios.post(`${SERVER_BASE_URL}/advert`, values, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      toast.success(data.message);
+      setSpinner(false);
+    } catch (error) {
+      console.error("An unexpected error occurred:", error);
+      const { errors } = error.response.data;
+      displayErrorMessages(errors);
+      setSpinner(false);
+    }
   };
   return (
     <Layout>
@@ -216,14 +240,27 @@ const BuildAd = () => {
                 ) : (
                   <button
                     to="/"
-                    onClick={() => openModal(setIsPaymentOptionOpen)}
-                    // type="submit"
-                    // disabled={!isValid}
+                    type={submit ? "submit" : "button"}
+                    onClick={() => {
+                      setSubmit(true);
+                      openModal(setIsPaymentOptionOpen);
+                    }}
+                    disabled={spinner}
                     className={`bg-[#0D1A8B] hover:bg-[#0a1dbd] text-white p-3 rounded-md inline-block text-center sm:w-28 w-full  ${
                       isValid ? "opacity-100" : "opacity-70"
                     }`}
                   >
-                    List Item
+                    {spinner ? (
+                      <Oval
+                        secondaryColor="#fff"
+                        color="#fff"
+                        width={20}
+                        height={20}
+                        wrapperClass="justify-center"
+                      />
+                    ) : (
+                      "List Item"
+                    )}
                   </button>
                 )}
               </div>
