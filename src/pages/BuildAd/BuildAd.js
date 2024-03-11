@@ -1,20 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
 import Layout from "../../components/Layout/Layout";
 import ProgressSteps from "../../components/ProgressSteps";
-import SelectCategoryStep1 from "../../components/BuildAdSteps/SelectCategoryStep1";
 import { Formik, Form } from "formik";
 import ItemDescriptionStep2 from "../../components/BuildAdSteps/ItemDescriptionStep2";
 import ItemFeaturesStep3 from "../../components/BuildAdSteps/ItemFeaturesStep3";
 import NotesSteps4 from "../../components/BuildAdSteps/NotesSteps4";
 import PriceStep6 from "../../components/BuildAdSteps/PriceStep6";
 import GalleryStep5 from "../../components/BuildAdSteps/GalleryStep5";
-import {
-  buildAdValidationSchema,
-  imageValidationSchema,
-} from "../../utils/ValidationSchema";
+import { buildAdValidationSchema } from "../../utils/ValidationSchema";
 import { AuthContext } from "../../Context/AuthContext";
-import Payment from "../Payment/Payment";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Modal from "../../components/Modal";
 import PaymentOptionModal from "../../components/BuildAdSteps/AdComponents/PaymentOptionModal";
 import {
@@ -75,6 +70,7 @@ const BuildAd = () => {
     facilities: [],
     advert_package: selectedPackage,
     countries: [],
+    advert_status: "",
   };
   const prevStep = () => setStep(step - 1);
   // const nextStep = () => setStep(step + 1);
@@ -158,6 +154,7 @@ const BuildAd = () => {
         },
       });
       toast.success(data.message);
+      openModal(setIsPaymentOptionOpen);
       setSpinner(false);
     } catch (error) {
       console.error("An unexpected error occurred:", error);
@@ -189,14 +186,7 @@ const BuildAd = () => {
         validationSchema={buildAdValidationSchema}
         onSubmit={handleSubmit}
       >
-        {({
-          isSubmitting,
-          isValid,
-          values,
-          setErrors,
-          setTouched,
-          setFieldValue,
-        }) => (
+        {({ isValid, values, setErrors, setTouched, setFieldValue }) => (
           <Form>
             {step === 1 && <ItemDescriptionStep2 />}
             {step === 2 && <ItemFeaturesStep3 />}
@@ -247,7 +237,6 @@ const BuildAd = () => {
                     type={submit ? "submit" : "button"}
                     onClick={() => {
                       setSubmit(true);
-                      openModal(setIsPaymentOptionOpen);
                     }}
                     disabled={spinner}
                     className={`bg-[#0D1A8B] hover:bg-[#0a1dbd] text-white p-3 rounded-md inline-block text-center sm:w-28 w-full  ${

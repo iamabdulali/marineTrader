@@ -15,7 +15,7 @@ import {
 } from "../../utils/ModalOpeningClosingFunctions";
 import AvailableUpgrades from "./AdComponents/AvailableUpgrades";
 import { FormField } from "../FormField";
-import { fetchOptions } from "../../utils/fetchOptions";
+import { fetchOptions } from "../../utils/fetch/fetchData";
 import { tax } from "../../utils/DummyData";
 
 const PriceStep6 = ({ setFieldValue, values }) => {

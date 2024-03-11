@@ -11,7 +11,7 @@ import {
   trailers,
   yearsArray,
 } from "../../utils/DummyData";
-import { fetchOptions } from "../../utils/fetchOptions";
+import { fetchOptions } from "../../utils/fetch/fetchData";
 
 const ItemDescriptionStep2 = () => {
   const { selectedPackage } = useContext(AuthContext);
