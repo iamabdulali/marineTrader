@@ -1,10 +1,14 @@
 import { useContext, useState, useEffect } from "react";
 import { FaTimes } from "react-icons/fa";
 import { AuthContext } from "../Context/AuthContext";
+import { useFormikContext } from "formik";
 
 export const TagsInput = ({ field, form }) => {
   const [tags, setTags] = useState([]);
   const { listingTags, dispatch } = useContext(AuthContext);
+
+  const { values } = useFormikContext();
+  console.log(values.tags);
 
   useEffect(() => {
     // Set the tags array when the listingTags change

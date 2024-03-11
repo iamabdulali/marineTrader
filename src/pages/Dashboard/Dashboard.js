@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import PackageMessage from "../../components/Notifications/PackageMessage";
 import { jetski3d, packageIcon, speakerIcon } from "../../assets";
 import { FaTimes } from "react-icons/fa";
@@ -14,13 +14,34 @@ import {
   openModal,
 } from "../../utils/ModalOpeningClosingFunctions";
 import { AuthContext } from "../../Context/AuthContext";
+import axios from "axios";
+import { SERVER_BASE_URL } from "../..";
 
 export default function Dashboard() {
   let [isVideoOpen, setIsVideoOpen] = useState(false);
+  const [adverts, setAdverts] = useState([]);
 
   const { user } = useContext(AuthContext);
 
   const { seller_type } = Object(user);
+
+  const getAdvert = async () => {
+    try {
+      const { data } = await axios.get(`${SERVER_BASE_URL}/advert`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      console.log(data.data);
+      setAdverts(data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getAdvert();
+  }, []);
 
   return (
     <>
@@ -60,6 +81,7 @@ export default function Dashboard() {
             hasPadding={true}
             sellingListing={true}
             tableHeader={sellingHeader}
+            sellingData={adverts}
           />
         </div>
         {/* <ListingTable

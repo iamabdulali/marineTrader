@@ -36,7 +36,7 @@ const ItemFeaturesStep3 = () => {
                   MenuFor={modificationCheckboxes}
                   dispatch={dispatch}
                   actionType="UPDATE_MODIFICATIONS"
-                  name="modification"
+                  name="modifications"
                 />
               }
             />
@@ -87,7 +87,7 @@ const ItemFeaturesStep3 = () => {
                   MenuFor={convenienceCheckboxes}
                   dispatch={dispatch}
                   actionType="UPDATE_CONVENIENCE"
-                  name="convenience"
+                  name="conveniences"
                 />
               }
             />

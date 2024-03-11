@@ -77,6 +77,7 @@ export default function AdSubscription() {
                 buttonText="Get Started"
                 text="View Display Results"
                 key={id}
+                id={id}
               />
             );
           })}
@@ -117,6 +118,7 @@ export default function AdSubscription() {
                     variant={name}
                     featuresArray={featuresArray}
                     key={id}
+                    id={id}
                   />
                 )
               );

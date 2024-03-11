@@ -530,10 +530,74 @@ export const links = [
   },
 ];
 
-export const years = [
+const years = [
   2024, 2023, 2022, 2021, 2020, 2019, 2018, 2017, 2016, 2015, 2014, 2013, 2012,
   2011, 2010, 2009, 2008, 2007, 2006, 2005, 2004, 2003, 2002, 2001, 2000, 1999,
   1998, 1997, 1996, 1995, 1994, 1993, 1992, 1991, 1990, 1989, 1988, 1987, 1986,
   1985, 1984, 1983, 1982, 1981, 1980, 1979, 1978, 1977, 1976, 1975, 1974, 1973,
   1972, 1971, 1970,
+];
+
+export const yearsArray = years.map((year, index) => {
+  return { id: year, name: year };
+});
+
+export const colors = [
+  { id: 1, name: "Black" },
+  { id: 2, name: "Blue" },
+  { id: 3, name: "Red" },
+  { id: 4, name: "Yellow" },
+  { id: 5, name: "Orange" },
+  { id: 6, name: "Grey" },
+  { id: 7, name: "Purple" },
+  { id: 8, name: "White" },
+  { id: 9, name: "Cream" },
+  { id: 10, name: "Brown" },
+  { id: 11, name: "Green" },
+  { id: 12, name: "Pink" },
+  { id: 13, name: "Silver" },
+  { id: 14, name: "Gold" },
+];
+
+export const serviceHistory = [
+  { id: 1, name: "None" },
+  { id: 2, name: "Part" },
+  { id: 3, name: "Full" },
+  { id: 4, name: "Month" },
+  { id: 5, name: "Repaired" },
+];
+
+export const passengers = [
+  { id: 1, name: "Passenger One" },
+  { id: 2, name: "Passenger Two" },
+  { id: 3, name: "Passenger Three" },
+];
+
+export const trailers = [
+  { id: 1, name: "Yes" },
+  { id: 2, name: "No" },
+  { id: 3, name: "Sold Separately" },
+];
+
+export const tax = [
+  {
+    id: 1,
+    name: "Tax Exempt",
+  },
+  {
+    id: 2,
+    name: "Tax Not Paid",
+  },
+  {
+    id: 3,
+    name: "Inc. VAT",
+  },
+  {
+    id: 4,
+    name: "Ex. VAT",
+  },
+  {
+    id: 5,
+    name: "No VAT",
+  },
 ];

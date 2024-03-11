@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FiSearch, FiEye, FiMoreVertical } from "react-icons/fi";
 import SortDropdown from "../SortDropdown";
-import { OffersData, listingData, sellingData } from "../../utils/DummyData";
+import { OffersData, sellingData } from "../../utils/DummyData";
 import { Link } from "react-router-dom";
 import CustomDropdownMenu from "../CustomDropdownMenu";
 import ListingMenu from "../Selling/ListingMenu";
@@ -24,6 +24,8 @@ const ListingTable = ({
   dashboardListing,
   sellingListing,
   tableFor,
+  listingData,
+  sellingData,
 }) => {
   let [isOfferOpen, setIsOfferOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -138,13 +140,14 @@ const ListingTable = ({
                 {sellingData.map(
                   ({
                     id,
-                    image,
-                    itemName,
+                    images,
+                    category,
+                    currency,
                     status,
                     price,
-                    adExpireDate,
+                    expire_date,
                     packageName,
-                    views,
+                    view,
                     ad,
                   }) => (
                     <tr
@@ -154,32 +157,35 @@ const ListingTable = ({
                       <td className="py-4 px-4 whitespace-nowrap">
                         <div className="flex items-center gap-2">
                           <img
-                            src={image}
+                            src={images[0].image}
                             alt="Item"
                             className="w-16 h-16 object-cover rounded-lg mr-2"
                           />
                           <div>
                             <p className="text-[#11133D] font-semibold text-base mb-1">
-                              {itemName}
+                              {category.name}
                             </p>
-                            <p>{price}</p>
+                            <p>
+                              {currency.symbol}
+                              {price}
+                            </p>
                           </div>
                         </div>
                       </td>
-                      <td className="py-4 px-4">{adExpireDate}</td>
+                      <td className="py-4 px-4">{expire_date}</td>
                       {/* <td className="py-4 px-4">{packageName}</td> */}
-                      <td className="py-4 px-4">{views}</td>
+                      <td className="py-4 px-4">{view}</td>
                       <td className="py-4 px-4">
                         <p
                           className={`${
                             status == "Active"
                               ? "bg-[#D6FDEC] text-[#36B37E]"
-                              : status == "In Draft"
+                              : status == "0"
                               ? "bg-[#F6F6F6] text-[#8891B2]"
                               : "bg-[#FDD6D6] text-[#FF4545]"
                           }  rounded-2xl text-center py-3 font-medium`}
                         >
-                          {status}
+                          {status == "0" ? "In Draft" : ""}
                         </p>
                       </td>
                       <td className="py-4 px-4">
@@ -187,14 +193,14 @@ const ListingTable = ({
                           <Link
                             to={ad == "Edit" ? "/selling/buildAd" : "/"}
                             className={` ${
-                              ad == "Edit"
+                              status == "0"
                                 ? "text-[#0D1A8B] border-2 border-[#0D1A8B] hover:bg-[#0D1A8B] hover:text-white"
                                 : ad == "Upgrade"
                                 ? "text-[#FFB800] border-2 border-[#FFB800] hover:bg-[#FFB800] hover:text-white"
                                 : "text-[#2AD18A] border-2 border-[#2AD18A] hover:bg-[#2AD18A] hover:text-white"
                             } px-3 py-3 min-w-24 text-sm rounded-md block text-center`}
                           >
-                            {ad}
+                            {status == "0" ? "Edit" : ""}
                           </Link>
                         </div>
                       </td>

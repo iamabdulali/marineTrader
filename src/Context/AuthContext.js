@@ -5,7 +5,7 @@ export const AuthContext = createContext();
 
 export const authReducer = (state, action) => {
   switch (action.type) {
-    case "UPDATE_SELECTED_CATEGORY_BUILD_AD":
+    case "SELECTED_CATEGORY":
       return { ...state, selectedCategory: action.payload };
     case "ADD_TAG":
       return { ...state, listingTags: [...state.listingTags, action.payload] };
@@ -47,6 +47,7 @@ export const AuthContextProvider = ({ children }) => {
     accessoriesCheckboxes: [],
     isAuthenticated: false,
     selectedPackage: null, // Adding selectedPackage state
+    selectedCategory: null,
   });
 
   // console.log("Auth context state: ", state);

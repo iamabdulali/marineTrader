@@ -1,6 +1,7 @@
 // CategoryList.jsx
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { ReactSVG } from "react-svg";
+import axios from "axios"; // Import axios for making HTTP requests
 import {
   boatHomeIcon,
   commercialIcon,
@@ -12,19 +13,11 @@ import {
   sailboatIcon,
   smallcraftIcon,
 } from "../../assets";
+import { SERVER_BASE_URL } from "../..";
+import { AuthContext } from "../../Context/AuthContext";
 
 const CategoryList = ({
-  categories = [
-    "Jet Skis",
-    "Boat Home",
-    "Commercial",
-    "Motor/Yacht",
-    "Sailboat",
-    "Smallcraft",
-    "Fishing",
-    "Rib",
-    "Non-Motor",
-  ],
+  categories: propCategories, // Pass categories as a prop
   onCategoryClick,
   initialCategory,
   className,
@@ -34,24 +27,40 @@ const CategoryList = ({
   defaultSelectedCategory,
   multiSelect = false, // Introduce multiSelect prop
 }) => {
+  const [categories, setCategories] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState(
     multiSelect
       ? defaultSelectedCategory || []
       : defaultSelectedCategory ||
-          (categories.length > 0 ? [categories[initialCategory]] : [])
+          (propCategories.length > 0 ? [propCategories[initialCategory]] : [])
   );
 
   const categoryIcons = {
-    "Jet Skis": jetskiIcon,
+    Jetski: jetskiIcon,
     "Boat Home": boatHomeIcon,
     Commercial: commercialIcon,
-    "Motor/Yacht": motorYachtIcon,
-    Sailboat: sailboatIcon,
-    Smallcraft: smallcraftIcon,
+    Yacht: motorYachtIcon,
+    "Sail Boat": sailboatIcon,
+    "Small Craft": smallcraftIcon,
     Fishing: fishingIcon,
-    Rib: ribIcon,
-    "Non-Motor": nonMotorIcon,
+    RIB: ribIcon,
+    "Non Motor": nonMotorIcon,
   };
+
+  useEffect(() => {
+    // Fetch categories when component mounts
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get(`${SERVER_BASE_URL}/categories`);
+        setCategories(response.data.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchCategories();
+  }, []);
+
+  const { dispatch } = useContext(AuthContext);
 
   const handleCategoryClick = (category) => {
     let newSelectedCategories;
@@ -68,7 +77,16 @@ const CategoryList = ({
 
     setSelectedCategories(newSelectedCategories);
     onCategoryChange(newSelectedCategories);
-    onCategoryClick(newSelectedCategories);
+
+    // Pass both category name and ID to the onCategoryClick callback
+    const selectedCategoryId = categories.find(
+      (cat) => cat.name === category
+    )?.id;
+    onCategoryClick({ name: category, id: selectedCategoryId });
+    dispatch({
+      type: "SELECTED_CATEGORY",
+      payload: { name: category, id: selectedCategoryId },
+    });
   };
 
   const getCategoryIcon = (category) => {
@@ -91,17 +109,19 @@ const CategoryList = ({
 
   return (
     <div className={`category-list ${className}`}>
-      {categories.map((category) => (
+      {categories?.map((category) => (
         <div
-          key={category}
-          onClick={() => handleCategoryClick(category)}
+          key={category.name} // Assuming 'name' is a unique identifier
+          onClick={() => handleCategoryClick(category.name)} // Use category name as identifier
           className={`category-item cursor-pointer ${
-            selectedCategories.includes(category)
+            selectedCategories.includes(category.name)
               ? `${activeCategory}`
               : `${unActiveCategory}`
           }`}
         >
-          <span className="category-icon">{getCategoryIcon(category)}</span>
+          <span className="category-icon">
+            {getCategoryIcon(category.name)}
+          </span>
         </div>
       ))}
     </div>

@@ -14,6 +14,7 @@ import {
   openModal,
 } from "../../utils/ModalOpeningClosingFunctions";
 import VideoModal from "../../components/VideoTutorial/VideoModal";
+import BuildAd from "../BuildAd/BuildAd";
 
 export default function Selling() {
   const [hasListing, setHasListing] = useState(true);
@@ -53,6 +54,7 @@ export default function Selling() {
               setHasListing(false);
             }}
             onCategoryClick={() => {}}
+            categories={[""]}
           />
         </div>
         {hasListing ? (
@@ -80,6 +82,7 @@ export default function Selling() {
           <VideoModal />
         </Modal>
       </Layout>
+      {/* <BuildAd /> */}
     </>
   );
 }

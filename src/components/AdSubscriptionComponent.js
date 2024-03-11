@@ -21,6 +21,7 @@ const AdSubscriptionComponent = ({
   variant,
   isStandard,
   featuresArray,
+  id,
 }) => {
   let variantStyles = {};
   let [isSearchResultOpen, setIsSearchResultOpen] = useState(false);
@@ -121,7 +122,7 @@ const AdSubscriptionComponent = ({
 
         <Link
           onClick={() => {
-            dispatch({ type: "SELECT_PACKAGE", payload: packageName });
+            dispatch({ type: "SELECT_PACKAGE", payload: id });
           }}
           to="/selling/buildAd"
           className={`${variantStyles.buttonBg} hover:bg-opacity-85 text-white font-semibold inline-block py-3 w-9/12 rounded-lg`}

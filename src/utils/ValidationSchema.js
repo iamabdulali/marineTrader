@@ -132,7 +132,7 @@ export const buildAdValidationSchema = Yup.object().shape({
   // buildAdImages: Yup.array().min("Select At One Photo"),
   // buildAdVideo: videoValidationSchema,
   images: Yup.array().min(1, "Please upload at least one image"),
-  video: Yup.mixed().required("Video is Required"),
+  // video: Yup.mixed().required("Video is Required"),
   currency: Yup.string().required("Currency is required"),
   price: Yup.string().required("Price is required"),
 });

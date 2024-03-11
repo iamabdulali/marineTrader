@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import BuildLayout from "./BuildLayout";
 import { Field } from "formik";
 import { CategorySelectDropdown } from "../CategorySelectDropdown";
@@ -15,6 +15,8 @@ import {
 } from "../../utils/ModalOpeningClosingFunctions";
 import AvailableUpgrades from "./AdComponents/AvailableUpgrades";
 import { FormField } from "../FormField";
+import { fetchOptions } from "../../utils/fetchOptions";
+import { tax } from "../../utils/DummyData";
 
 const PriceStep6 = ({ setFieldValue, values }) => {
   const initialFacilities = {
@@ -29,9 +31,14 @@ const PriceStep6 = ({ setFieldValue, values }) => {
   const [facilities, setFacilities] = useState(initialFacilities.facilities);
   const [showSpotlightModal, setShowSpotlightModal] = useState(false);
   const [priceInfoType, setPriceInfoType] = useState("enterInfo");
+  const [currencies, setCurrencies] = useState([]);
 
   let [isBundleOpen, setIsBundleOpen] = useState(false);
   let [isSpotlightOpen, setIsSpotlightOpen] = useState(false);
+
+  useEffect(() => {
+    fetchOptions("currencies", setCurrencies);
+  }, []);
 
   return (
     <BuildLayout heading="Set Price">
@@ -72,23 +79,7 @@ const PriceStep6 = ({ setFieldValue, values }) => {
             <CategorySelectDropdown
               label="Currency"
               name="currency"
-              options={[
-                "$ (USD)",
-                "€ (EUR)",
-                "£ (GBP)",
-                "¥ (JPY)",
-                "CHF (Swiss Franc)",
-                "C$ (CAD)",
-                "A$ (AUD)",
-                "CN¥ (CNY)",
-                "₹ (INR)",
-                "₽ (RUB)",
-                "R$ (BRL)",
-                "Mex$ (MXN)",
-                "₩ (KRW)",
-                "₺ (TRY)",
-                "R (ZAR)",
-              ]}
+              options={currencies}
             />
             <FormField
               FieldType="number"
@@ -97,17 +88,7 @@ const PriceStep6 = ({ setFieldValue, values }) => {
               label="Price"
               className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
             />
-            <CategorySelectDropdown
-              label="Tax"
-              name="tax"
-              options={[
-                "Tax Exempt",
-                "Tax Not Paid",
-                "Inc. VAT",
-                "Ex. VAT",
-                "No VAT",
-              ]}
-            />
+            <CategorySelectDropdown label="Tax" name="tax" options={tax} />
           </div>
         ) : (
           <div className="text-sm mt-5  text-[#11133D] bg-[#FFE8E8] py-7 sm:px-7 px-4 rounded-lg">

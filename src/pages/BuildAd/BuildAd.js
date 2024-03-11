@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Layout from "../../components/Layout/Layout";
 import ProgressSteps from "../../components/ProgressSteps";
 import SelectCategoryStep1 from "../../components/BuildAdSteps/SelectCategoryStep1";
@@ -14,7 +14,7 @@ import {
 } from "../../utils/ValidationSchema";
 import { AuthContext } from "../../Context/AuthContext";
 import Payment from "../Payment/Payment";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import Modal from "../../components/Modal";
 import PaymentOptionModal from "../../components/BuildAdSteps/AdComponents/PaymentOptionModal";
 import {
@@ -33,8 +33,8 @@ const BuildAd = () => {
   const [step, setStep] = useState(1);
   const [submit, setSubmit] = useState(false);
   const [spinner, setSpinner] = useState(false);
+  const NavigateTo = useNavigate();
 
-  const [selectedCategory, setSelectedCategory] = useState("Jet Skis");
   const stepLabels = [
     // "Category",
     "Description",
@@ -44,17 +44,13 @@ const BuildAd = () => {
     "Price",
   ];
 
-  const handleCategoryChange = (category, setFieldValue) => {
-    setSelectedCategory(category);
-    setFieldValue("boatName", category);
-  };
-
-  const { selectedPackage } = useContext(AuthContext);
+  const { selectedPackage, selectedCategory } = useContext(AuthContext);
 
   const initialValues = {
-    boatName: "",
+    category: selectedCategory?.id,
     title: "",
     sub_title: "",
+    type: "",
     make: "",
     model: "",
     year: "",
@@ -65,9 +61,9 @@ const BuildAd = () => {
     length: "",
     hours: "",
     trailers: "",
-    modification: [],
+    modifications: [],
     features: [],
-    convenience: [],
+    conveniences: [],
     accessories: [],
     description: "",
     tags: [],
@@ -77,7 +73,7 @@ const BuildAd = () => {
     currency: "",
     price: "",
     facilities: [],
-    packageName: selectedPackage,
+    advert_package: selectedPackage,
     countries: [],
   };
   const prevStep = () => setStep(step - 1);
@@ -116,7 +112,7 @@ const BuildAd = () => {
         } else if (step === 3) {
           return ["description", "tags"].includes(field);
         } else if (step === 4) {
-          return ["images", "video"].includes(field);
+          return ["images"].includes(field);
         } else if (step === 5) {
           return ["currency", "price"].includes(field);
         }
@@ -152,6 +148,7 @@ const BuildAd = () => {
   };
 
   const handleSubmit = async (values) => {
+    console.log(values);
     setSpinner(true);
     try {
       const { data } = await axios.post(`${SERVER_BASE_URL}/advert`, values, {
@@ -169,6 +166,13 @@ const BuildAd = () => {
       setSpinner(false);
     }
   };
+
+  useEffect(() => {
+    if (selectedCategory == null) {
+      NavigateTo("/selling");
+    }
+  }, []);
+
   return (
     <Layout>
       <p className="rounded-lg shadow-[7px] bg-white font-semibold py-5 px-7">
@@ -182,7 +186,7 @@ const BuildAd = () => {
       />
       <Formik
         initialValues={initialValues}
-        validationSchema={buildAdValidationSchema}
+        // validationSchema={buildAdValidationSchema}
         onSubmit={handleSubmit}
       >
         {({
