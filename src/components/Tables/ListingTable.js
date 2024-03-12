@@ -229,13 +229,14 @@ const ListingTable = ({
                 {sellingData.map(
                   ({
                     id,
-                    image,
-                    itemName,
+                    images,
+                    category,
+                    currency,
                     status,
                     price,
-                    adExpireDate,
+                    expire_date,
                     packageName,
-                    views,
+                    view,
                     ad,
                   }) => (
                     <div
@@ -243,26 +244,26 @@ const ListingTable = ({
                       className="bg-white sm:text-base text-sm block rounded-lg sm:flex gap-4 w-full p-4"
                     >
                       <img
-                        src={image}
+                        src={images[0]?.image}
                         alt="Item"
                         className="sm:w-4/12 w-full object-cover rounded-lg sm:mr-2 mb-4"
                       />
                       <div className="sm:w-8/12 w-full">
                         <p className="text-[#11133D] font-semibold text-xl mb-2">
-                          {itemName}
+                          {category?.name}
                         </p>
                         <p className="text-[#8891B2] font-medium">
                           Price:
                           <span className="text-[#696E9D] font-semibold">
                             {" "}
-                            {price}
+                            {currency?.symbol}
                           </span>
                         </p>
                         <p className="text-[#8891B2] font-medium mt-4">
                           {" "}
                           Ad Expires Date:{" "}
                           <span className="text-[#696E9D] font-semibold">
-                            {adExpireDate}
+                            {expire_date}
                           </span>
                         </p>
                         {/* <td className="py-4 px-4">{packageName}</td> */}
@@ -270,7 +271,7 @@ const ListingTable = ({
                           Views:{" "}
                           <span className="text-[#696E9D] font-semibold">
                             {" "}
-                            {views}
+                            {view}
                           </span>
                         </p>
                         <p className="text-[#8891B2] font-medium mt-2">
@@ -279,27 +280,27 @@ const ListingTable = ({
                             className={`${
                               status == "Active"
                                 ? "bg-[#D6FDEC] text-[#36B37E]"
-                                : status == "In Draft"
+                                : status == "0"
                                 ? "bg-[#F6F6F6] text-[#8891B2]"
                                 : "bg-[#FDD6D6] text-[#FF4545]"
                             }  rounded-2xl text-center ml-1 px-5 py-2 inline-block text-[#696E9D] font-semibold`}
                           >
                             {" "}
-                            {status}
+                            {status == "0" ? "In Draft" : ""}
                           </span>
                         </p>
                         <div className="flex mt-5 font-semibold items-center justify-center">
                           <Link
                             to={ad == "Edit" ? "/selling/buildAd" : "/"}
                             className={` ${
-                              ad == "Edit"
+                              status == "0"
                                 ? "text-[#0D1A8B] border-2 border-[#0D1A8B] hover:bg-[#0D1A8B] hover:text-white"
-                                : ad == "Upgrade"
+                                : status == "Upgrade"
                                 ? "text-[#FFB800] border-2 border-[#FFB800]  hover:bg-[#FFB800] hover:text-white"
                                 : "text-[#2AD18A] border-2 border-[#2AD18A] hover:bg-[#2AD18A] hover:text-white"
                             } px-3 py-3 min-w-24 text-sm rounded-md block text-center w-full`}
                           >
-                            {ad}
+                            {status == "0" ? "Edit" : ""}
                           </Link>
                           <CustomDropdownMenu
                             buttonToOpenMenu={
@@ -312,6 +313,7 @@ const ListingTable = ({
                             children={
                               <ListingMenu
                                 openDeleteModal={handleDeleteModalOpen}
+                                id={id}
                               />
                             }
                           />
