@@ -1,6 +1,21 @@
 import React from "react";
 
-const ItemOverview = () => {
+const ItemOverview = ({ advert }) => {
+  const {
+    category,
+    type,
+    model,
+    length,
+    trailers,
+    year,
+    condition,
+    make,
+    service_history,
+    hours,
+    color,
+    tags,
+    description,
+  } = Object(advert);
   return (
     <div>
       <p className="text-[#11133D] font-semibold sm:text-2xl text-xl">
@@ -19,12 +34,12 @@ const ItemOverview = () => {
         <div className="mt-3 grid md:grid-cols-2 gap-x-6 gap-y-6">
           <div className="flex justify-between items-center">
             <p className="text-[#8891B2] sm:text-base text-sm">Boat Type</p>
-            <p className="text-[#11133D] font-semibold">Jet Ski</p>
+            <p className="text-[#11133D] font-semibold">{category?.name}</p>
           </div>
           <div className="flex justify-between items-center">
             <p className="text-[#8891B2] sm:text-base text-sm">Jet Ski Make</p>
             <p className="text-[#11133D] font-semibold sm:text-base text-sm">
-              Yamaha
+              {make?.name}
             </p>
           </div>
           <div className="flex justify-between items-center">
@@ -32,7 +47,7 @@ const ItemOverview = () => {
               Jet Ski Sit Modal
             </p>
             <p className="text-[#11133D] font-semibold sm:text-base text-sm">
-              Fzs Svho
+              {model?.name}
             </p>
           </div>
           <div className="flex justify-between items-center">
@@ -44,7 +59,7 @@ const ItemOverview = () => {
           <div className="flex justify-between items-center">
             <p className="text-[#8891B2] sm:text-base text-sm">Seat Type</p>
             <p className="text-[#11133D] font-semibold sm:text-base text-sm">
-              2 Seater
+              {type?.name}
             </p>
           </div>
           <div className="flex justify-between items-center">
@@ -57,82 +72,68 @@ const ItemOverview = () => {
             <p className="text-[#8891B2] sm:text-base text-sm">
               Service History
             </p>
-            <p className="text-[#11133D] font-semibold sm:text-base text-sm">
-              Full
+            <p className="text-[#11133D] font-semibold sm:text-base text-sm capitalize">
+              {service_history}
             </p>
           </div>
           <div className="flex justify-between items-center">
             <p className="text-[#8891B2] sm:text-base text-sm">Condition</p>
             <p className="text-[#11133D] font-semibold sm:text-base text-sm">
-              Like New
+              {condition?.name}
             </p>
           </div>
           <div className="flex justify-between items-center">
             <p className="text-[#8891B2] sm:text-base text-sm">CA Year</p>
             <p className="text-[#11133D] font-semibold sm:text-base text-sm">
-              2019
+              {year}
             </p>
           </div>
           <div className="flex justify-between items-center">
             <p className="text-[#8891B2] sm:text-base text-sm">Color</p>
-            <p className="text-[#11133D] font-semibold sm:text-base text-sm">
-              Red
+            <p className="text-[#11133D] font-semibold sm:text-base text-sm capitalize">
+              {color}
             </p>
           </div>
           <div className="flex justify-between items-center">
             <p className="text-[#8891B2] sm:text-base text-sm">Length</p>
             <p className="text-[#11133D] font-semibold sm:text-base text-sm">
-              14"
+              {length}
             </p>
           </div>
           <div className="flex justify-between items-center">
             <p className="text-[#8891B2] sm:text-base text-sm">Hours</p>
             <p className="text-[#11133D] font-semibold sm:text-base text-sm">
-              33
+              {hours}
             </p>
           </div>
           <div className="flex justify-between items-center">
             <p className="text-[#8891B2] sm:text-base text-sm">Trailer</p>
-            <p className="text-[#11133D] font-semibold sm:text-base text-sm">
-              No
+            <p className="text-[#11133D] font-semibold sm:text-base text-sm capitalize">
+              {trailers}
             </p>
           </div>
         </div>
         <p className="text-[#11133D] font-semibold text-2xl mt-14">Tags</p>
         <div className="flex flex-wrap items-center mt-5 gap-4 sm:text-base text-sm">
-          <p className="text-[#0D1A8B] bg-[#F0F1FF] rounded-full font-medium py-3 px-4">
-            3k Modifications
-          </p>
-          <p className="text-[#0D1A8B] bg-[#F0F1FF] rounded-full font-medium py-3 px-4">
-            456 Bhp
-          </p>
-          <p className="text-[#0D1A8B] bg-[#F0F1FF] rounded-full font-medium py-3 px-4">
-            Lady In Red
-          </p>
-          <p className="text-[#0D1A8B] bg-[#F0F1FF] rounded-full font-medium py-3 px-4">
-            Supercharge Upgrade
-          </p>
+          {tags.map(({ id, name }) => {
+            return (
+              <p
+                key={id}
+                className="text-[#0D1A8B] uppercase bg-[#F0F1FF] rounded-full font-medium py-3 px-4"
+              >
+                {name}
+              </p>
+            );
+          })}
         </div>
         <div>
           <p className="text-[#11133D] font-semibold sm:text-2xl text-xl mt-14 mb-2">
             Seller Notes
           </p>
           <p className="text-[#8891B2] sm:leading-loose sm:text-base text-sm leading-loose">
-            A yacht is a sailing or power vessel used for pleasure, cruising, or
-            racing. There is no standard definition, though the term generally
-            applies to vessels with a cabin intended for overnight use. To be
-            termed a yacht, as opposed to a boat, such a pleasure vessel is
-            likely to be at least 33 feet (10 m) in length and may have been
-            judged to have good aesthetic qualities.
+            {description}
           </p>
-          <p className="text-[#8891B2] sm:leading-loose sm:text-base text-sm leading-loose">
-            A yacht is a sailing or power vessel used for pleasure, cruising, or
-            racing. There is no standard definition, though the term generally
-            applies to vessels with a cabin intended for overnight use. To be
-            termed a yacht, as opposed to a boat, such a pleasure vessel is
-            likely to be at least 33 feet (10 m) in length and may have been
-            judged to have good aesthetic qualities.
-          </p>
+
           <div className="flex smallLg:flex-row flex-col items-center mt-6 gap-3">
             <img
               className="smallLg:w-auto w-full"

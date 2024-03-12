@@ -1,5 +1,5 @@
 import React from "react";
-import { ErrorMessage, useField } from "formik";
+import { ErrorMessage, useField, useFormikContext } from "formik";
 import { FaPlus, FaTimes } from "react-icons/fa";
 
 const ImageAndVideoHandler = ({
@@ -15,6 +15,7 @@ const ImageAndVideoHandler = ({
   const [, , helpers] = useField(field.name);
   const [previews, setPreviews] = React.useState([]);
   const [fileType, setFileType] = React.useState("");
+  const { values } = useFormikContext();
 
   const handleChange = (event) => {
     const { setFieldValue } = form;
@@ -27,18 +28,34 @@ const ImageAndVideoHandler = ({
     }
 
     if (files.length > 0) {
-      const newPreviews = Array.from(files).map((file) => {
-        setFileType(file.type);
-        return URL.createObjectURL(file);
+      const newPreviews = [];
+      let videoFile = null;
+
+      // Separate videos from images
+      Array.from(files).forEach((file) => {
+        if (file.type.startsWith("image/")) {
+          newPreviews.push(URL.createObjectURL(file));
+        } else if (!videoFile && file.type.startsWith("video/")) {
+          videoFile = file;
+        }
       });
-      setPreviews([...previews, ...newPreviews]);
 
-      // Accumulate selected files in an array
-      const accumulatedFiles = [...(form.values[field.name] || []), ...files];
-      setFieldValue(field.name, accumulatedFiles);
+      if (videoFile) {
+        // If a video is selected, set the video file separately
+        setFileType(videoFile.type);
+        setPreviews([URL.createObjectURL(videoFile)]);
+        setFieldValue(field.name, videoFile);
+      } else {
+        // If no video is selected, append images to previews array
+        setPreviews([...previews, ...newPreviews]);
+
+        // Accumulate selected image files in an array
+        const accumulatedFiles = [...(form.values[field.name] || []), ...files];
+        setFieldValue(field.name, accumulatedFiles);
+      }
     }
+    console.log(values.images, values.video);
   };
-
   const handleDelete = (index) => {
     const updatedPreviews = [...previews];
     updatedPreviews.splice(index, 1);

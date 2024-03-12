@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import ListingTable from "../../components/Tables/ListingTable";
 import Heading from "../../components/Heading";
 import { FaArrowLeft } from "react-icons/fa";
@@ -14,20 +14,20 @@ import {
   openModal,
 } from "../../utils/ModalOpeningClosingFunctions";
 import VideoModal from "../../components/VideoTutorial/VideoModal";
-import BuildAd from "../BuildAd/BuildAd";
-import { getAdvert } from "../../utils/fetch/fetchData";
+import { fetchOptions, getAdvert } from "../../utils/fetch/fetchData";
 import LoadingWrapper from "../../utils/LoadingWrapper";
-import { faL } from "@fortawesome/free-solid-svg-icons";
+import { AuthContext } from "../../Context/AuthContext";
 
 export default function Selling() {
   const [loading, setLoading] = useState(true);
   const [hasListing, setHasListing] = useState(true);
-  const [category, setCategory] = useState("Jet Skis");
   let [isVideoOpen, setIsVideoOpen] = useState(false);
   const [adverts, setAdverts] = useState([]);
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     getAdvert(setAdverts, setLoading);
+    fetchOptions("categories", setCategories, setLoading);
   }, []);
 
   return (
@@ -62,11 +62,10 @@ export default function Selling() {
               activeCategory="border-b-4 border-[#0D1A8B] py-3"
               unActiveCategory="py-3"
               onCategoryChange={(category) => {
-                setCategory(category);
                 setHasListing(false);
               }}
               onCategoryClick={() => {}}
-              categories={[""]}
+              categories={categories}
             />
           </div>
           {hasListing ? (

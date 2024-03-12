@@ -2,14 +2,8 @@ import { Menu } from "@headlessui/react";
 import React, { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
 import { links } from "../../utils/DummyData";
-import {
-  closeModal,
-  openModal,
-} from "../../utils/ModalOpeningClosingFunctions";
-import Modal from "../Modal";
-import DeleteListingModal from "./DeleteListingModal";
 
-const ListingMenu = ({ openDeleteModal }) => {
+const ListingMenu = ({ openDeleteModal, id }) => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   console.log(isDeleteModalOpen);
 
@@ -37,7 +31,7 @@ const ListingMenu = ({ openDeleteModal }) => {
                   </p>
                 ) : (
                   <Link
-                    to={href}
+                    to={`/itemDetails/${id}`}
                     className={`flex items-center gap-4  ${
                       colorChange ? "text-[#FC4040]" : "text-[#11133D]"
                     } text-base font-medium mt-4`}

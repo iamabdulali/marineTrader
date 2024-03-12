@@ -29,15 +29,14 @@ const PriceStep6 = ({ setFieldValue, values }) => {
   };
 
   const [facilities, setFacilities] = useState(initialFacilities.facilities);
-  const [showSpotlightModal, setShowSpotlightModal] = useState(false);
   const [priceInfoType, setPriceInfoType] = useState("enterInfo");
   const [currencies, setCurrencies] = useState([]);
-
+  const [loading, setLoading] = useState(true);
   let [isBundleOpen, setIsBundleOpen] = useState(false);
   let [isSpotlightOpen, setIsSpotlightOpen] = useState(false);
 
   useEffect(() => {
-    fetchOptions("currencies", setCurrencies);
+    fetchOptions("currencies", setCurrencies, setLoading);
   }, []);
 
   return (

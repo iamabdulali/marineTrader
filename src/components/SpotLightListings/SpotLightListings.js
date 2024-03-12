@@ -36,7 +36,9 @@ const SpotLightListings = ({
               ""
             )}
           </div>
-          <p className="text-[#8891B2] text-sm mt-2">{selectedCategory}</p>
+          <p className="text-[#8891B2] text-sm mt-2">
+            {selectedCategory?.name}
+          </p>
           <p className="text-[#11133D] font-semibold">{listingName}</p>
           <p className="text-[#0D1A8B] mt-2 font-semibold">{listingPrice}</p>
         </div>

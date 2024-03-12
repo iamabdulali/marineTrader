@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Layout from "../../components/Layout/Layout";
 import CategoryList from "../../components/categoryList/CategoryList";
 import Heading from "../../components/Heading";
@@ -14,11 +14,20 @@ import {
 } from "../../utils/ModalOpeningClosingFunctions";
 import Modal from "../../components/Modal";
 import VideoBtn from "../../components/VideoTutorial/VideoBtn";
+import { fetchOptions } from "../../utils/fetch/fetchData";
+import { AuthContext } from "../../Context/AuthContext";
 
 const Subscription = () => {
   const [hasSubscription, setHasSubscription] = useState(true);
   const [category, setCategory] = useState("Jet Skis");
   let [isVideoOpen, setIsVideoOpen] = useState(false);
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    fetchOptions("categories", setCategories);
+  }, []);
+
+  const { selectedCategory } = useContext(AuthContext);
 
   return (
     <Layout>
@@ -57,6 +66,7 @@ const Subscription = () => {
             setCategory(category);
           }}
           onCategoryClick={() => {}}
+          categories={categories}
         />
       </div>
 
@@ -73,7 +83,7 @@ const Subscription = () => {
           />
         </div>
       ) : (
-        <SubscriptionStep2 selectedCategory={category} />
+        <SubscriptionStep2 selectedCategory={selectedCategory?.name} />
       )}
       <VideoBtn onClick={() => openModal(setIsVideoOpen)} />
       <Modal

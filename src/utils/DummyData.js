@@ -24,6 +24,7 @@ import {
   thumb6,
   warning,
 } from "../assets";
+import { useEffect } from "react";
 
 // Sample data array of objects
 export const listingData = [
@@ -499,7 +500,7 @@ export const AfroStyles = [
 
 export const links = [
   {
-    href: "/list",
+    href: `/itemDetails`,
     label: (
       <>
         <FaEye /> View
@@ -543,61 +544,46 @@ export const yearsArray = years.map((year, index) => {
 });
 
 export const colors = [
-  { id: 1, name: "Black" },
-  { id: 2, name: "Blue" },
-  { id: 3, name: "Red" },
-  { id: 4, name: "Yellow" },
-  { id: 5, name: "Orange" },
-  { id: 6, name: "Grey" },
-  { id: 7, name: "Purple" },
-  { id: 8, name: "White" },
-  { id: 9, name: "Cream" },
-  { id: 10, name: "Brown" },
-  { id: 11, name: "Green" },
-  { id: 12, name: "Pink" },
-  { id: 13, name: "Silver" },
-  { id: 14, name: "Gold" },
+  { id: "black", name: "Black" },
+  { id: "blue", name: "Blue" },
+  { id: "red", name: "Red" },
+  { id: "yellow", name: "Yellow" },
+  { id: "orange", name: "Orange" },
+  { id: "grey", name: "Grey" },
+  { id: "purple", name: "Purple" },
+  { id: "white", name: "White" },
+  { id: "cream", name: "Cream" },
+  { id: "brown", name: "Brown" },
+  { id: "green", name: "Green" },
+  { id: "pink", name: "Pink" },
+  { id: "silver", name: "Silver" },
+  { id: "gold", name: "Gold" },
 ];
 
 export const serviceHistory = [
-  { id: 1, name: "None" },
-  { id: 2, name: "Part" },
-  { id: 3, name: "Full" },
-  { id: 4, name: "Month" },
-  { id: 5, name: "Repaired" },
+  { id: "none", name: "None" },
+  { id: "part", name: "Part" },
+  { id: "full", name: "Full" },
+  { id: "month", name: "Month" },
+  { id: "repaired", name: "Repaired" },
 ];
 
 export const passengers = [
-  { id: 1, name: "Passenger One" },
-  { id: 2, name: "Passenger Two" },
-  { id: 3, name: "Passenger Three" },
+  { id: "passengerOne", name: "Passenger One" },
+  { id: "passengerTwo", name: "Passenger Two" },
+  { id: "passengerThree", name: "Passenger Three" },
 ];
 
 export const trailers = [
-  { id: 1, name: "Yes" },
-  { id: 2, name: "No" },
-  { id: 3, name: "Sold Separately" },
+  { id: "yes", name: "Yes" },
+  { id: "no", name: "No" },
+  { id: "Sold Separately", name: "Sold Separately" },
 ];
 
 export const tax = [
-  {
-    id: 1,
-    name: "Tax Exempt",
-  },
-  {
-    id: 2,
-    name: "Tax Not Paid",
-  },
-  {
-    id: 3,
-    name: "Inc. VAT",
-  },
-  {
-    id: 4,
-    name: "Ex. VAT",
-  },
-  {
-    id: 5,
-    name: "No VAT",
-  },
+  { id: "taxExempt", name: "Tax Exempt" },
+  { id: "taxNotPaid", name: "Tax Not Paid" },
+  { id: "incVAT", name: "Inc. VAT" },
+  { id: "exVAT", name: "Ex. VAT" },
+  { id: "noVAT", name: "No VAT" },
 ];

@@ -19,11 +19,16 @@ const VerticalMenu = ({ menuState, setMenuState }) => {
     setMenuState(!menuState);
   };
 
+  const paths = ["/", "/list", "/itemDetails"];
+
   const IsHomePage = () => {
     const location = useLocation();
 
-    // Check if the current location pathname is "/"
-    return location.pathname === "/";
+    // Check if the current location pathname is "/" or starts with "/itemDetails/"
+    return (
+      paths.includes(location.pathname) ||
+      location.pathname.startsWith("/itemDetails/")
+    );
   };
 
   const { phone_no, email } = Object(user);

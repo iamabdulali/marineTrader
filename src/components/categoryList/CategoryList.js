@@ -26,8 +26,9 @@ const CategoryList = ({
   onCategoryChange,
   defaultSelectedCategory,
   multiSelect = false, // Introduce multiSelect prop
+  categories,
 }) => {
-  const [categories, setCategories] = useState([]);
+  // const [categories, setCategories] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState(
     multiSelect
       ? defaultSelectedCategory || []
@@ -46,19 +47,6 @@ const CategoryList = ({
     RIB: ribIcon,
     "Non Motor": nonMotorIcon,
   };
-
-  useEffect(() => {
-    // Fetch categories when component mounts
-    const fetchCategories = async () => {
-      try {
-        const response = await axios.get(`${SERVER_BASE_URL}/categories`);
-        setCategories(response.data.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchCategories();
-  }, []);
 
   const { dispatch } = useContext(AuthContext);
 

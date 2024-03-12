@@ -19,12 +19,13 @@ const ItemDescriptionStep2 = () => {
   const [make, setMake] = useState([]);
   const [conditions, setConditions] = useState([]);
   const [types, setTypes] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchOptions("models", setModals);
-    fetchOptions("make", setMake);
-    fetchOptions("conditions", setConditions);
-    fetchOptions("types", setTypes);
+    fetchOptions("models", setModals, setLoading);
+    fetchOptions("make", setMake, setLoading);
+    fetchOptions("conditions", setConditions, setLoading);
+    fetchOptions("types", setTypes, setLoading);
   }, []);
 
   return (

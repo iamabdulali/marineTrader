@@ -216,6 +216,7 @@ const ListingTable = ({
                           children={
                             <ListingMenu
                               openDeleteModal={handleDeleteModalOpen}
+                              id={id}
                             />
                           }
                         />

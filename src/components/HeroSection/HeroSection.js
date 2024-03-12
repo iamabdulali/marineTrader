@@ -14,6 +14,8 @@ const HeroSection = () => {
     Navigate("/list");
   };
 
+  console.log(selectedCategory);
+
   const categoryBackgrounds = {
     "Jet Skis": boatBg,
     "Boat Home":
@@ -25,8 +27,8 @@ const HeroSection = () => {
   let backgroundImg = boatBg;
 
   // Set background image based on selected category
-  if (selectedCategory && categoryBackgrounds[selectedCategory]) {
-    backgroundImg = categoryBackgrounds[selectedCategory];
+  if (selectedCategory && categoryBackgrounds[selectedCategory?.name]) {
+    backgroundImg = categoryBackgrounds[selectedCategory?.name];
   }
 
   return (
@@ -39,7 +41,7 @@ const HeroSection = () => {
         <p className="text-white mb-3 flex items-center gap-3">
           {" "}
           <span className="bg-[#FFB800] h-[2px] w-12 inline-block"></span> Buy
-          and Sell {selectedCategory || "Jet Skis"}
+          and Sell {selectedCategory?.name || "Jet Skis"}
         </p>
         <p className="text-white sm:text-5xl text-4xl font-bold sm:leading-tight">
           Freedom is Just <br /> An Anchor{" "}
@@ -53,7 +55,7 @@ const HeroSection = () => {
       <div className="lg:absolute right-20 top-[17%] lg:w-5/12 w-full lg:px-0 sm:px-10 px-6 lg:py-0 sm:py-10 pb-10 pt-0">
         <CategoryDropdown
           onSubmit={handleFormSubmit}
-          category={selectedCategory}
+          category={selectedCategory?.name}
         />
       </div>
     </div>

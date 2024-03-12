@@ -1,18 +1,11 @@
 import React from "react";
 
-const ItemVideos = () => {
+const ItemVideos = ({ advert }) => {
+  const { video } = Object(advert);
   return (
-    <div>
-      <iframe
-        width="853"
-        height="480"
-        src="https://www.youtube.com/embed/Kpn2ajSa92c"
-        title="Asynchronous Vs Synchronous Programming"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        allowfullscreen
-      ></iframe>
-    </div>
+    <video autoPlay controls loop className="w-full">
+      <source src={video?.video}></source>
+    </video>
   );
 };
 

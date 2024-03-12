@@ -46,7 +46,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/slider" element={<SwiperSlider />} />
         <Route path="/list" element={<ListPage />} />
-        <Route path="/itemDetails" element={<ItemDetailPage />} />
+        <Route path="/itemDetails/:id" element={<ItemDetailPage />} />
         <Route
           path="/userProfile"
           element={

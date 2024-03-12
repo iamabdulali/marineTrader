@@ -11,10 +11,10 @@ const SubscriptionStep2 = ({ selectedCategory }) => {
 
   // Check if the selected category matches any of the specified categories
   if (
-    selectedCategory === "Jet Skis" ||
-    selectedCategory === "Smallcraft" ||
-    selectedCategory === "Rib" ||
-    selectedCategory === "Non-Motor"
+    selectedCategory === "Jetski" ||
+    selectedCategory === "Small Craft" ||
+    selectedCategory === "RIB" ||
+    selectedCategory === "Non Motor"
   ) {
     packageName = "Dealer Plus";
     price = "£200";
