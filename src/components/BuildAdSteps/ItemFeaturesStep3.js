@@ -13,6 +13,8 @@ const ItemFeaturesStep3 = () => {
     dispatch,
   } = useContext(AuthContext);
 
+  console.log(modificationCheckboxes);
+
   return (
     <>
       <BuildLayout heading="Items Features">
@@ -26,7 +28,7 @@ const ItemFeaturesStep3 = () => {
               buttonToOpenMenu={
                 <>
                   <p className="border-[#CECED7] text-[#8891B2] px-3 py-[13px] border-2 rounded-md  w-full text-left">
-                    Select Modifications
+                    {modificationCheckboxes[0] || "Select Modifications"}
                   </p>
                 </>
               }
@@ -50,7 +52,7 @@ const ItemFeaturesStep3 = () => {
               buttonToOpenMenu={
                 <>
                   <p className="border-[#CECED7] text-[#8891B2] px-3 py-[13px] border-2 rounded-md  w-full text-left">
-                    Select Features
+                    {featuresCheckboxes[0] || "Select Features"}
                   </p>
                 </>
               }
@@ -77,7 +79,7 @@ const ItemFeaturesStep3 = () => {
               buttonToOpenMenu={
                 <>
                   <p className="border-[#CECED7] text-[#8891B2] px-3 py-[13px] border-2 rounded-md  w-full text-left">
-                    Select Conveniences
+                    {convenienceCheckboxes[0] || "Select Conveniences"}
                   </p>
                 </>
               }
@@ -101,7 +103,7 @@ const ItemFeaturesStep3 = () => {
               buttonToOpenMenu={
                 <>
                   <p className="border-[#CECED7] text-[#8891B2] px-3 py-[13px] border-2 rounded-md  w-full text-left">
-                    Select Accessories
+                    {accessoriesCheckboxes[0] || "Select Accessories"}
                   </p>
                 </>
               }
