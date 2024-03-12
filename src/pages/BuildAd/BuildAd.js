@@ -25,7 +25,7 @@ import axios from "axios";
 import { Oval } from "react-loader-spinner";
 
 const BuildAd = () => {
-  const [step, setStep] = useState(2);
+  const [step, setStep] = useState(1);
   const [submit, setSubmit] = useState(false);
   const [spinner, setSpinner] = useState(false);
   const NavigateTo = useNavigate();
