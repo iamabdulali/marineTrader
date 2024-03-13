@@ -8,7 +8,6 @@ export const getAdvert = async (setData, setLoading) => {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
-    console.log(data.data);
     setData(data.data);
     setLoading(false);
   } catch (error) {
@@ -24,7 +23,6 @@ export const getOneAdvert = async (setData, setLoading, id) => {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
-    console.log(data.data);
     setData(data.data);
     setLoading(false);
   } catch (error) {
@@ -37,6 +35,21 @@ export const fetchOptions = async (url, setData, setLoading) => {
   try {
     const { data } = await axios.get(`${SERVER_BASE_URL}/${url}`);
     setData(data.data);
+    setLoading(false);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const fetchOffers = async (setData, setLoading) => {
+  try {
+    const { data } = await axios.get(`${SERVER_BASE_URL}/offer`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    setData(data.data);
+    console.log(data.data);
     setLoading(false);
   } catch (error) {
     console.log(error);

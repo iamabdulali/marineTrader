@@ -25,8 +25,8 @@ const MakeOfferForm = ({ initialValues, handleFormSubmit }) => {
           <FormField
             inputField={true}
             FieldType="tel"
-            name="telephone"
-            label="Telephone"
+            name="phone"
+            label="Phone"
             className="w-full border-2 px-3 py-3 rounded-md"
           />
           <FormField

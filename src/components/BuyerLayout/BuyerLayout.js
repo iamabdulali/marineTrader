@@ -26,7 +26,10 @@ const BuyerLayout = ({ children, showCategoryList }) => {
         menuState={menuState}
         setMenuState={handleMenuStateChange}
       />
-      <LoadingWrapper loading={loading} className="top-0">
+      <LoadingWrapper
+        loading={loading}
+        className="top-0 xl:-translate-x-0 -translate-x-1/2"
+      >
         {showCategoryList ? (
           <div className="overflow-x-scroll category-menu">
             <CategoryList

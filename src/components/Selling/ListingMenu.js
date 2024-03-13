@@ -5,7 +5,6 @@ import { links } from "../../utils/DummyData";
 
 const ListingMenu = ({ openDeleteModal, id }) => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  console.log(isDeleteModalOpen);
 
   // Function to open the delete modal
   const handleDeleteButtonClick = () => {

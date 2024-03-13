@@ -33,7 +33,10 @@ export default function Dashboard() {
   return (
     <>
       <Layout>
-        <LoadingWrapper loading={loading} className="top-0">
+        <LoadingWrapper
+          loading={loading}
+          className="top-0 xl:-translate-x-0 -translate-x-1/2"
+        >
           {" "}
           <PackageMessage
             className="bg-[#E7F1FA] mb-3 border-l-[6px] border-[#0D1A8B] flex items-center justify-between p-4 rounded-xl font-medium shadow-[3px] "

@@ -13,8 +13,6 @@ const ItemFeaturesStep3 = () => {
     dispatch,
   } = useContext(AuthContext);
 
-  console.log(modificationCheckboxes);
-
   return (
     <>
       <BuildLayout heading="Items Features">

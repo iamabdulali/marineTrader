@@ -73,7 +73,10 @@ const ItemDetailPage = () => {
   };
 
   return (
-    <LoadingWrapper loading={loading}>
+    <LoadingWrapper
+      loading={loading}
+      className="xl:-translate-x-0 -translate-x-1/2"
+    >
       <BuyerLayout showCategoryList={false}>
         <div className="2xl:px-24 sm:px-10 px-4">
           <Link
@@ -94,9 +97,9 @@ const ItemDetailPage = () => {
           <p className="text-sm font-semibold text-[#696E9D] mt-3">
             {condition?.name}
           </p>
-          <SwiperSlider />
+          <SwiperSlider advert={advert} />
           <div className="sm:hidden block">
-            <OfferSectionHeader />
+            <OfferSectionHeader advert={advert} />
           </div>
           <div className="flex xl:flex-row flex-col gap-6 mt-8 items-start ">
             <div className="xl:w-8/12 w-full overflow-x-hidden">
@@ -116,7 +119,7 @@ const ItemDetailPage = () => {
                 {selectedTab === "itemVideos" && <ItemVideos advert={advert} />}
               </div>
             </div>
-            <MakeOfferSection />
+            <MakeOfferSection advert={advert} />
           </div>
           <div className="mt-28">
             <HomeHeading heading="You May Also Like" />

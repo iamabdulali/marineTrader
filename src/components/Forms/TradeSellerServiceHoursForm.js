@@ -34,13 +34,19 @@ export default function TradeSellerServiceHoursForm() {
   const handleDayClick = (day) => {
     const { working_days } = values;
     const selectedIndex = working_days.indexOf(day);
-    const newSelectedDays = [...working_days];
+    let newSelectedDays = [...working_days];
 
     if (selectedIndex === -1) {
       newSelectedDays.push(day);
     } else {
       newSelectedDays.splice(selectedIndex, 1);
     }
+
+    // Sort the selected days before updating the state
+    newSelectedDays = newSelectedDays.sort((a, b) => {
+      const daysOfWeek = ["Mon", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun"];
+      return daysOfWeek.indexOf(a) - daysOfWeek.indexOf(b);
+    });
 
     setValues({ ...values, working_days: newSelectedDays });
   };
@@ -254,8 +260,8 @@ export default function TradeSellerServiceHoursForm() {
           type="text"
           placeholder="New Facility"
           name="new-facility"
-          // value={newFacility}
-          // onChange={handleNewFacilityChange}
+          value={newFacility}
+          onChange={handleNewFacilityChange}
           className="border-[#CECED7] border-2 rounded-md p-3 sm:w-72 w-full sm:mr-0"
         />
         <button

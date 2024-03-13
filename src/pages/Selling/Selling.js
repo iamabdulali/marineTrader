@@ -33,7 +33,10 @@ export default function Selling() {
   return (
     <>
       <Layout>
-        <LoadingWrapper loading={loading} className="top-0">
+        <LoadingWrapper
+          loading={loading}
+          className="top-0 xl:-translate-x-0 -translate-x-1/2"
+        >
           <div className="flex items-center justify-between">
             <Heading
               content={hasListing ? "Selling" : "Create a New Listing"}

@@ -100,7 +100,10 @@ const UserInfo = () => {
 
   return (
     <Layout>
-      <LoadingWrapper loading={loading} className="top-0">
+      <LoadingWrapper
+        loading={loading}
+        className="top-0 xl:-translate-x-0 -translate-x-1/2"
+      >
         <div className="flex items-center justify-between rounded-lg  shadow-[7px] bg-white font-semibold py-5 px-7">
           <p className="">User Profile</p>
           <p

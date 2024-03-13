@@ -35,8 +35,8 @@ const initialValues = {
   countryCode: "",
   timezone: "",
   open_public_holidays: "",
-  company_logo: "",
-  main_picture: "",
+  company_logo: null,
+  main_picture: null,
   first_name: "",
   last_name: "",
   job_title: "",
@@ -58,7 +58,7 @@ const TradeSeller = () => {
   const [spinner, setSpinner] = useState(false);
   const [submit, setSubmit] = useState(false);
   const NavigateTo = useNavigate();
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(2);
   const stepLabels = [
     "Company Info",
     "Business Details",

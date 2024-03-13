@@ -8,6 +8,18 @@ import { AuthContextProvider } from "./Context/AuthContext";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 export const SERVER_BASE_URL = "https://marine.takhleeqsoft.com/api";
+export const packages = ["Standard", "Premium", "Featured"];
+export const subscriptions = ["Dealer Plus", "Service Plus"];
+export const categories = [
+  "Jetski",
+  "Boat Home",
+  "Commercial",
+  "Yacht",
+  "Small Craft",
+  "Fishing",
+  "RIB",
+  "Non Motor",
+];
 
 root.render(
   <React.StrictMode>

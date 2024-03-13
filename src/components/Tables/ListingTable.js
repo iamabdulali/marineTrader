@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { FiSearch, FiEye, FiMoreVertical } from "react-icons/fi";
 import SortDropdown from "../SortDropdown";
-import { OffersData, sellingData } from "../../utils/DummyData";
 import { Link } from "react-router-dom";
 import CustomDropdownMenu from "../CustomDropdownMenu";
 import ListingMenu from "../Selling/ListingMenu";
@@ -13,6 +12,7 @@ import {
 } from "../../utils/ModalOpeningClosingFunctions";
 import DeleteListingModal from "../Selling/DeleteListingModal";
 import { FaCheck, FaDollarSign, FaTimes } from "react-icons/fa";
+import { categories } from "../..";
 
 const ListingTable = ({
   hasSort,
@@ -26,6 +26,7 @@ const ListingTable = ({
   tableFor,
   listingData,
   sellingData,
+  OffersData,
 }) => {
   let [isOfferOpen, setIsOfferOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -255,8 +256,8 @@ const ListingTable = ({
                         <p className="text-[#8891B2] font-medium">
                           Price:
                           <span className="text-[#696E9D] font-semibold">
-                            {" "}
                             {currency?.symbol}
+                            {price}
                           </span>
                         </p>
                         <p className="text-[#8891B2] font-medium mt-4">
@@ -333,11 +334,13 @@ const ListingTable = ({
                     id,
                     image,
                     itemName,
-                    offerAmount,
+                    offer,
                     price,
-                    buyerName,
-                    telephone,
+                    name,
+                    advert,
+                    phone,
                     email,
+                    currency,
                   }) => (
                     <tr
                       key={id}
@@ -346,23 +349,27 @@ const ListingTable = ({
                       <td className="py-4 px-4 whitespace-nowrap">
                         <div className="flex items-center gap-2">
                           <img
-                            src={image}
+                            src={advert?.images[0]?.image}
                             alt="Item"
                             className="w-16 h-16 object-cover rounded-lg mr-2"
                           />
                           <div>
                             <p className="text-[#11133D] font-semibold text-base mb-1">
-                              {itemName}
+                              {categories[advert?.category_id]}
                             </p>
-                            <p>{price}</p>
+                            <p>
+                              {currency?.currency_code} {advert?.price}
+                            </p>
                           </div>
                         </div>
                       </td>
-                      <td className="py-4 px-4">{buyerName}</td>
+                      <td className="py-4 px-4">{name}</td>
                       <td className="py-4 px-4">{email}</td>
-                      <td className="py-4 px-4">{telephone}</td>
+                      <td className="py-4 px-4">{phone}</td>
                       <td className="py-4 px-4">
-                        <p className="font-semibold">{offerAmount}</p>
+                        <p className="font-semibold max-w-20 text-ellipsis whitespace-nowrap overflow-hidden">
+                          {currency?.currency_code} {offer}
+                        </p>
                       </td>
                       <td className="py-4 px-4">
                         <div className="flex gap-3 font-semibold items-center justify-center">
@@ -390,38 +397,40 @@ const ListingTable = ({
                     id,
                     image,
                     itemName,
-                    offerAmount,
+                    offer,
                     price,
-                    buyerName,
-                    telephone,
+                    advert,
+                    name,
+                    phone,
                     email,
+                    currency,
                   }) => (
                     <div
                       key={id}
                       className="bg-white sm:text-base text-sm block rounded-lg sm:flex gap-4 w-full p-4"
                     >
                       <img
-                        src={image}
+                        src={advert?.images[0]?.image}
                         alt="Item"
                         className="sm:w-4/12 w-full object-cover rounded-lg sm:mr-2 mb-4"
                       />
                       <div className="sm:w-8/12 w-full">
                         <p className="text-[#11133D] font-semibold text-xl mb-2">
-                          {itemName}
+                          {categories[advert?.category_id]}
                         </p>
                         <div className="flex justify-between items-center">
                           <p className="text-[#8891B2] font-medium">
                             Price:
                             <span className="text-[#696E9D] font-semibold">
                               {" "}
-                              {price}
+                              {currency?.currency_code} {advert?.price}
                             </span>
                           </p>
-                          <p className="text-[#11133D] font-semibold">
+                          <p className="text-[#11133D] font-semibold max-w-36 text-ellipsis overflow-hidden whitespace-nowrap">
                             Offer Price:
                             <span className="text-[#11133D] font-semibold">
                               {" "}
-                              {offerAmount}
+                              {offer}
                             </span>
                           </p>
                         </div>
@@ -429,7 +438,7 @@ const ListingTable = ({
                           {" "}
                           Buyer Name:{" "}
                           <span className="text-[#696E9D] font-semibold">
-                            {buyerName}
+                            {name}
                           </span>
                         </p>
                         {/* <td className="py-4 px-4">{packageName}</td> */}
@@ -444,7 +453,7 @@ const ListingTable = ({
                           Telephone:{" "}
                           <span className="text-[#696E9D] font-semibold">
                             {" "}
-                            {telephone}
+                            {phone}
                           </span>
                         </p>
                         <div className="flex gap-3 font-semibold items-center mt-4">

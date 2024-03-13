@@ -91,10 +91,12 @@ code {
 
 .thumb-slider .slick-track {
   display: flex;
+  width: 100% !important;
 }
 
 .thumb-slider .slick-slide {
   margin-right: 10px;
+  width: 100% !important;
 }
 
 .thumb-slider .slick-slide:last-child {

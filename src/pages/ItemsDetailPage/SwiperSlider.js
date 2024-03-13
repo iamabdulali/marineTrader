@@ -12,7 +12,7 @@ import {
   FaTimesCircle,
 } from "react-icons/fa";
 
-const SwiperSlider = () => {
+const SwiperSlider = ({ advert }) => {
   const [nav1, setNav1] = useState(null);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [slider1, setSlider1] = useState(null);
@@ -43,20 +43,6 @@ const SwiperSlider = () => {
     asNavFor: ".slider-nav",
     nextArrow: <FaChevronRight color="#fff" />,
     prevArrow: <FaChevronLeft color="#fff" />,
-    // responsive: [
-    //   {
-    //     breakpoint: 1024,
-    //     settings: {
-    //       slidesToShow: 2,
-    //     },
-    //   },
-    //   {
-    //     breakpoint: 600,
-    //     settings: {
-    //       slidesToShow: 1,
-    //     },
-    //   },
-    // ],
   };
 
   const thumbSetting = {
@@ -75,7 +61,7 @@ const SwiperSlider = () => {
           asNavFor={nav1}
           ref={(slider) => setSlider1(slider)}
         >
-          {AfroStyles.map((item, idx) => (
+          {advert?.images.map((item, idx) => (
             <div
               key={item.id}
               className="max-h-[560px]"
@@ -83,7 +69,7 @@ const SwiperSlider = () => {
             >
               <img
                 className="w-full sm:min-h-[560px] sm:max-h-[560px] min-h-[211px] max-h-[211px] object-cover"
-                src={item.src}
+                src={item.image}
                 alt={item.alt}
               />
             </div>
@@ -91,16 +77,17 @@ const SwiperSlider = () => {
         </Slider>
         <div className="md:block hidden">
           <Slider {...thumbSetting} className="mt-4 thumb-slider">
-            {AfroStyles.map((item, idx) => (
+            {advert?.images.map((item, idx) => (
               <div
                 key={item.id}
                 onClick={() => {
                   slider1?.slickGoTo(idx);
                 }}
+                className="w-full"
               >
                 <img
-                  src={item.src}
-                  className="max-h-[128px] w-full min-h-[128px] object-cover"
+                  src={item.image}
+                  className="max-h-[128px] w-full max-w-[180px] min-h-[128px] object-cover"
                   alt={item.alt}
                 />
               </div>
@@ -119,11 +106,11 @@ const SwiperSlider = () => {
               infinite={false}
               initialSlide={modalIndex}
             >
-              {AfroStyles.map((item) => (
+              {advert?.images.map((item) => (
                 <div key={item.id}>
                   <img
                     className="w-full min-h-[95vh] object-contain"
-                    src={item.src}
+                    src={item.image}
                     alt={item.alt}
                   />
                 </div>

@@ -39,16 +39,11 @@ export const validationSchema = Yup.object().shape({
       (value) => !value || (value && value.size <= 1024 * 1024)
     )
     .test(
-      "fileType",
-      "Unsupported file format",
-      (value) =>
-        !value || (value && ["image/jpeg", "image/png"].includes(value.type))
-    )
-    .test(
       "isRequired",
       "Please upload a picture",
       (value) => value !== undefined && value !== null
-    ),
+    )
+    .required("Please Upload a Picture"),
   main_picture: Yup.mixed()
     .test(
       "fileSize",
@@ -56,16 +51,11 @@ export const validationSchema = Yup.object().shape({
       (value) => !value || (value && value.size <= 1024 * 1024)
     )
     .test(
-      "fileType",
-      "Unsupported file format",
-      (value) =>
-        !value || (value && ["image/jpeg", "image/png"].includes(value.type))
-    )
-    .test(
       "isRequired",
       "Please upload a picture",
       (value) => value !== undefined && value !== null
-    ),
+    )
+    .required("Please Upload a Picture"),
   selectedDays: Yup.array().min(1, "Select at least one day"),
   first_name: Yup.string().required("First Name is required"),
   last_name: Yup.string().required("Last Name is required"),
