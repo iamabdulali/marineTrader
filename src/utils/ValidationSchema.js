@@ -162,3 +162,14 @@ export const loginValidationSchema = Yup.object({
     .required("Email Address is required"),
   password: Yup.string().required("Password is required"),
 });
+
+export const makeOfferValidationSchema = Yup.object({
+  name: Yup.string().required("Please Enter Your Name"),
+  email: Yup.string()
+    .email("Enter a valid email address")
+    .required("Email Address is required"),
+  offer: Yup.number().required("Please Enter Some Amount"),
+  phone: Yup.string()
+    .length(11, "Phone Number must be of 11 characters")
+    .required("Phone Number is required"),
+});

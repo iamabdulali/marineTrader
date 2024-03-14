@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../Layout/Layout";
 import {
   CardCvcElement,
@@ -9,8 +9,7 @@ import {
 } from "@stripe/react-stripe-js";
 import Heading from "../Heading";
 import { useNavigate } from "react-router-dom";
-import { FaArrowRight } from "react-icons/fa";
-import { diamondImage, stackIcon } from "../../assets";
+import { stackIcon } from "../../assets";
 import PaymentSummary from "./PaymentSummary";
 import SpotlightModal from "../BuildAdSteps/SpotlightModal";
 import Modal from "../Modal";
@@ -20,13 +19,32 @@ import {
 } from "../../utils/ModalOpeningClosingFunctions";
 import AvailableUpgrades from "../BuildAdSteps/AdComponents/AvailableUpgrades";
 import BundlesModal from "../BuildAdSteps/AdComponents/BundlesModal";
+import { getOneAdvert } from "../../utils/fetch/fetchData";
+import axios from "axios";
+import { SERVER_BASE_URL } from "../..";
+import { toast } from "react-toastify";
+import { Oval } from "react-loader-spinner";
 
 const PaymentForm = ({ setFieldValue, values }) => {
   const [postalCode, setPostalCode] = useState("");
   const [country, setCountry] = useState("");
+  let [isSpotlightOpen, setIsSpotlightOpen] = useState(false);
+  let [isBundleOpen, setIsBundleOpen] = useState(false);
+  const [advert, setAdvert] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [spinner, setSpinner] = useState(false);
   const navigate = useNavigate();
   const stripe = useStripe();
   const elements = useElements();
+
+  const pathArray = window.location.pathname.split("/");
+  const id = pathArray[2];
+
+  useEffect(() => {
+    getOneAdvert(setAdvert, setLoading, id);
+  }, []);
+
+  const { currency_id, advert_package_id } = Object(advert);
 
   const generateStripeToken = async () => {
     if (!stripe || !elements) {
@@ -48,19 +66,33 @@ const PaymentForm = ({ setFieldValue, values }) => {
 
   const handlePaymentSubmit = async (e) => {
     e.preventDefault();
-
+    setSpinner(true);
     try {
       const token = await generateStripeToken();
-      console.log(token);
-      navigate("/paymentStatus");
+      const { data } = await axios.post(
+        `${SERVER_BASE_URL}/advert-payment/${id}`,
+        {
+          advert_package: advert_package_id,
+          currency: currency_id,
+          stripe_token: token.id,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      console.log(data);
+      toast.success(data.message);
+      setSpinner(false);
+      // navigate("/paymentStatus");
     } catch (error) {
-      navigate("/paymentStatus");
+      // navigate("/paymentStatus");
       console.log(error);
+      setSpinner(false);
+      toast.error(error.response.data.message);
     }
   };
-
-  let [isSpotlightOpen, setIsSpotlightOpen] = useState(false);
-  let [isBundleOpen, setIsBundleOpen] = useState(false);
 
   return (
     <>
@@ -68,7 +100,7 @@ const PaymentForm = ({ setFieldValue, values }) => {
         <Heading content="Payment Details" />
         <div className="flex smallLg:flex-row flex-col gap-7">
           <div className="smallLg:w-1/2 w-full">
-            <PaymentSummary />
+            <PaymentSummary advert={advert} />
             <AvailableUpgrades
               className="bg-[#1CBF73] flex flex-col gap-5 mt-8 p-5 rounded-lg w-full"
               openModal={() => openModal(setIsSpotlightOpen)}
@@ -177,7 +209,17 @@ const PaymentForm = ({ setFieldValue, values }) => {
               <button
                 className={`bg-[#0D1A8B] hover:bg-[#0a1dbd] text-white p-3 rounded-md mt-4 w-full`}
               >
-                Pay
+                {spinner ? (
+                  <Oval
+                    secondaryColor="#fff"
+                    color="#fff"
+                    width={20}
+                    height={20}
+                    wrapperClass="justify-center"
+                  />
+                ) : (
+                  "Pay"
+                )}
               </button>
             </form>
             <div className="bg-[#1C5DBF] text-white p-6 mt-8 shadow-[7px]">

@@ -27,7 +27,7 @@ export default function Selling() {
 
   useEffect(() => {
     getAdvert(setAdverts, setLoading);
-    fetchOptions("categories", setCategories, setLoading);
+    fetchOptions("categories", setCategories);
   }, []);
 
   return (
@@ -51,7 +51,7 @@ export default function Selling() {
                 className=" text-[#0D1A8B] flex items-center gap-2 font-medium underline"
               >
                 <FaArrowLeft size={15} />
-                Back To Listings
+                <span className="sm:block hidden">Back To Listings</span>
               </Link>
             )}
           </div>

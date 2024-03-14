@@ -43,7 +43,7 @@ const Subscription = () => {
             className=" text-[#0D1A8B] flex items-center gap-2 font-medium underline"
           >
             <FaArrowLeft size={15} />
-            Back To Subscriptions
+            <span className="sm:block hidden">Back To Subscriptions</span>
           </Link>
         )}
       </div>

@@ -1,12 +1,22 @@
 import React from "react";
 import { FormField } from "../FormField";
 import { Formik, Form } from "formik";
+import { Oval } from "react-loader-spinner";
 
-const MakeOfferForm = ({ initialValues, handleFormSubmit }) => {
+const MakeOfferForm = ({
+  initialValues,
+  handleFormSubmit,
+  validationSchema,
+  spinner,
+}) => {
   return (
     <>
       {" "}
-      <Formik initialValues={initialValues} onSubmit={handleFormSubmit}>
+      <Formik
+        initialValues={initialValues}
+        onSubmit={handleFormSubmit}
+        validationSchema={validationSchema}
+      >
         <Form>
           <FormField
             inputField={true}
@@ -31,7 +41,7 @@ const MakeOfferForm = ({ initialValues, handleFormSubmit }) => {
           />
           <FormField
             inputField={true}
-            FieldType="text"
+            FieldType="number"
             name="offer"
             label="Offer"
             className="w-full border-2 px-3 py-3 rounded-md"
@@ -40,7 +50,17 @@ const MakeOfferForm = ({ initialValues, handleFormSubmit }) => {
             type="submit"
             className="w-full bg-[#0D1A8B] hover:bg-[#0a1dbd] my-5 text-white rounded-md p-3 font-medium "
           >
-            Make Offer
+            {spinner ? (
+              <Oval
+                secondaryColor="#fff"
+                color="#fff"
+                width={20}
+                height={20}
+                wrapperClass="justify-center"
+              />
+            ) : (
+              "Make Offer"
+            )}
           </button>
         </Form>
       </Formik>

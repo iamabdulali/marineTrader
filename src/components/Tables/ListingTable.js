@@ -30,7 +30,7 @@ const ListingTable = ({
 }) => {
   let [isOfferOpen, setIsOfferOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-
+  const [counterOfferId, setCounterOfferId] = useState(null);
   // Callback function to update isDeleteModalOpen state
   const handleDeleteModalOpen = (isOpen) => {
     setIsDeleteModalOpen(isOpen);
@@ -358,7 +358,8 @@ const ListingTable = ({
                               {categories[advert?.category_id]}
                             </p>
                             <p>
-                              {currency?.currency_code} {advert?.price}
+                              {currency?.symbol}
+                              {advert?.price}
                             </p>
                           </div>
                         </div>
@@ -367,8 +368,9 @@ const ListingTable = ({
                       <td className="py-4 px-4">{email}</td>
                       <td className="py-4 px-4">{phone}</td>
                       <td className="py-4 px-4">
-                        <p className="font-semibold max-w-20 text-ellipsis whitespace-nowrap overflow-hidden">
-                          {currency?.currency_code} {offer}
+                        <p className="font-semibold ">
+                          {currency?.symbol}
+                          {offer}
                         </p>
                       </td>
                       <td className="py-4 px-4">
@@ -380,7 +382,10 @@ const ListingTable = ({
                             <FaTimes />
                           </button>
                           <button
-                            onClick={() => openModal(setIsOfferOpen)}
+                            onClick={() => {
+                              openModal(setIsOfferOpen);
+                              setCounterOfferId(id);
+                            }}
                             className="bg-[#FFB800] flex items-center justify-center w-9 h-9 text-white rounded-full"
                           >
                             <FaDollarSign />
@@ -393,18 +398,7 @@ const ListingTable = ({
               </tbody>
               <div className="smallLg:hidden grid gap-4">
                 {OffersData.map(
-                  ({
-                    id,
-                    image,
-                    itemName,
-                    offer,
-                    price,
-                    advert,
-                    name,
-                    phone,
-                    email,
-                    currency,
-                  }) => (
+                  ({ id, offer, advert, name, phone, email, currency }) => (
                     <div
                       key={id}
                       className="bg-white sm:text-base text-sm block rounded-lg sm:flex gap-4 w-full p-4"
@@ -423,13 +417,15 @@ const ListingTable = ({
                             Price:
                             <span className="text-[#696E9D] font-semibold">
                               {" "}
-                              {currency?.currency_code} {advert?.price}
+                              {currency?.symbol}
+                              {advert?.price}
                             </span>
                           </p>
-                          <p className="text-[#11133D] font-semibold max-w-36 text-ellipsis overflow-hidden whitespace-nowrap">
+                          <p className="text-[#11133D] font-semibold ">
                             Offer Price:
                             <span className="text-[#11133D] font-semibold">
                               {" "}
+                              {currency?.symbol}
                               {offer}
                             </span>
                           </p>
@@ -464,7 +460,10 @@ const ListingTable = ({
                             <FaTimes size={20} />
                           </button>
                           <button
-                            onClick={() => openModal(setIsOfferOpen)}
+                            onClick={() => {
+                              openModal(setIsOfferOpen);
+                              setCounterOfferId(id);
+                            }}
                             className="bg-[#FFB800] flex p-3 rounded-md items-center justify-center text-white w-full"
                           >
                             <FaDollarSign size={20} />
@@ -485,7 +484,10 @@ const ListingTable = ({
         opacity="bg-opacity-40"
         padding="p-6"
       >
-        <CounterOffer onClose={() => closeModal(setIsOfferOpen)} />
+        <CounterOffer
+          id={counterOfferId}
+          onClose={() => closeModal(setIsOfferOpen)}
+        />
       </Modal>
       <Modal
         isOpen={isDeleteModalOpen}

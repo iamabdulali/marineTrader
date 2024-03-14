@@ -66,11 +66,12 @@ const BuildAd = () => {
     video: null,
     priceOnInformation: "",
     currency: "",
-    price: "",
+    price: 200 * 100,
     facilities: [],
     advert_package: selectedPackage,
     countries: [],
     advert_status: "",
+    stripe_token: "",
   };
   const prevStep = () => setStep(step - 1);
   // const nextStep = () => setStep(step + 1);

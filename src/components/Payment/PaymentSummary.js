@@ -1,6 +1,27 @@
 import React from "react";
 
-const PaymentSummary = () => {
+const PaymentSummary = ({ advert }) => {
+  const advertPackages = [
+    {
+      packageName: "dummy",
+      price: "free",
+    },
+    {
+      packageName: "Standard",
+      price: "10.99",
+    },
+    {
+      packageName: "Premium",
+      price: "19.99",
+    },
+    {
+      packageName: "Featured",
+      price: "19.99",
+    },
+  ];
+
+  const { advert_package_id } = Object(advert);
+
   return (
     <div className="bg-white shadow-[7px] rounded-md p-6 mt-6 w-full">
       <p className="text-[#11133D] font-semibold text-xl">Summary</p>
@@ -15,13 +36,23 @@ const PaymentSummary = () => {
         </div>
         <p className="text-[#0D1A8B] font-semibold mt-2">Package</p>
         <div className=" flex items-center justify-between mt-2">
-          <p className="text-[#696E9D]">Standard:</p>
-          <p className="text-[#11133D] font-semibold">£1.49</p>
+          <p className="text-[#696E9D]">
+            {advertPackages[advert_package_id]?.packageName}:
+          </p>
+          <p className="text-[#11133D] font-semibold">
+            £{advertPackages[advert_package_id]?.price}
+          </p>
         </div>
         <p className="text-[#0D1A8B] font-semibold mt-2">Ad</p>
         <div className=" flex items-center justify-between mt-2">
-          <p className="text-[#696E9D]">Standard:</p>
-          <p className="text-[#11133D] font-semibold">£10.99</p>
+          <p className="text-[#696E9D]">
+            {" "}
+            {advertPackages[advert_package_id]?.packageName}:
+          </p>
+          <p className="text-[#11133D] font-semibold">
+            {" "}
+            £{advertPackages[advert_package_id]?.price}
+          </p>
         </div>
         <div className="mt-6 relative">
           <input

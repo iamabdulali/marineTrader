@@ -18,8 +18,11 @@ import axios from "axios";
 import { SERVER_BASE_URL } from "../..";
 import { convertTimestampToMonthYear } from "../../utils/TimeStampConverter";
 import { AuthContext } from "../../Context/AuthContext";
+import { makeOfferValidationSchema } from "../../utils/ValidationSchema";
+import { toast } from "react-toastify";
 
 const MakeOfferSection = ({ advert }) => {
+  const [spinner, setSpinner] = useState(false);
   const [showTiming, setShowTiming] = useState(true);
   const [showFacilities, setShowFacilities] = useState(true);
   const { user } = useContext(AuthContext);
@@ -42,6 +45,7 @@ const MakeOfferSection = ({ advert }) => {
   const handleFormSubmit = async (values) => {
     // Your logic for handling form submission
     console.log("Form submitted with values:", values);
+    setSpinner(true);
 
     try {
       const { data } = await axios.post(`${SERVER_BASE_URL}/offer`, values, {
@@ -51,8 +55,12 @@ const MakeOfferSection = ({ advert }) => {
         },
       });
       console.log(data);
+      toast.success(data.message);
+      setSpinner(false);
     } catch (error) {
+      toast.error(error.response.data.message);
       console.log(error);
+      setSpinner(true);
     }
   };
 
@@ -93,6 +101,8 @@ const MakeOfferSection = ({ advert }) => {
           <MakeOfferForm
             initialValues={initialValues}
             handleFormSubmit={handleFormSubmit}
+            validationSchema={makeOfferValidationSchema}
+            spinner={spinner}
           />
         </div>
       </div>

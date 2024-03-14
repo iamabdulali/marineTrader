@@ -6,7 +6,7 @@ import { Form, Formik } from "formik";
 
 const Payment = () => {
   const stripe = loadStripe(
-    "pk_test_51OTmDuDrmRTy0GxZLR4C2hn3O5wWlWvAk1WbX7flR8BSWH3d83dMOPi9RN8h6ueK9xWqkoWopMkvxS0OVhz2vzwn00wuaqAOGd"
+    "pk_test_51NMtq1B668ud5SeijFm72obtlqRPZAO73yZY1uwOVKUluZfygSXUe3KD4US7sc55OSLeTR47WbQui3momJjeIWou00UhkEM2Mx"
   );
   return (
     <Elements stripe={stripe}>

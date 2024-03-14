@@ -35,7 +35,9 @@ export const fetchOptions = async (url, setData, setLoading) => {
   try {
     const { data } = await axios.get(`${SERVER_BASE_URL}/${url}`);
     setData(data.data);
-    setLoading(false);
+    if (setLoading) {
+      setLoading(false);
+    }
   } catch (error) {
     console.log(error);
   }

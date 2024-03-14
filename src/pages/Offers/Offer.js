@@ -6,6 +6,7 @@ import Heading from "../../components/Heading";
 import { offersHeader } from "../../utils/DummyData";
 import Layout from "../../components/Layout/Layout";
 import { fetchOffers, fetchOptions } from "../../utils/fetch/fetchData";
+import LoadingWrapper from "../../utils/LoadingWrapper";
 
 export default function Offer() {
   const [offers, setOffers] = useState([]);
@@ -19,14 +20,18 @@ export default function Offer() {
         <div className="flex items-center justify-between">
           <Heading content="Offers" />
         </div>
-
-        <ListingTable
-          tableFor="Offers"
-          hasSort={true}
-          hasPadding={true}
-          tableHeader={offersHeader}
-          OffersData={offers}
-        />
+        <LoadingWrapper
+          loading={loading}
+          className="top-0 xl:-translate-x-0 -translate-x-1/2"
+        >
+          <ListingTable
+            tableFor="Offers"
+            hasSort={true}
+            hasPadding={true}
+            tableHeader={offersHeader}
+            OffersData={offers}
+          />
+        </LoadingWrapper>
       </Layout>
     </>
   );

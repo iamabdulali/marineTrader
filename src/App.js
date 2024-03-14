@@ -145,10 +145,21 @@ function App() {
             </GuestRoute>
           }
         />
-        <Route path="/payments" element={<Payment />} />
+        <Route
+          path="/payment/:id"
+          element={
+            <ProtectedRoute>
+              <Payment />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/paymentStatus"
-          element={<PaymentStatus successStatus={true} />}
+          element={
+            <ProtectedRoute>
+              <PaymentStatus successStatus={true} />
+            </ProtectedRoute>
+          }
         />
       </Routes>
       <ToastContainer />
