@@ -56,7 +56,7 @@ export const validationSchema = Yup.object().shape({
       (value) => value !== undefined && value !== null
     )
     .required("Please Upload a Picture"),
-  selectedDays: Yup.array().min(1, "Select at least one day"),
+  working_days: Yup.array().min(1, "Select at least one day"),
   first_name: Yup.string().required("First Name is required"),
   last_name: Yup.string().required("Last Name is required"),
   job_title: Yup.string().required("Job Title is required"),

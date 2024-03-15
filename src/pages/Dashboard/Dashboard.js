@@ -30,6 +30,8 @@ export default function Dashboard() {
     getAdvert(setAdverts, setLoading);
   }, []);
 
+  console.log(adverts);
+
   return (
     <>
       <Layout>

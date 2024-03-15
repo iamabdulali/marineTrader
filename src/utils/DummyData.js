@@ -3,6 +3,7 @@ import {
   FaDollarSign,
   FaEye,
   FaPencilAlt,
+  FaStackExchange,
   FaTicketAlt,
   FaTimes,
   FaTrashAlt,
@@ -514,6 +515,16 @@ export const links = [
     label: (
       <>
         <FaPencilAlt /> Edit
+      </>
+    ),
+    colorChange: false,
+    onClick: false,
+  },
+  {
+    href: "/selling/buildAd",
+    label: (
+      <>
+        <FaStackExchange /> Optimise
       </>
     ),
     colorChange: false,

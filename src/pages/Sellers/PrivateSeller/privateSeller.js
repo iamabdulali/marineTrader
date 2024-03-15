@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Formik, Form } from "formik";
 import { privateSellerValidationSchema } from "../../../utils/ValidationSchema.js";
@@ -12,10 +12,12 @@ import { displayErrorMessages } from "../../../utils/displayErrors.js";
 import { Oval } from "react-loader-spinner";
 import { SERVER_BASE_URL } from "../../../index.js";
 import { AuthContext } from "../../../Context/AuthContext.js";
+import { fetchOptions } from "../../../utils/fetch/fetchData.js";
 
 const PrivateSeller = () => {
   const { dispatch } = useContext(AuthContext);
   const [spinner, setSpinner] = useState(false);
+
   const NavigateTo = useNavigate();
   const initialValues = {
     name: "",

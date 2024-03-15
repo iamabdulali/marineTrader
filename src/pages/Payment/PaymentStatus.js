@@ -5,6 +5,8 @@ import { FaArrowLeft } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const PaymentStatus = ({ successStatus, paymentType }) => {
+  const pathArray = window.location.pathname.split("/");
+  const id = pathArray[2];
   return (
     <Layout>
       <div className="absolute -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2 w-full mx-auto">
@@ -37,7 +39,8 @@ const PaymentStatus = ({ successStatus, paymentType }) => {
           </p>
         </div>
         <Link
-          to={successStatus ? "/dashboard" : "/payments"}
+          reloadDocument={true}
+          to={successStatus ? "/dashboard" : `/payment/${id}`}
           className="text-[#0D1A8B] font-semibold underline flex items-center gap-4 justify-center mt-5"
         >
           {successStatus ? (

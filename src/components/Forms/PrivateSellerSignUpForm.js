@@ -1,5 +1,5 @@
 import { ErrorMessage, Field } from "formik";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import FileInput from "./FormElements/FileInput";
 import { FaChevronCircleDown, FaChevronDown, FaEye } from "react-icons/fa";
 import SelectDropdown from "./FormElements/SelectDropdown";
@@ -9,12 +9,17 @@ import {
   regionOptions,
 } from "../../utils/DropdownOptions";
 import { eye } from "../../assets";
+import { fetchOptions } from "../../utils/fetch/fetchData";
 
 const PrivateSellerSignUpForm = ({ setFieldValue, values }) => {
   const togglePasswordVisibility = (field, setFieldValue, values) => {
     setFieldValue(`showPassword${field}`, !values[`showPassword${field}`]);
   };
-
+  const [loading, setLoading] = useState(true);
+  const [currency, setCurrency] = useState([]);
+  useEffect(() => {
+    fetchOptions("currencies", setCurrency, setLoading);
+  }, []);
   return (
     <>
       {/* Form rows */}
@@ -186,7 +191,7 @@ const PrivateSellerSignUpForm = ({ setFieldValue, values }) => {
             />
             <SelectDropdown
               name="currency"
-              options={currencyOptions}
+              options={currency}
               className="border-[#CECED7] border-2 rounded-md p-3 w-full appearance-none sm:appearance-auto bg-white"
             />
           </div>

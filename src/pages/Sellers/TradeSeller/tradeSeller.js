@@ -58,7 +58,7 @@ const TradeSeller = () => {
   const [spinner, setSpinner] = useState(false);
   const [submit, setSubmit] = useState(false);
   const NavigateTo = useNavigate();
-  const [step, setStep] = useState(2);
+  const [step, setStep] = useState(1);
   const stepLabels = [
     "Company Info",
     "Business Details",
@@ -91,6 +91,7 @@ const TradeSeller = () => {
           } else if (step === 2) {
             return [
               "timezone",
+              "working_days",
               "open_public_holidays",
               "company_logo",
               "main_picture",

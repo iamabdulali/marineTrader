@@ -144,7 +144,7 @@ const ListingTable = ({
                     images,
                     category,
                     currency,
-                    status,
+                    advert_status,
                     price,
                     expire_date,
                     packageName,
@@ -179,29 +179,39 @@ const ListingTable = ({
                       <td className="py-4 px-4">
                         <p
                           className={`${
-                            status == "Active"
+                            advert_status == "paid"
                               ? "bg-[#D6FDEC] text-[#36B37E]"
-                              : status == "0"
+                              : advert_status == "draft"
                               ? "bg-[#F6F6F6] text-[#8891B2]"
                               : "bg-[#FDD6D6] text-[#FF4545]"
                           }  rounded-2xl text-center py-3 font-medium`}
                         >
-                          {status == "0" ? "In Draft" : ""}
+                          {advert_status == "draft"
+                            ? "In Draft"
+                            : advert_status == "paid"
+                            ? "Active"
+                            : ""}
                         </p>
                       </td>
                       <td className="py-4 px-4">
                         <div className="flex font-semibold items-center justify-center">
                           <Link
-                            to={ad == "Edit" ? "/selling/buildAd" : "/"}
+                            to={
+                              advert_status == "draft" ? `/payment/${id}` : "/"
+                            }
                             className={` ${
-                              status == "0"
+                              advert_status == "draft"
                                 ? "text-[#0D1A8B] border-2 border-[#0D1A8B] hover:bg-[#0D1A8B] hover:text-white"
-                                : ad == "Upgrade"
+                                : advert_status == "paid"
                                 ? "text-[#FFB800] border-2 border-[#FFB800] hover:bg-[#FFB800] hover:text-white"
                                 : "text-[#2AD18A] border-2 border-[#2AD18A] hover:bg-[#2AD18A] hover:text-white"
                             } px-3 py-3 min-w-24 text-sm rounded-md block text-center`}
                           >
-                            {status == "0" ? "Edit" : ""}
+                            {advert_status == "draft"
+                              ? "Pay Now"
+                              : advert_status == "paid"
+                              ? "Upgrade"
+                              : ""}
                           </Link>
                         </div>
                       </td>
@@ -236,7 +246,7 @@ const ListingTable = ({
                     status,
                     price,
                     expire_date,
-                    packageName,
+                    advert_status,
                     view,
                     ad,
                   }) => (
@@ -279,29 +289,31 @@ const ListingTable = ({
                           Status:
                           <span
                             className={`${
-                              status == "Active"
+                              advert_status == "paid"
                                 ? "bg-[#D6FDEC] text-[#36B37E]"
-                                : status == "0"
+                                : advert_status == "draft"
                                 ? "bg-[#F6F6F6] text-[#8891B2]"
                                 : "bg-[#FDD6D6] text-[#FF4545]"
                             }  rounded-2xl text-center ml-1 px-5 py-2 inline-block text-[#696E9D] font-semibold`}
                           >
                             {" "}
-                            {status == "0" ? "In Draft" : ""}
+                            {advert_status == "draft" ? "In Draft" : "Active"}
                           </span>
                         </p>
                         <div className="flex mt-5 font-semibold items-center justify-center">
                           <Link
-                            to={ad == "Edit" ? "/selling/buildAd" : "/"}
+                            to={
+                              advert_status == "draft" ? `/payment/${id}` : "/"
+                            }
                             className={` ${
-                              status == "0"
+                              advert_status == "draft"
                                 ? "text-[#0D1A8B] border-2 border-[#0D1A8B] hover:bg-[#0D1A8B] hover:text-white"
-                                : status == "Upgrade"
+                                : advert_status == "paid"
                                 ? "text-[#FFB800] border-2 border-[#FFB800]  hover:bg-[#FFB800] hover:text-white"
                                 : "text-[#2AD18A] border-2 border-[#2AD18A] hover:bg-[#2AD18A] hover:text-white"
                             } px-3 py-3 min-w-24 text-sm rounded-md block text-center w-full`}
                           >
-                            {status == "0" ? "Edit" : ""}
+                            {advert_status == "draft" ? "Pay Now" : "Upgrade"}
                           </Link>
                           <CustomDropdownMenu
                             buttonToOpenMenu={

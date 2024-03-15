@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { eye } from "../../assets";
 import { FaChevronDown, FaEye } from "react-icons/fa";
 import { Field, ErrorMessage } from "formik";
@@ -9,10 +9,17 @@ import {
   regionOptions,
 } from "../../utils/DropdownOptions";
 import Heading from "../Heading";
+import { fetchOptions } from "../../utils/fetch/fetchData";
 
 export default function TradeSellerCompanyInfoForm() {
   const [showPassword1, setShowPassword1] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
+
+  const [loading, setLoading] = useState(true);
+  const [currency, setCurrency] = useState([]);
+  useEffect(() => {
+    fetchOptions("currencies", setCurrency, setLoading);
+  }, []);
 
   const togglePasswordVisibility = (field) => {
     if (field === 1) {
@@ -194,7 +201,7 @@ export default function TradeSellerCompanyInfoForm() {
               />
               <SelectDropdown
                 name="currency"
-                options={currencyOptions}
+                options={currency}
                 className="border-[#CECED7] border-2 rounded-md p-3 w-full appearance-none sm:appearance-auto bg-white"
               />
             </div>

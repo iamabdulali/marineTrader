@@ -66,7 +66,7 @@ const BuildAd = () => {
     video: null,
     priceOnInformation: "",
     currency: "",
-    price: 200 * 100,
+    price: "",
     facilities: [],
     advert_package: selectedPackage,
     countries: [],
