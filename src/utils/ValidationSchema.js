@@ -63,43 +63,11 @@ export const validationSchema = Yup.object().shape({
 });
 
 export const categoryDropdownValidationSchema = Yup.object().shape({
-  // category: Yup.string().required("Category is required"),
-  // make: Yup.string().required("Make is required"),
   model: Yup.string().required("Model is required"),
   type: Yup.string().required("Type is required"),
   condition: Yup.string().required("Condition is required"),
   year: Yup.string().required("Year is required"),
 });
-
-// Validation schema for images (buildAdImages)
-const imageValidationSchema = Yup.array()
-  // .test("fileSize", "File size is too large", (value) => {
-  //   // Assuming you want to limit the file size to 5MB for images
-  //   return !value.some((file) => file.size > 5 * 1024 * 1024);
-  // })
-  // .test("fileType", "Invalid file type", (value) => {
-  //   // Validate file type for images
-  //   const acceptedImageTypes = ["image/jpeg", "image/png"];
-  //   return !value.some((file) => !acceptedImageTypes.includes(file.type));
-  // })
-  // .test("fileCount", "Maximum 5 images allowed", (value) => {
-  //   // Validate the number of selected files (images)
-  //   return !value || value.length <= 5;
-  // })
-  .min("Please upload at least one image");
-
-// Validation schema for videos (buildAdVideo)
-const videoValidationSchema = Yup.array()
-  .test("fileSize", "File size is too large", (value) => {
-    // Assuming you want to limit the file size to 1000MB for videos
-    return !value.some((file) => file.size > 1000 * 1024 * 1024);
-  })
-  .test("fileType", "Invalid file type", (value) => {
-    // Validate file type for videos
-    const acceptedVideoTypes = ["video/*"];
-    return !value.some((file) => !acceptedVideoTypes.includes(file.type));
-  })
-  .min("Please upload a video");
 
 export const buildAdValidationSchema = Yup.object().shape({
   title: Yup.string().required("Title is required"),
@@ -154,6 +122,18 @@ export const privateSellerValidationSchema = Yup.object({
     .email("Enter a valid email address")
     .required("Confirm Email Address is required")
     .oneOf([Yup.ref("email"), null], "Emails must match"),
+  image_field: Yup.mixed()
+    .test(
+      "fileSize",
+      "File size is too large (max 1 MB)",
+      (value) => !value || (value && value.size <= 1024 * 1024)
+    )
+    .test(
+      "isRequired",
+      "Please upload a picture",
+      (value) => value !== undefined && value !== null
+    )
+    .required("Please Upload a Picture"),
 });
 
 export const loginValidationSchema = Yup.object({

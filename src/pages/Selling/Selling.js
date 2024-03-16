@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import ListingTable from "../../components/Tables/ListingTable";
 import Heading from "../../components/Heading";
 import { FaArrowLeft } from "react-icons/fa";
@@ -16,7 +16,6 @@ import {
 import VideoModal from "../../components/VideoTutorial/VideoModal";
 import { fetchOptions, getAdvert } from "../../utils/fetch/fetchData";
 import LoadingWrapper from "../../utils/LoadingWrapper";
-import { AuthContext } from "../../Context/AuthContext";
 
 export default function Selling() {
   const [loading, setLoading] = useState(true);
@@ -72,16 +71,25 @@ export default function Selling() {
             />
           </div>
           {hasListing ? (
-            <div className="pb-40">
-              <ListingTable
-                tableFor="Your Listings"
-                hasSort={true}
-                hasPadding={true}
-                sellingListing={true}
-                tableHeader={sellingHeader}
-                sellingData={adverts}
-              />
-            </div>
+            <>
+              {adverts.length != 0 ? (
+                <div className="pb-40">
+                  <ListingTable
+                    tableFor="Your Listings"
+                    hasSort={true}
+                    hasPadding={true}
+                    sellingListing={true}
+                    tableHeader={sellingHeader}
+                    sellingData={adverts}
+                  />
+                </div>
+              ) : (
+                <p className="flex items-center h-[50vh] justify-center ">
+                  You are currently running 0 Ads, choose a category to start
+                  selling!
+                </p>
+              )}
+            </>
           ) : (
             <div className={hasListing ? "" : "mt-7"}>
               <AdSubscription />

@@ -136,6 +136,7 @@ const TradeSeller = () => {
   };
 
   const prevStep = () => setStep(step - 1);
+  // const nextStep = () => setStep(step + 1);
 
   const onSubmit = async (values) => {
     const updatedValues = {
@@ -212,8 +213,8 @@ const TradeSeller = () => {
                 ) : (
                   <button
                     type={submit ? "submit" : "button"}
-                    onClick={() => setSubmit(true)}
-                    disabled={spinner}
+                    onClick={onSubmit}
+                    disabled={!isValid}
                     className={`bg-[#0D1A8B] hover:bg-[#0a1dbd] text-white p-3 min-h-12 rounded-md w-28  ${
                       isValid ? "opacity-100" : "opacity-70"
                     }`}

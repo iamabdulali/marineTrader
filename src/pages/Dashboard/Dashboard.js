@@ -67,16 +67,25 @@ export default function Dashboard() {
             buttonText="Start Selling Now"
             image={jetski3d}
           />
-          <div className="pb-40">
-            <ListingTable
-              tableFor="Your Listings"
-              hasSort={true}
-              hasPadding={true}
-              sellingListing={true}
-              tableHeader={sellingHeader}
-              sellingData={adverts}
-            />
-          </div>
+          <>
+            {adverts.length != 0 ? (
+              <div className="pb-40">
+                <ListingTable
+                  tableFor="Your Listings"
+                  hasSort={true}
+                  hasPadding={true}
+                  sellingListing={true}
+                  tableHeader={sellingHeader}
+                  sellingData={adverts}
+                />
+              </div>
+            ) : (
+              <p className="mt-10 text-center">
+                You are currently running 0 Ads, choose a category to start
+                selling!
+              </p>
+            )}
+          </>
           {/* <ListingTable
           tableFor="Your Listings"
           hasSearch={true}
