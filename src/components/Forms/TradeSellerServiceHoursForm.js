@@ -495,12 +495,14 @@ export default function TradeSellerServiceHoursForm() {
           component={FileInput}
           label="Company Logo"
           accept="image/jpeg, image/png"
+          fieldName="company_logo"
         />
         <Field
           name="main_picture"
           component={FileInput}
           label="Main Picture"
           accept="image/jpeg, image/png"
+          fieldName="main_picture"
         />
       </div>
     </div>

@@ -56,7 +56,6 @@ const initialValues = {
 const TradeSeller = () => {
   const { dispatch } = useContext(AuthContext);
   const [spinner, setSpinner] = useState(false);
-  const [submit, setSubmit] = useState(false);
   const NavigateTo = useNavigate();
   const [step, setStep] = useState(1);
   const stepLabels = [
@@ -184,7 +183,6 @@ const TradeSeller = () => {
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
-          onSubmit={onSubmit}
         >
           {({ isValid, values, setErrors, setTouched }) => (
             <Form>
@@ -212,8 +210,8 @@ const TradeSeller = () => {
                   </button>
                 ) : (
                   <button
-                    type={submit ? "submit" : "button"}
-                    onClick={onSubmit}
+                    type="button"
+                    onClick={() => onSubmit(values)}
                     disabled={!isValid}
                     className={`bg-[#0D1A8B] hover:bg-[#0a1dbd] text-white p-3 min-h-12 rounded-md w-28  ${
                       isValid ? "opacity-100" : "opacity-70"
