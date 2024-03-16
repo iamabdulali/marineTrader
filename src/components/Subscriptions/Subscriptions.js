@@ -11,9 +11,11 @@ const Subscriptions = ({
   borderColor,
   subHeading,
   textColor,
+  id,
 }) => {
   return (
     <div
+      key={id}
       className={`bg-white shadow-[7px] lg:w-6/12 w-full border-t-4 relative py-6 sm:px-5 px-3 ${borderColor}`}
     >
       <p className="text-[#11133D] font-bold text-3xl ">
@@ -22,11 +24,13 @@ const Subscriptions = ({
           {subHeading}
         </span>
       </p>
-      <p className={`${textColor} relative w-fit font-semibold text-2xl mt-3 `}>
+      <p
+        className={`${textColor} relative capitalize w-fit font-semibold text-2xl mt-3 `}
+      >
         {packageName}
         <span
           data-tooltip-id={
-            packageName === "Dealer Plus" || packageName === "Broker Plus"
+            packageName === "Dealer Plus" || packageName === "Broker plus"
               ? "my-tooltip-1"
               : "my-tooltip-2"
           }
@@ -50,7 +54,7 @@ const Subscriptions = ({
         <span className="text-[#8891B2] font-medium text-sm my-2 block">
           Includes 180 Ads/year
         </span>
-      ) : packageName == "Broker Plus" ? (
+      ) : packageName == "Broker plus" ? (
         <span className="text-[#8891B2]  pointer-events-none font-medium text-sm my-2 block">
           Includes 300 Ads/year
         </span>

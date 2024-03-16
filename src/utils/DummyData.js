@@ -598,3 +598,25 @@ export const tax = [
   { id: "exVAT", name: "Ex. VAT" },
   { id: "noVAT", name: "No VAT" },
 ];
+
+export const initialFacilities = {
+  facilities: {
+    Accommodation: false,
+    "Licensed Bar": false,
+    Restaurant: false,
+    "24/7 Support": false,
+    "Service Department": false,
+    Reception: false,
+    Counter: false,
+    Parking: false,
+    "Disabled Access": false,
+    Finance: false,
+    "Equipment Hire": false,
+    "On Site Transport": false,
+    Delivery: false,
+    Showroom: false,
+    Shop: false,
+    Parts: false,
+    Dsds: false,
+  },
+};
