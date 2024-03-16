@@ -1,7 +1,7 @@
 import { ErrorMessage, Field } from "formik";
 import React, { useEffect, useState } from "react";
 import FileInput from "./FormElements/FileInput";
-import { FaChevronCircleDown, FaChevronDown, FaEye } from "react-icons/fa";
+import { FaChevronDown, FaEye } from "react-icons/fa";
 import SelectDropdown from "./FormElements/SelectDropdown";
 import {
   countryOptions,
@@ -290,35 +290,17 @@ const PrivateSellerSignUpForm = ({ setFieldValue, values }) => {
           </span>
         </div>
       </div>
-
       {/* Password strength requirements */}
       <li className="text-sm sm:w-6/12 sm:-indent-5">
         Password must contain a special character, capital letter, and number
       </li>
-
       <div className="w-full">
-        {/* <p className="text-[#11133D] font-semibold mb-3">Main Picture</p>
-    <div className="border-2 relative rounded border-[#0D1A8B] border-dashed flex flex-col items-center justify-center w-full p-8">
-      <p className="flex items-end mb-3">
-        <img src={cloud} alt="upload" className="w-6 mr-3" /> Drag &
-        drop or{" "}
-        <span className="text-[#0D1A8B] font-medium ml-1 underline">
-          {" "}
-          Upload Here
-        </span>
-      </p>
-      <p>JPEG/PNG size 160*160 pixels</p>
-      <input
-        name="imageField"
-        type="file"
-        className="absolute bg-slate-500 inset-0 opacity-0 cursor-pointer"
-      />
-    </div> */}
         <Field
           name="image_field"
           component={FileInput}
           label="Main Picture"
           accept="image/jpeg, image/png"
+          fieldName="image_field"
         />
       </div>
     </>
