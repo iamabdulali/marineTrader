@@ -84,7 +84,7 @@ const MakeOfferSection = ({ advert }) => {
         <div className="flex gap-4 items-center sm:px-7 py-6 px-4">
           <img
             src={advert?.user?.image_field || userProfile}
-            className="rounded-full w-20 object-contain"
+            className="rounded-full w-20 h-20 object-cover"
           />
           <div>
             <p className="text-[#11133D] font-semibold">{advert?.user?.name}</p>

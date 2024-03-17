@@ -2,14 +2,47 @@ import {
   CardCvcElement,
   CardExpiryElement,
   CardNumberElement,
+  useElements,
 } from "@stripe/react-stripe-js";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Oval } from "react-loader-spinner";
 import { stackIcon } from "../../assets";
 
 const StripePaymentForm = ({ handlePaymentSubmit, spinner }) => {
   const [postalCode, setPostalCode] = useState("");
   const [country, setCountry] = useState("");
+  const [isFormValid, setIsFormValid] = useState(false);
+  const elements = useElements();
+
+  useEffect(() => {
+    const checkValidity = () => {
+      if (!elements) return false; // Ensure elements object is available
+      const cardNumber = elements.getElement(CardNumberElement);
+      const cardCvc = elements.getElement(CardCvcElement);
+      const cardExpiry = elements.getElement(CardExpiryElement);
+
+      const isCardNumberValid =
+        cardNumber && !cardNumber._empty && !cardNumber._invalid;
+      const isCvcValid = cardCvc && !cardCvc._empty && !cardCvc._invalid;
+      const isExpiryValid =
+        cardExpiry && !cardExpiry._empty && !cardExpiry._invalid;
+
+      // You can adjust the validation criteria according to your requirements
+      return (
+        isCardNumberValid &&
+        isCvcValid &&
+        isExpiryValid &&
+        postalCode.trim() !== "" &&
+        country.trim() !== ""
+      );
+    };
+
+    // Enable or disable the Pay button based on form validity
+    const isValid = checkValidity();
+    console.log("Form validity:", isValid);
+    setIsFormValid(isValid);
+  }, [elements, postalCode, country]);
+
   return (
     <div className="smallLg:w-1/2 w-full">
       <form
@@ -108,6 +141,7 @@ const StripePaymentForm = ({ handlePaymentSubmit, spinner }) => {
           </div>
         </div>
         <button
+          disabled={!isFormValid}
           className={`bg-[#0D1A8B] hover:bg-[#0a1dbd] text-white p-3 rounded-md mt-4 w-full`}
         >
           {spinner ? (

@@ -4,7 +4,7 @@ import CategoryList from "../../components/categoryList/CategoryList";
 import Heading from "../../components/Heading";
 import { Link } from "react-router-dom";
 import CurrentSubscription from "../../components/Subscriptions/CurrentSubscription";
-import { ServicePlus } from "../../utils/DummyData";
+import { DealerPlus, ServicePlus } from "../../utils/DummyData";
 import SubscriptionStep2 from "./SubscriptionStep2";
 import { FaArrowLeft } from "react-icons/fa";
 import VideoModal from "../../components/VideoTutorial/VideoModal";
@@ -16,18 +16,38 @@ import Modal from "../../components/Modal";
 import VideoBtn from "../../components/VideoTutorial/VideoBtn";
 import { fetchOptions } from "../../utils/fetch/fetchData";
 import { AuthContext } from "../../Context/AuthContext";
+import { categoriesList } from "../..";
+import LoadingWrapper from "../../utils/LoadingWrapper";
 
 const Subscription = () => {
   const [hasSubscription, setHasSubscription] = useState(true);
   const [category, setCategory] = useState("Jet Skis");
   let [isVideoOpen, setIsVideoOpen] = useState(false);
   const [categories, setCategories] = useState([]);
+  const [subscription, setSubscriptions] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchOptions("categories", setCategories);
+    fetchOptions("subscriptions", setSubscriptions, setLoading);
   }, []);
 
   const { selectedCategory } = useContext(AuthContext);
+  const featuresArray = [
+    {
+      "Broker plus": DealerPlus,
+    },
+    {
+      "Service plus": ServicePlus,
+    },
+  ];
+
+  // Convert featuresArray to an object directly
+  const featuresObject = featuresArray.reduce((acc, obj) => {
+    const key = Object.keys(obj)[0];
+    acc[key] = obj[key];
+    return acc;
+  }, {});
 
   return (
     <Layout>
@@ -55,36 +75,51 @@ const Subscription = () => {
         ""
       )}
 
-      <div className="overflow-x-scroll category-menu">
-        <CategoryList
-          initialCategory={-1}
-          className="flex lg:w-full min-h-[88px] mt-5 justify-between px-4 bg-white border-2 rounded-lg border-[#D9DFF5] smallLg:w-auto w-[1300px]"
-          activeCategory="border-b-4 border-[#0D1A8B] py-3"
-          unActiveCategory="py-3"
-          onCategoryChange={(category) => {
-            setHasSubscription(false);
-            setCategory(category);
-          }}
-          onCategoryClick={() => {}}
-          categories={categories}
-        />
-      </div>
-
-      {hasSubscription ? (
-        <div>
-          <p className="font-semibold text-[#11133D] my-5">
-            Subscription For {category}
-          </p>
-
-          <CurrentSubscription
-            category={category}
-            isStandard={false}
-            featuresArray={ServicePlus}
+      <LoadingWrapper loading={loading}>
+        <div className="overflow-x-scroll category-menu">
+          <CategoryList
+            initialCategory={-1}
+            className="flex lg:w-full min-h-[88px] mt-5 justify-between px-4 bg-white border-2 rounded-lg border-[#D9DFF5] smallLg:w-auto w-[1300px]"
+            activeCategory="border-b-4 border-[#0D1A8B] py-3"
+            unActiveCategory="py-3"
+            onCategoryChange={(category) => {
+              setHasSubscription(false);
+              setCategory(category);
+            }}
+            onCategoryClick={() => {}}
+            categories={categories}
           />
         </div>
-      ) : (
-        <SubscriptionStep2 selectedCategory={selectedCategory?.name} />
-      )}
+        {hasSubscription ? (
+          <div>
+            {subscription.map(
+              ({ subscription_plan, end_date, status, id }, index) => {
+                const { category_id, name } = subscription_plan;
+                if (status == "canceled") {
+                  return;
+                }
+                return (
+                  <div key={index}>
+                    <p className="font-semibold text-[#11133D] my-5">
+                      Subscription For {categoriesList[category_id]}
+                    </p>
+                    <CurrentSubscription
+                      packageName={name}
+                      category={categoriesList[category_id]}
+                      isStandard={false}
+                      featuresArray={featuresObject[name] || ServicePlus}
+                      expiry_date={end_date}
+                      id={id}
+                    />
+                  </div>
+                );
+              }
+            )}
+          </div>
+        ) : (
+          <SubscriptionStep2 selectedCategory={selectedCategory?.name} />
+        )}
+      </LoadingWrapper>
       <VideoBtn onClick={() => openModal(setIsVideoOpen)} />
       <Modal
         isOpen={isVideoOpen}

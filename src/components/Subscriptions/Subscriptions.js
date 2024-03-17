@@ -117,7 +117,7 @@ const Subscriptions = ({
         })}
       </div>
       <Link
-        to="/payments"
+        to={`/payment/subscription/${id}`}
         className="block mt-6 text-center w-11/12 mx-auto border-[3px] border-[#0D1A8B] rounded-lg p-2 text-[#0D1A8B] font-semibold hover:bg-[#0D1A8B] hover:text-white"
       >
         Select

@@ -511,7 +511,7 @@ export const links = [
     onClick: false,
   },
   {
-    href: "/selling/buildAd",
+    href: "/selling/buildAd/advert",
     label: (
       <>
         <FaPencilAlt /> Edit

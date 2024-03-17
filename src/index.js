@@ -10,7 +10,8 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 export const SERVER_BASE_URL = "https://marine.takhleeqsoft.com/api";
 export const packages = ["Standard", "Premium", "Featured"];
 export const subscriptions = ["Dealer Plus", "Service Plus"];
-export const categories = [
+export const categoriesList = [
+  "",
   "Jetski",
   "Boat Home",
   "Commercial",

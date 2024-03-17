@@ -33,7 +33,11 @@ export const getOneAdvert = async (setData, setLoading, id) => {
 
 export const fetchOptions = async (url, setData, setLoading) => {
   try {
-    const { data } = await axios.get(`${SERVER_BASE_URL}/${url}`);
+    const { data } = await axios.get(`${SERVER_BASE_URL}/${url}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
     setData(data.data);
     if (setLoading) {
       setLoading(false);

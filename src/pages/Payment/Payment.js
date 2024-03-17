@@ -1,19 +1,35 @@
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import React from "react";
-import PaymentForm from "../../components/Payment/PaymentForm";
-import { Form, Formik } from "formik";
+import React, { useEffect, useState } from "react";
+import { Formik } from "formik";
+import { useLocation } from "react-router-dom"; // Import useLocation from React Router
+import { fetchOptions } from "../../utils/fetch/fetchData";
+import PaymentFormSubscription from "../../components/Payment/PaymentFormSubscription";
+import PaymentFormAd from "../../components/Payment/PaymentFormAd";
 
 const Payment = () => {
-  const stripe = loadStripe(
-    "pk_test_51NMtq1B668ud5SeijFm72obtlqRPZAO73yZY1uwOVKUluZfygSXUe3KD4US7sc55OSLeTR47WbQui3momJjeIWou00UhkEM2Mx"
-  );
+  const [stripeKey, setStripeKey] = useState("");
+  const location = useLocation(); // Get the current location
+  const isAdPayment = location.pathname.startsWith("/payment/advert");
+
+  useEffect(() => {
+    fetchOptions("stripe/key", setStripeKey);
+  }, []);
+
+  // Load Stripe only when stripeKey is available
+  const stripePromise = stripeKey ? loadStripe(stripeKey) : null;
+
   return (
-    <Elements stripe={stripe}>
-      <Formik>
-        <PaymentForm></PaymentForm>
-      </Formik>
-    </Elements>
+    <>
+      {stripePromise && (
+        <Elements stripe={stripePromise}>
+          <Formik>
+            <>{isAdPayment ? <PaymentFormAd /> : <PaymentFormSubscription />}</>
+            {/* <PaymentFormAd></PaymentFormAd> */}
+          </Formik>
+        </Elements>
+      )}
+    </>
   );
 };
 

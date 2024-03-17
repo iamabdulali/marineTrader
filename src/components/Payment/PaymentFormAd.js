@@ -24,7 +24,7 @@ import StripePaymentForm from "./StripePaymentForm";
 import LoadingWrapper from "../../utils/LoadingWrapper";
 import { useNavigate } from "react-router-dom";
 
-const PaymentForm = ({ setFieldValue, values }) => {
+const PaymentFormAd = ({ setFieldValue, values }) => {
   let [isSpotlightOpen, setIsSpotlightOpen] = useState(false);
   let [isBundleOpen, setIsBundleOpen] = useState(false);
   const [advert, setAdvert] = useState([]);
@@ -37,7 +37,9 @@ const PaymentForm = ({ setFieldValue, values }) => {
   const navigate = useNavigate();
 
   const pathArray = window.location.pathname.split("/");
-  const id = pathArray[2];
+  const id = pathArray[3];
+
+  console.log(id);
 
   useEffect(() => {
     getOneAdvert(setAdvert, setLoading, id);
@@ -98,6 +100,20 @@ const PaymentForm = ({ setFieldValue, values }) => {
     navigate("/dashboard");
   }
 
+  // const handleSubmit = async (event) => {
+  //   event.preventDefault();
+
+  //   elements.getElement(CardNumberElement);
+
+  //   const paymentMethod = await stripe.createPaymentMethod({
+  //     type: "card",
+  //     card: elements.getElement(CardNumberElement),
+  //   });
+
+  //   console.log(paymentMethod);
+
+  // };
+
   return (
     <>
       {showStatus ? (
@@ -150,4 +166,4 @@ const PaymentForm = ({ setFieldValue, values }) => {
   );
 };
 
-export default PaymentForm;
+export default PaymentFormAd;

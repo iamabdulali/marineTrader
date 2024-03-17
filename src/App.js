@@ -113,6 +113,14 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/selling/buildAd/advert/:id"
+          element={
+            <ProtectedRoute>
+              <BuildAd />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/directory" element={<Directory />} />
         <Route
           path="/subscriptions"
@@ -146,7 +154,15 @@ function App() {
           }
         />
         <Route
-          path="/payment/:id"
+          path="/payment/advert/:id"
+          element={
+            <ProtectedRoute>
+              <Payment />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/payment/subscription/:id"
           element={
             <ProtectedRoute>
               <Payment />

@@ -12,7 +12,7 @@ import {
 } from "../../utils/ModalOpeningClosingFunctions";
 import DeleteListingModal from "../Selling/DeleteListingModal";
 import { FaCheck, FaDollarSign, FaTimes } from "react-icons/fa";
-import { categories } from "../..";
+import { categoriesList } from "../..";
 
 const ListingTable = ({
   hasSort,
@@ -197,7 +197,9 @@ const ListingTable = ({
                         <div className="flex font-semibold items-center justify-center">
                           <Link
                             to={
-                              advert_status == "draft" ? `/payment/${id}` : "/"
+                              advert_status == "draft"
+                                ? `/payment/advert/${id}`
+                                : "/"
                             }
                             className={` ${
                               advert_status == "draft"
@@ -303,7 +305,9 @@ const ListingTable = ({
                         <div className="flex mt-5 font-semibold items-center justify-center">
                           <Link
                             to={
-                              advert_status == "draft" ? `/payment/${id}` : "/"
+                              advert_status == "draft"
+                                ? `/payment/advert/${id}`
+                                : "/"
                             }
                             className={` ${
                               advert_status == "draft"
@@ -367,7 +371,7 @@ const ListingTable = ({
                           />
                           <div>
                             <p className="text-[#11133D] font-semibold text-base mb-1">
-                              {categories[advert?.category_id]}
+                              {categoriesList[advert?.category_id]}
                             </p>
                             <p>
                               {currency?.symbol}
@@ -422,7 +426,7 @@ const ListingTable = ({
                       />
                       <div className="sm:w-8/12 w-full">
                         <p className="text-[#11133D] font-semibold text-xl mb-2">
-                          {categories[advert?.category_id]}
+                          {categoriesList[advert?.category_id]}
                         </p>
                         <div className="flex justify-between items-center">
                           <p className="text-[#8891B2] font-medium">
