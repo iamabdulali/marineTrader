@@ -25,7 +25,6 @@ const Payment = () => {
         <Elements stripe={stripePromise}>
           <Formik>
             <>{isAdPayment ? <PaymentFormAd /> : <PaymentFormSubscription />}</>
-            {/* <PaymentFormAd></PaymentFormAd> */}
           </Formik>
         </Elements>
       )}

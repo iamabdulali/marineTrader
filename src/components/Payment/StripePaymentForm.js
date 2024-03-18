@@ -39,7 +39,6 @@ const StripePaymentForm = ({ handlePaymentSubmit, spinner }) => {
 
     // Enable or disable the Pay button based on form validity
     const isValid = checkValidity();
-    console.log("Form validity:", isValid);
     setIsFormValid(isValid);
   }, [elements, postalCode, country]);
 

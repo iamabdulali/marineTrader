@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Layout from "../Layout/Layout";
 import {
   CardNumberElement,
@@ -15,7 +15,6 @@ import {
 } from "../../utils/ModalOpeningClosingFunctions";
 import AvailableUpgrades from "../BuildAdSteps/AdComponents/AvailableUpgrades";
 import BundlesModal from "../BuildAdSteps/AdComponents/BundlesModal";
-import { getOneAdvert } from "../../utils/fetch/fetchData";
 import axios from "axios";
 import { SERVER_BASE_URL } from "../..";
 import { toast } from "react-toastify";
@@ -24,6 +23,8 @@ import StripePaymentForm from "./StripePaymentForm";
 import LoadingWrapper from "../../utils/LoadingWrapper";
 import { useNavigate } from "react-router-dom";
 import { displayErrorMessages } from "../../utils/displayErrors";
+import { fetchOptions } from "../../utils/fetch/fetchData";
+import { AuthContext } from "../../Context/AuthContext";
 
 const PaymentFormSubscription = ({ setFieldValue, values }) => {
   let [isSpotlightOpen, setIsSpotlightOpen] = useState(false);
@@ -33,12 +34,40 @@ const PaymentFormSubscription = ({ setFieldValue, values }) => {
   const [spinner, setSpinner] = useState(false);
   const [success, setSuccess] = useState(false);
   const [showStatus, setShowStatus] = useState(false);
+  const [subscription, setSubscriptions] = useState([]);
+  const [hasActiveSubscription, setHasActiveSubscription] = useState(false);
+  const [hasActiveSubscriptionId, setHasActiveSubscriptionId] = useState(false);
   const stripe = useStripe();
   const elements = useElements();
   const navigate = useNavigate();
 
   const pathArray = window.location.pathname.split("/");
   const id = pathArray[3];
+
+  const { selectedCategory } = useContext(AuthContext);
+
+  const categoryToCheck = selectedCategory?.id;
+
+  useEffect(() => {
+    if (!selectedCategory) {
+      navigate("/subscriptions");
+    }
+    fetchOptions("subscriptions", setSubscriptions, setLoading);
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const userSubscriptions = subscription;
+      // Check if the user has an active subscription in the specified category
+      const foundSubscription = userSubscriptions.find((subscription) => {
+        return subscription.subscription_plan.category_id == categoryToCheck;
+      });
+      setHasActiveSubscriptionId(foundSubscription?.id);
+      setHasActiveSubscription(foundSubscription !== undefined);
+    };
+
+    fetchData();
+  }, [subscription]);
 
   const generatePaymentMethod = async () => {
     if (!stripe || !elements) {
@@ -73,10 +102,37 @@ const PaymentFormSubscription = ({ setFieldValue, values }) => {
           },
         }
       );
-      console.log(data.data);
       toast.success(data.message);
       navigate("/subscriptions");
       setSpinner(false);
+    } catch (error) {
+      console.log(error);
+      setSpinner(false);
+      const { errors } = error.response.data;
+      displayErrorMessages(errors);
+    }
+  };
+
+  const updateSubscription = async (e) => {
+    e.preventDefault();
+    setSpinner(true);
+    try {
+      const { data } = await axios.post(
+        `${SERVER_BASE_URL}/subscription/upgrade`,
+        {
+          subscription: hasActiveSubscriptionId,
+          new_plan: id,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      console.log(data.data);
+      toast.success(data.message);
+      setSpinner(false);
+      navigate("/subscriptions");
     } catch (error) {
       console.log(error);
       setSpinner(false);
@@ -105,7 +161,11 @@ const PaymentFormSubscription = ({ setFieldValue, values }) => {
                   />
                 </div>
                 <StripePaymentForm
-                  handlePaymentSubmit={handlePaymentSubmit}
+                  handlePaymentSubmit={
+                    hasActiveSubscription
+                      ? updateSubscription
+                      : handlePaymentSubmit
+                  }
                   spinner={spinner}
                 />
               </div>

@@ -21,7 +21,6 @@ import LoadingWrapper from "../../utils/LoadingWrapper";
 
 const Subscription = () => {
   const [hasSubscription, setHasSubscription] = useState(true);
-  const [category, setCategory] = useState("Jet Skis");
   let [isVideoOpen, setIsVideoOpen] = useState(false);
   const [categories, setCategories] = useState([]);
   const [subscription, setSubscriptions] = useState([]);
@@ -33,6 +32,7 @@ const Subscription = () => {
   }, []);
 
   const { selectedCategory } = useContext(AuthContext);
+
   const featuresArray = [
     {
       "Broker plus": DealerPlus,
@@ -42,7 +42,6 @@ const Subscription = () => {
     },
   ];
 
-  // Convert featuresArray to an object directly
   const featuresObject = featuresArray.reduce((acc, obj) => {
     const key = Object.keys(obj)[0];
     acc[key] = obj[key];
@@ -84,7 +83,6 @@ const Subscription = () => {
             unActiveCategory="py-3"
             onCategoryChange={(category) => {
               setHasSubscription(false);
-              setCategory(category);
             }}
             onCategoryClick={() => {}}
             categories={categories}
@@ -92,29 +90,26 @@ const Subscription = () => {
         </div>
         {hasSubscription ? (
           <div>
-            {subscription.map(
-              ({ subscription_plan, end_date, status, id }, index) => {
-                const { category_id, name } = subscription_plan;
-                if (status == "canceled") {
-                  return;
-                }
-                return (
-                  <div key={index}>
-                    <p className="font-semibold text-[#11133D] my-5">
-                      Subscription For {categoriesList[category_id]}
-                    </p>
-                    <CurrentSubscription
-                      packageName={name}
-                      category={categoriesList[category_id]}
-                      isStandard={false}
-                      featuresArray={featuresObject[name] || ServicePlus}
-                      expiry_date={end_date}
-                      id={id}
-                    />
-                  </div>
-                );
-              }
-            )}
+            {subscription.map(({ subscription_plan, end_date, id }, index) => {
+              const { category_id, name } = subscription_plan;
+              return (
+                <div key={index}>
+                  <p className="font-semibold text-[#11133D] my-5">
+                    Subscription For {categoriesList[category_id]}
+                  </p>
+                  <CurrentSubscription
+                    packageName={name}
+                    categoryId={category_id}
+                    category={categoriesList[category_id]}
+                    isStandard={false}
+                    featuresArray={featuresObject[name] || ServicePlus}
+                    expiry_date={end_date}
+                    id={id}
+                    setHasSubscription={setHasSubscription}
+                  />
+                </div>
+              );
+            })}
           </div>
         ) : (
           <SubscriptionStep2 selectedCategory={selectedCategory?.name} />

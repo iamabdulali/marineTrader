@@ -12,21 +12,6 @@ const SubscriptionStep2 = () => {
   const [subscriptions, setSubscriptions] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Define default values for packageName and price
-  let packageName = "Broker Plus";
-  let price = "£400";
-
-  // Check if the selected category matches any of the specified categories
-  // if (
-  //   selectedCategory === "Jetski" ||
-  //   selectedCategory === "Small Craft" ||
-  //   selectedCategory === "RIB" ||
-  //   selectedCategory === "Non Motor"
-  // ) {
-  //   packageName = "Dealer Plus";
-  //   price = "£200";
-  // }
-
   const tabs = [
     {
       id: "Broker plus",
@@ -51,8 +36,6 @@ const SubscriptionStep2 = () => {
     );
   }, [selectedCategory]);
 
-  console.log(subscriptions);
-
   const featuresArray = [DealerPlus, ServicePlus];
 
   return (
@@ -61,9 +44,6 @@ const SubscriptionStep2 = () => {
       <div className="lg:flex hidden gap-5 mt-10">
         <LoadingWrapper className="top-44" loading={loading}>
           {subscriptions?.map(({ name, amount, id }, index) => {
-            // if (id == 1) {
-            //   return;
-            // }
             return (
               <Subscriptions
                 key={id}
@@ -84,22 +64,6 @@ const SubscriptionStep2 = () => {
             );
           })}
         </LoadingWrapper>
-        {/* <Subscriptions
-          featuresArray={DealerPlus}
-          packagePrice={price}
-          packageName={packageName}
-          subHeading="/12 months package"
-          textColor="text-[#36B37E]"
-          borderColor="border-[#36B37E]"
-        />
-        <Subscriptions
-          featuresArray={ServicePlus}
-          packagePrice="£125"
-          packageName="Service Plus"
-          subHeading="/12 months package"
-          textColor="text-[#FFB800]"
-          borderColor="border-[#FFB800]"
-        /> */}
       </div>
       <div>
         <Tabs
@@ -110,22 +74,7 @@ const SubscriptionStep2 = () => {
         />
         <div className="lg:hidden block py-10">
           <LoadingWrapper loading={loading}>
-            {console.log(selectedTab)}
             {subscriptions?.map(({ name, amount, id }, index) => {
-              // let featuresArray = [];
-              // switch (name) {
-              //   case "Dealer Plus":
-              //     featuresArray = adsubscriptionStandardFeatures;
-              //     break;
-              //   case "Premium":
-              //     featuresArray = adsubscriptionPremiumFeatures;
-              //     break;
-              //   case "Featured":
-              //     featuresArray = adsubscriptionFeaturedFeatures;
-              //     break;
-              //   default:
-              //     featuresArray = [];
-              // }
               return (
                 selectedTab === name && (
                   <Subscriptions

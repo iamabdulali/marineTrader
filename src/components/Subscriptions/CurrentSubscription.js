@@ -1,19 +1,23 @@
-import React from "react";
+import React, { useContext } from "react";
 import { FaCheck } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../Context/AuthContext";
+import { categoriesList } from "../..";
 
 const CurrentSubscription = ({
   packageName,
-  packageDuration,
   isStandard,
   featuresArray,
   category,
   expiry_date,
-  id,
+  setHasSubscription,
+  categoryId,
 }) => {
   const dynamicClasses = isStandard
     ? "border-[#1565D8] text-[#1565d8]"
     : "border-[#36B37E] text-[#36B37E]";
+
+  const { dispatch } = useContext(AuthContext);
 
   return (
     <div
@@ -28,12 +32,25 @@ const CurrentSubscription = ({
           </span>
         </p>
 
-        <Link
+        {/* <Link
           to={`/payment/subscription/${id}`}
           className=" border-[3px] sm:w-auto hover:bg-[#0D1A8B] hover:text-white w-full text-center block rounded-md border-[#0D1A8B] text-[#0D1A8B] py-3 px-10 font-semibold "
         >
           {isStandard ? "Upgrade Now" : "Renew"}
-        </Link>
+        </Link> */}
+        <button
+          onClick={() => {
+            setHasSubscription(false);
+            dispatch({
+              type: "SELECTED_CATEGORY",
+              payload: { id: categoryId, name: categoriesList[categoryId] },
+            });
+            // document.querySelector(`.category-${categoryId}`).click();
+          }}
+          className=" border-[3px] sm:w-auto hover:bg-[#0D1A8B] hover:text-white w-full text-center block rounded-md border-[#0D1A8B] text-[#0D1A8B] py-3 px-10 font-semibold "
+        >
+          {isStandard ? "Upgrade Now" : "Renew"}
+        </button>
       </div>
 
       <div className="flex justify-end items-center my-3">
@@ -57,8 +74,11 @@ const CurrentSubscription = ({
       <div className="mb-8 mt-5 grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 text-[#183B56] gap-y-3">
         {featuresArray?.map(({ id, featureName, standOut }) => {
           return (
-            <p key={id} className="flex gap-4 font-medium mt-5 mr-5">
-              <p className="bg-[#e1f4ec] rounded-full  h-6 w-6 flex items-center justify-center">
+            <p
+              key={id}
+              className="flex gap-4 font-medium mt-5 mr-5 items-baseline"
+            >
+              <p className="bg-[#e1f4ec] rounded-full  min-h-6 min-w-6 flex items-center justify-center">
                 <FaCheck color="#36B37E" size={10} />
               </p>
               {featureName}
