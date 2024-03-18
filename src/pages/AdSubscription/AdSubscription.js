@@ -38,7 +38,7 @@ export default function AdSubscription() {
       categoryToCheck,
       setHasActiveSubscription
     );
-  }, [categoryToCheck]);
+  }, [categoryToCheck, subscription]);
 
   console.log(hasActiveSubscription);
 
