@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Heading from "../../components/Heading";
 import AdSubscriptionComponent from "../../components/AdSubscriptionComponent";
 import {
@@ -11,11 +11,36 @@ import { displayErrorMessages } from "../../utils/displayErrors";
 import axios from "axios";
 import { SERVER_BASE_URL } from "../..";
 import LoadingWrapper from "../../utils/LoadingWrapper";
+import { AuthContext } from "../../Context/AuthContext";
+import {
+  checkCategorySubscription,
+  fetchOptions,
+} from "../../utils/fetch/fetchData";
 
 export default function AdSubscription() {
   const [selectedTab, setSelectedTab] = useState("Standard");
   const [loading, setLoading] = useState(true);
   const [packages, setPackages] = useState([]);
+  const [subscription, setSubscriptions] = useState([]);
+  const [hasActiveSubscription, setHasActiveSubscription] = useState(false);
+
+  const { selectedCategory } = useContext(AuthContext);
+
+  const categoryToCheck = selectedCategory?.id;
+  console.log(categoryToCheck);
+  useEffect(() => {
+    fetchOptions("subscriptions", setSubscriptions, setLoading);
+  }, []);
+
+  useEffect(() => {
+    checkCategorySubscription(
+      subscription,
+      categoryToCheck,
+      setHasActiveSubscription
+    );
+  }, [categoryToCheck]);
+
+  console.log(hasActiveSubscription);
 
   const tabs = [
     {
@@ -78,6 +103,7 @@ export default function AdSubscription() {
                 text="View Display Results"
                 key={id}
                 id={id}
+                hasActiveSubscription={hasActiveSubscription}
               />
             );
           })}
@@ -119,6 +145,7 @@ export default function AdSubscription() {
                     featuresArray={featuresArray}
                     key={id}
                     id={id}
+                    hasActiveSubscription={hasActiveSubscription}
                   />
                 )
               );

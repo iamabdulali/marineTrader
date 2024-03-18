@@ -19,9 +19,9 @@ const AdSubscriptionComponent = ({
   text,
   packageHeading,
   variant,
-  isStandard,
   featuresArray,
   id,
+  hasActiveSubscription,
 }) => {
   let variantStyles = {};
   let [isSearchResultOpen, setIsSearchResultOpen] = useState(false);
@@ -96,27 +96,27 @@ const AdSubscriptionComponent = ({
           {packageName}
         </p>
         <p className="text-[#171923] font-semibold text-4xl mb-3">{price}</p>
-        {variantStyles.monthlyAllowance ? (
+        {variantStyles.monthlyAllowance && hasActiveSubscription ? (
           <div className="text-sm text-[#11133D] font-medium">
-            <p>
+            <p className="mb-3">
               Inclusive Monthly Allowance:{" "}
               <span className="text-[#E6AB13] font-semibold">15 Remaining</span>
             </p>
-            <p className="mt-2 mb-3">
+            {/* <p className="mt-2 mb-3">
               Bundle Balance:{" "}
               <span className="text-[#FF4A6B] font-semibold">9 Remaining</span>
-            </p>
+            </p> */}
           </div>
         ) : (
           <div className="text-sm text-[#11133D] opacity-0">
-            <p>
+            <p className="mb-3">
               Inclusive Monthly Allowance:{" "}
               <span className="text-[#E6AB13] font-semibold">15 Remaining</span>
             </p>
-            <p className="mt-2 mb-3">
+            {/* <p className="mt-2 mb-3">
               Bundle Balance:{" "}
               <span className="text-[#FF4A6B] font-semibold">9 Remaining</span>
-            </p>
+            </p> */}
           </div>
         )}
 

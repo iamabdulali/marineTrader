@@ -23,7 +23,10 @@ import StripePaymentForm from "./StripePaymentForm";
 import LoadingWrapper from "../../utils/LoadingWrapper";
 import { useNavigate } from "react-router-dom";
 import { displayErrorMessages } from "../../utils/displayErrors";
-import { fetchOptions } from "../../utils/fetch/fetchData";
+import {
+  checkCategorySubscription,
+  fetchOptions,
+} from "../../utils/fetch/fetchData";
 import { AuthContext } from "../../Context/AuthContext";
 
 const PaymentFormSubscription = ({ setFieldValue, values }) => {
@@ -56,17 +59,12 @@ const PaymentFormSubscription = ({ setFieldValue, values }) => {
   }, []);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const userSubscriptions = subscription;
-      // Check if the user has an active subscription in the specified category
-      const foundSubscription = userSubscriptions.find((subscription) => {
-        return subscription.subscription_plan.category_id == categoryToCheck;
-      });
-      setHasActiveSubscriptionId(foundSubscription?.id);
-      setHasActiveSubscription(foundSubscription !== undefined);
-    };
-
-    fetchData();
+    checkCategorySubscription(
+      subscription,
+      categoryToCheck,
+      setHasActiveSubscription,
+      setHasActiveSubscriptionId
+    );
   }, [subscription]);
 
   const generatePaymentMethod = async () => {

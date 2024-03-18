@@ -61,3 +61,20 @@ export const fetchOffers = async (setData, setLoading) => {
     console.log(error);
   }
 };
+
+export const checkCategorySubscription = async (
+  subscription,
+  categoryToCheck,
+  setHasActiveSubscription,
+  setHasActiveSubscriptionId
+) => {
+  const userSubscriptions = subscription;
+  // Check if the user has an active subscription in the specified category
+  const foundSubscription = userSubscriptions.find((subscription) => {
+    return subscription.subscription_plan.category_id == categoryToCheck;
+  });
+  if (setHasActiveSubscriptionId) {
+    setHasActiveSubscriptionId(foundSubscription?.id);
+  }
+  setHasActiveSubscription(foundSubscription !== undefined);
+};
