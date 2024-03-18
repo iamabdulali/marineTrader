@@ -9,7 +9,7 @@ import PriceStep6 from "../../components/BuildAdSteps/PriceStep6";
 import GalleryStep5 from "../../components/BuildAdSteps/GalleryStep5";
 import { buildAdValidationSchema } from "../../utils/ValidationSchema";
 import { AuthContext } from "../../Context/AuthContext";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Modal from "../../components/Modal";
 import PaymentOptionModal from "../../components/BuildAdSteps/AdComponents/PaymentOptionModal";
 import {
@@ -23,6 +23,7 @@ import { toast } from "react-toastify";
 import { displayErrorMessages } from "../../utils/displayErrors";
 import axios from "axios";
 import { Oval } from "react-loader-spinner";
+import { getOneAdvert } from "../../utils/fetch/fetchData";
 
 const BuildAd = () => {
   const [step, setStep] = useState(1);
@@ -30,14 +31,26 @@ const BuildAd = () => {
   const [spinner, setSpinner] = useState(false);
   const NavigateTo = useNavigate();
 
-  const stepLabels = [
-    // "Category",
-    "Description",
-    "Features",
-    "Notes",
-    "Gallery",
-    "Price",
-  ];
+  const [advert, setAdvert] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const pathArray = window.location.pathname.split("/");
+  const id = pathArray[4];
+
+  const IsEditMode = () => {
+    const location = useLocation();
+    return location.pathname.startsWith("/selling/buildAd/advert");
+  };
+
+  const EditMode = IsEditMode();
+
+  useEffect(() => {
+    if (EditMode) {
+      getOneAdvert(setAdvert, setLoading, id);
+    }
+  }, []);
+
+  const stepLabels = ["Description", "Features", "Notes", "Gallery", "Price"];
 
   const { selectedPackage, selectedCategory } = useContext(AuthContext);
 
@@ -73,6 +86,10 @@ const BuildAd = () => {
     advert_status: "",
     stripe_token: "",
   };
+  const editValues = {
+    advert,
+  };
+
   const prevStep = () => setStep(step - 1);
   // const nextStep = () => setStep(step + 1);
   const [isPaymentOptionOpen, setIsPaymentOptionOpen] = useState(false);
@@ -166,7 +183,7 @@ const BuildAd = () => {
   };
 
   useEffect(() => {
-    if (selectedCategory == null) {
+    if (selectedCategory == null && !EditMode) {
       NavigateTo("/selling");
     }
   }, []);
