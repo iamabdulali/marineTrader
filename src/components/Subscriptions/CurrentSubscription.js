@@ -6,16 +6,16 @@ import { categoriesList } from "../..";
 
 const CurrentSubscription = ({
   packageName,
-  isStandard,
   featuresArray,
   category,
   expiry_date,
   setHasSubscription,
   categoryId,
 }) => {
-  const dynamicClasses = isStandard
-    ? "border-[#1565D8] text-[#1565d8]"
-    : "border-[#36B37E] text-[#36B37E]";
+  const dynamicClasses =
+    packageName == "Broker plus"
+      ? "border-[#36B37E] text-[#36B37E] "
+      : "border-[#FFB800] text-[#FFB800]";
 
   const { dispatch } = useContext(AuthContext);
 
@@ -28,16 +28,9 @@ const CurrentSubscription = ({
           {/* {isStandard ? "Standard Trader" : "Dealer Plus"} */}
           {packageName}
           <span className="text-[#8891B2] font-medium text-sm ml-1">
-            {isStandard ? " Pay as you list" : " (12 months package)"}
+            (12 months package)
           </span>
         </p>
-
-        {/* <Link
-          to={`/payment/subscription/${id}`}
-          className=" border-[3px] sm:w-auto hover:bg-[#0D1A8B] hover:text-white w-full text-center block rounded-md border-[#0D1A8B] text-[#0D1A8B] py-3 px-10 font-semibold "
-        >
-          {isStandard ? "Upgrade Now" : "Renew"}
-        </Link> */}
         <button
           onClick={() => {
             setHasSubscription(false);
@@ -47,25 +40,21 @@ const CurrentSubscription = ({
             });
             // document.querySelector(`.category-${categoryId}`).click();
           }}
-          className=" border-[3px] sm:w-auto hover:bg-[#0D1A8B] hover:text-white w-full text-center block rounded-md border-[#0D1A8B] text-[#0D1A8B] py-3 px-10 font-semibold "
+          className={`border-[3px] sm:w-auto ${
+            packageName == "Broker plus"
+              ? "hover:bg-[#36B37E]"
+              : "hover:bg-[#FFB800]"
+          } ] hover:text-white w-full text-center block rounded-md  py-3 px-10 font-semibold ${dynamicClasses}`}
         >
-          {isStandard ? "Upgrade Now" : "Renew"}
+          Renew
         </button>
       </div>
 
       <div className="flex justify-end items-center my-3">
-        <p className="font-semibold text-[#11133D] text-3xl">
-          {" "}
-          {isStandard ? "Free" : ""}
+        <p className="font-medium text-[#11133D]">
+          <span className="text-[#8891B2]  ">Expires On: </span>
+          {expiry_date}
         </p>
-        {isStandard ? (
-          ""
-        ) : (
-          <p className="font-medium text-[#11133D]">
-            <span className="text-[#8891B2]  ">Expires On: </span>
-            {expiry_date}
-          </p>
-        )}
       </div>
       <p className="font-medium text-[#11133D] mb-5">
         <span className="text-[#8891B2]  ">Category: </span>
@@ -78,8 +67,17 @@ const CurrentSubscription = ({
               key={id}
               className="flex gap-4 font-medium mt-5 mr-5 items-baseline"
             >
-              <p className="bg-[#e1f4ec] rounded-full  min-h-6 min-w-6 flex items-center justify-center">
-                <FaCheck color="#36B37E" size={10} />
+              <p
+                className={`${
+                  packageName == "Broker plus"
+                    ? "bg-[#e1f4ec]"
+                    : "bg-[#ffb80021]"
+                }  rounded-full  min-h-6 min-w-6 flex items-center justify-center`}
+              >
+                <FaCheck
+                  color={packageName == "Broker plus" ? "#36B37E" : "#FFB800"}
+                  size={10}
+                />
               </p>
               {featureName}
             </p>
