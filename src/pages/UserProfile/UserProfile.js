@@ -140,7 +140,11 @@ const UserInfo = () => {
                   )}
                   <div className="tab-content px-6 py-10">
                     {selectedTab === "companyInfo" && (
-                      <CompanyInfo editable={editing} user={user} />
+                      <CompanyInfo
+                        editable={editing}
+                        user={user}
+                        isPrivateSeller={isPrivateSeller}
+                      />
                     )}
                     {selectedTab === "businessDetails" && (
                       <BusinessDetails editable={editing} user={user} />

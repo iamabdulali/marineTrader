@@ -2,7 +2,7 @@ import React from "react";
 import { FormField } from "../../components/FormField";
 import { useFormikContext } from "formik";
 
-const CompanyInfo = ({ editable, user }) => {
+const CompanyInfo = ({ editable, isPrivateSeller }) => {
   const { values, setFieldValue } = useFormikContext();
 
   const handleInputChange = (e) => {
@@ -13,6 +13,27 @@ const CompanyInfo = ({ editable, user }) => {
   return (
     <>
       <div className="flex sm:gap-6 items-center sm:flex-row flex-col">
+        {isPrivateSeller ? (
+          <FormField
+            label="Name"
+            FieldType="text"
+            inputField={false}
+            value={values.user.name}
+            name="name"
+            onChange={(e) => handleInputChange(e)}
+            readOnly={true}
+          />
+        ) : (
+          <FormField
+            label="Company Name"
+            FieldType="text"
+            inputField={false}
+            value="john23"
+            name="companyName"
+            onChange={(e) => handleInputChange(e)}
+            readOnly={editable}
+          />
+        )}
         <FormField
           label="Username"
           FieldType="text"
@@ -21,15 +42,6 @@ const CompanyInfo = ({ editable, user }) => {
           name="user_name"
           onChange={(e) => handleInputChange(e)}
           readOnly={true}
-        />
-        <FormField
-          label="Company Name"
-          FieldType="text"
-          inputField={false}
-          value="john23"
-          name="companyName"
-          onChange={(e) => handleInputChange(e)}
-          readOnly={editable}
         />
       </div>
       <div className="flex sm:gap-6 items-center sm:flex-row flex-col">
