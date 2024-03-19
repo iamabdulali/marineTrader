@@ -42,7 +42,7 @@ const SubscriptionStep2 = () => {
 
   useEffect(() => {
     fetchOptions("subscriptions", setSubscriptions, setLoading);
-  }, []);
+  }, [selectedCategory]);
 
   useEffect(() => {
     fetchOptions(
