@@ -67,9 +67,9 @@ const SubscriptionStep2 = () => {
 
   return (
     <>
-      <Heading content="Select Subscription Plan" className="mt-8" />
-      <div className="lg:flex hidden gap-5 mt-10 pb-20">
-        <LoadingWrapper className="top-44" loading={loading}>
+      <LoadingWrapper className="top-44" loading={loading}>
+        <Heading content="Select Subscription Plan" className="mt-8" />
+        <div className="lg:flex hidden gap-5 mt-10 pb-20">
           {subscriptionsPlan?.map(({ name, amount, id }, index) => {
             return (
               <Subscriptions
@@ -90,10 +90,9 @@ const SubscriptionStep2 = () => {
               />
             );
           })}
-        </LoadingWrapper>
-      </div>
-      <div>
-        <LoadingWrapper loading={loading}>
+        </div>
+
+        <div>
           <Tabs
             className="lg:hidden bg-white justify-around block border-2 mt-8  rounded-md"
             tabs={tabs}
@@ -126,8 +125,8 @@ const SubscriptionStep2 = () => {
               );
             })}
           </div>
-        </LoadingWrapper>
-      </div>
+        </div>
+      </LoadingWrapper>
     </>
   );
 };
