@@ -23,12 +23,14 @@ const AdSubscriptionComponent = ({
   id,
   hasActiveSubscription,
   hasActiveSubscriptionData,
+  adsPosted,
 }) => {
   let variantStyles = {};
   let [isSearchResultOpen, setIsSearchResultOpen] = useState(false);
-  const totalAds =
-    hasActiveSubscriptionData?.subscription_plan?.premium_per_month;
-  console.log(hasActiveSubscriptionData);
+  const totalAds = Number(
+    hasActiveSubscriptionData?.subscription_plan?.premium_per_month - adsPosted
+  );
+
   const { dispatch } = useContext(AuthContext);
 
   switch (variant) {

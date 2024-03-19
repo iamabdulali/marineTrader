@@ -15,12 +15,14 @@ import { AuthContext } from "../../Context/AuthContext";
 import {
   checkCategorySubscription,
   fetchOptions,
+  getAdvert,
 } from "../../utils/fetch/fetchData";
 
 export default function AdSubscription() {
   const [selectedTab, setSelectedTab] = useState("Standard");
   const [loading, setLoading] = useState(true);
   const [packages, setPackages] = useState([]);
+  const [adverts, setAdverts] = useState([]);
   const [subscription, setSubscriptions] = useState([]);
   const [hasActiveSubscription, setHasActiveSubscription] = useState(false);
   const [hasActiveSubscriptionData, setHasActiveSubscriptionData] = useState(
@@ -32,7 +34,12 @@ export default function AdSubscription() {
   const categoryToCheck = selectedCategory?.id;
   useEffect(() => {
     fetchOptions("subscriptions", setSubscriptions, setLoading);
+    getAdvert(setAdverts, setLoading);
   }, []);
+
+  const filterAdverts = adverts.filter((advert) => {
+    return advert?.category_id == selectedCategory?.id;
+  });
 
   useEffect(() => {
     checkCategorySubscription(
@@ -106,6 +113,7 @@ export default function AdSubscription() {
                 id={id}
                 hasActiveSubscription={hasActiveSubscription}
                 hasActiveSubscriptionData={hasActiveSubscriptionData}
+                adsPosted={filterAdverts.length}
               />
             );
           })}
@@ -149,6 +157,7 @@ export default function AdSubscription() {
                     id={id}
                     hasActiveSubscription={hasActiveSubscription}
                     hasActiveSubscriptionData={hasActiveSubscriptionData}
+                    adsPosted={filterAdverts.length}
                   />
                 )
               );
