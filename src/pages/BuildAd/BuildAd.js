@@ -26,7 +26,7 @@ import { Oval } from "react-loader-spinner";
 import { getOneAdvert } from "../../utils/fetch/fetchData";
 
 const BuildAd = () => {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(5);
   const [submit, setSubmit] = useState(false);
   const [spinner, setSpinner] = useState(false);
   const NavigateTo = useNavigate();
@@ -83,6 +83,7 @@ const BuildAd = () => {
     facilities: [],
     advert_package: selectedPackage,
     countries: [],
+    continents: [],
     advert_status: "",
     stripe_token: "",
   };
@@ -201,7 +202,7 @@ const BuildAd = () => {
       />
       <Formik
         initialValues={initialValues}
-        validationSchema={buildAdValidationSchema}
+        // validationSchema={buildAdValidationSchema}
         onSubmit={handleSubmit}
       >
         {({ isValid, values, setErrors, setTouched, setFieldValue }) => (

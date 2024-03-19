@@ -155,7 +155,7 @@ const PaymentFormSubscription = ({ setFieldValue, values }) => {
                   <PaymentSummary advert={advert} />
                   <AvailableUpgrades
                     className="bg-[#1CBF73] flex flex-col gap-5 mt-8 p-5 rounded-lg w-full"
-                    openModal={() => openModal(setIsSpotlightOpen)}
+                    showSpotlight={false}
                     addButton={true}
                     openBundle={() => openModal(setIsBundleOpen)}
                   />
@@ -170,18 +170,6 @@ const PaymentFormSubscription = ({ setFieldValue, values }) => {
                 />
               </div>
             </Layout>
-            <Modal
-              isOpen={isSpotlightOpen}
-              onClose={() => closeModal(setIsSpotlightOpen)}
-              opacity="bg-opacity-40"
-              width="xl:w-9/12 w-full"
-            >
-              <SpotlightModal
-                value={values}
-                setFieldValue={setFieldValue}
-                onClick={() => closeModal(setIsSpotlightOpen)}
-              />
-            </Modal>
             <Modal
               isOpen={isBundleOpen}
               onClose={() => closeModal(setIsBundleOpen)}

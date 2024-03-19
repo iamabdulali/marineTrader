@@ -1,84 +1,25 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import CheckboxGroup from "../../CheckboxGroup";
 import { FaTrash } from "react-icons/fa";
 import { AuthContext } from "../../../Context/AuthContext";
+import { fetchOptions } from "../../../utils/fetch/fetchData";
+import { Field, useFormikContext } from "formik";
+import LoadingWrapper from "../../../utils/LoadingWrapper";
 
-const Step1 = ({ showSpotlightSelection, setFieldValue, values }) => {
+const Step1 = ({ showSpotlightSelection }) => {
   const { bundleName } = useContext(AuthContext);
 
-  const initialData = {
-    countries: {
-      "United Kingdom ( + £9.99)": { selected: false, price: 9.99 },
-      "Netherlands ( + £6.99)": { selected: false, price: 6.99 },
-      "Switzerland ( + £6.99)": { selected: false, price: 6.99 },
-      "Russia ( + £6.99)": { selected: false, price: 6.99 },
-      "France ( + £6.99)": { selected: false, price: 6.99 },
-      "Poland ( + £6.99)": { selected: false, price: 6.99 },
-      "Luxembourg ( + £6.99)": { selected: false, price: 6.99 },
-      "Brazil ( + £6.99)": { selected: false, price: 6.99 },
-      "Germany ( + £6.99)": { selected: false, price: 6.99 },
-      "Austria ( + £6.99)": { selected: false, price: 6.99 },
-      "Canada ( + £6.99)": { selected: false, price: 6.99 },
-      "Portugal ( + £6.99)": { selected: false, price: 6.99 },
-      "Spain ( + £6.99)": { selected: false, price: 6.99 },
-      "New Zealand ( + £6.99)": { selected: false, price: 6.99 },
-      "America ( + £6.99)": { selected: false, price: 6.99 },
-      "Mexico ( + £6.99)": { selected: false, price: 6.99 },
-      "Belgium ( + £6.99)": { selected: false, price: 6.99 },
-      "Hungary ( + £6.99)": { selected: false, price: 6.99 },
-      "Australia ( + £6.99)": { selected: false, price: 6.99 },
-      "China ( + £6.99)": { selected: false, price: 6.99 },
-      "Sweden ( + £6.99)": { selected: false, price: 6.99 },
-      "Norway ( + £6.99)": { selected: false, price: 6.99 },
-      // Add more countries with their respective prices as needed
-    },
-    continents: {
-      "North America ( + £89.99)": { selected: false, price: 89.99 },
-      "South America ( + £89.99)": { selected: false, price: 89.99 },
-      "Europe ( + £89.99)": { selected: false, price: 89.99 },
-      "Antarctica ( + £89.99)": { selected: false, price: 89.99 },
-      "Australia ( + £89.99)": { selected: false, price: 89.99 },
-      "Africa ( + £89.99)": { selected: false, price: 89.99 },
-      "Asia ( + £89.99)": { selected: false, price: 89.99 },
-    },
-  };
+  const [selectedCountries, setSelectedCountries] = useState([]);
+  const [selectedContinents, setSelectedContinents] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [totalCount, setTotalCount] = useState(0);
 
-  const [selectedCountries, setSelectedCountries] = useState(
-    initialData.countries
-  );
-  const [selectedContinents, setSelectedContinents] = useState(
-    initialData.continents
-  );
+  const { values, setFieldValue } = useFormikContext();
 
-  const calculateTotal = (selectedItems) => {
-    let total = 0;
-    for (const item in selectedItems) {
-      if (selectedItems[item].selected) {
-        total += selectedItems[item].price;
-      }
-    }
-    return total;
-  };
-
-  const handleCountryChange = (item) => {
-    setSelectedCountries((prevCountries) => ({
-      ...prevCountries,
-      [item]: {
-        ...prevCountries[item],
-        selected: !prevCountries[item].selected,
-      },
-    }));
-  };
-
-  const handleContinentChange = (item) => {
-    setSelectedContinents((prevContinents) => ({
-      ...prevContinents,
-      [item]: {
-        ...prevContinents[item],
-        selected: !prevContinents[item].selected,
-      },
-    }));
-  };
+  useEffect(() => {
+    fetchOptions("countries", setSelectedCountries, setLoading);
+    fetchOptions("continents", setSelectedContinents, setLoading);
+  }, []);
 
   const removeCountry = (item) => {
     setSelectedCountries((prevCountries) => ({
@@ -88,6 +29,43 @@ const Step1 = ({ showSpotlightSelection, setFieldValue, values }) => {
         selected: !prevCountries[item].selected,
       },
     }));
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value, checked } = e.target;
+
+    if (name === "countries" || name === "continents") {
+      if (checked) {
+        // Add the value to the respective array
+        setFieldValue(name, [...values[name], value]);
+        // Update the total count if the value is valid
+        const selectedType =
+          name === "countries" ? selectedCountries : selectedContinents;
+        const spotlightPrice = Number(
+          selectedType[value]?.spotlight_price.match(/\d+\.\d+/)[0]
+        );
+        if (!isNaN(spotlightPrice)) {
+          setTotalCount((prevTotalCount) => prevTotalCount + spotlightPrice);
+        }
+      } else {
+        // Remove the value from the respective array
+        setFieldValue(
+          name,
+          values[name].filter((item) => item !== value)
+        );
+        // Update the total count if the value is valid
+        const selectedType =
+          name === "countries" ? selectedCountries : selectedContinents;
+        const spotlightPrice = Number(
+          selectedType[value]?.spotlight_price.match(/\d+\.\d+/)[0]
+        );
+        if (!isNaN(spotlightPrice)) {
+          setTotalCount((prevTotalCount) => prevTotalCount - spotlightPrice);
+        }
+      }
+    } else {
+      setFieldValue(name, value);
+    }
   };
 
   const renderSelectedCountriesTable = () => {
@@ -116,9 +94,7 @@ const Step1 = ({ showSpotlightSelection, setFieldValue, values }) => {
       <div className="sm:px-8 px-5">
         <div className="text-[#0D1A8B] smallLg:text-xl text-base font-bold flex justify-between ">
           <p>Your SpotLight Selections</p>
-          <p className="uppercase">
-            Total: £{calculateTotal(selectedCountries).toFixed(2)}
-          </p>
+          <p className="uppercase">Total: £{totalCount.toFixed(2)}</p>
         </div>
         <table className="w-full sm:text-base text-sm text-left bg-[#f9f9f9] border-collapse border border-[#D8D8D8] mt-4">
           <thead>
@@ -140,35 +116,61 @@ const Step1 = ({ showSpotlightSelection, setFieldValue, values }) => {
           renderSelectedCountriesTable()
         ) : (
           <div className="py-5">
-            {}
-            <div className="text-[#0D1A8B] smallLg:text-xl text-base font-bold flex justify-between sm:px-8 px-5">
-              <p className="pr-3">Select Countries From The List:</p>
-              <p className="uppercase">
-                <span className="sm:inline-block hidden">Total:</span> £
-                {calculateTotal(selectedCountries).toFixed(2)}
-              </p>
-            </div>
-            <div className="sm:px-8 px-5">
-              <CheckboxGroup
-                setFieldValue={setFieldValue}
-                values={values}
-                className="grid smallLg:grid-cols-4 sm:grid-cols-2 gap-5"
-                facilities={selectedCountries}
-                name="countries"
-                checkedProp={true}
-                onChangeProp={handleCountryChange}
-              />
-
-              <div className="text-[#0D1A8B] smallLg:text-xl text-base font-bold mt-12">
-                <p>Select Continents From The List:</p>
+            <LoadingWrapper
+              loading={loading}
+              className="top-1/2 -translate-y-1/2"
+            >
+              <div className="text-[#0D1A8B] smallLg:text-xl text-base font-bold flex justify-between sm:px-8 px-5">
+                <p className="pr-3">Select Countries From The List:</p>
+                <p className="uppercase">
+                  <span className="sm:inline-block hidden">Total:</span> £
+                  {totalCount.toFixed(2)}
+                </p>
               </div>
-              <CheckboxGroup
-                className="grid smallLg:grid-cols-4 sm:grid-cols-2 gap-5"
-                facilities={selectedContinents}
-                name="continents"
-                onChange={handleContinentChange}
-              />
-            </div>
+              <div className="sm:px-8 px-5">
+                <div
+                  className={`grid smallLg:grid-cols-4 sm:grid-cols-2 gap-5 text-sm font-medium text-[#11133D] mt-7`}
+                >
+                  {selectedCountries?.map(({ name, id, spotlight_price }) => (
+                    <div key={id}>
+                      <label className="flex text-[#11133D]">
+                        <input
+                          className="min-w-[20px] min-h-[20px] text-blue-600 bg-gray-100 border-gray-300 rounded mr-3"
+                          type="checkbox"
+                          name="countries"
+                          value={id}
+                          // checked={values?.countries.includes(id)}
+                          onChange={(e) => handleInputChange(e)}
+                        />
+                        {name} (+ {spotlight_price})
+                      </label>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="text-[#0D1A8B] smallLg:text-xl text-base font-bold mt-12">
+                  <p>Select Continents From The List:</p>
+                </div>
+                <div
+                  className={`grid smallLg:grid-cols-4 sm:grid-cols-2 gap-5 text-sm font-medium text-[#11133D] mt-7`}
+                >
+                  {selectedContinents?.map(({ name, id, spotlight_price }) => (
+                    <div key={id}>
+                      <label className="flex text-[#11133D]">
+                        <input
+                          className="min-w-[20px] min-h-[20px] text-blue-600 bg-gray-100 border-gray-300 rounded mr-3"
+                          type="checkbox"
+                          name="continents"
+                          value={id}
+                          onChange={(e) => handleInputChange(e)}
+                        />
+                        {name} (+ £{spotlight_price})
+                      </label>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </LoadingWrapper>
           </div>
         )}
       </div>

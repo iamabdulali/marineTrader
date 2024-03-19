@@ -142,6 +142,7 @@ const PriceStep6 = ({ setFieldValue, values }) => {
           className="bg-[#1CBF73] flex smallLg:flex-row flex-col mt-8 p-5 rounded-lg justify-between smallLg:items-center"
           width="smallLg:w-auto"
           openModal={() => openModal(setIsSpotlightOpen)}
+          showSpotlight={true}
         />
       </div>
       <Modal

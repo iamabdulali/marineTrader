@@ -1,8 +1,8 @@
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import React, { useEffect, useState } from "react";
-import { Formik } from "formik";
-import { useLocation } from "react-router-dom"; // Import useLocation from React Router
+import { Formik, Form } from "formik";
+import { useLocation } from "react-router-dom";
 import { fetchOptions } from "../../utils/fetch/fetchData";
 import PaymentFormSubscription from "../../components/Payment/PaymentFormSubscription";
 import PaymentFormAd from "../../components/Payment/PaymentFormAd";
@@ -24,7 +24,9 @@ const Payment = () => {
       {stripePromise && (
         <Elements stripe={stripePromise}>
           <Formik>
-            <>{isAdPayment ? <PaymentFormAd /> : <PaymentFormSubscription />}</>
+            <Form>
+              {isAdPayment ? <PaymentFormAd /> : <PaymentFormSubscription />}
+            </Form>
           </Formik>
         </Elements>
       )}
