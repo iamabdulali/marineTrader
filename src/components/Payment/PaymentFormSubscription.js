@@ -39,7 +39,9 @@ const PaymentFormSubscription = ({ setFieldValue, values }) => {
   const [showStatus, setShowStatus] = useState(false);
   const [subscription, setSubscriptions] = useState([]);
   const [hasActiveSubscription, setHasActiveSubscription] = useState(false);
-  const [hasActiveSubscriptionId, setHasActiveSubscriptionId] = useState(false);
+  const [hasActiveSubscriptionData, setHasActiveSubscriptionData] = useState(
+    []
+  );
   const stripe = useStripe();
   const elements = useElements();
   const navigate = useNavigate();
@@ -63,7 +65,7 @@ const PaymentFormSubscription = ({ setFieldValue, values }) => {
       subscription,
       categoryToCheck,
       setHasActiveSubscription,
-      setHasActiveSubscriptionId
+      setHasActiveSubscriptionData
     );
   }, [subscription]);
 
@@ -118,7 +120,7 @@ const PaymentFormSubscription = ({ setFieldValue, values }) => {
       const { data } = await axios.post(
         `${SERVER_BASE_URL}/subscription/upgrade`,
         {
-          subscription: hasActiveSubscriptionId,
+          subscription: hasActiveSubscriptionData?.id,
           new_plan: id,
         },
         {

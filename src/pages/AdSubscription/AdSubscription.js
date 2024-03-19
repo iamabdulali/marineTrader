@@ -27,7 +27,6 @@ export default function AdSubscription() {
   const { selectedCategory } = useContext(AuthContext);
 
   const categoryToCheck = selectedCategory?.id;
-  console.log(categoryToCheck);
   useEffect(() => {
     fetchOptions("subscriptions", setSubscriptions, setLoading);
   }, []);
@@ -39,8 +38,6 @@ export default function AdSubscription() {
       setHasActiveSubscription
     );
   }, [categoryToCheck, subscription]);
-
-  console.log(hasActiveSubscription);
 
   const tabs = [
     {

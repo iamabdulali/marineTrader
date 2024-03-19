@@ -66,17 +66,15 @@ export const checkCategorySubscription = async (
   subscription,
   categoryToCheck,
   setHasActiveSubscription,
-  setHasActiveSubscriptionId
+  setHasActiveSubscriptionData
 ) => {
   const userSubscriptions = await subscription;
-  console.log(userSubscriptions);
   // Check if the user has an active subscription in the specified category
   const foundSubscription = userSubscriptions.find((subscription) => {
     return subscription.subscription_plan.category_id == categoryToCheck;
   });
-  if (setHasActiveSubscriptionId) {
-    setHasActiveSubscriptionId(foundSubscription?.id);
+  if (setHasActiveSubscriptionData) {
+    setHasActiveSubscriptionData(foundSubscription);
   }
-  console.log("HELO");
   setHasActiveSubscription(foundSubscription !== undefined);
 };

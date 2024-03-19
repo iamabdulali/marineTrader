@@ -11,6 +11,8 @@ const CurrentSubscription = ({
   expiry_date,
   setHasSubscription,
   categoryId,
+  id,
+  subscription_plan_id,
 }) => {
   const dynamicClasses =
     packageName == "Broker plus"
@@ -31,23 +33,44 @@ const CurrentSubscription = ({
             (12 months package)
           </span>
         </p>
-        <button
-          onClick={() => {
-            setHasSubscription(false);
-            dispatch({
-              type: "SELECTED_CATEGORY",
-              payload: { id: categoryId, name: categoriesList[categoryId] },
-            });
-            // document.querySelector(`.category-${categoryId}`).click();
-          }}
-          className={`border-[3px] sm:w-auto ${
-            packageName == "Broker plus"
-              ? "hover:bg-[#36B37E]"
-              : "hover:bg-[#FFB800]"
-          } ] hover:text-white w-full text-center block rounded-md  py-3 px-10 font-semibold ${dynamicClasses}`}
-        >
-          Renew
-        </button>
+        {packageName == "Broker plus" ? (
+          <Link
+            to={`/payment/subscription/${subscription_plan_id}`}
+            onClick={() => {
+              // setHasSubscription(false);
+              dispatch({
+                type: "SELECTED_CATEGORY",
+                payload: { id: categoryId, name: categoriesList[categoryId] },
+              });
+              // document.querySelector(`.category-${categoryId}`).click();
+            }}
+            className={`border-[3px] sm:w-auto ${
+              packageName == "Broker plus"
+                ? "hover:bg-[#36B37E]"
+                : "hover:bg-[#FFB800]"
+            } ] hover:text-white w-full text-center block rounded-md  py-3 px-10 font-semibold ${dynamicClasses}`}
+          >
+            Renew
+          </Link>
+        ) : (
+          <button
+            onClick={() => {
+              setHasSubscription(false);
+              dispatch({
+                type: "SELECTED_CATEGORY",
+                payload: { id: categoryId, name: categoriesList[categoryId] },
+              });
+              // document.querySelector(`.category-${categoryId}`).click();
+            }}
+            className={`border-[3px] sm:w-auto ${
+              packageName == "Broker plus"
+                ? "hover:bg-[#36B37E]"
+                : "hover:bg-[#FFB800]"
+            } ] hover:text-white w-full text-center block rounded-md  py-3 px-10 font-semibold ${dynamicClasses}`}
+          >
+            Upgrade
+          </button>
+        )}
       </div>
 
       <div className="flex justify-end items-center my-3">
