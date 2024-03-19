@@ -44,8 +44,6 @@ export default function AdSubscription() {
     );
   });
 
-  console.log(filterAdverts);
-
   useEffect(() => {
     checkCategorySubscription(
       subscription,

@@ -74,7 +74,10 @@ const Subscription = () => {
         ""
       )}
 
-      <LoadingWrapper loading={loading}>
+      <LoadingWrapper
+        loading={loading}
+        className="top-0 xl:-translate-x-0 -translate-x-1/2"
+      >
         <div className="overflow-x-scroll category-menu">
           <CategoryList
             initialCategory={-1}
