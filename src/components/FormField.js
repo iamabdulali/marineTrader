@@ -28,8 +28,6 @@ export const FormField = ({
           onClick={onClick}
           placeholder={label}
           className={className}
-          onChange={onChange}
-          value={value}
         ></Field>
         <ErrorMessage component="span" name={name} className="text-[red]" />
       </div>
