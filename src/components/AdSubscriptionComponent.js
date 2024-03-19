@@ -22,9 +22,13 @@ const AdSubscriptionComponent = ({
   featuresArray,
   id,
   hasActiveSubscription,
+  hasActiveSubscriptionData,
 }) => {
   let variantStyles = {};
   let [isSearchResultOpen, setIsSearchResultOpen] = useState(false);
+  const totalAds =
+    hasActiveSubscriptionData?.subscription_plan?.premium_per_month;
+  console.log(hasActiveSubscriptionData);
   const { dispatch } = useContext(AuthContext);
 
   switch (variant) {
@@ -57,7 +61,7 @@ const AdSubscriptionComponent = ({
         ribbon: true,
         ribbonImage: ribbon,
         searchResult: featuredSearchResult,
-        monthlyAllowance: true,
+        monthlyAllowance: false,
       };
       break;
     default:
@@ -100,7 +104,9 @@ const AdSubscriptionComponent = ({
           <div className="text-sm text-[#11133D] font-medium">
             <p className="mb-3">
               Inclusive Monthly Allowance:{" "}
-              <span className="text-[#E6AB13] font-semibold">15 Remaining</span>
+              <span className="text-[#E6AB13] font-semibold">
+                {totalAds} Remaining
+              </span>
             </p>
             {/* <p className="mt-2 mb-3">
               Bundle Balance:{" "}

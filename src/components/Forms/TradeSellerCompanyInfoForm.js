@@ -55,7 +55,7 @@ export default function TradeSellerCompanyInfoForm() {
             <Field
               className="border-[#CECED7] border-2 rounded-md p-3 w-full"
               type="text"
-              placeholder="Company Info"
+              placeholder="Company Name"
               name="company_name"
             />
             <ErrorMessage

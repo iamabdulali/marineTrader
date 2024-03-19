@@ -23,6 +23,9 @@ export default function AdSubscription() {
   const [packages, setPackages] = useState([]);
   const [subscription, setSubscriptions] = useState([]);
   const [hasActiveSubscription, setHasActiveSubscription] = useState(false);
+  const [hasActiveSubscriptionData, setHasActiveSubscriptionData] = useState(
+    []
+  );
 
   const { selectedCategory } = useContext(AuthContext);
 
@@ -35,7 +38,8 @@ export default function AdSubscription() {
     checkCategorySubscription(
       subscription,
       categoryToCheck,
-      setHasActiveSubscription
+      setHasActiveSubscription,
+      setHasActiveSubscriptionData
     );
   }, [categoryToCheck, subscription]);
 
@@ -101,6 +105,7 @@ export default function AdSubscription() {
                 key={id}
                 id={id}
                 hasActiveSubscription={hasActiveSubscription}
+                hasActiveSubscriptionData={hasActiveSubscriptionData}
               />
             );
           })}
@@ -143,6 +148,7 @@ export default function AdSubscription() {
                     key={id}
                     id={id}
                     hasActiveSubscription={hasActiveSubscription}
+                    hasActiveSubscriptionData={hasActiveSubscriptionData}
                   />
                 )
               );

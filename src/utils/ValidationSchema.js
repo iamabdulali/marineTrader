@@ -35,8 +35,8 @@ export const validationSchema = Yup.object().shape({
   company_logo: Yup.mixed()
     .test(
       "fileSize",
-      "File size is too large (max 1 MB)",
-      (value) => !value || (value && value.size <= 1024 * 1024)
+      "File size is too large (max 10 MB)",
+      (value) => !value || (value && value.size <= 10 * 1024 * 1024)
     )
     .test(
       "isRequired",
@@ -47,8 +47,8 @@ export const validationSchema = Yup.object().shape({
   main_picture: Yup.mixed()
     .test(
       "fileSize",
-      "File size is too large (max 1 MB)",
-      (value) => !value || (value && value.size <= 1024 * 1024)
+      "File size is too large (max 10 MB)",
+      (value) => !value || (value && value.size <= 10 * 1024 * 1024)
     )
     .test(
       "isRequired",
@@ -125,8 +125,8 @@ export const privateSellerValidationSchema = Yup.object({
   image_field: Yup.mixed()
     .test(
       "fileSize",
-      "File size is too large (max 1 MB)",
-      (value) => !value || (value && value.size <= 1024 * 1024)
+      "File size is too large (max 10 MB)",
+      (value) => !value || (value && value.size <= 10 * 1024 * 1024) // Changed from 1MB to 10MB
     )
     .test(
       "isRequired",
