@@ -38,8 +38,13 @@ export default function AdSubscription() {
   }, []);
 
   const filterAdverts = adverts.filter((advert) => {
-    return advert?.category_id == selectedCategory?.id;
+    return (
+      advert?.category_id == selectedCategory?.id &&
+      advert?.advert_package_id == "2"
+    );
   });
+
+  console.log(filterAdverts);
 
   useEffect(() => {
     checkCategorySubscription(
