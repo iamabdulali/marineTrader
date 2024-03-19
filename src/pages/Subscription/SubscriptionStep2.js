@@ -3,14 +3,25 @@ import Subscriptions from "../../components/Subscriptions/Subscriptions";
 import Heading from "../../components/Heading";
 import { DealerPlus, ServicePlus, StandardTrade } from "../../utils/DummyData";
 import Tabs from "../../components/Tabs";
-import { fetchOptions } from "../../utils/fetch/fetchData";
+import {
+  checkCategorySubscription,
+  fetchOptions,
+} from "../../utils/fetch/fetchData";
 import LoadingWrapper from "../../utils/LoadingWrapper";
 import { AuthContext } from "../../Context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const SubscriptionStep2 = () => {
   const [selectedTab, setSelectedTab] = useState("Broker plus");
   const [subscriptions, setSubscriptions] = useState([]);
+  const [subscriptionsPlan, setSubscriptionsPlans] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [hasActiveSubscription, setHasActiveSubscription] = useState(false);
+  const [hasActiveSubscriptionData, setHasActiveSubscriptionData] = useState(
+    []
+  );
+  const navigate = useNavigate();
 
   const tabs = [
     {
@@ -27,23 +38,39 @@ const SubscriptionStep2 = () => {
   };
 
   const { selectedCategory } = useContext(AuthContext);
+  const categoryToCheck = selectedCategory?.id;
+
+  useEffect(() => {
+    fetchOptions("subscriptions", setSubscriptions, setLoading);
+  }, []);
 
   useEffect(() => {
     fetchOptions(
       `subscription-plans?category=${selectedCategory?.id || "1"}`,
-      setSubscriptions,
+      setSubscriptionsPlans,
       setLoading
     );
-  }, [selectedCategory]);
+    checkCategorySubscription(
+      subscriptions,
+      categoryToCheck,
+      setHasActiveSubscription,
+      setHasActiveSubscriptionData
+    );
+
+    if (hasActiveSubscriptionData?.subscription_plan_id == "2") {
+      navigate("/dashboard");
+      toast.error("You are already subscribed to the highest package");
+    }
+  }, [selectedCategory, subscriptions]);
 
   const featuresArray = [DealerPlus, ServicePlus];
 
   return (
     <>
       <Heading content="Select Subscription Plan" className="mt-8" />
-      <div className="lg:flex hidden gap-5 mt-10">
+      <div className="lg:flex hidden gap-5 mt-10 pb-20">
         <LoadingWrapper className="top-44" loading={loading}>
-          {subscriptions?.map(({ name, amount, id }, index) => {
+          {subscriptionsPlan?.map(({ name, amount, id }, index) => {
             return (
               <Subscriptions
                 key={id}
@@ -66,15 +93,15 @@ const SubscriptionStep2 = () => {
         </LoadingWrapper>
       </div>
       <div>
-        <Tabs
-          className="lg:hidden bg-white justify-around block border-2 mt-8  rounded-md"
-          tabs={tabs}
-          selectedTab={selectedTab}
-          handleTabClick={handleTabClick}
-        />
-        <div className="lg:hidden block py-10">
-          <LoadingWrapper loading={loading}>
-            {subscriptions?.map(({ name, amount, id }, index) => {
+        <LoadingWrapper loading={loading}>
+          <Tabs
+            className="lg:hidden bg-white justify-around block border-2 mt-8  rounded-md"
+            tabs={tabs}
+            selectedTab={selectedTab}
+            handleTabClick={handleTabClick}
+          />
+          <div className="lg:hidden block pt-10 pb-20">
+            {subscriptionsPlan?.map(({ name, amount, id }, index) => {
               return (
                 selectedTab === name && (
                   <Subscriptions
@@ -98,8 +125,8 @@ const SubscriptionStep2 = () => {
                 )
               );
             })}
-          </LoadingWrapper>
-        </div>
+          </div>
+        </LoadingWrapper>
       </div>
     </>
   );

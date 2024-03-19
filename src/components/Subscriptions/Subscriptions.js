@@ -102,7 +102,9 @@ const Subscriptions = ({
             return (
               <div
                 key={id}
-                className={`${standOut ? "font-semibold" : ""} flex gap-4 mt-5`}
+                className={`${
+                  standOut ? "items-center font-semibold" : ""
+                } flex gap-4 mt-5`}
               >
                 <p
                   className={`bg-[#e1f4ec] rounded-full h-6 w-6 flex items-center justify-center`}
