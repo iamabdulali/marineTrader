@@ -42,26 +42,26 @@ const SubscriptionStep2 = () => {
 
   useEffect(() => {
     fetchOptions("subscriptions", setSubscriptions, setLoading);
-  }, [selectedCategory]);
-
-  useEffect(() => {
     fetchOptions(
       `subscription-plans?category=${selectedCategory?.id || "1"}`,
       setSubscriptionsPlans,
       setLoading
     );
+  }, [selectedCategory]);
+
+  useEffect(() => {
     checkCategorySubscription(
       subscriptions,
       categoryToCheck,
       setHasActiveSubscription,
       setHasActiveSubscriptionData
     );
-
-    if (hasActiveSubscriptionData?.subscription_plan_id == "2") {
-      navigate("/dashboard");
-      toast.error("You are already subscribed to the highest package");
-    }
   }, [selectedCategory, subscriptions]);
+
+  if (hasActiveSubscriptionData?.subscription_plan_id == "2") {
+    navigate("/dashboard");
+    toast.error("You are already subscribed to the highest package");
+  }
 
   const featuresArray = [DealerPlus, ServicePlus];
 
