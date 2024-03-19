@@ -68,7 +68,7 @@ export const checkCategorySubscription = async (
   setHasActiveSubscription,
   setHasActiveSubscriptionData
 ) => {
-  const userSubscriptions = subscription;
+  const userSubscriptions = await subscription;
   // Check if the user has an active subscription in the specified category
   const foundSubscription = userSubscriptions.find((subscription) => {
     return subscription.subscription_plan?.category_id == categoryToCheck;
