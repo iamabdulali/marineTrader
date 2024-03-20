@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import Step1 from "./SpotlightModalSteps/Step1";
 
-const SpotlightModal = ({ onClick, setFieldValue, values }) => {
+const SpotlightModal = ({ onClick, setFieldValue, values, spotlightFor }) => {
   const [showSpotlightSelection, setShowSpotlightSelection] = useState(false);
 
   return (
     <>
       <Step1
+        spotlightFor={spotlightFor}
         values={values}
         setFieldValue={setFieldValue}
         showSpotlightSelection={showSpotlightSelection}

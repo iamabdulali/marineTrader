@@ -30,6 +30,8 @@ export default function Selling() {
     fetchOptions("categories", setCategories);
   }, []);
 
+  console.log(adverts);
+
   const handleDelete = (idToDelete) => {
     setAdverts((prevAds) => {
       const indexToDelete = prevAds.findIndex(

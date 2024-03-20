@@ -82,8 +82,10 @@ const BuildAd = () => {
     price: "",
     facilities: [],
     advert_package: selectedPackage,
-    countries: [],
-    continents: [],
+    category_spotlights_countries: [],
+    category_spotlights_continents: [],
+    home_spotlights_countries: [],
+    home_spotlights_continents: [],
     advert_status: "",
     stripe_token: "",
   };

@@ -6,7 +6,7 @@ import { fetchOptions } from "../../../utils/fetch/fetchData";
 import { Field, useFormikContext } from "formik";
 import LoadingWrapper from "../../../utils/LoadingWrapper";
 
-const Step1 = ({ showSpotlightSelection }) => {
+const Step1 = ({ showSpotlightSelection, spotlightFor }) => {
   const { bundleName } = useContext(AuthContext);
 
   const [selectedCountries, setSelectedCountries] = useState([]);
@@ -21,29 +21,25 @@ const Step1 = ({ showSpotlightSelection }) => {
     fetchOptions("continents", setSelectedContinents, setLoading);
   }, []);
 
-  const removeCountry = (item) => {
-    setSelectedCountries((prevCountries) => ({
-      ...prevCountries,
-      [item]: {
-        ...prevCountries[item],
-        selected: !prevCountries[item].selected,
-      },
-    }));
-  };
-
   const handleInputChange = (e) => {
     const { name, value, checked } = e.target;
 
-    if (name === "countries" || name === "continents") {
+    if (
+      name === `${spotlightFor}_spotlights_countries` ||
+      name === `${spotlightFor}_spotlights_continents`
+    ) {
       if (checked) {
         // Add the value to the respective array
         setFieldValue(name, [...values[name], value]);
         // Update the total count if the value is valid
         const selectedType =
-          name === "countries" ? selectedCountries : selectedContinents;
+          name === `${spotlightFor}_spotlights_countries`
+            ? selectedCountries
+            : selectedContinents;
         const spotlightPrice = Number(
-          selectedType[value]?.spotlight_price.match(/\d+\.\d+/)[0]
+          selectedType[value - 1]?.spotlight_price.match(/\d+\.\d+/)[0]
         );
+
         if (!isNaN(spotlightPrice)) {
           setTotalCount((prevTotalCount) => prevTotalCount + spotlightPrice);
         }
@@ -55,9 +51,11 @@ const Step1 = ({ showSpotlightSelection }) => {
         );
         // Update the total count if the value is valid
         const selectedType =
-          name === "countries" ? selectedCountries : selectedContinents;
+          name === `${spotlightFor}_spotlights_countries`
+            ? selectedCountries
+            : selectedContinents;
         const spotlightPrice = Number(
-          selectedType[value]?.spotlight_price.match(/\d+\.\d+/)[0]
+          selectedType[value - 1]?.spotlight_price.match(/\d+\.\d+/)[0]
         );
         if (!isNaN(spotlightPrice)) {
           setTotalCount((prevTotalCount) => prevTotalCount - spotlightPrice);
@@ -69,22 +67,23 @@ const Step1 = ({ showSpotlightSelection }) => {
   };
 
   const renderSelectedCountriesTable = () => {
-    const selectedCountriesArray = Object.entries(selectedCountries)
-      .filter(([_, data]) => data.selected)
-      .map(([country, data]) => (
-        <tr key={country} className=" text-[#11133D]">
-          <td className="py-2 px-4 font-semibold">{country}</td>
-          <td className="py-2 px-4 font-semibold">£{data.price.toFixed(2)}</td>
-          <td className="py-2 px-4 font-semibold">
-            <button
-              className=" text-[#FC4040] flex items-center gap-3 px-3 py-1 rounded"
-              onClick={() => removeCountry(country)}
-            >
-              <FaTrash /> Remove
-            </button>
-          </td>
-        </tr>
-      ));
+    const selectedCountriesArray =
+      values[`${spotlightFor}_spotlights_countries`];
+
+    const handleRemove = (country) => {
+      setFieldValue(
+        `${spotlightFor}_spotlights_countries`,
+        values[`${spotlightFor}_spotlights_countries`].filter(
+          (item) => item != country - 1
+        )
+      );
+      setTotalCount(
+        (prevTotalCount) =>
+          prevTotalCount - selectedCountries[country].spotlight_price
+      );
+    };
+
+    console.log(values?.home_spotlights_countries);
 
     if (selectedCountriesArray.length === 0) {
       return <p className="px-8">No countries selected.</p>;
@@ -104,11 +103,38 @@ const Step1 = ({ showSpotlightSelection }) => {
               <th className="py-2 px-4 font-medium">Action</th>
             </tr>
           </thead>
-          <tbody>{selectedCountriesArray}</tbody>
+          <tbody>
+            {values[`${spotlightFor}_spotlights_countries`]?.map((country) => {
+              return (
+                <tr
+                  key={selectedCountries[country]?.name}
+                  className=" text-[#11133D]"
+                >
+                  <td className="py-2 px-4 font-semibold">
+                    {selectedCountries[country]?.name}
+                  </td>
+                  <td className="py-2 px-4 font-semibold">
+                    £{selectedCountries[country]?.spotlight_price}
+                  </td>
+                  <td className="py-2 px-4 font-semibold">
+                    <button
+                      className=" text-[#FC4040] flex items-center gap-3 px-3 py-1 rounded"
+                      onClick={() =>
+                        handleRemove(selectedCountries[country]?.id)
+                      }
+                    >
+                      <FaTrash /> Remove
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
         </table>
       </div>
     );
   };
+
   return (
     <>
       <div className="py-5 ">
@@ -134,12 +160,11 @@ const Step1 = ({ showSpotlightSelection }) => {
                   {selectedCountries?.map(({ name, id, spotlight_price }) => (
                     <div key={id}>
                       <label className="flex text-[#11133D]">
-                        <input
+                        <Field
                           className="min-w-[20px] min-h-[20px] text-blue-600 bg-gray-100 border-gray-300 rounded mr-3"
                           type="checkbox"
-                          name="countries"
-                          value={id}
-                          // checked={values?.countries.includes(id)}
+                          name={`${spotlightFor}_spotlights_countries`}
+                          value={`${id}`}
                           onChange={(e) => handleInputChange(e)}
                         />
                         {name} (+ {spotlight_price})
@@ -157,11 +182,11 @@ const Step1 = ({ showSpotlightSelection }) => {
                   {selectedContinents?.map(({ name, id, spotlight_price }) => (
                     <div key={id}>
                       <label className="flex text-[#11133D]">
-                        <input
+                        <Field
                           className="min-w-[20px] min-h-[20px] text-blue-600 bg-gray-100 border-gray-300 rounded mr-3"
                           type="checkbox"
-                          name="continents"
-                          value={id}
+                          name={`${spotlightFor}_spotlights_continents`}
+                          value={`${id}`}
                           onChange={(e) => handleInputChange(e)}
                         />
                         {name} (+ £{spotlight_price})

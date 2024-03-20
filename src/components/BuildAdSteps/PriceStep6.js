@@ -35,6 +35,20 @@ const PriceStep6 = ({ setFieldValue, values }) => {
   let [isBundleOpen, setIsBundleOpen] = useState(false);
   let [isSpotlightOpen, setIsSpotlightOpen] = useState(false);
 
+  const [spotlightType, setSpotlightType] = useState(null); // State variable to track spotlight type
+
+  // Other state variables and useEffect as before
+
+  // Function to handle home spotlight click
+  const handleHomeSpotlightClick = () => {
+    setSpotlightType("home");
+  };
+
+  // Function to handle category spotlight click
+  const handleCategorySpotlightClick = () => {
+    setSpotlightType("category");
+  };
+
   useEffect(() => {
     fetchOptions("currencies", setCurrencies, setLoading);
   }, []);
@@ -143,6 +157,8 @@ const PriceStep6 = ({ setFieldValue, values }) => {
           width="smallLg:w-auto"
           openModal={() => openModal(setIsSpotlightOpen)}
           showSpotlight={true}
+          handleHomeSpotlightClick={handleHomeSpotlightClick}
+          handleCategorySpotlightClick={handleCategorySpotlightClick}
         />
       </div>
       <Modal
@@ -160,6 +176,7 @@ const PriceStep6 = ({ setFieldValue, values }) => {
         width="xl:w-9/12 w-full"
       >
         <SpotlightModal
+          spotlightFor={spotlightType}
           value={values}
           setFieldValue={setFieldValue}
           onClick={() => closeModal(setIsSpotlightOpen)}
