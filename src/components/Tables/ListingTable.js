@@ -27,10 +27,12 @@ const ListingTable = ({
   listingData,
   sellingData,
   OffersData,
+  onDelete,
 }) => {
   let [isOfferOpen, setIsOfferOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [counterOfferId, setCounterOfferId] = useState(null);
+  const [deleteAdvertId, setDeleteAdvertId] = useState(null);
   // Callback function to update isDeleteModalOpen state
   const handleDeleteModalOpen = (isOpen) => {
     setIsDeleteModalOpen(isOpen);
@@ -147,9 +149,7 @@ const ListingTable = ({
                     advert_status,
                     price,
                     expire_date,
-                    packageName,
                     view,
-                    ad,
                   }) => (
                     <tr
                       key={id}
@@ -221,6 +221,7 @@ const ListingTable = ({
                         <CustomDropdownMenu
                           buttonToOpenMenu={
                             <FiMoreVertical
+                              onClick={() => setDeleteAdvertId(id)}
                               size={20}
                               cursor="pointer"
                               color="#0D1A8B"
@@ -245,12 +246,10 @@ const ListingTable = ({
                     images,
                     category,
                     currency,
-                    status,
                     price,
                     expire_date,
                     advert_status,
                     view,
-                    ad,
                   }) => (
                     <div
                       key={id}
@@ -344,20 +343,8 @@ const ListingTable = ({
           ) : (
             <>
               <tbody className="smallLg:table-row-group hidden">
-                {/* Map through the array to dynamically render rows */}
                 {OffersData.map(
-                  ({
-                    id,
-                    image,
-                    itemName,
-                    offer,
-                    price,
-                    name,
-                    advert,
-                    phone,
-                    email,
-                    currency,
-                  }) => (
+                  ({ id, offer, name, advert, phone, email, currency }) => (
                     <tr
                       key={id}
                       className="bg-white border-b-[20px] shadow-[25px] border-[#f6f6f6] text-sm text-[#696E9D]"
@@ -511,7 +498,11 @@ const ListingTable = ({
         opacity="bg-opacity-40"
         padding="p-6"
       >
-        <DeleteListingModal onClick={() => closeModal(setIsDeleteModalOpen)} />
+        <DeleteListingModal
+          onDelete={onDelete}
+          id={deleteAdvertId}
+          onClick={() => closeModal(setIsDeleteModalOpen)}
+        />
       </Modal>
     </>
   );

@@ -1,9 +1,37 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { deleteIcon } from "../../assets";
+import axios from "axios";
+import { SERVER_BASE_URL } from "../..";
+import { toast } from "react-toastify";
+import { displayErrorMessages } from "../../utils/displayErrors";
+import { Oval } from "react-loader-spinner";
+import { AuthContext } from "../../Context/AuthContext";
 
-const DeleteListingModal = ({ onClick }) => {
+const DeleteListingModal = ({ onClick, id, onDelete }) => {
+  const { refresh, dispatch } = useContext(AuthContext);
+  const [spinner, setSpinner] = useState(false);
+  const handleDelete = async () => {
+    setSpinner(true);
+    try {
+      const { data } = await axios.delete(`${SERVER_BASE_URL}/advert/${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      toast.success(data.message);
+      setSpinner(false);
+      onDelete(id);
+      onClick();
+    } catch (error) {
+      console.log(error);
+      const { errors } = error.response.data;
+      displayErrorMessages(errors);
+      setSpinner(false);
+    }
+  };
+
   return (
-    <div className="rounded-lg">
+    <div className="rounded-lg sd">
       <img className="w-28 mx-auto" src={deleteIcon} />
       <p className="text-[#FC4040] font-semibold my-3 text-center">
         Delete Listing
@@ -18,8 +46,22 @@ const DeleteListingModal = ({ onClick }) => {
         >
           No
         </button>
-        <button className="rounded-lg text-white bg-[#FC4040] hover:bg-[#ff2626] py-3 w-full">
-          Yes
+        <button
+          onClick={handleDelete}
+          className="rounded-lg text-white bg-[#FC4040] hover:bg-[#ff2626] py-3 w-full"
+        >
+          {" "}
+          {spinner ? (
+            <Oval
+              secondaryColor="#fff"
+              color="#fff"
+              width={20}
+              height={20}
+              wrapperClass="justify-center"
+            />
+          ) : (
+            "Yes"
+          )}
         </button>
       </div>
     </div>

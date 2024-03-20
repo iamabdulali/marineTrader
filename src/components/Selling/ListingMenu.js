@@ -4,11 +4,7 @@ import { Link } from "react-router-dom";
 import { links } from "../../utils/DummyData";
 
 const ListingMenu = ({ openDeleteModal, id }) => {
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-
-  // Function to open the delete modal
   const handleDeleteButtonClick = () => {
-    // Invoke the callback function with the desired prop value
     openDeleteModal(true);
   };
   return (
@@ -16,8 +12,6 @@ const ListingMenu = ({ openDeleteModal, id }) => {
       <div>
         <Menu.Items className="absolute bg-white custom-shadow rounded-lg px-4 pb-4 right-7 ">
           {links.map(({ href, colorChange, label, onClick }) => {
-            console.log(label.props.children[1] == " Edit");
-            /* Use the `active` state to conditionally style the active item. */
             return (
               <Menu.Item key={href} as={Fragment}>
                 {({ active }) =>

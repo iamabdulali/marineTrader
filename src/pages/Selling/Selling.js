@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import ListingTable from "../../components/Tables/ListingTable";
 import Heading from "../../components/Heading";
 import { FaArrowLeft } from "react-icons/fa";
@@ -16,6 +16,7 @@ import {
 import VideoModal from "../../components/VideoTutorial/VideoModal";
 import { fetchOptions, getAdvert } from "../../utils/fetch/fetchData";
 import LoadingWrapper from "../../utils/LoadingWrapper";
+import { AuthContext } from "../../Context/AuthContext";
 
 export default function Selling() {
   const [loading, setLoading] = useState(true);
@@ -28,6 +29,18 @@ export default function Selling() {
     getAdvert(setAdverts, setLoading);
     fetchOptions("categories", setCategories);
   }, []);
+
+  const handleDelete = (idToDelete) => {
+    setAdverts((prevAds) => {
+      const indexToDelete = prevAds.findIndex(
+        (advert) => advert.id === idToDelete
+      );
+      if (indexToDelete !== -1) {
+        return prevAds.toSpliced(indexToDelete, 1);
+      }
+      return prevAds;
+    });
+  };
 
   return (
     <>
@@ -73,7 +86,7 @@ export default function Selling() {
           {hasListing ? (
             <>
               {adverts.length != 0 ? (
-                <div className="pb-40">
+                <div className="pb-56">
                   <ListingTable
                     tableFor="Your Listings"
                     hasSort={true}
@@ -81,6 +94,7 @@ export default function Selling() {
                     sellingListing={true}
                     tableHeader={sellingHeader}
                     sellingData={adverts}
+                    onDelete={handleDelete}
                   />
                 </div>
               ) : (

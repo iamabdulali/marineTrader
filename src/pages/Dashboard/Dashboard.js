@@ -30,6 +30,18 @@ export default function Dashboard() {
     getAdvert(setAdverts, setLoading);
   }, []);
 
+  const handleDelete = (idToDelete) => {
+    setAdverts((prevAds) => {
+      const indexToDelete = prevAds.findIndex(
+        (advert) => advert.id === idToDelete
+      );
+      if (indexToDelete !== -1) {
+        return prevAds.toSpliced(indexToDelete, 1);
+      }
+      return prevAds;
+    });
+  };
+
   return (
     <>
       <Layout>
@@ -67,13 +79,14 @@ export default function Dashboard() {
           />
           <>
             {adverts.length != 0 ? (
-              <div className="pb-40">
+              <div className="pb-56">
                 <ListingTable
                   tableFor="Your Listings"
                   hasSort={true}
                   hasPadding={true}
                   sellingListing={true}
                   tableHeader={sellingHeader}
+                  onDelete={handleDelete}
                   sellingData={adverts}
                 />
               </div>
