@@ -111,10 +111,10 @@ const Header = ({ menuState, setMenuState }) => {
         )}
 
         <div className="flex items-center">
-          <img
+          {/* <img
             src={`https://purecatamphetamine.github.io/country-flag-icons/3x2/${countryCode}.svg`}
             className="w-10 h-10 object-contain block mr-6"
-          />
+          /> */}
           {/* Language Dropdown */}
           {/* <div className="relative inline-block mr-7">
             <div className="flex items-center gap-7">
