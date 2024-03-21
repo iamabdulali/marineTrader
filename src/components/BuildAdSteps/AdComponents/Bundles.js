@@ -20,7 +20,7 @@ const Bundles = ({
         <p
           className={`${bundleNameColor} sm:text-lg text-sm font-semibold  sm:min-w-56 sm:mr-0 mr-2`}
         >
-          {BundleName} Bundle
+          {BundleName}
         </p>
         <p className="text-[#11133D] font-semibold sm:text-base text-xs">
           {adverts} Adverts

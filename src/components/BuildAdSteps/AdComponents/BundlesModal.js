@@ -1,7 +1,19 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Bundles from "./Bundles";
+import { fetchOptions } from "../../../utils/fetch/fetchData";
+import LoadingWrapper from "../../../utils/LoadingWrapper";
 
 const BundlesModal = ({ onClick }) => {
+  const [bundles, setBundles] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchOptions("bundles", setBundles, setLoading);
+  }, []);
+
+  const variants = ["#1565D8", "#36B37E", "#E6AB13", "#9D13B4", "#D81515"];
+  const bgVariants = ["#F7FAFF", "#E9FFF6", "#FFFCF6", "#FEF5FF", "#FFF6F6"];
+
   return (
     <>
       <div className="bg-gradient-to-t w-full py-4 rounded-tr-lg rounded-tl-lg from-[#0d1a8b] to-[#3241cb]">
@@ -16,55 +28,24 @@ const BundlesModal = ({ onClick }) => {
         <p className="text-sm text-[#8891B2] mt-2 mb-4">
           Select the most suitable bundle for you:
         </p>
-        <Bundles
-          bundleNameColor="text-[#1565D8]"
-          bundleBorder="border-[#1565D8]"
-          bgColor="bg-[#F7FAFF]"
-          BundleName="BASIC"
-          adverts="20"
-          price="16.79"
-          checkbox="basic-bundle"
-          hasDiscount={true}
-          oldPrice="19.79"
-        />
-        <Bundles
-          bundleNameColor="text-[#36B37E]"
-          bundleBorder="border-[#36B37E]"
-          bgColor="bg-[#E9FFF6]"
-          BundleName="STANDARD"
-          adverts="50"
-          price="49.49"
-          checkbox="standard-bundle"
-        />
-        <Bundles
-          bundleNameColor="text-[#E6AB13]"
-          bundleBorder="border-[#E6AB13]"
-          bgColor="bg-[#FFFCF6]"
-          BundleName="ADVANCED"
-          adverts="100"
-          price="79.00"
-          checkbox="advanced-bundle"
-          hasDiscount={true}
-          oldPrice="99.00"
-        />
-        <Bundles
-          bundleNameColor="text-[#9D13B4]"
-          bundleBorder="border-[#9D13B4]"
-          bgColor="bg-[#FEF5FF]"
-          BundleName="ULTIMATE"
-          adverts="250"
-          price="247.49"
-          checkbox="ultimate-bundle"
-        />
-        <Bundles
-          bundleNameColor="text-[#D81515]"
-          bundleBorder="border-[#D81515]"
-          bgColor="bg-[#FFF6F6]"
-          BundleName="EXTREME"
-          adverts="500"
-          price="494.99"
-          checkbox="extreme-bundle"
-        />
+        <LoadingWrapper loading={loading} className="top-1/2 -translate-y-1/2">
+          {bundles?.map(({ id, name, amount, total_adverts }) => {
+            return (
+              <Bundles
+                key={id}
+                bundleNameColor={`text-[${variants[id - 1]}]`}
+                bundleBorder={`border-[${variants[id - 1]}]`}
+                bgColor={`bg-[${bgVariants[id - 1]}]`}
+                BundleName={name}
+                adverts={total_adverts}
+                price={amount}
+                checkbox={name}
+                // hasDiscount={true}
+                // oldPrice="19.79"
+              />
+            );
+          })}
+        </LoadingWrapper>
       </div>
       <div className="text-right pr-6 pb-6">
         <button
@@ -75,6 +56,7 @@ const BundlesModal = ({ onClick }) => {
           Close
         </button>
         <button
+          onClick={onClick}
           type="button"
           className="bg-[#0D1A8B] text-white py-3 px-7 rounded-md"
         >

@@ -31,13 +31,31 @@ import ProtectedRoute from "./utils/ProtectedRoute";
 import GuestRoute from "./utils/GuestRoute";
 import { getUserData } from "./utils/getUserData";
 import "react-loading-skeleton/dist/skeleton.css";
+import axios from "axios";
 
 function App() {
-  const { user, dispatch, isAuthenticated } = useContext(AuthContext);
+  const { user, dispatch, userLocationDetails, isAuthenticated } =
+    useContext(AuthContext);
   const token = localStorage.getItem("token");
   useEffect(() => {
     getUserData(user, dispatch, token);
   }, [isAuthenticated]);
+
+  const getIp = async () => {
+    const { data } = await axios.get("https://api.ipify.org?format=json");
+    return data.ip;
+  };
+
+  useEffect(() => {
+    async function fetchDetailsUsingIP(params) {
+      const IP_ADDRESS = await getIp();
+      const { data } = await axios.get(`http://ip-api.com/json/${IP_ADDRESS}`);
+      dispatch({ type: "USER_DETAILS", payload: data });
+    }
+    fetchDetailsUsingIP();
+  }, []);
+
+  console.log(userLocationDetails);
 
   return (
     <Router>

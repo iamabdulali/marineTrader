@@ -32,6 +32,8 @@ export const authReducer = (state, action) => {
       return { ...state, selectedPackage: action.payload };
     case "REFRESH_STATE":
       return { ...state, refresh: action.payload };
+    case "USER_DETAILS":
+      return { ...state, userLocationDetails: action.payload };
     default:
       return state;
   }
@@ -51,6 +53,7 @@ export const AuthContextProvider = ({ children }) => {
     selectedPackage: null, // Adding selectedPackage state
     selectedCategory: null,
     refresh: false,
+    userLocationDetails: [],
   });
 
   // console.log("Auth context state: ", state);
