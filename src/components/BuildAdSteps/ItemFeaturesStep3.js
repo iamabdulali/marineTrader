@@ -3,6 +3,7 @@ import BuildLayout from "./BuildLayout";
 import CustomDropdownMenu from "../CustomDropdownMenu";
 import ModificationMenu from "./AdComponents/ModificationMenu";
 import { AuthContext } from "../../Context/AuthContext";
+import { useFormikContext } from "formik";
 
 const ItemFeaturesStep3 = () => {
   const {
@@ -12,6 +13,10 @@ const ItemFeaturesStep3 = () => {
     convenienceCheckboxes,
     dispatch,
   } = useContext(AuthContext);
+
+  const { values } = useFormikContext();
+
+  console.log(values?.modifications);
 
   return (
     <>

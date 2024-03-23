@@ -55,8 +55,6 @@ function App() {
     fetchDetailsUsingIP();
   }, []);
 
-  console.log(userLocationDetails);
-
   return (
     <Router>
       {/* <Header/> */}
@@ -173,6 +171,14 @@ function App() {
         />
         <Route
           path="/payment/advert/:id"
+          element={
+            <ProtectedRoute>
+              <Payment />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/payment/bundle/:id"
           element={
             <ProtectedRoute>
               <Payment />

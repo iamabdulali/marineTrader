@@ -111,8 +111,11 @@ const MakeOfferSection = ({ advert }) => {
           {" "}
           <div className="rounded-lg border-2 mt-5">
             <ContentToggle
+              className="flex justify-between cursor-pointer items-center py-6 px-7"
               title="Opening Times"
               setShowContent={setShowTiming}
+              textStyles="font-semibold md:text-xl text-base text-[#11133D]"
+              iconSize={24}
             />
             <div className={`pb-5 px-7 ${showTiming ? "block" : "hidden"}`}>
               {[
@@ -135,8 +138,11 @@ const MakeOfferSection = ({ advert }) => {
           </div>
           <div className="rounded-lg border-2 mt-5">
             <ContentToggle
+              className="flex justify-between cursor-pointer items-center py-6 px-7"
               setShowContent={setShowFacilities}
               title="Facilities"
+              textStyles="font-semibold md:text-xl text-base text-[#11133D]"
+              iconSize={24}
             />
             <div
               className={`pb-5 px-7 ${

@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 import { FaChevronUp, FaChevronDown } from "react-icons/fa";
 
-const ContentToggle = ({ title, setShowContent }) => {
+const ContentToggle = ({
+  title,
+  setShowContent,
+  className,
+  textStyles,
+  iconSize,
+}) => {
   const [showFacilities, setShowFacilities] = useState(true);
 
   const handleToggle = () => {
@@ -11,15 +17,15 @@ const ContentToggle = ({ title, setShowContent }) => {
 
   return (
     <div
-      className={`flex justify-between cursor-pointer items-center py-6 px-7 ${
-        showFacilities ? "border-b-2" : ""
-      } `}
+      className={`${className} ${showFacilities ? "border-b-2" : ""} `}
       onClick={handleToggle}
     >
-      <p className="font-semibold md:text-xl text-base text-[#11133D]">
-        {title}
-      </p>
-      {showFacilities ? <FaChevronUp size={24} /> : <FaChevronDown size={24} />}
+      <p className={`${textStyles}`}>{title}</p>
+      {showFacilities ? (
+        <FaChevronUp size={iconSize} />
+      ) : (
+        <FaChevronDown size={iconSize} />
+      )}
     </div>
   );
 };

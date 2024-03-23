@@ -10,6 +10,8 @@ export const FormField = ({
   value,
   onChange,
   readOnly,
+  useLabelAsPlaceHolder,
+  placeholder,
   as,
 }) => (
   <div className="mb-4 w-full text-sm">
@@ -26,7 +28,7 @@ export const FormField = ({
           type={FieldType}
           name={name}
           onClick={onClick}
-          placeholder={label}
+          placeholder={useLabelAsPlaceHolder ? label : placeholder}
           className={className}
         ></Field>
         <ErrorMessage component="span" name={name} className="text-[red]" />

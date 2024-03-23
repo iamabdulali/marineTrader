@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import Bundles from "./Bundles";
 import { fetchOptions } from "../../../utils/fetch/fetchData";
 import LoadingWrapper from "../../../utils/LoadingWrapper";
+import { Link } from "react-router-dom";
+import { useFormikContext } from "formik";
 
 const BundlesModal = ({ onClick }) => {
   const [bundles, setBundles] = useState([]);
@@ -11,8 +13,29 @@ const BundlesModal = ({ onClick }) => {
     fetchOptions("bundles", setBundles, setLoading);
   }, []);
 
-  const variants = ["#1565D8", "#36B37E", "#E6AB13", "#9D13B4", "#D81515"];
-  const bgVariants = ["#F7FAFF", "#E9FFF6", "#FFFCF6", "#FEF5FF", "#FFF6F6"];
+  const { values } = useFormikContext();
+
+  const variants = [
+    "border-[#1565D8]",
+    "border-[#36B37E]",
+    "border-[#E6AB13]",
+    "border-[#9D13B4]",
+    "border-[#D81515]",
+  ];
+  const bgVariants = [
+    "bg-[#F7FAFF]",
+    "bg-[#E9FFF6]",
+    "bg-[#FFFCF6]",
+    "bg-[#FEF5FF]",
+    "bg-[#FFF6F6]",
+  ];
+  const textVariants = [
+    "text-[#1565D8]",
+    "text-[#36B37E]",
+    "text-[#E6AB13]",
+    "text-[#9D13B4]",
+    "text-[#D81515]",
+  ];
 
   return (
     <>
@@ -33,13 +56,13 @@ const BundlesModal = ({ onClick }) => {
             return (
               <Bundles
                 key={id}
-                bundleNameColor={`text-[${variants[id - 1]}]`}
-                bundleBorder={`border-[${variants[id - 1]}]`}
-                bgColor={`bg-[${bgVariants[id - 1]}]`}
+                bundleNameColor={`${textVariants[id - 1]}`}
+                bundleBorder={`${variants[id - 1]}`}
+                bgColor={`${bgVariants[id - 1]}`}
                 BundleName={name}
                 adverts={total_adverts}
                 price={amount}
-                checkbox={name}
+                checkbox={id}
                 // hasDiscount={true}
                 // oldPrice="19.79"
               />
@@ -55,13 +78,14 @@ const BundlesModal = ({ onClick }) => {
         >
           Close
         </button>
-        <button
+        <Link
+          to={`/payment/bundle/${values?.bundles}`}
           onClick={onClick}
           type="button"
           className="bg-[#0D1A8B] text-white py-3 px-7 rounded-md"
         >
           Confirm
-        </button>
+        </Link>
       </div>
     </>
   );

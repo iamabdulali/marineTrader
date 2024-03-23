@@ -26,7 +26,7 @@ import { Oval } from "react-loader-spinner";
 import { getOneAdvert } from "../../utils/fetch/fetchData";
 
 const BuildAd = () => {
-  const [step, setStep] = useState(5);
+  const [step, setStep] = useState(1);
   const [submit, setSubmit] = useState(false);
   const [spinner, setSpinner] = useState(false);
   const NavigateTo = useNavigate();
@@ -94,75 +94,75 @@ const BuildAd = () => {
   };
 
   const prevStep = () => setStep(step - 1);
-  // const nextStep = () => setStep(step + 1);
+  const nextStep = () => setStep(step + 1);
   const [isPaymentOptionOpen, setIsPaymentOptionOpen] = useState(false);
   let [isVideoOpen, setIsVideoOpen] = useState(false);
 
-  const nextStep = (values, { setTouched, setErrors }) => {
-    try {
-      // Validate only the fields for steps 2 to 6
-      const fieldsToValidate = Object.keys(
-        buildAdValidationSchema.fields
-      ).filter((field) => {
-        if (step === 1) {
-          return [
-            "title",
-            "sub_title",
-            "make",
-            "model",
-            "year",
-            "condition",
-            "color",
-            "service_history",
-            "passenger",
-            "length",
-            "hours",
-            "trailers",
-          ].includes(field);
-        } else if (step === 2) {
-          return [
-            "modification",
-            "feature",
-            "convenience",
-            "accessories",
-          ].includes(field);
-        } else if (step === 3) {
-          return ["description", "tags"].includes(field);
-        } else if (step === 4) {
-          return ["images"].includes(field);
-        } else if (step === 5) {
-          return ["currency", "price"].includes(field);
-        }
-        return true; // Include all fields if not in a specific step
-      });
+  // const nextStep = (values, { setTouched, setErrors }) => {
+  //   try {
+  //     // Validate only the fields for steps 2 to 6
+  //     const fieldsToValidate = Object.keys(
+  //       buildAdValidationSchema.fields
+  //     ).filter((field) => {
+  //       if (step === 1) {
+  //         return [
+  //           "title",
+  //           "sub_title",
+  //           "make",
+  //           "model",
+  //           "year",
+  //           "condition",
+  //           "color",
+  //           "service_history",
+  //           "passenger",
+  //           "length",
+  //           "hours",
+  //           "trailers",
+  //         ].includes(field);
+  //       } else if (step === 2) {
+  //         return [
+  //           "modification",
+  //           "feature",
+  //           "convenience",
+  //           "accessories",
+  //         ].includes(field);
+  //       } else if (step === 3) {
+  //         return ["description", "tags"].includes(field);
+  //       } else if (step === 4) {
+  //         return ["images"].includes(field);
+  //       } else if (step === 5) {
+  //         return ["currency", "price"].includes(field);
+  //       }
+  //       return true; // Include all fields if not in a specific step
+  //     });
 
-      buildAdValidationSchema.pick(fieldsToValidate).validateSync(values, {
-        abortEarly: false,
-      });
+  //     buildAdValidationSchema.pick(fieldsToValidate).validateSync(values, {
+  //       abortEarly: false,
+  //     });
 
-      // Increment the step
-      setStep((prevStep) => prevStep + 1);
-    } catch (error) {
-      if (error.name === "ValidationError") {
-        console.error("Validation errors:", error.errors);
+  //     // Increment the step
+  //     setStep((prevStep) => prevStep + 1);
+  //   } catch (error) {
+  //     if (error.name === "ValidationError") {
+  //       console.error("Validation errors:", error.errors);
 
-        const allFields = Object.keys(values);
-        const touchedState = allFields.reduce((acc, field) => {
-          acc[field] = true;
-          return acc;
-        }, {});
-        setTouched(touchedState);
+  //       const allFields = Object.keys(values);
+  //       const touchedState = allFields.reduce((acc, field) => {
+  //         acc[field] = true;
+  //         return acc;
+  //       }, {});
+  //       setTouched(touchedState);
 
-        const errorState = error.errors.reduce((acc, error) => {
-          acc[error.path] = error.message;
-          return acc;
-        }, {});
-        setErrors(errorState);
-      } else {
-        console.error("Error:", error.message);
-      }
-    }
-  };
+  //       const errorState = error.errors.reduce((acc, error) => {
+  //         acc[error.path] = error.message;
+  //         return acc;
+  //       }, {});
+  //       setErrors(errorState);
+  //     } else {
+  //       console.error("Error:", error.message);
+  //     }
+  //   }
+  // };
 
   const handleSubmit = async (values) => {
     console.log(values);

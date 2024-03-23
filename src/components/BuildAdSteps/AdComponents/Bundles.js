@@ -40,9 +40,9 @@ const Bundles = ({
         <p className="font-semibold sm:text-base text-xs">£{price}</p>
       )}
       <Field
-        type="checkbox"
+        type="radio"
         name="bundles"
-        value={checkbox}
+        value={`${checkbox}`}
         className="sm:w-[25px] sm:h-[25px] min-w-[20px] min-h-[20px] sm:ml-0 ml-2"
       />
     </div>

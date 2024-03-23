@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Layout from "../Layout/Layout";
 import {
   CardNumberElement,
@@ -23,6 +23,7 @@ import PaymentStatus from "../../pages/Payment/PaymentStatus";
 import StripePaymentForm from "./StripePaymentForm";
 import LoadingWrapper from "../../utils/LoadingWrapper";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../Context/AuthContext";
 
 const PaymentFormAd = ({ setFieldValue, values }) => {
   let [isSpotlightOpen, setIsSpotlightOpen] = useState(false);
@@ -36,18 +37,22 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
   const elements = useElements();
   const navigate = useNavigate();
 
+  const { user } = useContext(AuthContext);
+
   const pathArray = window.location.pathname.split("/");
   const id = pathArray[3];
 
-  console.log(id);
+  const isBundlePayment = pathArray.includes("bundle");
 
   useEffect(() => {
-    getOneAdvert(setAdvert, setLoading, id);
+    if (!isBundlePayment) {
+      getOneAdvert(setAdvert, setLoading, id);
+    }
+    setLoading(false);
   }, []);
 
   const { currency_id, advert_package_id, advert_status } = Object(advert);
-
-  console.log(advert);
+  const { currency_id: user_currency_id } = Object(user);
 
   const generateStripeToken = async () => {
     if (!stripe || !elements) {
@@ -64,7 +69,7 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
     return token;
   };
 
-  const handlePaymentSubmit = async (e) => {
+  const handleAdPayment = async (e) => {
     e.preventDefault();
     setSpinner(true);
     try {
@@ -96,23 +101,41 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
     }
   };
 
-  if (advert_status == "paid") {
-    navigate("/dashboard");
-  }
+  const handleBundlePayment = async (e) => {
+    e.preventDefault();
+    setSpinner(true);
+    try {
+      const token = await generateStripeToken();
+      const { data } = await axios.post(
+        `${SERVER_BASE_URL}/bundle-payment/${id}`,
+        {
+          advert_package: advert_package_id,
+          currency: user_currency_id,
+          stripe_token: token.id,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      console.log(data);
+      toast.success(data.message);
+      setSpinner(false);
+      setSuccess(true);
+      setShowStatus(true);
+    } catch (error) {
+      console.log(error);
+      setSpinner(false);
+      setSuccess(false);
+      setShowStatus(true);
+      toast.error(error.response.data.message);
+    }
+  };
 
-  // const handleSubmit = async (event) => {
-  //   event.preventDefault();
-
-  //   elements.getElement(CardNumberElement);
-
-  //   const paymentMethod = await stripe.createPaymentMethod({
-  //     type: "card",
-  //     card: elements.getElement(CardNumberElement),
-  //   });
-
-  //   console.log(paymentMethod);
-
-  // };
+  // if (advert_status == "paid") {
+  //   navigate("/dashboard");
+  // }
 
   return (
     <>
@@ -134,7 +157,9 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
                   />
                 </div>
                 <StripePaymentForm
-                  handlePaymentSubmit={handlePaymentSubmit}
+                  handlePaymentSubmit={
+                    isBundlePayment ? handleBundlePayment : handleAdPayment
+                  }
                   spinner={spinner}
                 />
               </div>
