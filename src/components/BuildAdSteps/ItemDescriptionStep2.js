@@ -15,22 +15,29 @@ import { fetchOptions } from "../../utils/fetch/fetchData";
 import ContentToggle from "../ItemDetailsPage/ToggleContent";
 
 const ItemDescriptionStep2 = () => {
-  const { selectedPackage, selectedCategory } = useContext(AuthContext);
+  const {
+    selectedPackage,
+    selectedCategory,
+    conditions,
+    makes,
+    types,
+    modals,
+  } = useContext(AuthContext);
   const [showDetails, setShowDetails] = useState(true);
   const [showDimensions, setShowDimensions] = useState(true);
   const [showPerformance, setShowPerformance] = useState(true);
-  const [modals, setModals] = useState([]);
-  const [make, setMake] = useState([]);
-  const [conditions, setConditions] = useState([]);
-  const [types, setTypes] = useState([]);
+  // const [modals, setModals] = useState([]);
+  // const [make, setMake] = useState([]);
+  // const [conditions, setConditions] = useState([]);
+  // const [types, setTypes] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetchOptions("models", setModals, setLoading);
-    fetchOptions("make", setMake, setLoading);
-    fetchOptions("conditions", setConditions, setLoading);
-    fetchOptions("types", setTypes, setLoading);
-  }, []);
+  // useEffect(() => {
+  //   fetchOptions("models", setModals, setLoading);
+  //   fetchOptions("make", setMake, setLoading);
+  //   fetchOptions("conditions", setConditions, setLoading);
+  //   fetchOptions("types", setTypes, setLoading);
+  // }, []);
 
   return (
     <BuildLayout heading="Item Description">
@@ -60,7 +67,7 @@ const ItemDescriptionStep2 = () => {
       />
       <div className={`${showDetails ? "block" : "hidden"}`}>
         <div className="flex sm:flex-row flex-col gap-4">
-          <CategorySelectDropdown label="Make" name="make" options={make} />
+          <CategorySelectDropdown label="Make" name="make" options={makes} />
           <CategorySelectDropdown label="Model" name="model" options={modals} />
         </div>
 

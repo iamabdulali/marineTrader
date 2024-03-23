@@ -14,7 +14,7 @@ import {
   openModal,
 } from "../../utils/ModalOpeningClosingFunctions";
 import VideoModal from "../../components/VideoTutorial/VideoModal";
-import { fetchOptions, getAdvert } from "../../utils/fetch/fetchData";
+import { getAdvert } from "../../utils/fetch/fetchData";
 import LoadingWrapper from "../../utils/LoadingWrapper";
 import { AuthContext } from "../../Context/AuthContext";
 
@@ -23,14 +23,11 @@ export default function Selling() {
   const [hasListing, setHasListing] = useState(true);
   let [isVideoOpen, setIsVideoOpen] = useState(false);
   const [adverts, setAdverts] = useState([]);
-  const [categories, setCategories] = useState([]);
+  const { categories } = useContext(AuthContext);
 
   useEffect(() => {
     getAdvert(setAdverts, setLoading);
-    fetchOptions("categories", setCategories);
   }, []);
-
-  console.log(adverts);
 
   const handleDelete = (idToDelete) => {
     setAdverts((prevAds) => {

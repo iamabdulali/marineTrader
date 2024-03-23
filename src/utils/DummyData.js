@@ -620,3 +620,57 @@ export const initialFacilities = {
     Dsds: false,
   },
 };
+
+export const engineCount = [
+  {
+    id: 0,
+    name: "No Engine",
+  },
+  {
+    id: "sailDriven",
+    name: "Sail Driven",
+  },
+  {
+    id: 1,
+    name: "1 Engine",
+  },
+  {
+    id: 2,
+    name: "2 Engine",
+  },
+  {
+    id: 3,
+    name: "3 Engine",
+  },
+  {
+    id: 4,
+    name: "4 Engine",
+  },
+  {
+    id: 5,
+    name: "5 Engine",
+  },
+];
+
+export const propeller = [
+  {
+    id: 0,
+    name: "No Propeller",
+  },
+  {
+    id: 1,
+    name: "2 Blade",
+  },
+  {
+    id: 2,
+    name: "3 Blade",
+  },
+  {
+    id: 3,
+    name: "4 Blade",
+  },
+  {
+    id: 4,
+    name: "Folding",
+  },
+];

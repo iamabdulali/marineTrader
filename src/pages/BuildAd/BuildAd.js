@@ -54,7 +54,7 @@ const BuildAd = () => {
 
   const { selectedPackage, selectedCategory } = useContext(AuthContext);
 
-  const initialValues = {
+  const initialValuesJetSki = {
     category: selectedCategory?.id,
     title: "",
     sub_title: "",
@@ -88,6 +88,47 @@ const BuildAd = () => {
     home_spotlights_continents: [],
     advert_status: "",
     stripe_token: "",
+    // engineCount: 0,
+    // selectedEngine: -1,
+    // engines: [],
+  };
+  const initialValuesBoatHome = {
+    category: selectedCategory?.id,
+    title: "",
+    sub_title: "",
+    type: "",
+    make: "",
+    model: "",
+    year: "",
+    condition: "",
+    color: "",
+    service_history: "",
+    passenger: "",
+    length: "",
+    hours: "",
+    trailers: "",
+    modifications: [],
+    features: [],
+    conveniences: [],
+    accessories: [],
+    description: "",
+    tags: [],
+    images: [],
+    video: null,
+    priceOnInformation: "",
+    currency: "",
+    price: "",
+    facilities: [],
+    advert_package: selectedPackage,
+    category_spotlights_countries: [],
+    category_spotlights_continents: [],
+    home_spotlights_countries: [],
+    home_spotlights_continents: [],
+    advert_status: "",
+    stripe_token: "",
+    engineCount: 0,
+    selectedEngine: -1,
+    engines: [],
   };
   const editValues = {
     advert,
@@ -203,7 +244,11 @@ const BuildAd = () => {
         stepLabels={stepLabels}
       />
       <Formik
-        initialValues={initialValues}
+        initialValues={
+          selectedCategory?.name == "Boat Home"
+            ? initialValuesBoatHome
+            : initialValuesJetSki
+        }
         // validationSchema={buildAdValidationSchema}
         onSubmit={handleSubmit}
       >

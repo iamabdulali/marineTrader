@@ -32,10 +32,10 @@ import GuestRoute from "./utils/GuestRoute";
 import { getUserData } from "./utils/getUserData";
 import "react-loading-skeleton/dist/skeleton.css";
 import axios from "axios";
+import { SERVER_BASE_URL } from ".";
 
 function App() {
-  const { user, dispatch, userLocationDetails, isAuthenticated } =
-    useContext(AuthContext);
+  const { user, dispatch, isAuthenticated } = useContext(AuthContext);
   const token = localStorage.getItem("token");
   useEffect(() => {
     getUserData(user, dispatch, token);
@@ -53,6 +53,16 @@ function App() {
       dispatch({ type: "USER_DETAILS", payload: data });
     }
     fetchDetailsUsingIP();
+
+    async function fetchOptions(url, type) {
+      const { data } = await axios.get(`${SERVER_BASE_URL}/${url}`);
+      dispatch({ type: type, payload: data.data });
+    }
+    fetchOptions("categories", "CATEGORIES");
+    fetchOptions("make", "MAKES");
+    fetchOptions("models", "MODALS");
+    fetchOptions("conditions", "CONDITIONS");
+    fetchOptions("types", "TYPES");
   }, []);
 
   return (

@@ -34,6 +34,16 @@ export const authReducer = (state, action) => {
       return { ...state, refresh: action.payload };
     case "USER_DETAILS":
       return { ...state, userLocationDetails: action.payload };
+    case "MAKES":
+      return { ...state, makes: action.payload };
+    case "MODALS":
+      return { ...state, modals: action.payload };
+    case "CONDITIONS":
+      return { ...state, conditions: action.payload };
+    case "TYPES":
+      return { ...state, types: action.payload };
+    case "CATEGORIES":
+      return { ...state, categories: action.payload };
     default:
       return state;
   }
@@ -88,6 +98,11 @@ export const AuthContextProvider = ({ children }) => {
     selectedCategory: null,
     refresh: false,
     userLocationDetails: [],
+    makes: [],
+    modals: [],
+    conditions: [],
+    types: [],
+    categories: [],
   });
 
   // console.log("Auth context state: ", state);

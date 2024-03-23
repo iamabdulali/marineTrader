@@ -22,12 +22,11 @@ import LoadingWrapper from "../../utils/LoadingWrapper";
 const Subscription = () => {
   const [hasSubscription, setHasSubscription] = useState(true);
   let [isVideoOpen, setIsVideoOpen] = useState(false);
-  const [categories, setCategories] = useState([]);
   const [subscription, setSubscriptions] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { categories } = useContext(AuthContext);
 
   useEffect(() => {
-    fetchOptions("categories", setCategories);
     fetchOptions("subscriptions", setSubscriptions, setLoading);
   }, []);
 

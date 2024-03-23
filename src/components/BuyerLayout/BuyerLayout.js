@@ -1,23 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Header from "../../components/Header/Header";
 import Footer from "../Footer/Footer";
 import CategoryList from "../categoryList/CategoryList";
 import VerticalMenu from "../../components/verticalMenu/VerticalMenu";
 import LoadingWrapper from "../../utils/LoadingWrapper";
-import { fetchOptions } from "../../utils/fetch/fetchData";
+import { AuthContext } from "../../Context/AuthContext";
 
 const BuyerLayout = ({ children, showCategoryList }) => {
-  const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [menuState, setMenuState] = useState(false);
+  const { categories } = useContext(AuthContext);
 
   const handleMenuStateChange = (newState) => {
     setMenuState(newState);
   };
 
   useEffect(() => {
-    fetchOptions("categories", setCategories, setLoading);
-  }, []);
+    if (categories.length != 0) {
+      setLoading(false);
+    }
+  }, [categories]);
 
   return (
     <>
@@ -38,7 +40,6 @@ const BuyerLayout = ({ children, showCategoryList }) => {
               }}
               onCategoryClick={() => {}}
               categories={categories}
-              setLoading={setLoading}
             />
           </div>
         ) : (
