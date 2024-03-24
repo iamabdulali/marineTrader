@@ -101,12 +101,13 @@ const BuildAd = () => {
     model: "",
     year: "",
     condition: "",
-    color: "",
-    service_history: "",
-    passenger: "",
     length: "",
-    hours: "",
-    trailers: "",
+    width: "",
+    height: "",
+    depth: "",
+    hull_material: "",
+    hull_shape: "",
+    keel_type: "",
     modifications: [],
     features: [],
     conveniences: [],
@@ -129,81 +130,135 @@ const BuildAd = () => {
     engineCount: 0,
     selectedEngine: -1,
     engines: [],
+    bow_make: "",
+    bow_power: "",
+    bow_modal: "",
+    bow_year: "",
+    stern_make: "",
+    stern_power: "",
+    stern_modal: "",
+    stern_year: "",
+    generator_make: "",
+    generator_power: "",
+    generator_modal: "",
+    generator_year: "",
+    generator_consumption: "",
+    generator_hours: "",
   };
   const editValues = {
     advert,
   };
 
+  const bigBoatValidationArrayStep1 = [
+    "title",
+    "sub_title",
+    "make",
+    "model",
+    "year",
+    "condition",
+    "type",
+    "hull_shape",
+    "hull_material",
+    "keel_type",
+    "width",
+    "height",
+    "depth",
+    "length",
+  ];
+  const smallBoatsValidationArrayStep1 = [
+    "title",
+    "sub_title",
+    "make",
+    "model",
+    "year",
+    "condition",
+    "color",
+    "service_history",
+    "passenger",
+    "length",
+    "hours",
+    "trailers",
+  ];
+
+  const bigBoatValidationArrayStep2 = [
+    "engines",
+    "bow_make",
+    "bow_modal",
+    "bow_year",
+    "bow_power",
+    "stern_make",
+    "stern_modal",
+    "stern_year",
+    "stern_power",
+    "generator_make",
+    "generator_modal",
+    "generator_year",
+    "generator_power",
+    "generator_consumption",
+    "generator_hours",
+  ];
+  const smallBoatsValidationArrayStep2 = [
+    "modification",
+    "feature",
+    "convenience",
+    "accessories",
+  ];
+
   const prevStep = () => setStep(step - 1);
-  const nextStep = () => setStep(step + 1);
+  // const nextStep = () => setStep(step + 1);
   const [isPaymentOptionOpen, setIsPaymentOptionOpen] = useState(false);
   let [isVideoOpen, setIsVideoOpen] = useState(false);
 
-  // const nextStep = (values, { setTouched, setErrors }) => {
-  //   try {
-  //     // Validate only the fields for steps 2 to 6
-  //     const fieldsToValidate = Object.keys(
-  //       buildAdValidationSchema.fields
-  //     ).filter((field) => {
-  //       if (step === 1) {
-  //         return [
-  //           "title",
-  //           "sub_title",
-  //           "make",
-  //           "model",
-  //           "year",
-  //           "condition",
-  //           "color",
-  //           "service_history",
-  //           "passenger",
-  //           "length",
-  //           "hours",
-  //           "trailers",
-  //         ].includes(field);
-  //       } else if (step === 2) {
-  //         return [
-  //           "modification",
-  //           "feature",
-  //           "convenience",
-  //           "accessories",
-  //         ].includes(field);
-  //       } else if (step === 3) {
-  //         return ["description", "tags"].includes(field);
-  //       } else if (step === 4) {
-  //         return ["images"].includes(field);
-  //       } else if (step === 5) {
-  //         return ["currency", "price"].includes(field);
-  //       }
-  //       return true; // Include all fields if not in a specific step
-  //     });
+  const nextStep = (values, { setTouched, setErrors }) => {
+    try {
+      const fieldsToValidate = Object.keys(
+        buildAdValidationSchema.fields
+      ).filter((field) => {
+        if (step === 1) {
+          return selectedCategory?.name == "Boat Home"
+            ? bigBoatValidationArrayStep1.includes(field)
+            : smallBoatsValidationArrayStep1.includes(field);
+        } else if (step === 2) {
+          return selectedCategory?.name == "Boat Home"
+            ? bigBoatValidationArrayStep2.includes(field)
+            : smallBoatsValidationArrayStep2.includes(field);
+        } else if (step === 3) {
+          return ["description", "tags"].includes(field);
+        } else if (step === 4) {
+          return ["images"].includes(field);
+        } else if (step === 5) {
+          return ["currency", "price"].includes(field);
+        }
+        return true; // Include all fields if not in a specific step
+      });
 
-  //     buildAdValidationSchema.pick(fieldsToValidate).validateSync(values, {
-  //       abortEarly: false,
-  //     });
+      buildAdValidationSchema.pick(fieldsToValidate).validateSync(values, {
+        abortEarly: false,
+      });
 
-  //     // Increment the step
-  //     setStep((prevStep) => prevStep + 1);
-  //   } catch (error) {
-  //     if (error.name === "ValidationError") {
-  //       console.error("Validation errors:", error.errors);
+      // Increment the step
+      setStep((prevStep) => prevStep + 1);
+    } catch (error) {
+      if (error.name === "ValidationError") {
+        console.error("Validation errors:", error.errors);
 
-  //       const allFields = Object.keys(values);
-  //       const touchedState = allFields.reduce((acc, field) => {
-  //         acc[field] = true;
-  //         return acc;
-  //       }, {});
-  //       setTouched(touchedState);
+        const allFields = Object.keys(values);
+        const touchedState = allFields.reduce((acc, field) => {
+          acc[field] = true;
+          return acc;
+        }, {});
+        setTouched(touchedState);
 
-  //       const errorState = error.errors.reduce((acc, error) => {
-  //         acc[error.path] = error.message;
-  //         return acc;
-  //       }, {});
-  //       setErrors(errorState);
-  //     } else {
-  //       console.error("Error:", error.message);
-  //     }
-  //   }
-  // };
+        const errorState = error.errors.reduce((acc, error) => {
+          acc[error.path] = error.message;
+          return acc;
+        }, {});
+        setErrors(errorState);
+      } else {
+        console.error("Error:", error.message);
+      }
+    }
+  };
 
   const handleSubmit = async (values) => {
     console.log(values);
@@ -249,7 +304,7 @@ const BuildAd = () => {
             ? initialValuesBoatHome
             : initialValuesJetSki
         }
-        // validationSchema={buildAdValidationSchema}
+        validationSchema={buildAdValidationSchema}
         onSubmit={handleSubmit}
       >
         {({ isValid, values, setErrors, setTouched, setFieldValue }) => (

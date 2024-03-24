@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { CategorySelectDropdown } from "../CategorySelectDropdown";
 import { FormField } from "../FormField";
 import UpdateSubtitleNotice from "../UpdateSubtitleNotice";
@@ -11,7 +11,6 @@ import {
   trailers,
   yearsArray,
 } from "../../utils/DummyData";
-import { fetchOptions } from "../../utils/fetch/fetchData";
 import ContentToggle from "../ItemDetailsPage/ToggleContent";
 
 const ItemDescriptionStep2 = () => {
@@ -26,18 +25,6 @@ const ItemDescriptionStep2 = () => {
   const [showDetails, setShowDetails] = useState(true);
   const [showDimensions, setShowDimensions] = useState(true);
   const [showPerformance, setShowPerformance] = useState(true);
-  // const [modals, setModals] = useState([]);
-  // const [make, setMake] = useState([]);
-  // const [conditions, setConditions] = useState([]);
-  // const [types, setTypes] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  // useEffect(() => {
-  //   fetchOptions("models", setModals, setLoading);
-  //   fetchOptions("make", setMake, setLoading);
-  //   fetchOptions("conditions", setConditions, setLoading);
-  //   fetchOptions("types", setTypes, setLoading);
-  // }, []);
 
   return (
     <BuildLayout heading="Item Description">
