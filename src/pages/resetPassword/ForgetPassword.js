@@ -6,25 +6,27 @@ import { Oval } from "react-loader-spinner";
 import axios from "axios";
 import { SERVER_BASE_URL } from "../..";
 import { toast } from "react-toastify";
-import { resetPasswordValidationSchema } from "../../utils/ValidationSchema";
+import {
+  forgetPasswordValidationSchema,
+  loginValidationSchema,
+} from "../../utils/ValidationSchema";
 
-const ResetPassword = () => {
-  const naviage = useNavigate();
+const ForgetPassword = () => {
+  const navigate = useNavigate();
   const initialValues = {
-    otp: "",
-    password: "",
+    email: "",
   };
   const [spinner, setSpinner] = useState(false);
   const forgetPasswordHandler = async (values) => {
     setSpinner(true);
     try {
       const { data } = await axios.post(
-        `${SERVER_BASE_URL}/reset-password`,
+        `${SERVER_BASE_URL}/forget-password`,
         values
       );
       toast.success(data.message);
       setSpinner(false);
-      naviage("/login");
+      navigate("/reset-password");
     } catch (error) {
       console.log(error);
       toast.error(error.response.data.message);
@@ -43,33 +45,22 @@ const ResetPassword = () => {
           Reset Your Password
         </p>
         <p className="text-sm text-[#696E9D]">
-          Enter The OTP you have received on your registered Email
+          Type in your registered email address to reset password
         </p>
         <Formik
           onSubmit={forgetPasswordHandler}
           initialValues={initialValues}
-          validationSchema={resetPasswordValidationSchema}
+          validationSchema={forgetPasswordValidationSchema}
         >
           <Form>
             <Field
-              type="number"
-              name="otp"
-              placeholder="Enter your OTP"
+              type="email"
+              name="email"
+              placeholder="Enter your Email Address"
               className={`border-[#CECED7] text-sm text-[#8891B2] border-2 rounded-md p-3 w-full mt-6`}
             />
             <ErrorMessage
-              name="otp"
-              component="p"
-              className="text-red-500 mt-1 ml-2"
-            />
-            <Field
-              type="password"
-              name="password"
-              placeholder="Enter your New Password"
-              className={`border-[#CECED7] text-sm text-[#8891B2] border-2 rounded-md p-3 w-full mt-6`}
-            />
-            <ErrorMessage
-              name="password"
+              name="email"
               component="p"
               className="text-red-500 mt-1 ml-2"
             />
@@ -103,4 +94,4 @@ const ResetPassword = () => {
   );
 };
 
-export default ResetPassword;
+export default ForgetPassword;

@@ -85,10 +85,16 @@ const Login = () => {
                     className="text-red-500 mt-1 ml-2"
                   />
                 </div>
+                <Link
+                  to="/forget-password"
+                  className="text-sm text-[#0D1A8B] font-semibold block mt-3 text-right"
+                >
+                  Forgot Password?
+                </Link>
                 <button
                   type="submit"
                   disabled={spinner}
-                  className="w-full mt-6 bg-[#0D1A8B] font-medium text-white px-6 py-3 rounded cursor-pointer"
+                  className="w-full mt-6 bg-[#0D1A8B] hover:bg-[#0a1dbd] font-medium text-white px-6 py-3 rounded cursor-pointer"
                 >
                   {spinner ? (
                     <Oval

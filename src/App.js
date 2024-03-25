@@ -4,7 +4,6 @@ import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
 import Registration from "./pages/Registration/Registration";
 import Dashboard from "./pages/Dashboard/Dashboard";
-import ResetPassword from "./pages/resetPassword/ResetPassword";
 import TradeSeller from "./pages/Sellers/TradeSeller/tradeSeller";
 import Selling from "./pages/Selling/Selling";
 import Offer from "./pages/Offers/Offer";
@@ -33,6 +32,8 @@ import { getUserData } from "./utils/getUserData";
 import "react-loading-skeleton/dist/skeleton.css";
 import axios from "axios";
 import { SERVER_BASE_URL } from ".";
+import ForgetPassword from "./pages/resetPassword/ForgetPassword";
+import ResetPassword from "./pages/resetPassword/ResetPassword";
 
 function App() {
   const { user, dispatch, isAuthenticated } = useContext(AuthContext);
@@ -130,6 +131,7 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route path="/forget-password" element={<ForgetPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route
           path="/selling/buildAd"

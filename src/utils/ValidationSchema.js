@@ -180,3 +180,19 @@ export const makeOfferValidationSchema = Yup.object({
     .length(11, "Phone Number must be of 11 characters")
     .required("Phone Number is required"),
 });
+
+export const forgetPasswordValidationSchema = Yup.object({
+  email: Yup.string()
+    .email("Enter a valid email address")
+    .required("Email Address is required"),
+});
+
+export const resetPasswordValidationSchema = Yup.object({
+  otp: Yup.string().required("OTP is Required"),
+  password: Yup.string()
+    .required("Password is required")
+    .matches(
+      /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+      "Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character"
+    ),
+});
