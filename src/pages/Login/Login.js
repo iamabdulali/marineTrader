@@ -16,17 +16,27 @@ const Login = () => {
   };
 
   const [spinner, setSpinner] = useState(false);
-  const { dispatch } = useContext(AuthContext);
+  const { fcmToken, dispatch } = useContext(AuthContext);
   const NavigateTo = useNavigate();
+
+  console.log(fcmToken);
 
   const onSubmit = async (values) => {
     setSpinner(true);
+    const updatedValues = {
+      ...values,
+      fcm_token: fcmToken,
+    };
     try {
-      const { data } = await axios.post(`${SERVER_BASE_URL}/login`, values, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const { data } = await axios.post(
+        `${SERVER_BASE_URL}/login`,
+        updatedValues,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
       toast.success(data.message);
       localStorage.setItem("token", data.token);
       dispatch({ type: "SET_USER", payload: data.data });

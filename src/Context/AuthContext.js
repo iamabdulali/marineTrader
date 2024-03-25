@@ -44,6 +44,8 @@ export const authReducer = (state, action) => {
       return { ...state, types: action.payload };
     case "CATEGORIES":
       return { ...state, categories: action.payload };
+    case "FCM_TOKEN":
+      return { ...state, fcmToken: action.payload };
     default:
       return state;
   }
@@ -103,6 +105,7 @@ export const AuthContextProvider = ({ children }) => {
     conditions: [],
     types: [],
     categories: [],
+    fcmToken: "",
   });
 
   // console.log("Auth context state: ", state);
