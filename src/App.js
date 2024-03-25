@@ -81,6 +81,7 @@ function App() {
 
       //We can send token to server
       console.log("Token generated : ", token);
+      alert(token);
     } else if (permission === "denied") {
       //notifications are blocked
       alert("You denied for the notification");
