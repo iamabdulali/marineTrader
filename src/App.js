@@ -34,6 +34,9 @@ import axios from "axios";
 import { SERVER_BASE_URL } from ".";
 import ForgetPassword from "./pages/resetPassword/ForgetPassword";
 import ResetPassword from "./pages/resetPassword/ResetPassword";
+import { messaging } from "./utils/firebaseSetup";
+import { getToken, onMessage } from "firebase/messaging";
+import Message from "./components/Message";
 
 function App() {
   const { user, dispatch, isAuthenticated } = useContext(AuthContext);
@@ -65,6 +68,32 @@ function App() {
     fetchOptions("conditions", "CONDITIONS");
     fetchOptions("types", "TYPES");
   }, []);
+
+  async function requestPermission() {
+    //requesting permission using Notification API
+    const permission = await Notification.requestPermission();
+
+    if (permission === "granted") {
+      const token = await getToken(messaging, {
+        vapidKey:
+          "BAiqc7-uEWMc08ecnXYznT5NUPsYlsq5StIPpwPQV5Q9HSmNLU_Zkqmop64QJ2tt3ZeexvHK3j0ZWKIisuy-Hek",
+      });
+
+      //We can send token to server
+      console.log("Token generated : ", token);
+    } else if (permission === "denied") {
+      //notifications are blocked
+      alert("You denied for the notification");
+    }
+  }
+
+  useEffect(() => {
+    requestPermission();
+  }, []);
+
+  onMessage(messaging, (payload) => {
+    toast(<Message notification={payload.notification} />);
+  });
 
   return (
     <Router>

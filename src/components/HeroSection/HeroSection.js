@@ -14,8 +14,6 @@ const HeroSection = () => {
     Navigate("/list");
   };
 
-  console.log(selectedCategory);
-
   const categoryBackgrounds = {
     "Jet Skis": boatBg,
     "Boat Home":

@@ -5,11 +5,8 @@ import { CategorySelectDropdown } from "../CategorySelectDropdown";
 
 const CategoryDropdown = ({ onSubmit, category }) => {
   const handleSubmit = (values) => {
-    // Implement your search logic here using the form values
     onSubmit(values);
   };
-
-  console.log(category);
 
   const categoryOptions = {
     "Jet Skis": ["Jet Skis"],
