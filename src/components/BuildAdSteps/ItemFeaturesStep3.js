@@ -44,6 +44,7 @@ const ItemFeaturesStep3 = () => {
     selectedCategory,
   } = useContext(AuthContext);
 
+  console.log(values);
   return (
     <>
       <BuildLayout heading="Items Features">
@@ -354,7 +355,11 @@ const ItemFeaturesStep3 = () => {
                   buttonToOpenMenu={
                     <>
                       <p className="border-[#CECED7] text-[#8891B2] px-3 py-[13px] border-2 rounded-md  w-full text-left">
-                        {modificationCheckboxes[0] || "Select Modifications"}
+                        {modificationCheckboxes
+                          .filter((modification) =>
+                            values?.modifications.includes(modification)
+                          )
+                          .join(", ") || "Select Modifications"}
                       </p>
                     </>
                   }
@@ -378,7 +383,11 @@ const ItemFeaturesStep3 = () => {
                   buttonToOpenMenu={
                     <>
                       <p className="border-[#CECED7] text-[#8891B2] px-3 py-[13px] border-2 rounded-md  w-full text-left">
-                        {featuresCheckboxes[0] || "Select Features"}
+                        {featuresCheckboxes
+                          .filter((features) =>
+                            values?.features.includes(features)
+                          )
+                          .join(", ") || "Select Features"}
                       </p>
                     </>
                   }
@@ -405,7 +414,11 @@ const ItemFeaturesStep3 = () => {
                   buttonToOpenMenu={
                     <>
                       <p className="border-[#CECED7] text-[#8891B2] px-3 py-[13px] border-2 rounded-md  w-full text-left">
-                        {convenienceCheckboxes[0] || "Select Conveniences"}
+                        {convenienceCheckboxes
+                          .filter((conveniences) =>
+                            values?.conveniences.includes(conveniences)
+                          )
+                          .join(", ") || "Select Conveniences"}
                       </p>
                     </>
                   }
@@ -429,7 +442,11 @@ const ItemFeaturesStep3 = () => {
                   buttonToOpenMenu={
                     <>
                       <p className="border-[#CECED7] text-[#8891B2] px-3 py-[13px] border-2 rounded-md  w-full text-left">
-                        {accessoriesCheckboxes[0] || "Select Accessories"}
+                        {accessoriesCheckboxes
+                          .filter((accessories) =>
+                            values?.accessories.includes(accessories)
+                          )
+                          .join(", ") || "Select Accessories"}
                       </p>
                     </>
                   }
