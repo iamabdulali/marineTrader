@@ -93,7 +93,6 @@ function App() {
   }, []);
 
   onMessage(messaging, (payload) => {
-    alert("HELO");
     toast(<Message notification={payload.notification} />);
   });
 
