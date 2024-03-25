@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import Layout from "../../components/Layout/Layout";
 import CategoryList from "../../components/categoryList/CategoryList";
 import Heading from "../../components/Heading";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CurrentSubscription from "../../components/Subscriptions/CurrentSubscription";
 import { DealerPlus, ServicePlus } from "../../utils/DummyData";
 import SubscriptionStep2 from "./SubscriptionStep2";
@@ -25,12 +25,23 @@ const Subscription = () => {
   const [subscription, setSubscriptions] = useState([]);
   const [loading, setLoading] = useState(true);
   const { categories } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const { selectedCategory, user } = useContext(AuthContext);
+
+  const { seller_type } = Object(user);
 
   useEffect(() => {
     fetchOptions("subscriptions", setSubscriptions, setLoading);
   }, []);
 
-  const { selectedCategory } = useContext(AuthContext);
+  const isPrivateSeller = seller_type == "private seller";
+
+  useEffect(() => {
+    if (isPrivateSeller) {
+      navigate("/dashboard");
+    }
+  }, [user]);
 
   const featuresArray = [
     {

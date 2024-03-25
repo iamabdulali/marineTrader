@@ -75,8 +75,8 @@ function App() {
 
     if (permission === "granted") {
       const token = await getToken(messaging, {
-        vapidKey:
-          "BAiqc7-uEWMc08ecnXYznT5NUPsYlsq5StIPpwPQV5Q9HSmNLU_Zkqmop64QJ2tt3ZeexvHK3j0ZWKIisuy-Hek",
+        // vapidKey:
+        //   "BAiqc7-uEWMc08ecnXYznT5NUPsYlsq5StIPpwPQV5Q9HSmNLU_Zkqmop64QJ2tt3ZeexvHK3j0ZWKIisuy-Hek",
       });
 
       //We can send token to server

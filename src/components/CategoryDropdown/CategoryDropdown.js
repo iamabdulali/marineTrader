@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { categoryDropdownValidationSchema } from "../../utils/ValidationSchema";
 import { CategorySelectDropdown } from "../CategorySelectDropdown";
+import { yearsArray } from "../../utils/DummyData";
+import { AuthContext } from "../../Context/AuthContext";
 
 const CategoryDropdown = ({ onSubmit, category }) => {
   const handleSubmit = (values) => {
@@ -20,6 +22,9 @@ const CategoryDropdown = ({ onSubmit, category }) => {
     Commercial: ["Commercial"],
   };
 
+  const { selectedCategory, conditions, makes, types, modals } =
+    useContext(AuthContext);
+
   return (
     <Formik
       initialValues={{
@@ -30,51 +35,51 @@ const CategoryDropdown = ({ onSubmit, category }) => {
         condition: "",
         year: "",
       }}
-      validationSchema={categoryDropdownValidationSchema}
+      // validationSchema={categoryDropdownValidationSchema}
       onSubmit={handleSubmit}
     >
       <Form className="bg-white shadow-md rounded-lg sm:px-8 px-4 w-full py-8 mb-4">
         <div className="mb-4">
           <div className="flex lg:flex-row flex-col lg:gap-4 gap-0">
-            {category ? (
-              ""
-            ) : (
-              <CategorySelectDropdown
+            <div className="w-full text-sm">
+              <label
+                className="block text-[#11133D] text-sm font-medium mb-2"
+                htmlFor="category"
+              >
+                Category
+              </label>
+              <Field
+                as="select"
                 label="Category"
                 name="category"
-                options={categoryOptions[category] || ["Category"]}
-              />
-            )}
-
-            <CategorySelectDropdown
-              label="Make"
-              name="make"
-              options={categoryOptions[category] || ["Make1", "Make2", "Make3"]}
-            />
+                className="border-[#CECED7] mb-4 text-[#8891B2] border-2 rounded-md p-3 w-full sm:appearance-auto appearance-none"
+              >
+                <option value={selectedCategory?.id}>
+                  {selectedCategory?.name}
+                </option>
+              </Field>
+            </div>
+            <CategorySelectDropdown label="Make" name="make" options={makes} />
           </div>
 
           <div className="flex lg:flex-row flex-col lg:gap-4 gap-0">
             <CategorySelectDropdown
               label="Model"
               name="model"
-              options={["Model1", "Model2", "Model3"]}
+              options={modals}
             />
-            <CategorySelectDropdown
-              label="Type"
-              name="type"
-              options={["Type1", "Type2", "Type3"]}
-            />
+            <CategorySelectDropdown label="Type" name="type" options={types} />
           </div>
           <div className="flex lg:flex-row flex-col lg:gap-4 gap-0">
             <CategorySelectDropdown
               label="Condition"
               name="condition"
-              options={["Condition1", "Condition2", "Condition3"]}
+              options={conditions}
             />
             <CategorySelectDropdown
               label="Year"
               name="year"
-              options={["Year1", "Year2", "Year3"]}
+              options={yearsArray}
             />
           </div>
         </div>

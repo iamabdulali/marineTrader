@@ -86,7 +86,6 @@ const BuildAd = () => {
     category_spotlights_continents: [],
     home_spotlights_countries: [],
     home_spotlights_continents: [],
-    advert_status: "",
     stripe_token: "",
     // engineCount: 0,
     // selectedEngine: -1,

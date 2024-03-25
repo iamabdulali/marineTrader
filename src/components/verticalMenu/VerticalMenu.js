@@ -31,7 +31,7 @@ const VerticalMenu = ({ menuState, setMenuState }) => {
     );
   };
 
-  const { phone_no, email } = Object(user);
+  const { phone_no, email, seller_type } = Object(user);
 
   return (
     <>
@@ -96,15 +96,20 @@ const VerticalMenu = ({ menuState, setMenuState }) => {
                 Events
               </NavLink>
             </li>
-            <li className="mb-4">
-              <NavLink
-                to="/subscriptions"
-                className="flex items-center py-4 px-4 text-[#8891B2] rounded-xl hover:bg-gray-200"
-              >
-                <FaClipboardList className="mr-3" size={18} />
-                Subscriptions
-              </NavLink>
-            </li>
+            {seller_type != "private seller" ? (
+              <li className="mb-4">
+                <NavLink
+                  to="/subscriptions"
+                  className="flex items-center py-4 px-4 text-[#8891B2] rounded-xl hover:bg-gray-200"
+                >
+                  <FaClipboardList className="mr-3" size={18} />
+                  Subscriptions
+                </NavLink>
+              </li>
+            ) : (
+              ""
+            )}
+
             <li className="mb-4">
               <NavLink
                 to="/contact-mt"

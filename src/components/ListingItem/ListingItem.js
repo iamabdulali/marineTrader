@@ -37,12 +37,15 @@ const ListingItem = ({ itemData }) => {
     prevArrow: <FaChevronLeft color="#fff" size={60} />,
   };
 
+  const { id, title, description, hours, year, price } = Object(itemData);
+
   return (
     <>
       <Link
+        key={id}
         to="/itemDetails"
         className={`${
-          itemData.featured
+          itemData?.featured
             ? "bg-[#FEF9EE] border-4 mt-11 border-[#FFB800]"
             : "bg-[#F9FBFE]"
         } rounded-lg sm:px-5 sm:py-5 p-4 block`}
@@ -78,7 +81,7 @@ const ListingItem = ({ itemData }) => {
             <div className="flex justify-between items-center">
               <div className="flex items-center gap-4">
                 <h2 className="md:text-xl text-base text-[#11133D] font-semibold">
-                  {itemData.heading}
+                  {title}
                 </h2>
                 <p className="bg-white md:flex hidden shadow-2xl  items-center justify-center custom-shadow rounded-full w-7 h-7">
                   <FaHeart color="#8891B2" />
@@ -86,7 +89,7 @@ const ListingItem = ({ itemData }) => {
               </div>
               <div>
                 <p className="font-semibold text-[#11133D] md:text-xl text-base">
-                  $12,000
+                  ${price}
                 </p>
                 <p className="text-[#8891B2] md:text-base text-sm">
                   Tax Not Paid
@@ -96,7 +99,7 @@ const ListingItem = ({ itemData }) => {
 
             {/* Item Description */}
             <p className="text-[#696E9D] lg:w-9/12 lg:mt-0 mt-5 w-full md:text-base text-sm">
-              {itemData.description}
+              {description}
             </p>
 
             {/* List of Features */}
@@ -107,7 +110,7 @@ const ListingItem = ({ itemData }) => {
                   <p className="text-[#11133D] font-medium md:text-base text-sm">
                     Make
                   </p>
-                  <p className="text-[#696E9D] text-sm">{itemData.make}</p>
+                  <p className="text-[#696E9D] text-sm">{itemData?.make}</p>
                 </div>
               </div>
               <div className="flex gap-3">
@@ -116,7 +119,7 @@ const ListingItem = ({ itemData }) => {
                   <p className="text-[#11133D] font-medium md:text-base text-sm">
                     Model
                   </p>
-                  <p className="text-[#696E9D] text-sm">{itemData.model}</p>
+                  <p className="text-[#696E9D] text-sm">{itemData?.model}</p>
                 </div>
               </div>
               <div className="flex gap-3">
@@ -125,7 +128,9 @@ const ListingItem = ({ itemData }) => {
                   <p className="text-[#11133D] font-medium md:text-base text-sm">
                     Condition
                   </p>
-                  <p className="text-[#696E9D] text-sm">{itemData.condition}</p>
+                  <p className="text-[#696E9D] text-sm">
+                    {itemData?.condition}
+                  </p>
                 </div>
               </div>
               <div className="flex gap-3">
@@ -134,7 +139,7 @@ const ListingItem = ({ itemData }) => {
                   <p className="text-[#11133D] font-medium md:text-base text-sm">
                     Year
                   </p>
-                  <p className="text-[#696E9D] text-sm">{itemData.year}</p>
+                  <p className="text-[#696E9D] text-sm">{year}</p>
                 </div>
               </div>
               <div className="flex gap-3">
@@ -143,7 +148,7 @@ const ListingItem = ({ itemData }) => {
                   <p className="text-[#11133D] font-medium md:text-base text-sm">
                     Hours
                   </p>
-                  <p className="text-[#696E9D] text-sm">{itemData.hours} Hrs</p>
+                  <p className="text-[#696E9D] text-sm">{hours}</p>
                 </div>
               </div>
               {/* Add more features as needed */}
@@ -151,7 +156,7 @@ const ListingItem = ({ itemData }) => {
 
             {/* Tags */}
             <div className="flex lg:flex-nowrap flex-wrap mt-8 gap-4">
-              {itemData.tags.map((tag, index) => (
+              {itemData?.tags?.map((tag, index) => (
                 <span
                   key={index}
                   className="bg-[#E0E3FB] text-sm font-semibold text-[#0D1A8B] px-4 py-1 rounded-md"
@@ -164,10 +169,10 @@ const ListingItem = ({ itemData }) => {
         </div>
         <div
           className={`flex justify-between sm:items-center mt-8 sm:flex-row flex-col ${
-            itemData.sellerInfo ? "border-t-2 pt-6 pb-3" : ""
+            itemData?.sellerInfo ? "border-t-2 pt-6 pb-3" : ""
           }`}
         >
-          {itemData.sellerInfo ? (
+          {itemData?.sellerInfo ? (
             <div className="flex gap-8">
               <img
                 src={logo}
@@ -188,7 +193,7 @@ const ListingItem = ({ itemData }) => {
           )}
           <div
             className={`flex justify-end items-center gap-3 sm:mt-0 mt-5 ${
-              itemData.sellerInfo ? "" : "w-full"
+              itemData?.sellerInfo ? "" : "w-full"
             }`}
           >
             <p className="bg-[#0D1A8B] hover:bg-[#0a1dbd] w-12 h-12 rounded-xl flex items-center justify-center">

@@ -115,7 +115,9 @@ const ItemDetailPage = () => {
                 {selectedTab === "itemOverview" && (
                   <ItemOverview advert={advert} />
                 )}
-                {selectedTab === "specifications" && <Specifications />}
+                {selectedTab === "specifications" && (
+                  <Specifications advert={advert} />
+                )}
                 {selectedTab === "itemVideos" && <ItemVideos advert={advert} />}
               </div>
             </div>

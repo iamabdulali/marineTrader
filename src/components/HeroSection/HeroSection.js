@@ -8,10 +8,21 @@ const HeroSection = () => {
   const Navigate = useNavigate();
   const { selectedCategory } = useContext(AuthContext);
 
-  const handleFormSubmit = (values) => {
-    // Your logic for handling form submission
-    console.log("Form submitted with values:", values);
-    Navigate("/list");
+  const handleFormSubmit = async (values) => {
+    const queryParams = new URLSearchParams();
+    if (selectedCategory?.id)
+      queryParams.append("category", selectedCategory?.id);
+    if (values.make) queryParams.append("make", values.make);
+    if (values.model) queryParams.append("model", values.model);
+    if (values.type) queryParams.append("type", values.type);
+    if (values.condition) queryParams.append("condition", values.condition);
+    if (values.year) queryParams.append("year", values.year);
+
+    const queryString = queryParams.toString();
+    console.log(queryString);
+
+    // Navigate to list page with the constructed query string
+    Navigate(`/list${queryString ? `?${queryString}` : ""}`);
   };
 
   const categoryBackgrounds = {
