@@ -6,6 +6,7 @@ import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { SERVER_BASE_URL } from "../..";
 import { toast } from "react-toastify";
+import LoadingWrapper from "../../utils/LoadingWrapper";
 
 const ListPage = () => {
   const location = useLocation();
@@ -18,6 +19,7 @@ const ListPage = () => {
   const year = queryParams.get("year");
 
   const [searchedListings, setSearchedListings] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const searchedListing = async () => {
@@ -40,40 +42,15 @@ const ListPage = () => {
         const { data } = await axios.get(url);
         toast.success(data.message);
         setSearchedListings(data.data);
+        setLoading(false);
       } catch (error) {
         console.log(error);
+        setLoading(true);
       }
     };
     searchedListing();
-  }, [category, make, model, type, condition, year]);
+  }, []);
 
-  console.log(searchedListings);
-
-  const itemData = {
-    heading: "Item Heading",
-    description:
-      "Pharetra ut nulla urna turpis euismod risus turpis tempor. Orci sed lacus eu nunc nisl at vitae orci. Faucibus fermentum nibh pellentesque orci euismod enim.",
-    make: "Yamaha",
-    model: "Fzs Svho",
-    condition: "Excellent",
-    year: 2022,
-    hours: 120,
-    tags: ["3k Modification", "Lady In Red", "456 Bhp", "Super Charger"],
-    featured: false,
-  };
-  const itemData2 = {
-    heading: "Item Heading",
-    description:
-      "Pharetra ut nulla urna turpis euismod risus turpis tempor. Orci sed lacus eu nunc nisl at vitae orci. Faucibus fermentum nibh pellentesque orci euismod enim.",
-    make: "Yamaha",
-    model: "Fzs Svho",
-    condition: "Excellent",
-    year: 2022,
-    hours: 120,
-    tags: ["3k Modification", "Lady In Red", "456 Bhp", "Super Charger"],
-    featured: true,
-    sellerInfo: true,
-  };
   return (
     <BuyerLayout showCategoryList={true}>
       <div className="2xl:px-24 sm:px-10 px-4">
@@ -93,9 +70,13 @@ const ListPage = () => {
 
         {searchedListings.length == 0 ? <div>No Listing Found</div> : ""}
 
-        {searchedListings?.map((listing) => {
-          return <ListingItem itemData={listing} />;
-        })}
+        <div className="min-h-[50vh]">
+          <LoadingWrapper loading={loading} className="top-1/3">
+            {searchedListings?.map((listing) => {
+              return <ListingItem itemData={listing} />;
+            })}
+          </LoadingWrapper>
+        </div>
       </div>
     </BuyerLayout>
   );
