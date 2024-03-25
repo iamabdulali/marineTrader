@@ -43,7 +43,7 @@ const ListingItem = ({ itemData }) => {
     <>
       <Link
         key={id}
-        to="/itemDetails"
+        to={`/itemDetails/${id}`}
         className={`${
           itemData?.featured
             ? "bg-[#FEF9EE] border-4 mt-11 border-[#FFB800]"

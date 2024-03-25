@@ -25,6 +25,8 @@ const CategoryDropdown = ({ onSubmit, category }) => {
   const { selectedCategory, conditions, makes, types, modals } =
     useContext(AuthContext);
 
+  console.log(selectedCategory?.name);
+
   return (
     <Formik
       initialValues={{
@@ -55,7 +57,7 @@ const CategoryDropdown = ({ onSubmit, category }) => {
                 className="border-[#CECED7] mb-4 text-[#8891B2] border-2 rounded-md p-3 w-full sm:appearance-auto appearance-none"
               >
                 <option value={selectedCategory?.id}>
-                  {selectedCategory?.name}
+                  {selectedCategory?.name || "Select Category"}
                 </option>
               </Field>
             </div>

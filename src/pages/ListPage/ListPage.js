@@ -90,8 +90,9 @@ const ListPage = () => {
             <option>Sort By</option>
           </select>
         </div>
-        {/* <ListingItem itemData={itemData} />
-        <ListingItem itemData={itemData2} /> */}
+
+        {searchedListings.length == 0 ? <div>No Listing Found</div> : ""}
+
         {searchedListings?.map((listing) => {
           return <ListingItem itemData={listing} />;
         })}
