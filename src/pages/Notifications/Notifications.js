@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from "react";
-import VerticalMenu from "../../components/verticalMenu/VerticalMenu";
-import Header from "../../components/Header/Header";
-import ListingTable from "../../components/Tables/ListingTable";
-import Heading from "../../components/Heading";
-import { notificationsData, offersHeader } from "../../utils/DummyData";
-import { greenNotification, warning } from "../../assets";
+import { greenNotification } from "../../assets";
 import Layout from "../../components/Layout/Layout";
 import { Link } from "react-router-dom";
 import { fetchOptions } from "../../utils/fetch/fetchData";
@@ -17,6 +12,7 @@ export default function Notifications() {
   useEffect(() => {
     fetchOptions("notification", setNotifications, setLoading);
   }, []);
+
   return (
     <>
       <Layout>

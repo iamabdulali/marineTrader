@@ -26,7 +26,7 @@ const MakeOfferSection = ({ advert }) => {
   const [showTiming, setShowTiming] = useState(true);
   const [showFacilities, setShowFacilities] = useState(true);
 
-  const { currency_id, advert_package_id, user } = Object(advert);
+  const { currency_id, advert_package_id, user, id } = Object(advert);
   const { image_field, created_at, name, seller_type, facilities } =
     Object(user);
 
@@ -38,7 +38,7 @@ const MakeOfferSection = ({ advert }) => {
     phone: "",
     offer: "",
     currency: currency_id,
-    advert: advert_package_id,
+    advert: id,
   };
 
   const handleFormSubmit = async (values) => {

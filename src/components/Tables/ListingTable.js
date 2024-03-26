@@ -12,7 +12,9 @@ import {
 } from "../../utils/ModalOpeningClosingFunctions";
 import DeleteListingModal from "../Selling/DeleteListingModal";
 import { FaCheck, FaDollarSign, FaTimes } from "react-icons/fa";
-import { categoriesList } from "../..";
+import { SERVER_BASE_URL, categoriesList } from "../..";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const ListingTable = ({
   hasSort,
@@ -36,6 +38,26 @@ const ListingTable = ({
   // Callback function to update isDeleteModalOpen state
   const handleDeleteModalOpen = (isOpen) => {
     setIsDeleteModalOpen(isOpen);
+  };
+
+  const handleOfferStatus = async (id, status) => {
+    try {
+      const { data } = await axios.post(
+        `${SERVER_BASE_URL}/offer-status/${id}`,
+        {
+          status,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      toast.success(data.message);
+    } catch (error) {
+      console.log(error);
+      toast.success(error.response.data.message);
+    }
   };
 
   return (
@@ -378,10 +400,24 @@ const ListingTable = ({
                       </td>
                       <td className="py-4 px-4">
                         <div className="flex gap-3 font-semibold items-center justify-center">
-                          <button className="bg-[#36B37E] flex items-center justify-center w-9 h-9 text-white rounded-full">
+                          <button
+                            onClick={() => {
+                              setCounterOfferId(id);
+                              handleOfferStatus(counterOfferId, "accepted");
+                              console.log(counterOfferId);
+                            }}
+                            className="bg-[#36B37E] flex items-center justify-center w-9 h-9 text-white rounded-full"
+                          >
                             <FaCheck />
                           </button>
-                          <button className="bg-[#FF4A6B] flex items-center justify-center w-9 h-9 text-white rounded-full">
+                          <button
+                            onClick={() => {
+                              setCounterOfferId(id);
+                              handleOfferStatus(counterOfferId, "rejected");
+                              console.log(counterOfferId);
+                            }}
+                            className="bg-[#FF4A6B] flex items-center justify-center w-9 h-9 text-white rounded-full"
+                          >
                             <FaTimes />
                           </button>
                           <button

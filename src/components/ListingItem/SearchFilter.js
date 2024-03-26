@@ -4,7 +4,7 @@ import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { useWindowSize } from "../../Hooks/windowResize";
 import { AuthContext } from "../../Context/AuthContext";
 import { yearsArray } from "../../utils/DummyData";
-import { Form, Formik } from "formik";
+import { Field, Form, Formik } from "formik";
 import { SERVER_BASE_URL } from "../..";
 import axios from "axios";
 import { Oval } from "react-loader-spinner";
@@ -15,9 +15,10 @@ const SearchFilter = ({ setSearchedListings, setLoading }) => {
   const [spinner, setSpinner] = useState(false);
 
   useEffect(() => {
-    // Update showFilterMenu state when the window width changes
     setShowFilterMenu(width > 900);
   }, [width]);
+  const { selectedCategory, conditions, makes, types, modals } =
+    useContext(AuthContext);
 
   const initialValues = {
     make: "",
@@ -26,9 +27,6 @@ const SearchFilter = ({ setSearchedListings, setLoading }) => {
     type: "",
     condition: "",
   };
-
-  const { selectedCategory, conditions, makes, types, modals } =
-    useContext(AuthContext);
 
   const handleSubmit = async (values) => {
     setSpinner(true);
