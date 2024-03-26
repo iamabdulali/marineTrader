@@ -25,8 +25,6 @@ const CategoryDropdown = ({ onSubmit, category }) => {
   const { selectedCategory, conditions, makes, types, modals } =
     useContext(AuthContext);
 
-  console.log(selectedCategory?.name);
-
   return (
     <Formik
       initialValues={{
@@ -37,7 +35,6 @@ const CategoryDropdown = ({ onSubmit, category }) => {
         condition: "",
         year: "",
       }}
-      // validationSchema={categoryDropdownValidationSchema}
       onSubmit={handleSubmit}
     >
       <Form className="bg-white shadow-md rounded-lg sm:px-8 px-4 w-full py-8 mb-4">

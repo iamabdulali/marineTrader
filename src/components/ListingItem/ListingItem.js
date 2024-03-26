@@ -28,8 +28,7 @@ import { Link } from "react-router-dom";
 
 const ListingItem = ({ itemData }) => {
   const sliderSettings = {
-    // dots: true,
-    infinite: true,
+    infinite: false,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
@@ -37,15 +36,30 @@ const ListingItem = ({ itemData }) => {
     prevArrow: <FaChevronLeft color="#fff" size={60} />,
   };
 
-  const { id, title, description, hours, year, price } = Object(itemData);
+  const {
+    id,
+    title,
+    description,
+    hours,
+    year,
+    price,
+    condition,
+    make,
+    model,
+    tags,
+    user,
+    images,
+    advert_package_id,
+  } = Object(itemData);
 
+  const { phone_no, email } = Object(user);
   return (
     <>
       <Link
         key={id}
         to={`/itemDetails/${id}`}
         className={`${
-          itemData?.featured
+          advert_package_id == "3"
             ? "bg-[#FEF9EE] border-4 mt-11 border-[#FFB800]"
             : "bg-[#F9FBFE]"
         } rounded-lg sm:px-5 sm:py-5 p-4 block`}
@@ -53,18 +67,17 @@ const ListingItem = ({ itemData }) => {
         <div className={`flex md:flex-row flex-col gap-5 `}>
           <div className="lg:w-2/12 md:w-4/12 w-full relative">
             <Slider {...sliderSettings} className="list-slider">
-              <img
-                className="rounded-lg min-h-56 max-h-56 object-cover"
-                src={require("../../assets/jetski-3.png")}
-                alt="Slider Image 1"
-              />
-              <img
-                className="rounded-lg max-h-56 object-cover"
-                src={require("../../assets/jetSkiPerson.png")}
-                alt="Slider Image 2"
-              />
+              {images?.map(({ image, id }) => {
+                return (
+                  <img
+                    key={id}
+                    className="rounded-lg min-h-56 max-h-56 object-cover"
+                    src={image}
+                  />
+                );
+              })}
             </Slider>
-            {itemData.featured ? (
+            {advert_package_id == "3" ? (
               <img
                 src={featuredRevert}
                 className="w-28 absolute top-0 right-0"
@@ -110,7 +123,7 @@ const ListingItem = ({ itemData }) => {
                   <p className="text-[#11133D] font-medium md:text-base text-sm">
                     Make
                   </p>
-                  <p className="text-[#696E9D] text-sm">{itemData?.make}</p>
+                  <p className="text-[#696E9D] text-sm">{make?.name}</p>
                 </div>
               </div>
               <div className="flex gap-3">
@@ -119,7 +132,7 @@ const ListingItem = ({ itemData }) => {
                   <p className="text-[#11133D] font-medium md:text-base text-sm">
                     Model
                   </p>
-                  <p className="text-[#696E9D] text-sm">{itemData?.model}</p>
+                  <p className="text-[#696E9D] text-sm">{model?.name}</p>
                 </div>
               </div>
               <div className="flex gap-3">
@@ -128,9 +141,7 @@ const ListingItem = ({ itemData }) => {
                   <p className="text-[#11133D] font-medium md:text-base text-sm">
                     Condition
                   </p>
-                  <p className="text-[#696E9D] text-sm">
-                    {itemData?.condition}
-                  </p>
+                  <p className="text-[#696E9D] text-sm">{condition?.name}</p>
                 </div>
               </div>
               <div className="flex gap-3">
@@ -156,12 +167,12 @@ const ListingItem = ({ itemData }) => {
 
             {/* Tags */}
             <div className="flex lg:flex-nowrap flex-wrap mt-8 gap-4">
-              {itemData?.tags?.map((tag, index) => (
+              {tags?.map(({ id, name }) => (
                 <span
-                  key={index}
+                  key={id}
                   className="bg-[#E0E3FB] text-sm font-semibold text-[#0D1A8B] px-4 py-1 rounded-md"
                 >
-                  {tag}
+                  {name}
                 </span>
               ))}
             </div>
@@ -169,10 +180,10 @@ const ListingItem = ({ itemData }) => {
         </div>
         <div
           className={`flex justify-between sm:items-center mt-8 sm:flex-row flex-col ${
-            itemData?.sellerInfo ? "border-t-2 pt-6 pb-3" : ""
+            advert_package_id == "2" ? "border-t-2 pt-6 pb-3" : ""
           }`}
         >
-          {itemData?.sellerInfo ? (
+          {advert_package_id == "2" ? (
             <div className="flex gap-8">
               <img
                 src={logo}
@@ -193,18 +204,30 @@ const ListingItem = ({ itemData }) => {
           )}
           <div
             className={`flex justify-end items-center gap-3 sm:mt-0 mt-5 ${
-              itemData?.sellerInfo ? "" : "w-full"
+              advert_package_id == "2" ? "" : "w-full"
             }`}
           >
-            <p className="bg-[#0D1A8B] hover:bg-[#0a1dbd] w-12 h-12 rounded-xl flex items-center justify-center">
+            <a
+              onClick={(e) => {
+                e.preventDefault();
+                window.location.href = `mailto:${email}`;
+              }}
+              className="bg-[#0D1A8B] hover:bg-[#0a1dbd] w-12 h-12 rounded-xl flex items-center justify-center"
+            >
               <FaEnvelope size={24} color="#fff" />
-            </p>
+            </a>
             <p className="bg-[#0D1A8B] hover:bg-[#0a1dbd] w-12 h-12 rounded-xl flex items-center justify-center">
               <FaSms size={24} color="#fff" />
             </p>
-            <p className="bg-[#0D1A8B] hover:bg-[#0a1dbd] w-12 h-12 rounded-xl flex items-center justify-center">
+            <a
+              onClick={(e) => {
+                e.preventDefault();
+                window.location.href = `tel:${phone_no}`;
+              }}
+              className="bg-[#0D1A8B] hover:bg-[#0a1dbd] w-12 h-12 rounded-xl flex items-center justify-center"
+            >
               <FaPhone size={24} color="#fff" />
-            </p>
+            </a>
           </div>
         </div>
       </Link>

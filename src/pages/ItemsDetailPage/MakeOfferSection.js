@@ -25,13 +25,12 @@ const MakeOfferSection = ({ advert }) => {
   const [spinner, setSpinner] = useState(false);
   const [showTiming, setShowTiming] = useState(true);
   const [showFacilities, setShowFacilities] = useState(true);
-  const { user } = useContext(AuthContext);
 
-  const { seller_type } = Object(user);
+  const { currency_id, advert_package_id, user } = Object(advert);
+  const { image_field, created_at, name, seller_type, facilities } =
+    Object(user);
 
   const isPrivateSeller = seller_type == "private seller";
-
-  const { currency_id, advert_package_id } = Object(advert);
 
   const initialValues = {
     name: "",
@@ -83,14 +82,13 @@ const MakeOfferSection = ({ advert }) => {
         </div>
         <div className="flex gap-4 items-center sm:px-7 py-6 px-4">
           <img
-            src={advert?.user?.image_field || userProfile}
+            src={image_field || userProfile}
             className="rounded-full w-20 h-20 object-cover"
           />
           <div>
-            <p className="text-[#11133D] font-semibold">{advert?.user?.name}</p>
+            <p className="text-[#11133D] font-semibold">{name}</p>
             <p className="text-sm text-[#696E9D]">
-              Member Since{" "}
-              {convertTimestampToMonthYear(advert?.user?.created_at)}
+              Member Since {convertTimestampToMonthYear(created_at)}
             </p>
           </div>
         </div>
@@ -136,38 +134,35 @@ const MakeOfferSection = ({ advert }) => {
               })}
             </div>
           </div>
-          <div className="rounded-lg border-2 mt-5">
-            <ContentToggle
-              className="flex justify-between cursor-pointer items-center py-6 px-7"
-              setShowContent={setShowFacilities}
-              title="Facilities"
-              textStyles="font-semibold md:text-xl text-base text-[#11133D]"
-              iconSize={24}
-            />
-            <div
-              className={`pb-5 px-7 ${
-                showFacilities ? "block" : "hidden"
-              } grid grid-cols-2`}
-            >
-              {[
-                "WC",
-                "Accomodation",
-                "Parking",
-                "Disabled Access",
-                "Reception",
-                "Counter",
-              ].map((day) => {
-                return (
-                  <div className=" mt-5 text-[#11133D] font-semibold">
-                    <div className="flex items-center gap-5">
-                      <span className="h-2 w-2 rounded-full bg-[#0D1A8B]"></span>
-                      <p className="sm:text-base text-sm">{day}</p>
+          {facilities?.length == 0 || facilities?.length == undefined ? (
+            ""
+          ) : (
+            <div className="rounded-lg border-2 mt-5">
+              <ContentToggle
+                className="flex justify-between cursor-pointer items-center py-6 px-7"
+                setShowContent={setShowFacilities}
+                title="Facilities"
+                textStyles="font-semibold md:text-xl text-base text-[#11133D]"
+                iconSize={24}
+              />
+              <div
+                className={`pb-5 px-7 ${
+                  showFacilities ? "block" : "hidden"
+                } grid grid-cols-2`}
+              >
+                {facilities?.map((day) => {
+                  return (
+                    <div className=" mt-5 text-[#11133D] font-semibold">
+                      <div className="flex items-center gap-5">
+                        <span className="h-2 w-2 rounded-full bg-[#0D1A8B]"></span>
+                        <p className="sm:text-base text-sm">{day}</p>
+                      </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
+              </div>
             </div>
-          </div>{" "}
+          )}
         </>
       ) : (
         ""

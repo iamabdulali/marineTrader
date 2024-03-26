@@ -5,7 +5,6 @@ import SearchFilter from "../../components/ListingItem/SearchFilter";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { SERVER_BASE_URL } from "../..";
-import { toast } from "react-toastify";
 import LoadingWrapper from "../../utils/LoadingWrapper";
 
 const ListPage = () => {
@@ -32,15 +31,11 @@ const ListPage = () => {
         if (condition) url += `condition=${condition}&`;
         if (year) url += `year=${year}&`;
 
-        // Remove the last '&' character if present
         if (url.endsWith("&")) {
           url = url.slice(0, -1);
         }
 
-        console.log(url);
-
         const { data } = await axios.get(url);
-        toast.success(data.message);
         setSearchedListings(data.data);
         setLoading(false);
       } catch (error) {
@@ -54,7 +49,10 @@ const ListPage = () => {
   return (
     <BuyerLayout showCategoryList={true}>
       <div className="2xl:px-24 sm:px-10 px-4">
-        <SearchFilter />
+        <SearchFilter
+          setSearchedListings={setSearchedListings}
+          setLoading={setLoading}
+        />
         <div className="flex items-center justify-between mb-8">
           <p className="md:text-2xl text-xl text-[#11133D] font-semibold">
             Jet Ski For Sale
@@ -68,13 +66,15 @@ const ListPage = () => {
           </select>
         </div>
 
-        {searchedListings.length == 0 ? <div>No Listing Found</div> : ""}
-
         <div className="min-h-[50vh]">
           <LoadingWrapper loading={loading} className="top-1/3">
-            {searchedListings?.map((listing) => {
-              return <ListingItem itemData={listing} />;
-            })}
+            {searchedListings.length == 0 ? (
+              <div>No Listing Found</div>
+            ) : (
+              searchedListings?.map((listing, index) => {
+                return <ListingItem key={index} itemData={listing} />;
+              })
+            )}
           </LoadingWrapper>
         </div>
       </div>
