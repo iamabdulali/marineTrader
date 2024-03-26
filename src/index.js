@@ -22,6 +22,15 @@ export const categoriesList = [
   "Non Motor",
 ];
 
+export const smallBoats = ["Jetski", "Non Motor", "RIB", "Small Craft"];
+export const bigBoats = [
+  "Fishing",
+  "Boat Home",
+  "Sailboat",
+  "Yacht",
+  "Commercial",
+];
+
 root.render(
   <React.StrictMode>
     <AuthContextProvider>

@@ -10,6 +10,7 @@ import ModificationMenu from "./AdComponents/ModificationMenu.js";
 import ContentToggle from "../ItemDetailsPage/ToggleContent.js";
 import Tabs from "../Tabs.js";
 import MachinaryForm from "./AdComponents/MachinaryForm.js";
+import { bigBoats } from "../../index.js";
 
 const ItemFeaturesStep3 = () => {
   const { values } = useFormikContext();
@@ -48,7 +49,7 @@ const ItemFeaturesStep3 = () => {
   return (
     <>
       <BuildLayout heading="Items Features">
-        {selectedCategory?.name == "Boat Home" ? (
+        {bigBoats.includes(selectedCategory?.name) ? (
           <>
             <ContentToggle
               setShowContent={setShowEngine}

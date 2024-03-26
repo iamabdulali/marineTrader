@@ -12,6 +12,7 @@ import {
   yearsArray,
 } from "../../utils/DummyData";
 import ContentToggle from "../ItemDetailsPage/ToggleContent";
+import { bigBoats } from "../..";
 
 const ItemDescriptionStep2 = () => {
   const {
@@ -70,7 +71,7 @@ const ItemDescriptionStep2 = () => {
             options={conditions}
           />
         </div>
-        {selectedCategory?.name == "Boat Home" ? (
+        {bigBoats.includes(selectedCategory?.name) ? (
           <>
             <div className="flex sm:flex-row flex-col  gap-4">
               <CategorySelectDropdown
@@ -125,7 +126,7 @@ const ItemDescriptionStep2 = () => {
           ""
         )}
 
-        {selectedCategory?.name == "Boat Home" ? (
+        {bigBoats.includes(selectedCategory?.name) ? (
           ""
         ) : (
           <div className="flex sm:flex-row flex-col gap-4">
@@ -141,7 +142,7 @@ const ItemDescriptionStep2 = () => {
             />
           </div>
         )}
-        {selectedCategory?.name == "Boat Home" ? (
+        {bigBoats.includes(selectedCategory?.name) ? (
           ""
         ) : (
           <div className="flex sm:flex-row flex-col  gap-4">
@@ -160,7 +161,7 @@ const ItemDescriptionStep2 = () => {
             />
           </div>
         )}
-        {selectedCategory?.name == "Boat Home" ? (
+        {bigBoats.includes(selectedCategory?.name) ? (
           ""
         ) : (
           <div className="flex sm:flex-row flex-col  gap-4">
@@ -179,7 +180,7 @@ const ItemDescriptionStep2 = () => {
             />
           </div>
         )}
-        {selectedCategory?.name == "Boat Home" ? (
+        {bigBoats.includes(selectedCategory?.name) ? (
           <div className="flex sm:flex-row flex-col  gap-4">
             <FormField
               FieldType="text"
@@ -202,7 +203,7 @@ const ItemDescriptionStep2 = () => {
           <CategorySelectDropdown label="Type" name="type" options={types} />
         </div>
       </div>
-      {selectedCategory?.name == "Boat Home" ? (
+      {bigBoats.includes(selectedCategory?.name) ? (
         <>
           <ContentToggle
             title={`${selectedCategory?.name} Dimensions`}
@@ -283,7 +284,7 @@ const ItemDescriptionStep2 = () => {
       ) : (
         ""
       )}
-      {selectedCategory?.name == "Boat Home" ? (
+      {bigBoats.includes(selectedCategory?.name) ? (
         <>
           <ContentToggle
             title={`${selectedCategory?.name} Performance`}

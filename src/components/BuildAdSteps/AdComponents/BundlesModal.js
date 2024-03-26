@@ -2,18 +2,27 @@ import React, { useEffect, useState } from "react";
 import Bundles from "./Bundles";
 import { fetchOptions } from "../../../utils/fetch/fetchData";
 import LoadingWrapper from "../../../utils/LoadingWrapper";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useFormikContext } from "formik";
+import { toast } from "react-toastify";
+import axios from "axios";
+import { SERVER_BASE_URL } from "../../..";
+import { displayErrorMessages } from "../../../utils/displayErrors";
+import { Oval } from "react-loader-spinner";
 
 const BundlesModal = ({ onClick }) => {
   const [bundles, setBundles] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [spinner, setSpinner] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchOptions("bundles", setBundles, setLoading);
   }, []);
 
-  const { values } = useFormikContext();
+  const { values, isValid } = useFormikContext();
+
+  console.log(isValid);
 
   const variants = [
     "border-[#1565D8]",
@@ -37,8 +46,11 @@ const BundlesModal = ({ onClick }) => {
     "text-[#D81515]",
   ];
 
+  const showErrorMessage = () => {
+    if (!isValid) toast.error("Please Fill All Fields To Buy Bundle");
+  };
   return (
-    <>
+    <form>
       <div className="bg-gradient-to-t w-full py-4 rounded-tr-lg rounded-tl-lg from-[#0d1a8b] to-[#3241cb]">
         <p className="text-white text-xl font-semibold text-center mb-1">
           BUNDLES : STANDARD Advert
@@ -63,8 +75,6 @@ const BundlesModal = ({ onClick }) => {
                 adverts={total_adverts}
                 price={amount}
                 checkbox={id}
-                // hasDiscount={true}
-                // oldPrice="19.79"
               />
             );
           })}
@@ -74,20 +84,30 @@ const BundlesModal = ({ onClick }) => {
         <button
           type="button"
           onClick={onClick}
-          className="bg-[#8891B2] text-white py-3 px-7 rounded-md mr-3 min-w-[120px]"
+          className="bg-[#8891B2] text-white py-3 px-7 rounded-md mr-3 min-w-[121px] min-h-[48px]"
         >
           Close
         </button>
-        <Link
-          to={`/payment/bundle/${values?.bundles}`}
-          onClick={onClick}
-          type="button"
+        <button
+          // to={`/payment/bundle/${values?.bundles}`}
+          onClick={!isValid ? showErrorMessage : () => {}}
+          type={`${!isValid ? "button" : "submit"}`}
           className="bg-[#0D1A8B] text-white py-3 px-7 rounded-md"
         >
-          Confirm
-        </Link>
+          {spinner ? (
+            <Oval
+              secondaryColor="#fff"
+              color="#fff"
+              width={20}
+              height={20}
+              wrapperClass="justify-center"
+            />
+          ) : (
+            "Confirm"
+          )}
+        </button>
       </div>
-    </>
+    </form>
   );
 };
 

@@ -69,7 +69,7 @@ export const categoryDropdownValidationSchema = Yup.object().shape({
   year: Yup.string().required("Year is required"),
 });
 
-export const buildAdValidationSchema = Yup.object().shape({
+export const buildAdSmallBoatsValidationSchema = Yup.object().shape({
   title: Yup.string().required("Title is required"),
   sub_title: Yup.string().required("Subtitle is required"),
   make: Yup.string().required("Make is required"),
@@ -86,6 +86,21 @@ export const buildAdValidationSchema = Yup.object().shape({
   features: Yup.array().min(1, "Select at least one option"),
   convenience: Yup.array().min(1, "Select at least one option"),
   accessories: Yup.array().min(1, "Select at least one option"),
+  description: Yup.string().required("Description is required"),
+  type: Yup.string().required("Type is required"),
+  images: Yup.array().min(1, "Please upload at least one image"),
+  currency: Yup.string().required("Currency is required"),
+  price: Yup.string().required("Price is required"),
+});
+
+export const buildAdBigBoatsValidationSchema = Yup.object().shape({
+  title: Yup.string().required("Title is required"),
+  sub_title: Yup.string().required("Subtitle is required"),
+  make: Yup.string().required("Make is required"),
+  model: Yup.string().required("Model is required"),
+  condition: Yup.string().required("Condition is required"),
+  year: Yup.string().required("Year is required"),
+  length: Yup.string().required("Length is required"),
   description: Yup.string().required("Description is required"),
   hull_material: Yup.string().required("Hull Material is required"),
   hull_shape: Yup.string().required("Hull Shape is required"),

@@ -7,7 +7,10 @@ import ItemFeaturesStep3 from "../../components/BuildAdSteps/ItemFeaturesStep3";
 import NotesSteps4 from "../../components/BuildAdSteps/NotesSteps4";
 import PriceStep6 from "../../components/BuildAdSteps/PriceStep6";
 import GalleryStep5 from "../../components/BuildAdSteps/GalleryStep5";
-import { buildAdValidationSchema } from "../../utils/ValidationSchema";
+import {
+  buildAdBigBoatsValidationSchema,
+  buildAdSmallBoatsValidationSchema,
+} from "../../utils/ValidationSchema";
 import { AuthContext } from "../../Context/AuthContext";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Modal from "../../components/Modal";
@@ -18,7 +21,7 @@ import {
 } from "../../utils/ModalOpeningClosingFunctions";
 import VideoModal from "../../components/VideoTutorial/VideoModal";
 import VideoBtn from "../../components/VideoTutorial/VideoBtn";
-import { SERVER_BASE_URL } from "../..";
+import { SERVER_BASE_URL, bigBoats, smallBoats } from "../..";
 import { toast } from "react-toastify";
 import { displayErrorMessages } from "../../utils/displayErrors";
 import axios from "axios";
@@ -26,7 +29,7 @@ import { Oval } from "react-loader-spinner";
 import { getOneAdvert } from "../../utils/fetch/fetchData";
 
 const BuildAd = () => {
-  const [step, setStep] = useState(5);
+  const [step, setStep] = useState(1);
   const [submit, setSubmit] = useState(false);
   const [spinner, setSpinner] = useState(false);
   const NavigateTo = useNavigate();
@@ -53,6 +56,14 @@ const BuildAd = () => {
   const stepLabels = ["Description", "Features", "Notes", "Gallery", "Price"];
 
   const { selectedPackage, selectedCategory } = useContext(AuthContext);
+
+  let validationSchema;
+
+  if (smallBoats.includes(selectedCategory?.name)) {
+    validationSchema = buildAdSmallBoatsValidationSchema;
+  } else {
+    validationSchema = buildAdBigBoatsValidationSchema;
+  }
 
   const initialValuesJetSki = {
     category: selectedCategory?.id,
@@ -87,9 +98,6 @@ const BuildAd = () => {
     home_spotlights_countries: [],
     home_spotlights_continents: [],
     stripe_token: "",
-    // engineCount: 0,
-    // selectedEngine: -1,
-    // engines: [],
   };
   const initialValuesBoatHome = {
     category: selectedCategory?.id,
@@ -107,10 +115,6 @@ const BuildAd = () => {
     hull_material: "",
     hull_shape: "",
     keel_type: "",
-    modifications: [],
-    features: [],
-    conveniences: [],
-    accessories: [],
     description: "",
     tags: [],
     images: [],
@@ -210,28 +214,28 @@ const BuildAd = () => {
 
   const nextStep = (values, { setTouched, setErrors }) => {
     try {
-      const fieldsToValidate = Object.keys(
-        buildAdValidationSchema.fields
-      ).filter((field) => {
-        if (step === 1) {
-          return selectedCategory?.name == "Boat Home"
-            ? bigBoatValidationArrayStep1.includes(field)
-            : smallBoatsValidationArrayStep1.includes(field);
-        } else if (step === 2) {
-          return selectedCategory?.name == "Boat Home"
-            ? bigBoatValidationArrayStep2.includes(field)
-            : smallBoatsValidationArrayStep2.includes(field);
-        } else if (step === 3) {
-          return ["description", "tags"].includes(field);
-        } else if (step === 4) {
-          return ["images"].includes(field);
-        } else if (step === 5) {
-          return ["currency", "price"].includes(field);
+      const fieldsToValidate = Object.keys(validationSchema.fields).filter(
+        (field) => {
+          if (step === 1) {
+            return selectedCategory?.name == "Boat Home"
+              ? bigBoatValidationArrayStep1.includes(field)
+              : smallBoatsValidationArrayStep1.includes(field);
+          } else if (step === 2) {
+            return selectedCategory?.name == "Boat Home"
+              ? bigBoatValidationArrayStep2.includes(field)
+              : smallBoatsValidationArrayStep2.includes(field);
+          } else if (step === 3) {
+            return ["description", "tags"].includes(field);
+          } else if (step === 4) {
+            return ["images"].includes(field);
+          } else if (step === 5) {
+            return ["currency", "price"].includes(field);
+          }
+          return true; // Include all fields if not in a specific step
         }
-        return true; // Include all fields if not in a specific step
-      });
+      );
 
-      buildAdValidationSchema.pick(fieldsToValidate).validateSync(values, {
+      validationSchema.pick(fieldsToValidate).validateSync(values, {
         abortEarly: false,
       });
 
@@ -262,6 +266,8 @@ const BuildAd = () => {
   const handleSubmit = async (values) => {
     console.log(values);
     setSpinner(true);
+    const isBundleSelected = values?.bundles != "";
+
     try {
       const { data } = await axios.post(`${SERVER_BASE_URL}/advert`, values, {
         headers: {
@@ -270,6 +276,7 @@ const BuildAd = () => {
         },
       });
       toast.success(data.message);
+      if (isBundleSelected) NavigateTo(`/payment/bundle/${values?.bundles}`);
       openModal(setIsPaymentOptionOpen);
       setSpinner(false);
     } catch (error) {
@@ -299,11 +306,11 @@ const BuildAd = () => {
       />
       <Formik
         initialValues={
-          selectedCategory?.name == "Boat Home"
+          bigBoats.includes(selectedCategory?.name)
             ? initialValuesBoatHome
             : initialValuesJetSki
         }
-        validationSchema={buildAdValidationSchema}
+        validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
         {({ isValid, values, setErrors, setTouched, setFieldValue }) => (
