@@ -28,13 +28,18 @@ export default function AdSubscription() {
   const [hasActiveSubscriptionData, setHasActiveSubscriptionData] = useState(
     []
   );
+
   const [hasBundle, setHasBundle] = useState("");
 
-  const { selectedCategory } = useContext(AuthContext);
+  const { selectedCategory, user } = useContext(AuthContext);
+
+  const { seller_type } = Object(user);
+
+  const isPrivateSeller = seller_type == "private seller";
 
   const categoryToCheck = selectedCategory?.id;
+
   useEffect(() => {
-    // fetchOptions("subscriptions", setSubscriptions, setLoading);
     getAdvert(setAdverts, setLoading);
   }, []);
 
@@ -44,15 +49,6 @@ export default function AdSubscription() {
       advert?.advert_package_id == "2"
     );
   });
-
-  // useEffect(() => {
-  //   checkCategorySubscription(
-  //     subscription,
-  //     categoryToCheck,
-  //     setHasActiveSubscription,
-  //     setHasActiveSubscriptionData
-  //   );
-  // }, [categoryToCheck, subscription]);
 
   const tabs = [
     {
@@ -95,30 +91,14 @@ export default function AdSubscription() {
     adsubscriptionFeaturedFeatures,
   ];
 
-  const getRemainingAdverts = async () => {
-    try {
-      const { data } = await axios.get(
-        `${SERVER_BASE_URL}/bundle/advert/remains`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
-      console.log(data.data);
-      setHasBundle(data.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
-    // getRemainingAdverts();
-    fetchOptions("bundle/advert/remains", setHasBundle);
-    fetchOptions(
-      `subscription/advert/remains/${selectedCategory?.id}`,
-      setHasActiveSubscription
-    );
+    if (!isPrivateSeller) {
+      fetchOptions("bundle/advert/remains", setHasBundle);
+      fetchOptions(
+        `subscription/advert/remains/${selectedCategory?.id}`,
+        setHasActiveSubscription
+      );
+    }
   }, [categoryToCheck]);
 
   return (
