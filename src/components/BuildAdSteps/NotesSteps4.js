@@ -1,9 +1,11 @@
 import React from "react";
 import BuildLayout from "./BuildLayout";
-import { ErrorMessage, Field } from "formik";
+import { ErrorMessage, Field, useFormikContext } from "formik";
 import { TagsInput } from "../TagsInput";
 
 const NotesSteps4 = () => {
+  const { values } = useFormikContext();
+  console.log(values?.tags);
   return (
     <>
       <BuildLayout heading="Notes">

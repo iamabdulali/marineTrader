@@ -7,12 +7,24 @@ import {
 import React, { useEffect, useState } from "react";
 import { Oval } from "react-loader-spinner";
 import { stackIcon } from "../../assets";
+import { fetchOptions } from "../../utils/fetch/fetchData";
 
-const StripePaymentForm = ({ handlePaymentSubmit, spinner }) => {
+const StripePaymentForm = ({ handlePaymentSubmit, spinner, id }) => {
   const [postalCode, setPostalCode] = useState("");
   const [country, setCountry] = useState("");
   const [isFormValid, setIsFormValid] = useState(false);
   const elements = useElements();
+  const [hasSubscription, setHasSubscription] = useState(0);
+  const [hasBundle, setHasBundle] = useState(0);
+
+  console.log(id);
+
+  useEffect(() => {
+    fetchOptions("bundle/advert/remains", setHasBundle);
+    fetchOptions(`subscription/advert/remains/${id}`, setHasSubscription);
+  }, [id]);
+
+  console.log(hasSubscription);
 
   useEffect(() => {
     const checkValidity = () => {
@@ -165,14 +177,24 @@ const StripePaymentForm = ({ handlePaymentSubmit, spinner }) => {
           />{" "}
           Allowances/Bundles
         </p>
-        <div className="flex items-center sm:text-base text-sm justify-between border-b-2 border-white mt-4 pb-3">
-          <p>Inclusive Monthly Allowance</p>
-          <p className="font-medium sm:text-lg text-base">15</p>
-        </div>
-        <div className="flex items-center sm:text-base text-sm justify-between mt-3">
-          <p>Bundle Balance</p>
-          <p className="font-medium sm:text-lg text-base">9</p>
-        </div>
+        {hasSubscription != 0 ? (
+          <div className="flex items-center sm:text-base text-sm justify-between border-b-2 border-white mt-4 pb-3">
+            <p>Inclusive Monthly Allowance</p>
+            <p className="font-medium sm:text-lg text-base">
+              {hasSubscription}
+            </p>
+          </div>
+        ) : (
+          ""
+        )}
+        {hasBundle != 0 ? (
+          <div className="flex items-center sm:text-base text-sm justify-between mt-3">
+            <p>Bundle Balance</p>
+            <p className="font-medium sm:text-lg text-base">{hasBundle}</p>
+          </div>
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );

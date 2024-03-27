@@ -1,12 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import BuildLayout from "./BuildLayout";
 import { Field } from "formik";
 import { CategorySelectDropdown } from "../CategorySelectDropdown";
-import { diamondImage, warningIcon } from "../../assets";
-import { FaArrowRight } from "react-icons/fa";
+import { warningIcon } from "../../assets";
 import BundlesModal from "./AdComponents/BundlesModal";
 import { Link } from "react-router-dom";
-import CheckboxGroup from "../CheckboxGroup";
 import SpotlightModal from "./SpotlightModal";
 import Modal from "../Modal";
 import {
@@ -15,30 +13,14 @@ import {
 } from "../../utils/ModalOpeningClosingFunctions";
 import AvailableUpgrades from "./AdComponents/AvailableUpgrades";
 import { FormField } from "../FormField";
-import { fetchOptions } from "../../utils/fetch/fetchData";
-import { tax } from "../../utils/DummyData";
 import { AuthContext } from "../../Context/AuthContext";
-import SelectDropdown from "../Forms/FormElements/SelectDropdown";
 
 const PriceStep6 = ({ setFieldValue, values }) => {
-  const initialFacilities = {
-    facilities: {
-      "Finance Available": false,
-      Warranty: false,
-      "Water Test Available": false,
-      "Part Exchange Available": false,
-    },
-  };
-
-  const [facilities, setFacilities] = useState(initialFacilities.facilities);
   const [priceInfoType, setPriceInfoType] = useState("enterInfo");
-  const [loading, setLoading] = useState(true);
   let [isBundleOpen, setIsBundleOpen] = useState(false);
   let [isSpotlightOpen, setIsSpotlightOpen] = useState(false);
 
-  const [spotlightType, setSpotlightType] = useState(null); // State variable to track spotlight type
-
-  // Other state variables and useEffect as before
+  const [spotlightType, setSpotlightType] = useState(null);
 
   // Function to handle home spotlight click
   const handleHomeSpotlightClick = () => {
@@ -50,7 +32,11 @@ const PriceStep6 = ({ setFieldValue, values }) => {
     setSpotlightType("category");
   };
 
-  const { currency, taxes } = useContext(AuthContext);
+  const { currency, taxes, user } = useContext(AuthContext);
+
+  const { seller_type } = Object(user);
+
+  const isPrivateSeller = seller_type == "private seller";
 
   return (
     <BuildLayout heading="Set Price">
@@ -124,12 +110,34 @@ const PriceStep6 = ({ setFieldValue, values }) => {
           </div>
         )}
 
-        <CheckboxGroup
-          className="flex gap-5 smallLg:flex-nowrap flex-wrap"
-          name="facilities"
-          facilities={facilities}
-          checkedProp={false}
-        />
+        {!isPrivateSeller ? (
+          <div className="flex gap-5 smallLg:flex-nowrap flex-wrap text-sm font-medium">
+            {[
+              "Finance Available",
+              "Warranty",
+              "Water Test Available",
+              "Part Exchange Available",
+            ].map((facility, index) => {
+              return (
+                <div key={index}>
+                  <label className="flex text-[#11133D]">
+                    <Field
+                      className="min-w-[20px] min-h-[20px] text-blue-600 bg-gray-100 border-gray-300 rounded mr-3"
+                      type="checkbox"
+                      name={`facilities`}
+                      value={`${facility}`}
+                      // onChange={(e) => handleInputChange(e)}
+                    />
+                    {facility}
+                  </label>
+                </div>
+              );
+            })}
+          </div>
+        ) : (
+          ""
+        )}
+
         <div className="mt-6 pt-6 border-t-2">
           <div className="flex items-center justify-between">
             <p className="text-[#0D1A8B] font-semibold capitalize sm:text-lg text-sm">

@@ -51,7 +51,8 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
     setLoading(false);
   }, []);
 
-  const { currency_id, advert_package_id, advert_status } = Object(advert);
+  const { currency_id, advert_package_id, advert_status, category_id } =
+    Object(advert);
   const { currency_id: user_currency_id } = Object(user);
 
   const generateStripeToken = async () => {
@@ -143,7 +144,7 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
         <PaymentStatus successStatus={success} paymentType="list" />
       ) : (
         <>
-          <LoadingWrapper loading={loading}>
+          <LoadingWrapper loading={false}>
             <Layout>
               <Heading content="Payment Details" />
               <div className="flex smallLg:flex-row flex-col gap-7">
@@ -157,6 +158,7 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
                   />
                 </div>
                 <StripePaymentForm
+                  id={category_id}
                   handlePaymentSubmit={
                     isBundlePayment ? handleBundlePayment : handleAdPayment
                   }

@@ -410,35 +410,70 @@ const ListingTable = ({
                       </td>
                       <td className="py-4 px-4">
                         <div className="flex gap-3 font-semibold items-center justify-center">
-                          <button
-                            disabled={status != "pending" ? true : false}
-                            onClick={() => {
-                              handleOfferStatus(id, "accepted");
-                              setDeleteAdvertId(id);
-                            }}
-                            className="bg-[#36B37E] flex items-center justify-center w-9 h-9 text-white rounded-full"
-                          >
-                            <FaCheck />
-                          </button>
-                          <button
-                            disabled={status != "pending" ? true : false}
-                            onClick={() => {
-                              handleOfferStatus(id, "rejected");
-                              setDeleteAdvertId(id);
-                            }}
-                            className="bg-[#FF4A6B] flex items-center justify-center w-9 h-9 text-white rounded-full"
-                          >
-                            <FaTimes />
-                          </button>
-                          <button
-                            onClick={() => {
-                              openModal(setIsOfferOpen);
-                              setCounterOfferId(id);
-                            }}
-                            className="bg-[#FFB800] flex items-center justify-center w-9 h-9 text-white rounded-full"
-                          >
-                            <FaDollarSign />
-                          </button>
+                          {status == "accepted" ? (
+                            <button
+                              disabled={status != "pending" ? true : false}
+                              onClick={() => {
+                                handleOfferStatus(id, "accepted");
+                                setDeleteAdvertId(id);
+                              }}
+                              className="bg-[#36B37E] flex items-center justify-center w-9 h-9 text-white rounded-full"
+                            >
+                              <FaCheck />
+                            </button>
+                          ) : (
+                            ""
+                          )}
+
+                          {status == "rejected" ? (
+                            <button
+                              disabled={status != "pending" ? true : false}
+                              onClick={() => {
+                                handleOfferStatus(id, "rejected");
+                                setDeleteAdvertId(id);
+                              }}
+                              className="bg-[#FF4A6B] flex items-center justify-center w-9 h-9 text-white rounded-full"
+                            >
+                              <FaTimes />
+                            </button>
+                          ) : (
+                            ""
+                          )}
+                          {status == "pending" ? (
+                            <div className="flex gap-3 font-semibold items-center justify-cente">
+                              <button
+                                disabled={status != "pending" ? true : false}
+                                onClick={() => {
+                                  handleOfferStatus(id, "accepted");
+                                  setDeleteAdvertId(id);
+                                }}
+                                className="bg-[#36B37E] flex items-center justify-center w-9 h-9 text-white rounded-full"
+                              >
+                                <FaCheck />
+                              </button>
+                              <button
+                                disabled={status != "pending" ? true : false}
+                                onClick={() => {
+                                  handleOfferStatus(id, "rejected");
+                                  setDeleteAdvertId(id);
+                                }}
+                                className="bg-[#FF4A6B] flex items-center justify-center w-9 h-9 text-white rounded-full"
+                              >
+                                <FaTimes />
+                              </button>
+                              <button
+                                onClick={() => {
+                                  openModal(setIsOfferOpen);
+                                  setCounterOfferId(id);
+                                }}
+                                className="bg-[#FFB800] flex items-center justify-center w-9 h-9 text-white rounded-full"
+                              >
+                                <FaDollarSign />
+                              </button>
+                            </div>
+                          ) : (
+                            ""
+                          )}
                         </div>
                       </td>
                     </tr>

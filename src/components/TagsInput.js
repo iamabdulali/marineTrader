@@ -55,10 +55,10 @@ export const TagsInput = ({ field, form }) => {
         {field.name.charAt(0).toUpperCase() + field.name.slice(1)}
       </label>
       <input
-        {...field}
+        // {...field}
         type="text"
         placeholder={`Enter Tags`}
-        value={field.value} // Set the value to the field value
+        // value={field.value} // Set the value to the field value
         onChange={handleTagInput}
         onKeyDown={handleKeyDown}
         className="border-[#CECED7] mb-4 text-[#8891B2] border-2 rounded-md p-3 w-full"
