@@ -266,8 +266,8 @@ const BuildAd = () => {
   const handleSubmit = async (values) => {
     console.log(values);
     setSpinner(true);
-    const isBundleSelected = values?.bundles != "";
-
+    const isBundleSelected = values?.bundles != undefined;
+    console.log(isBundleSelected);
     try {
       const { data } = await axios.post(`${SERVER_BASE_URL}/advert`, values, {
         headers: {
