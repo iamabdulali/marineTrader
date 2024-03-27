@@ -67,6 +67,8 @@ function App() {
     fetchOptions("models", "MODALS");
     fetchOptions("conditions", "CONDITIONS");
     fetchOptions("types", "TYPES");
+    fetchOptions("currencies", "CURRENCY");
+    fetchOptions("taxes", "TAXES");
   }, []);
 
   async function requestPermission() {

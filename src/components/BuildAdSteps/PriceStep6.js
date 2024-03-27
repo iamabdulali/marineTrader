@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import BuildLayout from "./BuildLayout";
 import { Field } from "formik";
 import { CategorySelectDropdown } from "../CategorySelectDropdown";
@@ -17,6 +17,8 @@ import AvailableUpgrades from "./AdComponents/AvailableUpgrades";
 import { FormField } from "../FormField";
 import { fetchOptions } from "../../utils/fetch/fetchData";
 import { tax } from "../../utils/DummyData";
+import { AuthContext } from "../../Context/AuthContext";
+import SelectDropdown from "../Forms/FormElements/SelectDropdown";
 
 const PriceStep6 = ({ setFieldValue, values }) => {
   const initialFacilities = {
@@ -30,7 +32,6 @@ const PriceStep6 = ({ setFieldValue, values }) => {
 
   const [facilities, setFacilities] = useState(initialFacilities.facilities);
   const [priceInfoType, setPriceInfoType] = useState("enterInfo");
-  const [currencies, setCurrencies] = useState([]);
   const [loading, setLoading] = useState(true);
   let [isBundleOpen, setIsBundleOpen] = useState(false);
   let [isSpotlightOpen, setIsSpotlightOpen] = useState(false);
@@ -49,9 +50,7 @@ const PriceStep6 = ({ setFieldValue, values }) => {
     setSpotlightType("category");
   };
 
-  useEffect(() => {
-    fetchOptions("currencies", setCurrencies, setLoading);
-  }, []);
+  const { currency, taxes } = useContext(AuthContext);
 
   return (
     <BuildLayout heading="Set Price">
@@ -92,7 +91,7 @@ const PriceStep6 = ({ setFieldValue, values }) => {
             <CategorySelectDropdown
               label="Currency"
               name="currency"
-              options={currencies}
+              options={currency}
             />
             <FormField
               FieldType="number"
@@ -101,7 +100,7 @@ const PriceStep6 = ({ setFieldValue, values }) => {
               label="Price"
               className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
             />
-            <CategorySelectDropdown label="Tax" name="tax" options={tax} />
+            <CategorySelectDropdown label="Tax" name="tax" options={taxes} />
           </div>
         ) : (
           <div className="text-sm mt-5  text-[#11133D] bg-[#FFE8E8] py-7 sm:px-7 px-4 rounded-lg">

@@ -15,19 +15,20 @@ import { displayErrorMessages } from "../../utils/displayErrors";
 import axios from "axios";
 import { Oval } from "react-loader-spinner";
 import ImageSection from "./ImageSection";
+import { deepEqual } from "../../utils/deepEqual";
 
 const UserInfo = () => {
   const [loading, setLoading] = useState(true);
   const [selectedTab, setSelectedTab] = useState("companyInfo");
   const [spinner, setSpinner] = useState(false);
 
-  const [editing, setEditing] = useState(true);
+  const [editing, setEditing] = useState(false);
   const { user, dispatch } = useContext(AuthContext);
   const { seller_type } = Object(user);
   const isPrivateSeller = seller_type == "private seller";
 
   const handleEditClick = () => {
-    setEditing(!editing);
+    setEditing(true);
   };
 
   const handleTabClick = (tab) => {
@@ -59,18 +60,49 @@ const UserInfo = () => {
   }
 
   const onSubmit = async (values) => {
-    let updatedValues = {
-      ...values.user,
-    };
-    if (!isPrivateSeller) {
-      updatedValues = {
-        ...updatedValues,
-        service_hours: JSON.stringify(values.user.service_hours),
-        working_days: arrayOfDays,
-        facilities: arrayOfFacilities,
-      };
+    let updatedValues = {};
+
+    // Iterate over all fields in values.user object
+    for (const fieldName in values.user) {
+      // Check if the field exists in the user object and if its value has changed
+      if (
+        values.user.hasOwnProperty(fieldName) &&
+        !deepEqual(values.user[fieldName], user[fieldName])
+      ) {
+        // Update the updatedValues object with the new value
+        updatedValues[fieldName] = values.user[fieldName];
+      }
     }
+
+    // Convert facilities to an array of names if it's an array of objects
+    if (
+      updatedValues.hasOwnProperty("facilities") &&
+      Array.isArray(updatedValues["facilities"])
+    ) {
+      updatedValues["facilities"] = updatedValues["facilities"].map(
+        (facility) => facility.name
+      );
+    }
+
     console.log(updatedValues);
+
+    // Check if any updates are needed
+    if (Object.keys(updatedValues).length === 0) {
+      // If no differences, no need to send any updates
+      return;
+    }
+    // let updatedValues = {
+    //   ...values.user,
+    // };
+    // if (!isPrivateSeller) {
+    //   updatedValues = {
+    //     ...updatedValues,
+    //     service_hours: JSON.stringify(values.user.service_hours),
+    //     working_days: arrayOfDays,
+    //     facilities: arrayOfFacilities,
+    //   };
+    // }
+    // console.log(updatedValues);
     setSpinner(true);
     try {
       const { data } = await axios.post(
@@ -88,6 +120,7 @@ const UserInfo = () => {
       toast.success(data.message);
       dispatch({ type: "SET_USER", payload: data.data });
       setSpinner(false);
+      setEditing(false);
     } catch (error) {
       console.error("An unexpected error occurred:", error);
       const { errors } = error.response.data;
@@ -95,9 +128,7 @@ const UserInfo = () => {
       setSpinner(false);
     }
   };
-
-  console.log(user);
-
+  console.log(editing);
   return (
     <Layout>
       <LoadingWrapper

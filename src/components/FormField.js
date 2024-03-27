@@ -49,7 +49,9 @@ export const FormField = ({
           onClick={onClick}
           placeholder={label}
           readOnly={readOnly}
-          className="border-[#f1f1f1] font-semibold outline-none border-b-2 py-2 px-0 text-[#11133D] w-full"
+          className={`border-b-2 font-semibold outline-none ${
+            readOnly ? "border-[#f1f1f1]" : "border-[#000]"
+          }  py-2 px-0 text-[#11133D] w-full`}
         />
       </div>
     )}

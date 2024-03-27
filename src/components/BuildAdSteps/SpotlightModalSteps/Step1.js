@@ -21,6 +21,8 @@ const Step1 = ({ showSpotlightSelection, spotlightFor }) => {
     fetchOptions("continents", setSelectedContinents, setLoading);
   }, []);
 
+  console.log(values);
+
   const handleInputChange = (e) => {
     const { name, value, checked } = e.target;
 
@@ -29,6 +31,14 @@ const Step1 = ({ showSpotlightSelection, spotlightFor }) => {
       name === `${spotlightFor}_spotlights_continents`
     ) {
       if (checked) {
+        // Uncheck all countries if a continent is selected
+        if (name === `${spotlightFor}_spotlights_continents`) {
+          setFieldValue(`${spotlightFor}_spotlights_countries`, []);
+        }
+        // Uncheck all continents if a country is selected
+        else if (name === `${spotlightFor}_spotlights_countries`) {
+          setFieldValue(`${spotlightFor}_spotlights_continents`, []);
+        }
         // Add the value to the respective array
         setFieldValue(name, [...values[name], value]);
         // Update the total count if the value is valid

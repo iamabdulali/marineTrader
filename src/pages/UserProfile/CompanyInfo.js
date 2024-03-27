@@ -1,14 +1,33 @@
-import React from "react";
+import React, { useContext } from "react";
 import { FormField } from "../../components/FormField";
-import { useFormikContext } from "formik";
+import { Field, useFormikContext } from "formik";
+import SelectDropdown from "../../components/SelectDropdown";
+import { AuthContext } from "../../Context/AuthContext";
+import { isEditable } from "@testing-library/user-event/dist/utils";
+import { countryOptions, regionOptions } from "../../utils/DropdownOptions";
 
 const CompanyInfo = ({ editable, isPrivateSeller }) => {
+  const { currency } = useContext(AuthContext);
+
   const { values, setFieldValue } = useFormikContext();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFieldValue(`user.${name}`, value);
+    // For the currency field, extract the ID from the selected currency object
+    if (name === "currency") {
+      const selectedCurrency = currency.find((c) => c.id === parseInt(value));
+      console.log(selectedCurrency);
+      if (selectedCurrency) {
+        setFieldValue("user.currency", selectedCurrency?.id);
+      } else {
+        console.error("Selected currency not found");
+      }
+    } else {
+      setFieldValue(`user.${name}`, value);
+    }
   };
+
+  console.log(values);
 
   return (
     <>
@@ -31,7 +50,7 @@ const CompanyInfo = ({ editable, isPrivateSeller }) => {
             value="john23"
             name="companyName"
             onChange={(e) => handleInputChange(e)}
-            readOnly={editable}
+            readOnly={!editable}
           />
         )}
         <FormField
@@ -52,7 +71,7 @@ const CompanyInfo = ({ editable, isPrivateSeller }) => {
           value={values.user.building_number}
           name="building_number"
           onChange={(e) => handleInputChange(e)}
-          readOnly={editable}
+          readOnly={!editable}
         />
         <FormField
           label="Street Name"
@@ -61,7 +80,7 @@ const CompanyInfo = ({ editable, isPrivateSeller }) => {
           value={values.user.street_name}
           name="street_name"
           onChange={(e) => handleInputChange(e)}
-          readOnly={editable}
+          readOnly={!editable}
         />
       </div>
       <div className="flex sm:gap-6 items-center sm:flex-row flex-col">
@@ -72,7 +91,7 @@ const CompanyInfo = ({ editable, isPrivateSeller }) => {
           value={values.user.city}
           name="city"
           onChange={(e) => handleInputChange(e)}
-          readOnly={editable}
+          readOnly={!editable}
         />
         <FormField
           label="Postal Code"
@@ -81,28 +100,61 @@ const CompanyInfo = ({ editable, isPrivateSeller }) => {
           value={values.user.postcode}
           name="postcode"
           onChange={(e) => handleInputChange(e)}
-          readOnly={editable}
+          readOnly={!editable}
         />
       </div>
       <div className="flex sm:gap-6 items-center sm:flex-row flex-col">
-        <FormField
-          label="Country"
-          FieldType="text"
-          inputField={false}
-          value={values.user.country}
-          name="country"
-          onChange={(e) => handleInputChange(e)}
-          readOnly={editable}
-        />
-        <FormField
-          label="Region"
-          FieldType="text"
-          inputField={false}
-          value={values.user.region}
-          name="region"
-          onChange={(e) => handleInputChange(e)}
-          readOnly={editable}
-        />
+        <div className="w-full mb-4">
+          <label
+            className="block text-[#8891B2] text-sm font-medium"
+            htmlFor={"country"}
+          >
+            Country
+          </label>
+          <Field
+            onChange={(e) => handleInputChange(e)}
+            value={values.user.country}
+            disabled={!editable}
+            as="select"
+            className={`border-b-2 text-sm font-semibold outline-none ${
+              !editable ? "border-[#f1f1f1]" : "border-[#000]"
+            }  py-2 px-0 text-[#11133D] w-full`}
+            name={"country"}
+          >
+            <option>Select a {"country"}</option>
+            {countryOptions.map((option) => (
+              <option key={option.id} value={option.id} label={option.name}>
+                {option.name}
+              </option>
+            ))}
+          </Field>
+        </div>
+
+        <div className="w-full mb-4">
+          <label
+            className="block text-[#8891B2] text-sm font-medium"
+            htmlFor={"region"}
+          >
+            Region
+          </label>
+          <Field
+            onChange={(e) => handleInputChange(e)}
+            value={values.user.region}
+            disabled={!editable}
+            as="select"
+            className={`border-b-2 text-sm font-semibold outline-none ${
+              !editable ? "border-[#f1f1f1]" : "border-[#000]"
+            }  py-2 px-0 text-[#11133D] w-full`}
+            name={"region"}
+          >
+            <option>Select a {"Region"}</option>
+            {regionOptions.map((option) => (
+              <option key={option.id} value={option.id} label={option.name}>
+                {option.name}
+              </option>
+            ))}
+          </Field>
+        </div>
       </div>
       <div className="flex sm:gap-6 items-center sm:flex-row flex-col">
         <FormField
@@ -112,17 +164,34 @@ const CompanyInfo = ({ editable, isPrivateSeller }) => {
           value={values.user.phone_no}
           name="phone_no"
           onChange={(e) => handleInputChange(e)}
-          readOnly={editable}
+          readOnly={!editable}
         />
-        <FormField
-          label="Currency"
-          FieldType="text"
-          inputField={false}
-          value="USD"
-          onChange={(e) => handleInputChange(e)}
-          readOnly={editable}
-          name="currency"
-        />
+
+        <div className="w-full mb-4">
+          <label
+            className="block text-[#8891B2] text-sm font-medium"
+            htmlFor={"currency"}
+          >
+            Currency
+          </label>
+          <Field
+            onChange={(e) => handleInputChange(e)}
+            value={values.user?.currency?.id}
+            disabled={!editable}
+            as="select"
+            className={`border-b-2 text-sm font-semibold outline-none ${
+              !editable ? "border-[#f1f1f1]" : "border-[#000]"
+            }  py-2 px-0 text-[#11133D] w-full`}
+            name={"currency"}
+          >
+            <option>Select a {"currency"}</option>
+            {currency.map((option) => (
+              <option key={option.id} value={option.id} label={option.name}>
+                {option.name}
+              </option>
+            ))}
+          </Field>
+        </div>
       </div>
       <div className="flex sm:gap-6 items-center sm:flex-row flex-col">
         <FormField
@@ -141,7 +210,7 @@ const CompanyInfo = ({ editable, isPrivateSeller }) => {
           value="password"
           name="password"
           onChange={(e) => handleInputChange(e)}
-          readOnly={editable}
+          readOnly={true}
         />
       </div>
     </>

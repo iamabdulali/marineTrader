@@ -3,22 +3,23 @@ import { FaArrowRight, FaHeart } from "react-icons/fa";
 import { boatImage, featuredImage } from "../../assets";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../Context/AuthContext";
+import { categoriesList } from "../..";
 
 const SpotLightListings = ({
   id,
-  listingType,
-  listingName,
-  listingPrice,
+  title,
+  price,
   isFeatured,
   isNews,
   newsTitle,
   newsDate,
   thumbnail,
+  category_id,
 }) => {
   const { selectedCategory } = useContext(AuthContext);
 
   return (
-    <Link to={`/${id}`}>
+    <Link to={`/itemDetails/${id}`}>
       {isNews ? (
         <div>
           <img src={thumbnail} className="w-full" />
@@ -37,10 +38,12 @@ const SpotLightListings = ({
             )}
           </div>
           <p className="text-[#8891B2] text-sm mt-2">
-            {selectedCategory?.name}
+            {categoriesList[category_id]}
           </p>
-          <p className="text-[#11133D] font-semibold">{listingName}</p>
-          <p className="text-[#0D1A8B] mt-2 font-semibold">{listingPrice}</p>
+          <p className="text-[#11133D] font-semibold">{title}</p>
+          <p className="text-[#0D1A8B] mt-2 font-semibold">
+            £{Number(price).toFixed(0)}
+          </p>
         </div>
       )}
 

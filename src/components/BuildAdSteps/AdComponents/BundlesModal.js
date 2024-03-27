@@ -14,13 +14,12 @@ const BundlesModal = ({ onClick }) => {
   const [bundles, setBundles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [spinner, setSpinner] = useState(false);
-  const navigate = useNavigate();
 
   useEffect(() => {
     fetchOptions("bundles", setBundles, setLoading);
   }, []);
 
-  const { values, isValid } = useFormikContext();
+  const { isValid } = useFormikContext();
 
   console.log(isValid);
 
@@ -89,8 +88,7 @@ const BundlesModal = ({ onClick }) => {
           Close
         </button>
         <button
-          // to={`/payment/bundle/${values?.bundles}`}
-          onClick={!isValid ? showErrorMessage : () => {}}
+          onClick={!isValid ? showErrorMessage : onClick}
           type={`${!isValid ? "button" : "submit"}`}
           className="bg-[#0D1A8B] text-white py-3 px-7 rounded-md"
         >

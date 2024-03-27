@@ -44,6 +44,10 @@ export const authReducer = (state, action) => {
       return { ...state, types: action.payload };
     case "CATEGORIES":
       return { ...state, categories: action.payload };
+    case "CURRENCY":
+      return { ...state, currency: action.payload };
+    case "TAXES":
+      return { ...state, taxes: action.payload };
     case "FCM_TOKEN":
       return { ...state, fcmToken: action.payload };
     default:
@@ -105,6 +109,8 @@ export const AuthContextProvider = ({ children }) => {
     conditions: [],
     types: [],
     categories: [],
+    currency: [],
+    taxes: [],
     fcmToken: "",
   });
 

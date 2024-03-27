@@ -22,14 +22,10 @@ const AdSubscriptionComponent = ({
   featuresArray,
   id,
   hasActiveSubscription,
-  hasActiveSubscriptionData,
-  adsPosted,
+  hasBundle,
 }) => {
   let variantStyles = {};
   let [isSearchResultOpen, setIsSearchResultOpen] = useState(false);
-  const totalAds = Number(
-    hasActiveSubscriptionData?.subscription_plan?.premium_per_month - adsPosted
-  );
 
   const { dispatch } = useContext(AuthContext);
 
@@ -42,6 +38,7 @@ const AdSubscriptionComponent = ({
         ribbon: false,
         searchResult: standardSearchResult,
         monthlyAllowance: false,
+        bundleAllowance: false,
       };
       break;
     case "Premium":
@@ -53,6 +50,7 @@ const AdSubscriptionComponent = ({
         ribbonImage: adsImage,
         searchResult: premiumSearchResult,
         monthlyAllowance: true,
+        bundleAllowance: true,
       };
       break;
     case "Featured":
@@ -64,6 +62,7 @@ const AdSubscriptionComponent = ({
         ribbonImage: ribbon,
         searchResult: featuredSearchResult,
         monthlyAllowance: false,
+        bundleAllowance: false,
       };
       break;
     default:
@@ -102,18 +101,14 @@ const AdSubscriptionComponent = ({
           {packageName}
         </p>
         <p className="text-[#171923] font-semibold text-4xl mb-3">{price}</p>
-        {variantStyles.monthlyAllowance && hasActiveSubscription ? (
+        {variantStyles.monthlyAllowance && hasActiveSubscription != 0 ? (
           <div className="text-sm text-[#11133D] font-medium">
             <p className="mb-3">
               Inclusive Monthly Allowance:{" "}
               <span className="text-[#E6AB13] font-semibold">
-                {totalAds} Remaining
+                {hasActiveSubscription} Remaining
               </span>
             </p>
-            {/* <p className="mt-2 mb-3">
-              Bundle Balance:{" "}
-              <span className="text-[#FF4A6B] font-semibold">9 Remaining</span>
-            </p> */}
           </div>
         ) : (
           <div className="text-sm text-[#11133D] opacity-0">
@@ -121,11 +116,20 @@ const AdSubscriptionComponent = ({
               Inclusive Monthly Allowance:{" "}
               <span className="text-[#E6AB13] font-semibold">15 Remaining</span>
             </p>
-            {/* <p className="mt-2 mb-3">
-              Bundle Balance:{" "}
-              <span className="text-[#FF4A6B] font-semibold">9 Remaining</span>
-            </p> */}
           </div>
+        )}
+
+        {variantStyles.bundleAllowance && hasBundle != "0" ? (
+          <div className="text-sm text-[#11133D] font-medium">
+            <p className="mt-2 mb-3">
+              Bundle Balance:{" "}
+              <span className="text-[#FF4A6B] font-semibold">
+                {hasBundle} Remaining
+              </span>
+            </p>
+          </div>
+        ) : (
+          ""
         )}
 
         <Link
