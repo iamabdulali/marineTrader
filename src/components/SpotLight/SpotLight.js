@@ -43,13 +43,14 @@ const SpotLight = () => {
       ) : (
         <>
           <div className="2xl:px-24 sm:px-10 px-6 mt-5 grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-10">
-            {homeSpotlights.map(({ id, title, price, category_id }) => (
+            {homeSpotlights.map(({ id, title, price, category_id, images }) => (
               <SpotLightListings
                 key={id}
                 id={id}
                 title={title}
                 category_id={category_id}
                 price={price}
+                image={images[0]?.image}
               />
             ))}
           </div>

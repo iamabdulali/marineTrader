@@ -15,6 +15,7 @@ const SpotLightListings = ({
   newsDate,
   thumbnail,
   category_id,
+  image,
 }) => {
   const { selectedCategory } = useContext(AuthContext);
 
@@ -28,8 +29,11 @@ const SpotLightListings = ({
         </div>
       ) : (
         <div>
-          <div className="relative w-full">
-            <img src={boatImage} className="w-full" />
+          <div className="relative w-full ">
+            <img
+              src={image}
+              className="w-full lg:max-h-[250px] lg:min-h-[250px] object-cover max-h-[250px] min-h-[250px]"
+            />
             <FaHeart className="absolute right-4 top-4" size={20} />
             {isFeatured ? (
               <img src={featuredImage} className="absolute w-28 top-3" />

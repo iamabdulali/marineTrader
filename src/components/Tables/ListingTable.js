@@ -280,7 +280,7 @@ const ListingTable = ({
                       <img
                         src={images[0]?.image}
                         alt="Item"
-                        className="sm:w-4/12 w-full object-cover rounded-lg sm:mr-2 mb-4"
+                        className="sm:w-4/12 smallLg:max-h-[auto] max-h-[250px]  w-full object-cover rounded-lg sm:mr-2 mb-4"
                       />
                       <div className="sm:w-8/12 w-full">
                         <p className="text-[#11133D] font-semibold text-xl mb-2">
@@ -343,6 +343,7 @@ const ListingTable = ({
                           <CustomDropdownMenu
                             buttonToOpenMenu={
                               <FiMoreVertical
+                                onClick={() => setDeleteAdvertId(id)}
                                 size={24}
                                 cursor="pointer"
                                 color="#0D1A8B"
@@ -366,7 +367,16 @@ const ListingTable = ({
             <>
               <tbody className="smallLg:table-row-group hidden">
                 {OffersData.map(
-                  ({ id, offer, name, advert, phone, email, currency }) => (
+                  ({
+                    id,
+                    offer,
+                    name,
+                    advert,
+                    phone,
+                    email,
+                    currency,
+                    status,
+                  }) => (
                     <tr
                       key={id}
                       className="bg-white border-b-[20px] shadow-[25px] border-[#f6f6f6] text-sm text-[#696E9D]"
@@ -401,20 +411,20 @@ const ListingTable = ({
                       <td className="py-4 px-4">
                         <div className="flex gap-3 font-semibold items-center justify-center">
                           <button
+                            disabled={status != "pending" ? true : false}
                             onClick={() => {
-                              setCounterOfferId(id);
-                              handleOfferStatus(counterOfferId, "accepted");
-                              console.log(counterOfferId);
+                              handleOfferStatus(id, "accepted");
+                              setDeleteAdvertId(id);
                             }}
                             className="bg-[#36B37E] flex items-center justify-center w-9 h-9 text-white rounded-full"
                           >
                             <FaCheck />
                           </button>
                           <button
+                            disabled={status != "pending" ? true : false}
                             onClick={() => {
-                              setCounterOfferId(id);
-                              handleOfferStatus(counterOfferId, "rejected");
-                              console.log(counterOfferId);
+                              handleOfferStatus(id, "rejected");
+                              setDeleteAdvertId(id);
                             }}
                             className="bg-[#FF4A6B] flex items-center justify-center w-9 h-9 text-white rounded-full"
                           >
@@ -437,7 +447,16 @@ const ListingTable = ({
               </tbody>
               <div className="smallLg:hidden grid gap-4">
                 {OffersData.map(
-                  ({ id, offer, advert, name, phone, email, currency }) => (
+                  ({
+                    id,
+                    offer,
+                    advert,
+                    name,
+                    phone,
+                    email,
+                    currency,
+                    status,
+                  }) => (
                     <div
                       key={id}
                       className="bg-white sm:text-base text-sm block rounded-lg sm:flex gap-4 w-full p-4"
@@ -445,7 +464,7 @@ const ListingTable = ({
                       <img
                         src={advert?.images[0]?.image}
                         alt="Item"
-                        className="sm:w-4/12 w-full object-cover rounded-lg sm:mr-2 mb-4"
+                        className="sm:w-4/12 smallLg:max-h-[auto] max-h-[250px] w-full object-cover rounded-lg sm:mr-2 mb-4"
                       />
                       <div className="sm:w-8/12 w-full">
                         <p className="text-[#11133D] font-semibold text-xl mb-2">
@@ -492,10 +511,24 @@ const ListingTable = ({
                           </span>
                         </p>
                         <div className="flex gap-3 font-semibold items-center mt-4">
-                          <button className="bg-[#36B37E] p-3 rounded-md flex items-center justify-center text-white w-full">
+                          <button
+                            disabled={status != "pending" ? true : false}
+                            onClick={() => {
+                              handleOfferStatus(id, "accepted");
+                              setDeleteAdvertId(id);
+                            }}
+                            className="bg-[#36B37E] p-3 rounded-md flex items-center justify-center text-white w-full"
+                          >
                             <FaCheck size={20} />
                           </button>
-                          <button className="bg-[#FF4A6B] p-3 rounded-md flex items-center justify-center text-white w-full">
+                          <button
+                            disabled={status != "pending" ? true : false}
+                            onClick={() => {
+                              handleOfferStatus(id, "rejected");
+                              setDeleteAdvertId(id);
+                            }}
+                            className="bg-[#FF4A6B] p-3 rounded-md flex items-center justify-center text-white w-full"
+                          >
                             <FaTimes size={20} />
                           </button>
                           <button
