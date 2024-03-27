@@ -92,8 +92,8 @@ export default function AdSubscription() {
   ];
 
   useEffect(() => {
+    fetchOptions("bundle/advert/remains", setHasBundle);
     if (!isPrivateSeller) {
-      fetchOptions("bundle/advert/remains", setHasBundle);
       fetchOptions(
         `subscription/advert/remains/${selectedCategory?.id}`,
         setHasActiveSubscription
