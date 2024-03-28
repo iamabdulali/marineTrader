@@ -26,13 +26,16 @@ import { toast } from "react-toastify";
 import { displayErrorMessages } from "../../utils/displayErrors";
 import axios from "axios";
 import { Oval } from "react-loader-spinner";
-import { getOneAdvert } from "../../utils/fetch/fetchData";
+import { fetchOptions, getOneAdvert } from "../../utils/fetch/fetchData";
 
 const BuildAd = () => {
-  const [step, setStep] = useState(5);
+  const [step, setStep] = useState(1);
   const [submit, setSubmit] = useState(false);
   const [spinner, setSpinner] = useState(false);
   const NavigateTo = useNavigate();
+  const [advertID, setAdvertID] = useState("");
+  const [hasSubscription, setHasSubscription] = useState(0);
+  const [hasBundle, setHasBundle] = useState(0);
 
   const [advert, setAdvert] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -88,7 +91,7 @@ const BuildAd = () => {
     tags: [],
     images: [],
     video: null,
-    priceOnInformation: "",
+    price_type: "",
     currency: "",
     price: "",
     facilities: [],
@@ -119,7 +122,7 @@ const BuildAd = () => {
     tags: [],
     images: [],
     video: null,
-    priceOnInformation: "",
+    price_type: "",
     currency: "",
     price: "",
     facilities: [],
@@ -263,6 +266,14 @@ const BuildAd = () => {
     }
   };
 
+  useEffect(() => {
+    fetchOptions("bundle/advert/remains", setHasBundle);
+    fetchOptions(
+      `subscription/advert/remains/${selectedCategory?.id}`,
+      setHasSubscription
+    );
+  }, [id]);
+
   const handleSubmit = async (values) => {
     console.log(values);
     setSpinner(true);
@@ -276,8 +287,14 @@ const BuildAd = () => {
         },
       });
       toast.success(data.message);
+      setAdvertID(data.data?.id);
       if (isBundleSelected) NavigateTo(`/payment/bundle/${values?.bundles}`);
-      openModal(setIsPaymentOptionOpen);
+      if (selectedPackage != "2") {
+        openModal(setIsPaymentOptionOpen);
+      } else if (hasSubscription == 0 || hasBundle == 0) {
+        openModal(setIsPaymentOptionOpen);
+      }
+
       setSpinner(false);
     } catch (error) {
       console.error("An unexpected error occurred:", error);
@@ -319,25 +336,23 @@ const BuildAd = () => {
             {step === 2 && <ItemFeaturesStep3 />}
             {step === 3 && <NotesSteps4 />}
             {step === 4 && <GalleryStep5 />}
-            {step === 5 && (
-              <PriceStep6 values={values} setFieldValue={setFieldValue} />
-            )}
+            {step === 5 && <PriceStep6 />}
             {/* Navigation buttons */}
             <div className="flex sm:flex-row flex-col-reverse align-center justify-between mt-10 mb-24">
               <div className="sm:w-auto w-full flex gap-5 items-center sm:flex-row flex-col sm:mt-0 mt-5">
                 <Link
                   to={"/selling"}
                   type="button"
-                  className="bg-white text-center sm:order-none order-1 hover:bg-[#8891B2] hover:text-white border-2 sm:w-28 w-full border-[#8891B2] text-[#8891B2] p-3 rounded-md  text-sm font-medium "
+                  className="bg-white text-center sm:order-none order-1 hover:bg-[#8891B2] hover:text-white border-2 sm:w-28 min-h-[48px] w-full border-[#8891B2] text-[#8891B2] p-3 rounded-md  text-sm font-medium "
                 >
                   Cancel
                 </Link>
-                <button
+                {/* <button
                   type="button"
                   className="bg-white border-2 sm:w-auto w-full hover:bg-[#0D1A8B] hover:text-white border-[#0D1A8B] text-[#0D1A8B] font-medium p-3 rounded-md text-sm"
                 >
                   Save To Draft
-                </button>
+                </button> */}
               </div>
               <div className="text-right flex items-center gap-5">
                 {step > 1 && (
@@ -392,6 +407,7 @@ const BuildAd = () => {
               width="lg:w-1/3"
             >
               <PaymentOptionModal
+                id={advertID}
                 onClose={() => closeModal(setIsPaymentOptionOpen)}
               />
             </Modal>

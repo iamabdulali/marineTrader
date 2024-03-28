@@ -4,10 +4,11 @@ import {
   CardNumberElement,
   useElements,
 } from "@stripe/react-stripe-js";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Oval } from "react-loader-spinner";
 import { stackIcon } from "../../assets";
 import { fetchOptions } from "../../utils/fetch/fetchData";
+import { AuthContext } from "../../Context/AuthContext";
 
 const StripePaymentForm = ({ handlePaymentSubmit, spinner, id }) => {
   const [postalCode, setPostalCode] = useState("");
@@ -16,15 +17,15 @@ const StripePaymentForm = ({ handlePaymentSubmit, spinner, id }) => {
   const elements = useElements();
   const [hasSubscription, setHasSubscription] = useState(0);
   const [hasBundle, setHasBundle] = useState(0);
+  const { user } = useContext(AuthContext);
+  const { seller_type } = Object(user);
 
-  console.log(id);
+  const isPrivateSeller = seller_type == "private seller";
 
   useEffect(() => {
     fetchOptions("bundle/advert/remains", setHasBundle);
     fetchOptions(`subscription/advert/remains/${id}`, setHasSubscription);
   }, [id]);
-
-  console.log(hasSubscription);
 
   useEffect(() => {
     const checkValidity = () => {
@@ -53,6 +54,8 @@ const StripePaymentForm = ({ handlePaymentSubmit, spinner, id }) => {
     const isValid = checkValidity();
     setIsFormValid(isValid);
   }, [elements, postalCode, country]);
+
+  console.log({ hasBundle, hasSubscription });
 
   return (
     <div className="smallLg:w-1/2 w-full">
@@ -144,7 +147,7 @@ const StripePaymentForm = ({ handlePaymentSubmit, spinner, id }) => {
               value={postalCode}
               onChange={(e) => setPostalCode(e.target.value)}
               required
-              type="number"
+              type="text"
               name="postalCode"
               className="border-[#8891B2] font-medium text-[#8891B2] border-2 rounded-lg p-3 w-full text-sm"
               placeholder="Postal Code"
@@ -168,34 +171,38 @@ const StripePaymentForm = ({ handlePaymentSubmit, spinner, id }) => {
           )}
         </button>
       </form>
-      <div className="bg-[#1C5DBF] text-white p-6 mt-8 shadow-[7px]">
-        <p className="sm:text-2xl text-base font-semibold">
-          <img
-            className="inline-block w-10 sm:mr-0 mr-3"
-            src={stackIcon}
-            alt="stackIcon"
-          />{" "}
-          Allowances/Bundles
-        </p>
-        {hasSubscription != 0 ? (
-          <div className="flex items-center sm:text-base text-sm justify-between border-b-2 border-white mt-4 pb-3">
-            <p>Inclusive Monthly Allowance</p>
-            <p className="font-medium sm:text-lg text-base">
-              {hasSubscription}
-            </p>
-          </div>
-        ) : (
-          ""
-        )}
-        {hasBundle != 0 ? (
-          <div className="flex items-center sm:text-base text-sm justify-between mt-3">
-            <p>Bundle Balance</p>
-            <p className="font-medium sm:text-lg text-base">{hasBundle}</p>
-          </div>
-        ) : (
-          ""
-        )}
-      </div>
+      {!isPrivateSeller && (hasSubscription != 0 || hasBundle != 0) ? (
+        <div className="bg-[#1C5DBF] text-white p-6 mt-8 shadow-[7px]">
+          <p className="sm:text-2xl text-base font-semibold">
+            <img
+              className="inline-block w-10 sm:mr-0 mr-3"
+              src={stackIcon}
+              alt="stackIcon"
+            />{" "}
+            Allowances/Bundles
+          </p>
+          {hasSubscription != 0 ? (
+            <div className="flex items-center sm:text-base text-sm justify-between border-b-2 border-white mt-4 pb-3">
+              <p>Inclusive Monthly Allowance</p>
+              <p className="font-medium sm:text-lg text-base">
+                {hasSubscription}
+              </p>
+            </div>
+          ) : (
+            ""
+          )}
+          {hasBundle != 0 ? (
+            <div className="flex items-center sm:text-base text-sm justify-between mt-3">
+              <p>Bundle Balance</p>
+              <p className="font-medium sm:text-lg text-base">{hasBundle}</p>
+            </div>
+          ) : (
+            ""
+          )}
+        </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 };

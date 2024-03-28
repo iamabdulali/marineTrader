@@ -32,7 +32,11 @@ const SpotlightModal = ({ onClick, setFieldValue, values, spotlightFor }) => {
           ""
         )}
         <button
-          onClick={() => setShowSpotlightSelection(true)}
+          onClick={
+            showSpotlightSelection
+              ? onClick
+              : () => setShowSpotlightSelection(true)
+          }
           type="button"
           className="bg-[#0D1A8B] hover:bg-[#0a1dbd] text-white py-3 px-7  rounded-md min-w-[120px]"
         >

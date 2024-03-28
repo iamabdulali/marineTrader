@@ -208,7 +208,7 @@ const Header = ({ menuState, setMenuState }) => {
                       <span className="min-w-20">
                         {user_name || <Skeleton />}
                       </span>
-                      <FaChevronDown size={12} />
+                      {/* <FaChevronDown size={12} /> */}
                     </p>
                     <span className="text-[#737791] text-sm capitalize">
                       {seller_type || <Skeleton />}

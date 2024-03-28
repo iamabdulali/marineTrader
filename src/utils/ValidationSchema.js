@@ -11,7 +11,7 @@ export const validationSchema = Yup.object().shape({
   country: Yup.string().required("Country is required"),
   region: Yup.string().required("Region is required"),
   phone_no: Yup.string()
-    .length(11, "Phone Number must be of 11 characters")
+    .length(10, "Phone Number must be of 10 characters")
     .required("Phone Number is required"),
   currency: Yup.string().required("Currency is required"),
   email: Yup.string()

@@ -165,6 +165,7 @@ const ListingTable = ({
                 {sellingData.map(
                   ({
                     id,
+                    title,
                     images,
                     category,
                     currency,
@@ -179,14 +180,17 @@ const ListingTable = ({
                     >
                       <td className="py-4 px-4 whitespace-nowrap">
                         <div className="flex items-center gap-2">
-                          <img
-                            src={images[0].image}
-                            alt="Item"
-                            className="w-16 h-16 object-cover rounded-lg mr-2"
-                          />
+                          <Link to={`/itemDetails/${id}`}>
+                            <img
+                              src={images[0].image}
+                              alt="Item"
+                              className="w-16 h-16 object-cover rounded-lg mr-2"
+                            />
+                          </Link>
                           <div>
                             <p className="text-[#11133D] font-semibold text-base mb-1">
-                              {category.name}
+                              {/* {category.name} */}
+                              {title}
                             </p>
                             <p>
                               {currency.symbol}
@@ -267,6 +271,7 @@ const ListingTable = ({
                     id,
                     images,
                     category,
+                    title,
                     currency,
                     price,
                     expire_date,
@@ -277,14 +282,17 @@ const ListingTable = ({
                       key={id}
                       className="bg-white sm:text-base text-sm block rounded-lg sm:flex gap-4 w-full p-4"
                     >
-                      <img
-                        src={images[0]?.image}
-                        alt="Item"
-                        className="sm:w-4/12 smallLg:max-h-[auto] max-h-[250px]  w-full object-cover rounded-lg sm:mr-2 mb-4"
-                      />
+                      <Link to={`/itemDetails/${id}`}>
+                        <img
+                          src={images[0]?.image}
+                          alt="Item"
+                          className="sm:w-4/12 smallLg:max-h-[auto] max-h-[250px]  w-full object-cover rounded-lg sm:mr-2 mb-4"
+                        />
+                      </Link>
                       <div className="sm:w-8/12 w-full">
                         <p className="text-[#11133D] font-semibold text-xl mb-2">
-                          {category?.name}
+                          {/* {category?.name} */}
+                          {title}
                         </p>
                         <p className="text-[#8891B2] font-medium">
                           Price:

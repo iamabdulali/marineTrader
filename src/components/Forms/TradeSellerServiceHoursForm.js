@@ -70,7 +70,7 @@ export default function TradeSellerServiceHoursForm() {
       {/* Select Days */}
       <div>
         <p className="font-semibold my-5">Select Days:</p>
-        <div className="flex gap-3 2xl:flex-nowrap flex-wrap">
+        <div className="flex gap-3  flex-wrap">
           {["Mon", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun"].map((day) => (
             <div key={day}>
               <button

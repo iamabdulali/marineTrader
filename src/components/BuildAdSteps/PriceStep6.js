@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import BuildLayout from "./BuildLayout";
-import { Field } from "formik";
+import { Field, useFormikContext } from "formik";
 import { CategorySelectDropdown } from "../CategorySelectDropdown";
 import { warningIcon } from "../../assets";
 import BundlesModal from "./AdComponents/BundlesModal";
@@ -14,8 +14,10 @@ import {
 import AvailableUpgrades from "./AdComponents/AvailableUpgrades";
 import { FormField } from "../FormField";
 import { AuthContext } from "../../Context/AuthContext";
+import { toast } from "react-toastify";
+import { handlePackageUpgrade } from "../../utils/handlePackageUpgrade";
 
-const PriceStep6 = ({ setFieldValue, values }) => {
+const PriceStep6 = () => {
   const [priceInfoType, setPriceInfoType] = useState("enterInfo");
   let [isBundleOpen, setIsBundleOpen] = useState(false);
   let [isSpotlightOpen, setIsSpotlightOpen] = useState(false);
@@ -32,11 +34,20 @@ const PriceStep6 = ({ setFieldValue, values }) => {
     setSpotlightType("category");
   };
 
+  const { values, setFieldValue } = useFormikContext();
+
+  console.log(values);
+
   const { currency, taxes, user } = useContext(AuthContext);
 
   const { seller_type } = Object(user);
 
   const isPrivateSeller = seller_type == "private seller";
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFieldValue(name, value);
+  };
 
   return (
     <BuildLayout heading="Set Price">
@@ -47,12 +58,15 @@ const PriceStep6 = ({ setFieldValue, values }) => {
         <div className="flex sm:flex-row flex-col gap-5 mt-5 text-sm ">
           <div className="radio">
             <Field
-              name="priceOnInformation"
+              name="price_type"
               id="priceInfoRadio"
               type="radio"
               value="enterInfo"
-              checked={priceInfoType === "enterInfo"}
-              onChange={() => setPriceInfoType("enterInfo")}
+              checked={values?.price_type == "enterInfo"}
+              onChange={(e) => {
+                handleInputChange(e);
+                setPriceInfoType("enterInfo");
+              }}
             />
             <label htmlFor="priceInfoRadio" className="radio-label mr-5 ">
               Enter Pricing information
@@ -60,12 +74,15 @@ const PriceStep6 = ({ setFieldValue, values }) => {
           </div>
           <div className="radio">
             <Field
-              name="priceOnInformation"
+              name="price_type"
               id="poa"
               type="radio"
               value="poa"
-              checked={priceInfoType === "poa"}
-              onChange={() => setPriceInfoType("poa")}
+              checked={values?.price_type == "poa"}
+              onChange={(e) => {
+                handleInputChange(e);
+                setPriceInfoType("poa");
+              }}
             />
             <label htmlFor="poa" className="radio-label">
               POA (Price on Application)
@@ -89,7 +106,7 @@ const PriceStep6 = ({ setFieldValue, values }) => {
             <CategorySelectDropdown label="Tax" name="tax" options={taxes} />
           </div>
         ) : (
-          <div className="text-sm mt-5  text-[#11133D] bg-[#FFE8E8] py-7 sm:px-7 px-4 rounded-lg">
+          <div className="text-sm mt-5 mb-6  text-[#11133D] bg-[#FFE8E8] py-7 sm:px-7 px-4 rounded-lg">
             <p className="flex items-center gap-4 text-[#FC4040] font-bold sm:text-xl text-base">
               <img src={warningIcon} className="w-10" alt="warningIcon" />
               Please Note By Selecting POA:
@@ -126,7 +143,6 @@ const PriceStep6 = ({ setFieldValue, values }) => {
                       type="checkbox"
                       name={`facilities`}
                       value={`${facility}`}
-                      // onChange={(e) => handleInputChange(e)}
                     />
                     {facility}
                   </label>
@@ -151,13 +167,20 @@ const PriceStep6 = ({ setFieldValue, values }) => {
               Buy a Bundle
             </button>
           </div>
-          <p className="text-sm mt-3">
-            <Link className="text-[#0D1A8B] font-semibold underline ">
-              UPGRADE
-            </Link>{" "}
-            to premium or featured package for making your advert highlighted on
-            home page and category page
-          </p>
+          {values?.advert_package != 3 ? (
+            <p className="text-sm mt-3">
+              <button
+                onClick={() => handlePackageUpgrade(values, setFieldValue)}
+                type="button"
+                className="text-[#0D1A8B] font-semibold underline "
+              >
+                UPGRADE
+              </button>{" "}
+              to Premium or Featured Package
+            </p>
+          ) : (
+            ""
+          )}
         </div>
         <AvailableUpgrades
           className="bg-[#1CBF73] flex smallLg:flex-row flex-col mt-8 p-5 rounded-lg justify-between smallLg:items-center"

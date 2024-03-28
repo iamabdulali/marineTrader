@@ -13,6 +13,7 @@ import {
 } from "../../utils/DummyData";
 import ContentToggle from "../ItemDetailsPage/ToggleContent";
 import { bigBoats } from "../..";
+import { useFormikContext } from "formik";
 
 const ItemDescriptionStep2 = () => {
   const {
@@ -26,6 +27,8 @@ const ItemDescriptionStep2 = () => {
   const [showDetails, setShowDetails] = useState(true);
   const [showDimensions, setShowDimensions] = useState(true);
   const [showPerformance, setShowPerformance] = useState(true);
+
+  const { values, setFieldValue } = useFormikContext();
 
   return (
     <BuildLayout heading="Item Description">
@@ -45,7 +48,11 @@ const ItemDescriptionStep2 = () => {
         className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
         placeholder={"Sub Title"}
       />
-      {selectedPackage == "1" ? <UpdateSubtitleNotice /> : ""}
+      {values?.advert_package == "1" ? (
+        <UpdateSubtitleNotice values={values} setFieldValue={setFieldValue} />
+      ) : (
+        ""
+      )}
 
       <ContentToggle
         title={`${selectedCategory?.name} Details`}

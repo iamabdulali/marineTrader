@@ -3,7 +3,8 @@ import React from "react";
 import { FaTimes } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
-const PaymentOptionModal = ({ onClose }) => {
+const PaymentOptionModal = ({ onClose, id }) => {
+  console.log(id);
   return (
     <div className="bg-white rounded-lg border-t-8 border-[#0D1A8B] py-3 px-6">
       <div className="flex items-center justify-between mt-3">
@@ -25,7 +26,7 @@ const PaymentOptionModal = ({ onClose }) => {
             Paypal
           </label>
         </div>
-        <div className="radio mt-3">
+        {/* <div className="radio mt-3">
           <Field
             name="paymentMethod"
             id="monthlyAllowance"
@@ -38,7 +39,7 @@ const PaymentOptionModal = ({ onClose }) => {
           >
             Inclusive Monthly Allowance
           </label>
-        </div>
+        </div> */}
         <div className="radio mt-3">
           <Field
             name="paymentMethod"
@@ -55,7 +56,7 @@ const PaymentOptionModal = ({ onClose }) => {
         </div>
       </div>
       <Link
-        to="/payments"
+        to={`/payment/advert/${id}`}
         className="py-3 w-full text-center block mt-7 mb-4 text-white hover:bg-[#0a1dbd] bg-[#0D1A8B] rounded-md"
       >
         Submit
