@@ -31,9 +31,9 @@ export default function AdSubscription() {
 
   const [hasBundle, setHasBundle] = useState("");
 
-  const { selectedCategory, user } = useContext(AuthContext);
+  const { selectedCategory, user, currencyRates } = useContext(AuthContext);
 
-  const { seller_type } = Object(user);
+  const { seller_type, currency } = Object(user);
 
   const isPrivateSeller = seller_type == "private seller";
 
@@ -117,7 +117,9 @@ export default function AdSubscription() {
                 featuresArray={featuresArray[id - 1]}
                 packageName={name}
                 variant={name}
-                price={`£${amount}`}
+                price={`${currency?.symbol}${Number(
+                  amount * currencyRates[currency?.currency_code]
+                ).toFixed(2)}`}
                 buttonText="Get Started"
                 text="View Display Results"
                 key={id}
@@ -159,7 +161,9 @@ export default function AdSubscription() {
                   <AdSubscriptionComponent
                     hasBundle={hasBundle}
                     packageName={name}
-                    price={`£${amount}`}
+                    price={`${currency?.symbol}${Number(
+                      amount * currencyRates[currency?.currency_code]
+                    ).toFixed(2)}`}
                     buttonText="Get Started"
                     text="View Display Results"
                     packageHeading={`${name} package includes the following.`}

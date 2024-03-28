@@ -134,7 +134,7 @@ const ItemOverview = ({ advert }) => {
             {description}
           </p>
 
-          <div className="flex smallLg:flex-row flex-col items-center mt-6 gap-3">
+          {/* <div className="flex smallLg:flex-row flex-col items-center mt-6 gap-3">
             <img
               className="smallLg:w-auto w-full"
               src={require("../../assets/boat.png")}
@@ -149,7 +149,7 @@ const ItemOverview = ({ advert }) => {
                 src={require("../../assets/boat-3.png")}
               />
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

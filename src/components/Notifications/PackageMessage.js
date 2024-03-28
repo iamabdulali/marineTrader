@@ -1,4 +1,5 @@
 import React from "react";
+import Skeleton from "react-loading-skeleton";
 import { Link } from "react-router-dom";
 
 const PackageMessage = ({
@@ -10,13 +11,14 @@ const PackageMessage = ({
   LinkText,
   LinkPath,
   linkClass,
+  onClick,
 }) => {
   return (
     <div className={className}>
       <div className="flex items-center gap-3">
         <img src={image} className="sm:w-10 w-7 inline-block" />
-        <p className="inline-block mr-1 sm:text-base text-sm">
-          {content}{" "}
+        <p className="inline-block mr-1 sm:text-base text-sm ">
+          {content}
           {hasLink ? (
             <Link to={LinkPath} className={linkClass}>
               {LinkText}
@@ -26,7 +28,10 @@ const PackageMessage = ({
           )}
         </p>
       </div>
-      <p className="min-w-7 min-h-7 cursor-pointer bg-[#ff0000] flex items-center justify-center rounded-full">
+      <p
+        onClick={onClick}
+        className="min-w-7 min-h-7 cursor-pointer bg-[#ff0000] flex items-center justify-center rounded-full"
+      >
         {icon}
       </p>
     </div>

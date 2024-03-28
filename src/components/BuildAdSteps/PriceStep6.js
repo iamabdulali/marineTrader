@@ -152,34 +152,40 @@ const PriceStep6 = () => {
           ""
         )}
 
-        <div className="mt-6 pt-6 border-t-2">
-          <div className="flex items-center justify-between">
-            <p className="text-[#0D1A8B] font-semibold capitalize sm:text-lg text-sm">
-              Available Upgrades
-            </p>
-            <button
-              onClick={() => openModal(setIsBundleOpen)}
-              type="button"
-              className="bg-[#0D1A8B] hover:bg-[#0a1dbd] text-sm font-medium text-white py-2 px-4 rounded-md"
-            >
-              Buy a Bundle
-            </button>
-          </div>
-          {values?.advert_package != 3 ? (
-            <p className="text-sm mt-3">
+        {(!isPrivateSeller && values?.advert_package == "2") ||
+        values?.advert_package == "3" ? (
+          <div className="mt-6 pt-6 border-t-2">
+            <div className="flex items-center justify-between">
+              <p className="text-[#0D1A8B] font-semibold capitalize sm:text-lg text-sm">
+                Available Upgrades
+              </p>
               <button
-                onClick={() => handlePackageUpgrade(values, setFieldValue)}
+                onClick={() => openModal(setIsBundleOpen)}
                 type="button"
-                className="text-[#0D1A8B] font-semibold underline "
+                className="bg-[#0D1A8B] hover:bg-[#0a1dbd] text-sm font-medium text-white py-2 px-4 rounded-md"
               >
-                UPGRADE
-              </button>{" "}
-              to Premium or Featured Package
-            </p>
-          ) : (
-            ""
-          )}
-        </div>
+                Buy a Bundle
+              </button>
+            </div>
+            {values?.advert_package != 3 ? (
+              <p className="text-sm mt-3">
+                <button
+                  onClick={() => handlePackageUpgrade(values, setFieldValue)}
+                  type="button"
+                  className="text-[#0D1A8B] font-semibold underline "
+                >
+                  UPGRADE
+                </button>{" "}
+                to Premium or Featured Package
+              </p>
+            ) : (
+              ""
+            )}
+          </div>
+        ) : (
+          ""
+        )}
+
         <AvailableUpgrades
           className="bg-[#1CBF73] flex smallLg:flex-row flex-col mt-8 p-5 rounded-lg justify-between smallLg:items-center"
           width="smallLg:w-auto"

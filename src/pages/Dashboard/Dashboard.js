@@ -14,14 +14,22 @@ import {
   openModal,
 } from "../../utils/ModalOpeningClosingFunctions";
 import { AuthContext } from "../../Context/AuthContext";
-import { getAdvert } from "../../utils/fetch/fetchData";
+import { fetchOptions, getAdvert } from "../../utils/fetch/fetchData";
 import LoadingWrapper from "../../utils/LoadingWrapper";
+import Skeleton from "react-loading-skeleton";
 
 export default function Dashboard() {
   let [isVideoOpen, setIsVideoOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const [adverts, setAdverts] = useState([]);
+  const [notifications, setNotifications] = useState([]);
+  const [showNotification, setShowNotification] = useState(true);
 
+  useEffect(() => {
+    fetchOptions("notification", setNotifications, setLoading(false));
+  }, []);
+
+  const latestNotification = notifications[notifications.length - 1];
   const { user } = useContext(AuthContext);
 
   const { seller_type } = Object(user);
@@ -50,7 +58,7 @@ export default function Dashboard() {
           className="top-0 xl:-translate-x-0 -translate-x-1/2"
         >
           {" "}
-          <PackageMessage
+          {/* <PackageMessage
             className="bg-[#E7F1FA] mb-3 border-l-[6px] border-[#0D1A8B] flex items-center justify-between p-4 rounded-xl font-medium shadow-[3px] "
             image={speakerIcon}
             content="We have just launched our Premium Pro Package! Go and explore it’s
@@ -59,13 +67,19 @@ export default function Dashboard() {
             hasLink={true}
             LinkText="Check Now!"
             linkClass="underline font-bold text-[#0D1A8B]"
-          />
-          <PackageMessage
-            className="bg-white flex items-center justify-between p-4 rounded-xl font-medium shadow-[3px]"
-            image={packageIcon}
-            content="Congratulations! You Have successfully subscribed to Dealer Plus Package"
-            icon={<FaTimes color="#fff" />}
-          />
+          /> */}
+          {showNotification ? (
+            <PackageMessage
+              className="bg-white flex items-center justify-between p-4 rounded-xl font-medium shadow-[3px]"
+              image={packageIcon}
+              content={latestNotification?.body || <Skeleton width={200} />}
+              icon={<FaTimes color="#fff" />}
+              loading={loading}
+              onClick={() => setShowNotification(false)}
+            />
+          ) : (
+            ""
+          )}
           <WelcomeMessage
             className="text-white flex justify-between md:p-10 sm:py-7 sm:px-7 p-5 mt-5 rounded-xl md:items-stretch items-center"
             heading={

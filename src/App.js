@@ -69,6 +69,14 @@ function App() {
     fetchOptions("types", "TYPES");
     fetchOptions("currencies", "CURRENCY");
     fetchOptions("taxes", "TAXES");
+
+    async function fetchCurrencyRates(params) {
+      const { data } = await axios.get(
+        `https://api.exchangerate-api.com/v4/latest/GBP`
+      );
+      dispatch({ type: "CURRENCY_RATES", payload: data?.rates });
+    }
+    fetchCurrencyRates();
   }, []);
 
   async function requestPermission() {

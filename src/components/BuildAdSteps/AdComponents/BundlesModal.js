@@ -58,11 +58,14 @@ const BundlesModal = ({ onClick }) => {
           Current price per advert: £ 0.99
         </p>
       </div>
-      <div className="py-4 px-6">
+      <div className="py-4 px-6  min-h-[40vh]">
         <p className="text-sm text-[#8891B2] mt-2 mb-4">
           Select the most suitable bundle for you:
         </p>
-        <LoadingWrapper loading={loading} className="top-1/2 -translate-y-1/2">
+        <LoadingWrapper
+          loading={loading}
+          className="top-1/2 -translate-y-1/2  -translate-x-1/2"
+        >
           {bundles?.map(({ id, name, amount, total_adverts }) => {
             return (
               <Bundles

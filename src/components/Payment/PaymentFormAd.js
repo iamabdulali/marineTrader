@@ -37,7 +37,9 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
   const elements = useElements();
   const navigate = useNavigate();
 
-  const { user } = useContext(AuthContext);
+  const { user, selectedBundle } = useContext(AuthContext);
+
+  console.log(selectedBundle);
 
   const pathArray = window.location.pathname.split("/");
   const id = pathArray[3];
@@ -134,6 +136,64 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
     }
   };
 
+  const handleCombinedPayments = async (e) => {
+    e.preventDefault();
+    setSpinner(true);
+    try {
+      const adToken = await generateStripeToken();
+      let adPaymentResponse, bundlePaymentResponse;
+
+      // Ad Payment
+      adPaymentResponse = await axios.post(
+        `${SERVER_BASE_URL}/advert-payment/${id}`,
+        {
+          advert_package: advert_package_id,
+          currency: currency_id,
+          stripe_token: adToken.id,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+
+      console.log(adPaymentResponse.data);
+      toast.success(adPaymentResponse.data.message);
+
+      // Bundle Payment (if selectedBundle is defined)
+      if (selectedBundle !== undefined && selectedBundle !== null) {
+        const bundleToken = await generateStripeToken();
+        bundlePaymentResponse = await axios.post(
+          `${SERVER_BASE_URL}/bundle-payment/${selectedBundle}`,
+          {
+            advert_package: advert_package_id,
+            currency: user_currency_id,
+            stripe_token: bundleToken.id,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+
+        console.log(bundlePaymentResponse.data);
+        toast.success(bundlePaymentResponse.data.message);
+      }
+
+      setSpinner(false);
+      setSuccess(true);
+      setShowStatus(true);
+    } catch (error) {
+      console.error(error);
+      setSpinner(false);
+      setSuccess(false);
+      setShowStatus(true);
+      toast.error(error.response.data.message);
+    }
+  };
+
   // if (advert_status == "paid") {
   //   navigate("/dashboard");
   // }
@@ -160,7 +220,8 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
                 <StripePaymentForm
                   id={category_id}
                   handlePaymentSubmit={
-                    isBundlePayment ? handleBundlePayment : handleAdPayment
+                    // isBundlePayment ? handleBundlePayment : handleAdPayment
+                    handleCombinedPayments
                   }
                   spinner={spinner}
                 />

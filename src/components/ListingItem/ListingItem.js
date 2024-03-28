@@ -1,5 +1,5 @@
 // SliderComponent.js
-import React from "react";
+import React, { useContext } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -25,6 +25,7 @@ import {
 import { featuredImage, featuredRevert, logo } from "../../assets";
 import SelectDropdown from "../SelectDropdown";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../Context/AuthContext";
 
 const ListingItem = ({ itemData }) => {
   const sliderSettings = {
@@ -47,12 +48,17 @@ const ListingItem = ({ itemData }) => {
     make,
     model,
     tags,
-    user,
+    user: listItemUser,
     images,
     advert_package_id,
   } = Object(itemData);
 
-  const { phone_no, email } = Object(user);
+  const { currencyRates, user } = useContext(AuthContext);
+
+  const { currency } = Object(user);
+  const { phone_no, email } = Object(listItemUser);
+
+  // console.log(currencyRates[currency?.currency_code]);
   return (
     <>
       <Link
@@ -102,7 +108,9 @@ const ListingItem = ({ itemData }) => {
               </div>
               <div>
                 <p className="font-semibold text-[#11133D] md:text-xl text-base">
-                  ${price}
+                  {`${currency?.symbol}${Number(
+                    Number(price) * currencyRates[currency?.currency_code]
+                  ).toFixed(2)}`}
                 </p>
                 <p className="text-[#8891B2] md:text-base text-sm">
                   Tax Not Paid

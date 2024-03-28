@@ -63,7 +63,8 @@ const BuildAd = () => {
 
   const stepLabels = ["Description", "Features", "Notes", "Gallery", "Price"];
 
-  const { selectedPackage, selectedCategory } = useContext(AuthContext);
+  const { selectedPackage, selectedCategory, dispatch } =
+    useContext(AuthContext);
 
   let validationSchema;
 
@@ -279,9 +280,13 @@ const BuildAd = () => {
     );
   }, [id]);
 
+  let isBundleSelected;
+
   const handleSubmit = async (values, { setFieldValue }) => {
     setSpinner(true);
-    const isBundleSelected = values?.bundles != undefined;
+    isBundleSelected = values?.bundles != undefined;
+
+    dispatch({ type: "SELECTED_BUNDLE", payload: values?.bundles });
 
     try {
       const { data } = await axios.post(`${SERVER_BASE_URL}/advert`, values, {
@@ -293,7 +298,7 @@ const BuildAd = () => {
       toast.success(data.message);
       setAdvertID(data.data?.id);
 
-      if (isBundleSelected) NavigateTo(`/payment/bundle/${values?.bundles}`);
+      // if (isBundleSelected) NavigateTo(`/payment/bundle/${values?.bundles}`);
       if (selectedPackage != "2") {
         openModal(setIsPaymentOptionOpen);
       } else if (hasSubscription == 0 && hasBundle == 0) {

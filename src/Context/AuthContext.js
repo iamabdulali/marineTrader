@@ -50,6 +50,10 @@ export const authReducer = (state, action) => {
       return { ...state, taxes: action.payload };
     case "FCM_TOKEN":
       return { ...state, fcmToken: action.payload };
+    case "SELECTED_BUNDLE":
+      return { ...state, selectedBundle: action.payload };
+    case "CURRENCY_RATES":
+      return { ...state, currencyRates: action.payload };
     default:
       return state;
   }
@@ -57,7 +61,7 @@ export const authReducer = (state, action) => {
 
 export const AuthContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, {
-    bundleName: "",
+    selectedBundle: null,
     user: null, // Updated user initialization
     selectedCategory: null,
     listingTags: [],
@@ -112,6 +116,7 @@ export const AuthContextProvider = ({ children }) => {
     currency: [],
     taxes: [],
     fcmToken: "",
+    currencyRates: [],
   });
 
   // console.log("Auth context state: ", state);

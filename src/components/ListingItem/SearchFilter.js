@@ -78,12 +78,12 @@ const SearchFilter = ({ setSearchedListings, setLoading }) => {
               name="condition"
             />
             <SelectDropdown options={yearsArray} label="Year" name="year" />
-            <SelectDropdown
+            {/* <SelectDropdown
               options={["priceOptions"]}
               options2={[""]}
               label="Price"
               name="Price"
-            />
+            /> */}
             <button
               type="submit"
               className="bg-[#0D1A8B] min-w-[104px] min-h-[48px] hover:bg-[#0a1dbd] text-white py-3 px-6 font-medium rounded-lg smallLg:mt-0 mt-4"

@@ -147,14 +147,14 @@ const Step1 = ({ showSpotlightSelection, spotlightFor }) => {
 
   return (
     <>
-      <div className="py-5 ">
+      <div className="py-5 min-h-[40vh]">
         {showSpotlightSelection ? (
           renderSelectedCountriesTable()
         ) : (
           <div className="py-5">
             <LoadingWrapper
               loading={loading}
-              className="top-1/2 -translate-y-1/2"
+              className="sm:top-1/2 top-1/3 -translate-y-1/2  -translate-x-1/2"
             >
               <div className="text-[#0D1A8B] smallLg:text-xl text-base font-bold flex justify-between sm:px-8 px-5">
                 <p className="pr-3">Select Countries From The List:</p>
