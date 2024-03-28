@@ -182,7 +182,7 @@ const ListingTable = ({
                         <div className="flex items-center gap-2">
                           <Link to={`/itemDetails/${id}`}>
                             <img
-                              src={images[0].image}
+                              src={images[0]?.image}
                               alt="Item"
                               className="w-16 h-16 object-cover rounded-lg mr-2"
                             />

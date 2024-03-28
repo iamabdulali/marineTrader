@@ -46,7 +46,7 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
 
   useEffect(() => {
     if (!isBundlePayment) {
-      getOneAdvert(setAdvert, setLoading, id);
+      getOneAdvert(setAdvert, setLoading, id, "advert");
     }
     setLoading(false);
   }, []);

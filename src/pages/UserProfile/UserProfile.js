@@ -84,6 +84,15 @@ const UserInfo = () => {
       );
     }
 
+    if (
+      updatedValues.hasOwnProperty("working_days") &&
+      Array.isArray(updatedValues["working_days"])
+    ) {
+      updatedValues["working_days"] = updatedValues["working_days"].map(
+        (day) => day.day
+      );
+    }
+
     console.log(updatedValues);
 
     // Check if any updates are needed

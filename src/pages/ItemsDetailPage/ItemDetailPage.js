@@ -36,7 +36,7 @@ const ItemDetailPage = () => {
   const id = pathArray[2];
 
   useEffect(() => {
-    getOneAdvert(setAdvert, setLoading, id);
+    getOneAdvert(setAdvert, setLoading, id, "advert-details");
   }, []);
 
   const { category, condition, price_type } = Object(advert);
@@ -107,7 +107,11 @@ const ItemDetailPage = () => {
           )}
 
           <div className="flex xl:flex-row flex-col gap-6 mt-8 items-start ">
-            <div className="xl:w-8/12 w-full overflow-x-hidden">
+            <div
+              className={`${
+                price_type == "1" ? "xl:w-8/12" : "w-full"
+              }  w-full overflow-x-hidden`}
+            >
               <div className="sm:overflow-x-hidden overflow-x-scroll tabs-div">
                 <Tabs
                   tabs={tabs}

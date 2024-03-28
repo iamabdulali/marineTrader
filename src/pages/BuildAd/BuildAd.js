@@ -33,9 +33,10 @@ const BuildAd = () => {
   const [submit, setSubmit] = useState(false);
   const [spinner, setSpinner] = useState(false);
   const NavigateTo = useNavigate();
-  const [advertID, setAdvertID] = useState("");
+  const [advertID, setAdvertID] = useState(null);
   const [hasSubscription, setHasSubscription] = useState(0);
   const [hasBundle, setHasBundle] = useState(0);
+  const [refresh, setRefresh] = useState(false);
 
   const [advert, setAdvert] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -50,11 +51,15 @@ const BuildAd = () => {
 
   const EditMode = IsEditMode();
 
+  // useEffect(() => {
+  //   if (EditMode) {
+  //     getOneAdvert(setAdvert, setLoading, id);
+  //   }
+  // }, []);
+
   useEffect(() => {
-    if (EditMode) {
-      getOneAdvert(setAdvert, setLoading, id);
-    }
-  }, []);
+    getOneAdvert(setAdvert, setLoading, advertID, "advert");
+  }, [advertID]);
 
   const stepLabels = ["Description", "Features", "Notes", "Gallery", "Price"];
 
@@ -70,30 +75,30 @@ const BuildAd = () => {
 
   const initialValuesJetSki = {
     category: selectedCategory?.id,
-    title: "",
-    sub_title: "",
-    type: "",
-    make: "",
-    model: "",
-    year: "",
-    condition: "",
-    color: "",
-    service_history: "",
-    passenger: "",
-    length: "",
-    hours: "",
-    trailers: "",
-    modifications: [],
-    features: [],
-    conveniences: [],
-    accessories: [],
+    title: "ads",
+    sub_title: "asd",
+    type: "3",
+    make: "1",
+    model: "1",
+    year: "2022",
+    condition: "1",
+    color: "Red",
+    service_history: "Ok",
+    passenger: "2",
+    length: "3",
+    hours: "4",
+    trailers: "No",
+    modifications: ["OK"],
+    features: ["OK"],
+    conveniences: ["OK"],
+    accessories: ["OK"],
     description: "",
-    tags: [],
+    tags: ["OK"],
     images: [],
     video: null,
-    price_type: "",
-    currency: "",
-    price: "",
+    price_type: "wda",
+    currency: "dwd",
+    price: "dwa",
     facilities: [],
     advert_package: selectedPackage,
     category_spotlights_countries: [],
@@ -274,11 +279,10 @@ const BuildAd = () => {
     );
   }, [id]);
 
-  const handleSubmit = async (values) => {
-    console.log(values);
+  const handleSubmit = async (values, { setFieldValue }) => {
     setSpinner(true);
     const isBundleSelected = values?.bundles != undefined;
-    console.log(isBundleSelected);
+
     try {
       const { data } = await axios.post(`${SERVER_BASE_URL}/advert`, values, {
         headers: {
@@ -288,13 +292,14 @@ const BuildAd = () => {
       });
       toast.success(data.message);
       setAdvertID(data.data?.id);
+
       if (isBundleSelected) NavigateTo(`/payment/bundle/${values?.bundles}`);
       if (selectedPackage != "2") {
         openModal(setIsPaymentOptionOpen);
-      } else if (hasSubscription == 0 || hasBundle == 0) {
+      } else if (hasSubscription == 0 && hasBundle == 0) {
         openModal(setIsPaymentOptionOpen);
       }
-
+      // setFieldValue("bundles", null);
       setSpinner(false);
     } catch (error) {
       console.error("An unexpected error occurred:", error);
@@ -309,6 +314,27 @@ const BuildAd = () => {
       NavigateTo("/selling");
     }
   }, []);
+
+  useEffect(() => {
+    const {
+      continentCategorySpotlights,
+      continentHomeSpotlights,
+      countryHomeSpotlights,
+      countryCategorySpotlights,
+    } = Object(advert);
+
+    console.log(advert);
+
+    const hasAnyValue =
+      continentCategorySpotlights?.length > 0 ||
+      countryCategorySpotlights?.length > 0 ||
+      continentHomeSpotlights?.length > 0 ||
+      countryHomeSpotlights?.length > 0;
+
+    if (hasAnyValue) {
+      NavigateTo(`/payment/advert/${advertID}`);
+    }
+  }, [advertID, advert, spinner]);
 
   return (
     <Layout>

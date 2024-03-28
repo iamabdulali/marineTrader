@@ -36,8 +36,6 @@ const PriceStep6 = () => {
 
   const { values, setFieldValue } = useFormikContext();
 
-  console.log(values);
-
   const { currency, taxes, user } = useContext(AuthContext);
 
   const { seller_type } = Object(user);

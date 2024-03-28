@@ -4,7 +4,6 @@ import { FaTimes } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const PaymentOptionModal = ({ onClose, id }) => {
-  console.log(id);
   return (
     <div className="bg-white rounded-lg border-t-8 border-[#0D1A8B] py-3 px-6">
       <div className="flex items-center justify-between mt-3">

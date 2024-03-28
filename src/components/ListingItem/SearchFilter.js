@@ -37,7 +37,10 @@ const SearchFilter = ({ setSearchedListings, setLoading }) => {
       }
     });
     const queryString = new URLSearchParams(filterParams).toString();
-    const searchUrl = `${SERVER_BASE_URL}?${queryString}`;
+    let newString = queryString + "&category=" + (selectedCategory?.id || "");
+    const searchUrl = `${SERVER_BASE_URL}?${queryString}${newString}`;
+
+    console.log(searchUrl);
 
     try {
       const { data } = await axios.get(searchUrl);

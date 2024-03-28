@@ -30,6 +30,8 @@ const ItemDescriptionStep2 = () => {
 
   const { values, setFieldValue } = useFormikContext();
 
+  console.log(values);
+
   return (
     <BuildLayout heading="Item Description">
       <FormField

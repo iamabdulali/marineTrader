@@ -16,16 +16,13 @@ export const getAdvert = async (setData, setLoading) => {
   }
 };
 
-export const getOneAdvert = async (setData, setLoading, id) => {
+export const getOneAdvert = async (setData, setLoading, id, url) => {
   try {
-    const { data } = await axios.get(
-      `${SERVER_BASE_URL}/advert-details/${id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      }
-    );
+    const { data } = await axios.get(`${SERVER_BASE_URL}/${url}/${id}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
     setData(data.data);
     setLoading(false);
   } catch (error) {
