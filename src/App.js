@@ -39,11 +39,11 @@ import { getToken, onMessage } from "firebase/messaging";
 import Message from "./components/Message";
 
 function App() {
-  const { user, dispatch, isAuthenticated } = useContext(AuthContext);
+  const { user, dispatch, isAuthenticated, refresh } = useContext(AuthContext);
   const token = localStorage.getItem("token");
   useEffect(() => {
     getUserData(user, dispatch, token);
-  }, [isAuthenticated]);
+  }, [isAuthenticated, refresh]);
 
   const getIp = async () => {
     const { data } = await axios.get("https://api.ipify.org?format=json");

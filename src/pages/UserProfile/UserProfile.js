@@ -23,7 +23,7 @@ const UserInfo = () => {
   const [spinner, setSpinner] = useState(false);
 
   const [editing, setEditing] = useState(false);
-  const { user, dispatch } = useContext(AuthContext);
+  const { user, dispatch, refresh } = useContext(AuthContext);
   const { seller_type } = Object(user);
   const isPrivateSeller = seller_type == "private seller";
 
@@ -127,6 +127,8 @@ const UserInfo = () => {
         }
       );
       toast.success(data.message);
+      dispatch({ type: "REFRESH_STATE", payload: !refresh });
+
       dispatch({ type: "SET_USER", payload: data.data });
       setSpinner(false);
       setEditing(false);

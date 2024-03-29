@@ -1,33 +1,19 @@
 import React, { useContext, useEffect, useState } from "react";
 import Heading from "../../components/Heading";
 import AdSubscriptionComponent from "../../components/AdSubscriptionComponent";
-import {
-  adsubscriptionFeaturedFeatures,
-  adsubscriptionPremiumFeatures,
-  adsubscriptionStandardFeatures,
-} from "../../utils/DummyData";
 import Tabs from "../../components/Tabs";
 import { displayErrorMessages } from "../../utils/displayErrors";
 import axios from "axios";
 import { SERVER_BASE_URL } from "../..";
 import LoadingWrapper from "../../utils/LoadingWrapper";
 import { AuthContext } from "../../Context/AuthContext";
-import {
-  checkCategorySubscription,
-  fetchOptions,
-  getAdvert,
-} from "../../utils/fetch/fetchData";
+import { fetchOptions } from "../../utils/fetch/fetchData";
 
 export default function AdSubscription() {
   const [selectedTab, setSelectedTab] = useState("Standard");
   const [loading, setLoading] = useState(true);
   const [packages, setPackages] = useState([]);
-  const [adverts, setAdverts] = useState([]);
-  const [subscription, setSubscriptions] = useState([]);
   const [hasActiveSubscription, setHasActiveSubscription] = useState("");
-  const [hasActiveSubscriptionData, setHasActiveSubscriptionData] = useState(
-    []
-  );
 
   const [hasBundle, setHasBundle] = useState("");
 
@@ -38,17 +24,6 @@ export default function AdSubscription() {
   const isPrivateSeller = seller_type == "private seller";
 
   const categoryToCheck = selectedCategory?.id;
-
-  useEffect(() => {
-    getAdvert(setAdverts, setLoading);
-  }, []);
-
-  const filterAdverts = adverts.filter((advert) => {
-    return (
-      advert?.category_id == selectedCategory?.id &&
-      advert?.advert_package_id == "2"
-    );
-  });
 
   const tabs = [
     {
@@ -64,13 +39,23 @@ export default function AdSubscription() {
       label: "Featured",
     },
   ];
+
+  if (isPrivateSeller) {
+    tabs.push({
+      id: "Basic",
+      label: "Basic",
+    });
+  }
+
   const handleTabClick = (tab) => {
     setSelectedTab(tab);
   };
 
   const getPackages = async () => {
     try {
-      const { data } = await axios.get(`${SERVER_BASE_URL}/advert-packages`);
+      const { data } = await axios.get(
+        `${SERVER_BASE_URL}/advert-packages?advert_for=${seller_type}`
+      );
       setLoading(false);
       setPackages(data.data);
     } catch (error) {
@@ -84,12 +69,6 @@ export default function AdSubscription() {
   useEffect(() => {
     getPackages();
   }, []);
-
-  const featuresArray = [
-    adsubscriptionStandardFeatures,
-    adsubscriptionPremiumFeatures,
-    adsubscriptionFeaturedFeatures,
-  ];
 
   useEffect(() => {
     fetchOptions("bundle/advert/remains", setHasBundle);
@@ -114,7 +93,6 @@ export default function AdSubscription() {
             return (
               <AdSubscriptionComponent
                 hasBundle={hasBundle}
-                featuresArray={featuresArray[id - 1]}
                 packageName={name}
                 variant={name}
                 price={`${currency?.symbol}${Number(
@@ -125,8 +103,7 @@ export default function AdSubscription() {
                 key={id}
                 id={id}
                 hasActiveSubscription={hasActiveSubscription}
-                hasActiveSubscriptionData={hasActiveSubscriptionData}
-                adsPosted={filterAdverts.length}
+                featuresArray={props}
               />
             );
           })}
@@ -134,7 +111,7 @@ export default function AdSubscription() {
       </div>
       <div>
         <Tabs
-          className="lg:hidden bg-white justify-between block border-2 mt-8  rounded-md"
+          className="lg:hidden sm:text-base text-sm bg-white justify-between block border-2 mt-8  rounded-md"
           tabs={tabs}
           selectedTab={selectedTab}
           handleTabClick={handleTabClick}
@@ -142,20 +119,6 @@ export default function AdSubscription() {
         <div className="lg:hidden block py-10">
           <LoadingWrapper loading={loading}>
             {packages.map(({ name, amount, id, ...props }) => {
-              let featuresArray = [];
-              switch (name) {
-                case "Standard":
-                  featuresArray = adsubscriptionStandardFeatures;
-                  break;
-                case "Premium":
-                  featuresArray = adsubscriptionPremiumFeatures;
-                  break;
-                case "Featured":
-                  featuresArray = adsubscriptionFeaturedFeatures;
-                  break;
-                default:
-                  featuresArray = [];
-              }
               return (
                 selectedTab === name && (
                   <AdSubscriptionComponent
@@ -168,12 +131,10 @@ export default function AdSubscription() {
                     text="View Display Results"
                     packageHeading={`${name} package includes the following.`}
                     variant={name}
-                    featuresArray={featuresArray}
+                    featuresArray={props}
                     key={id}
                     id={id}
                     hasActiveSubscription={hasActiveSubscription}
-                    hasActiveSubscriptionData={hasActiveSubscriptionData}
-                    adsPosted={filterAdverts.length}
                   />
                 )
               );

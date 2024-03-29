@@ -17,7 +17,6 @@ const AdSubscriptionComponent = ({
   price,
   buttonText,
   text,
-  packageHeading,
   variant,
   featuresArray,
   id,
@@ -29,7 +28,43 @@ const AdSubscriptionComponent = ({
 
   const { dispatch } = useContext(AuthContext);
 
+  // Function to map feature keys to their text representation
+  const mapFeaturesToText = (features) => {
+    const featureText = {
+      description_length:
+        features.description_length === "unlimited"
+          ? "Unlimited Character Description"
+          : `${features.description_length} Characters Description`,
+      social_media_package:
+        features.social_media_package === "yes" ? "Social Media Package" : null,
+      border: features.border === "yes" ? "Bold Outline Border" : null,
+      search_result_boost:
+        features.search_result_boost > 0
+          ? `${features.search_result_boost}x Search Results Boost`
+          : null,
+      video: features.video === "yes" ? "2 Min Video" : null,
+      max_photo:
+        features.max_photo > 0 ? `Upto ${features.max_photo} Photos` : null,
+    };
+
+    // Filter out null values (for features that should not be displayed)
+    return Object.values(featureText).filter((text) => text !== null);
+  };
+
+  const features = Object.entries(featuresArray);
+
   switch (variant) {
+    case "Basic":
+      variantStyles = {
+        backgroundColor: "bg-[#e8f0fc]",
+        buttonBg: "bg-[#1565D8]",
+        textColor: "text-[#1565D8]",
+        ribbon: false,
+        searchResult: standardSearchResult,
+        monthlyAllowance: false,
+        bundleAllowance: false,
+      };
+      break;
     case "Standard":
       variantStyles = {
         backgroundColor: "bg-[#ebf8f3]",
@@ -73,15 +108,6 @@ const AdSubscriptionComponent = ({
       };
   }
 
-  const renderFeatures = (features) => {
-    return features.map((feature, index) => (
-      <p key={index} className="flex items-center mt-5 gap-4 font-medium">
-        <FaCheckCircle size={20} />
-        {feature}
-      </p>
-    ));
-  };
-
   return (
     <div
       className={`block bg-white ad-subscription w-full mt-6 shadow-[8px] rounded-lg`}
@@ -91,7 +117,7 @@ const AdSubscriptionComponent = ({
       >
         {variantStyles.ribbon ? (
           <img
-            className="absolute 2xl:w-32 sm:w-32 lg:w-20 w-20 -top-1 left-0"
+            className="absolute 2xl:w-20 sm:w-32 lg:w-20 w-20 -top-1 left-0"
             src={variantStyles.ribbonImage}
           />
         ) : (
@@ -159,13 +185,15 @@ const AdSubscriptionComponent = ({
           <img src={variantStyles.searchResult} />
         </Modal>
       </div>
-      <div className="py-10 px-10">
-        <p className="text-[#171923] font-semibold">{packageHeading}</p>
-        <div className="mt-6  justify-between 2xl:pr-20">
-          <div>{renderFeatures(featuresArray.slice(0, 3))}</div>
-          {featuresArray.length > 3 && (
-            <div>{renderFeatures(featuresArray.slice(3, 6))}</div>
-          )}
+      <div className="py-10 px-4">
+        {/* <p className="text-[#171923] font-semibold">{packageHeading}</p> */}
+        <div className="mt-6  justify-between ">
+          {mapFeaturesToText(featuresArray).map((featureText, index) => (
+            <p key={index} className="flex items-center mt-5 gap-4 font-medium">
+              <FaCheckCircle size={20} className="min-w-[20px]" />
+              {featureText}
+            </p>
+          ))}
         </div>
       </div>
     </div>

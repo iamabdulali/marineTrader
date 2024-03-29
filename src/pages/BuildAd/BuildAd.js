@@ -66,6 +66,8 @@ const BuildAd = () => {
   const { selectedPackage, selectedCategory, dispatch } =
     useContext(AuthContext);
 
+  console.log(selectedPackage);
+
   let validationSchema;
 
   if (smallBoats.includes(selectedCategory?.name)) {
