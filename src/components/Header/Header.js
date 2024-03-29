@@ -1,5 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
-import { FaBars, FaChevronDown, FaGlobe, FaHamburger } from "react-icons/fa";
+import {
+  FaBars,
+  FaChevronDown,
+  FaCog,
+  FaGlobe,
+  FaHamburger,
+} from "react-icons/fa";
 import {
   bars,
   flagUsa,
@@ -172,10 +178,11 @@ const Header = ({ menuState, setMenuState }) => {
               <Link to="/notifications">
                 <img src={notificationIcon} className="sm:w-10 w-8" />
               </Link>
-              <GiGears
+              <FaCog
                 className="cursor-pointer"
                 onClick={() => openModal(setIsFeedbackModalOpen)}
-                size={30}
+                size={24}
+                color="#0D1A8B"
               />
             </div>
           ) : (
@@ -252,7 +259,7 @@ const Header = ({ menuState, setMenuState }) => {
         onClose={() => closeModal(setIsFeedbackModalOpen)}
         opacity="bg-opacity-40"
         padding="p-6"
-        width="w-9/12"
+        width="md:w-9/12 w-full"
       >
         <FeedbackModal onClick={() => closeModal(setIsFeedbackModalOpen)} />
       </Modal>

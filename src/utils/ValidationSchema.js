@@ -211,3 +211,9 @@ export const resetPasswordValidationSchema = Yup.object({
       "Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character"
     ),
 });
+
+export const feedbackValidationSchema = Yup.object({
+  type: Yup.string().required("Please Select Type"),
+  subject: Yup.string().required("Subject Cannot Be Empty"),
+  description: Yup.string().required("Description Cannot Be Empty"),
+});

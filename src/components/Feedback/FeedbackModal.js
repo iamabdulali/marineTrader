@@ -1,9 +1,10 @@
 import axios from "axios";
-import { Field, Form, Formik } from "formik";
+import { ErrorMessage, Field, Form, Formik } from "formik";
 import React, { useState } from "react";
 import { Oval } from "react-loader-spinner";
 import { SERVER_BASE_URL } from "../..";
 import { toast } from "react-toastify";
+import { feedbackValidationSchema } from "../../utils/ValidationSchema";
 
 const FeedbackModal = () => {
   const [spinner, setSpinner] = useState(false);
@@ -30,7 +31,11 @@ const FeedbackModal = () => {
   };
 
   return (
-    <Formik initialValues={initialValues} onSubmit={onSubmit}>
+    <Formik
+      initialValues={initialValues}
+      onSubmit={onSubmit}
+      validationSchema={feedbackValidationSchema}
+    >
       <Form>
         <p className="text-[#11133D] font-medium">
           We would love to hear your feedback
@@ -61,6 +66,12 @@ const FeedbackModal = () => {
             </label>
           </div>
         </div>
+        <ErrorMessage
+          component="p"
+          name="type"
+          className="text-sm text-red-500 mt-3 block"
+        />
+
         <div>
           <p className="text-[#11133D] font-medium text-sm mt-6 mb-3">
             Subject
@@ -70,6 +81,11 @@ const FeedbackModal = () => {
             placeholder="Write Here..."
             className="border-[#CECED7] text-sm  text-[#8891B2] border-2 rounded-md p-3 w-full"
             name="subject"
+          />
+          <ErrorMessage
+            component="p"
+            name="subject"
+            className="text-sm text-red-500 mt-1 block"
           />
         </div>
         <div>
@@ -82,6 +98,11 @@ const FeedbackModal = () => {
             className="border-[#CECED7] text-sm min-h-[150px] text-[#8891B2] border-2 rounded-md p-3 w-full"
             resize="vertical"
             name="description"
+          />
+          <ErrorMessage
+            component="p"
+            name="description"
+            className="text-sm text-red-500 mt-1 block"
           />
         </div>
         <button
