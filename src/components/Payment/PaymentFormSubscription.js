@@ -32,6 +32,7 @@ import { AuthContext } from "../../Context/AuthContext";
 const PaymentFormSubscription = () => {
   let [isBundleOpen, setIsBundleOpen] = useState(false);
   const [advert, setAdvert] = useState([]);
+  const [bundles, setBundles] = useState([]);
   const [loading, setLoading] = useState(false);
   const [spinner, setSpinner] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -64,6 +65,7 @@ const PaymentFormSubscription = () => {
       navigate("/subscriptions");
     }
     fetchOptions("subscriptions", setSubscriptions, setLoading);
+    fetchOptions("bundles", setBundles, setLoading);
   }, []);
 
   useEffect(() => {
@@ -221,6 +223,8 @@ const PaymentFormSubscription = () => {
                     subscription={subscriptionsPlans}
                     id={id}
                     isSubscriptionPage={isSubscriptionPage}
+                    isBundleSelected={selectedBundle}
+                    bundles={bundles}
                   />
                   {!isPrivateSeller ? (
                     <AvailableUpgrades

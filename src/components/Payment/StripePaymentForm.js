@@ -56,8 +56,6 @@ const StripePaymentForm = ({ handlePaymentSubmit, spinner, id }) => {
     setIsFormValid(isValid);
   }, [elements, postalCode, country]);
 
-  console.log({ hasBundle, hasSubscription });
-
   return (
     <div className="smallLg:w-1/2 w-full">
       <form

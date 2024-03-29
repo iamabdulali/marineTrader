@@ -7,7 +7,7 @@ import axios from "axios";
 import { SERVER_BASE_URL } from "../..";
 import LoadingWrapper from "../../utils/LoadingWrapper";
 import { AuthContext } from "../../Context/AuthContext";
-import { fetchOptions } from "../../utils/fetch/fetchData";
+import { fetchOptions, getPackages } from "../../utils/fetch/fetchData";
 
 export default function AdSubscription() {
   const [selectedTab, setSelectedTab] = useState("Standard");
@@ -25,23 +25,8 @@ export default function AdSubscription() {
 
   const categoryToCheck = selectedCategory?.id;
 
-  const getPackages = async () => {
-    try {
-      const { data } = await axios.get(
-        `${SERVER_BASE_URL}/advert-packages?advert_for=${seller_type}`
-      );
-      setLoading(false);
-      setPackages(data.data);
-    } catch (error) {
-      console.error("An unexpected error occurred:", error);
-      const { errors } = error.response.data;
-      displayErrorMessages(errors);
-      setLoading(true);
-    }
-  };
-
   useEffect(() => {
-    getPackages();
+    getPackages(setPackages, seller_type, setLoading);
   }, []);
 
   const tabs = packages.map((item) => ({

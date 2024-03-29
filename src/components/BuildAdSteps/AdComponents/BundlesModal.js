@@ -15,13 +15,10 @@ const BundlesModal = ({ onClick, setSelectedBundle }) => {
   const [bundles, setBundles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [spinner, setSpinner] = useState(false);
-  // const [selectedBundle] = useState(null);
 
   useEffect(() => {
     fetchOptions("bundles", setBundles, setLoading);
   }, []);
-
-  // const { selectedBundle } = useContext(AuthContext);
 
   const { isValid } = useFormikContext();
 
@@ -50,10 +47,6 @@ const BundlesModal = ({ onClick, setSelectedBundle }) => {
   const showErrorMessage = () => {
     if (!isValid) toast.error("Please Fill All Fields To Buy Bundle");
   };
-
-  // const handleBundle = () =>{
-  //   dispatch({type:'SELECTED_BUNDLE', payload:})
-  // }
 
   return (
     <form>

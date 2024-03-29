@@ -1,5 +1,6 @@
 import axios from "axios";
 import { SERVER_BASE_URL } from "../..";
+import { displayErrorMessages } from "../displayErrors";
 
 export const getAdvert = async (setData, setLoading) => {
   try {
@@ -77,4 +78,19 @@ export const checkCategorySubscription = async (
     setHasActiveSubscriptionData(foundSubscription);
   }
   setHasActiveSubscription(foundSubscription !== undefined);
+};
+
+export const getPackages = async (setPackages, seller_type, setLoading) => {
+  try {
+    const { data } = await axios.get(
+      `${SERVER_BASE_URL}/advert-packages?advert_for=${seller_type}`
+    );
+    setLoading(false);
+    setPackages(data.data);
+  } catch (error) {
+    console.error("An unexpected error occurred:", error);
+    const { errors } = error.response.data;
+    displayErrorMessages(errors);
+    setLoading(true);
+  }
 };

@@ -15,7 +15,11 @@ import {
 } from "../../utils/ModalOpeningClosingFunctions";
 import AvailableUpgrades from "../BuildAdSteps/AdComponents/AvailableUpgrades";
 import BundlesModal from "../BuildAdSteps/AdComponents/BundlesModal";
-import { getOneAdvert } from "../../utils/fetch/fetchData";
+import {
+  fetchOptions,
+  getOneAdvert,
+  getPackages,
+} from "../../utils/fetch/fetchData";
 import axios from "axios";
 import { SERVER_BASE_URL } from "../..";
 import { toast } from "react-toastify";
@@ -30,6 +34,8 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
   let [isSpotlightOpen, setIsSpotlightOpen] = useState(false);
   let [isBundleOpen, setIsBundleOpen] = useState(false);
   const [advert, setAdvert] = useState([]);
+  const [packages, setPackages] = useState([]);
+  const [bundles, setBundles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [spinner, setSpinner] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -40,7 +46,8 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
 
   const { user } = useContext(AuthContext);
 
-  console.log(selectedBundle);
+  const { currency_id: user_currency_id, seller_type } = Object(user);
+  const isPrivateSeller = seller_type == "private seller";
 
   const pathArray = window.location.pathname.split("/");
   const id = pathArray[3];
@@ -48,16 +55,40 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
   const isBundlePayment = pathArray.includes("bundle");
 
   useEffect(() => {
-    if (!isBundlePayment) {
-      getOneAdvert(setAdvert, setLoading, id, "advert");
-    }
-    setLoading(false);
-  }, []);
+    getOneAdvert(setAdvert, setLoading, id, "advert");
+    getPackages(setPackages, seller_type, setLoading);
+    fetchOptions("bundles", setBundles, setLoading);
 
-  const { currency_id, advert_package_id, advert_status, category_id } =
-    Object(advert);
-  const { currency_id: user_currency_id, seller_type } = Object(user);
-  const isPrivateSeller = seller_type == "private seller";
+    setLoading(false);
+  }, [user]);
+
+  const {
+    currency_id,
+    advert_package_id,
+    advert_status,
+    category_id,
+    countryCategorySpotlights,
+    countryHomeSpotlights,
+    continentCategorySpotlights,
+    continentHomeSpotlights,
+  } = Object(advert);
+
+  let spotlights = 0;
+
+  if (
+    countryCategorySpotlights?.length === 0 &&
+    countryHomeSpotlights?.length === 0 &&
+    continentCategorySpotlights?.length === 0 &&
+    continentHomeSpotlights?.length === 0
+  ) {
+    spotlights = false;
+  } else {
+    spotlights =
+      countryHomeSpotlights?.length * 6.99 +
+      countryCategorySpotlights?.length * 6.99 +
+      continentHomeSpotlights?.length * 89.99 +
+      continentCategorySpotlights?.length * 89.99;
+  }
 
   const generateStripeToken = async () => {
     if (!stripe || !elements) {
@@ -96,7 +127,6 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
         }
       );
 
-      console.log(adPaymentResponse.data);
       toast.success(adPaymentResponse.data.message);
 
       // Bundle Payment (if selectedBundle is defined)
@@ -116,7 +146,6 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
           }
         );
 
-        console.log(bundlePaymentResponse.data);
         toast.success(bundlePaymentResponse.data.message);
       }
 
@@ -147,7 +176,13 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
               <Heading content="Payment Details" />
               <div className="flex smallLg:flex-row flex-col gap-7">
                 <div className="smallLg:w-1/2 w-full">
-                  <PaymentSummary advert={advert} />
+                  <PaymentSummary
+                    advert={advert}
+                    packages={packages}
+                    isBundleSelected={selectedBundle}
+                    bundles={bundles}
+                    spotlights={spotlights}
+                  />
                   {!isPrivateSeller ? (
                     <AvailableUpgrades
                       className="bg-[#1CBF73] flex flex-col gap-5 mt-8 p-5 rounded-lg w-full"
