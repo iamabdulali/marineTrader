@@ -93,13 +93,26 @@ const PaymentSummary = ({
           ""
         )}
 
-        {isSubscriptionPage != "subscription" ? (
+        {isSubscriptionPage !== "subscription" ? (
           <>
-            {(hasBundle == 0 &&
-              hasSubscription == 0 &&
-              advert_package_id == "4") ||
-            advert_package_id == "1" ||
-            advert_package_id == "2" ? (
+            {(hasBundle === 0 && hasSubscription === 0) ||
+            (hasBundle > 0 &&
+              hasSubscription === 0 &&
+              advert_package_id === "4") ? (
+              <>
+                <p className="text-[#0D1A8B] font-semibold mt-2">Ad</p>
+                <div className=" flex items-center justify-between mt-2">
+                  <p className="text-[#696E9D]">{packageName}:</p>
+                  <p className="text-[#11133D] font-semibold">
+                    {`${currency?.symbol}${Number(
+                      packageAmount * currencyRates[currency?.currency_code]
+                    ).toFixed(2)}`}
+                  </p>
+                </div>
+              </>
+            ) : hasSubscription > 0 &&
+              hasBundle === 0 &&
+              (advert_package_id === "4" || advert_package_id === "6") ? (
               <>
                 <p className="text-[#0D1A8B] font-semibold mt-2">Ad</p>
                 <div className=" flex items-center justify-between mt-2">
