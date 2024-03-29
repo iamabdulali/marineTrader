@@ -61,7 +61,7 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
     getPackages(setPackages, seller_type, setLoading);
     fetchOptions("bundles", setBundles, setLoading);
 
-    setLoading(false);
+    // setLoading(false);
   }, [user]);
 
   useEffect(() => {
@@ -183,7 +183,7 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
         <PaymentStatus successStatus={success} paymentType="list" />
       ) : (
         <>
-          <LoadingWrapper loading={false}>
+          <LoadingWrapper loading={loading}>
             <Layout>
               <Heading content="Payment Details" />
               <div className="flex smallLg:flex-row flex-col gap-7">

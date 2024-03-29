@@ -33,7 +33,7 @@ const PaymentFormSubscription = () => {
   let [isBundleOpen, setIsBundleOpen] = useState(false);
   const [advert, setAdvert] = useState([]);
   const [bundles, setBundles] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [spinner, setSpinner] = useState(false);
   const [success, setSuccess] = useState(false);
   const [showStatus, setShowStatus] = useState(false);
@@ -64,8 +64,8 @@ const PaymentFormSubscription = () => {
     if (!selectedCategory) {
       navigate("/subscriptions");
     }
-    fetchOptions("subscriptions", setSubscriptions, setLoading);
-    fetchOptions("bundles", setBundles, setLoading);
+    fetchOptions("subscriptions", setSubscriptions);
+    fetchOptions("bundles", setBundles);
   }, []);
 
   useEffect(() => {
