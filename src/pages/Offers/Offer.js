@@ -22,13 +22,19 @@ export default function Offer() {
           loading={loading}
           className="top-0 xl:-translate-x-0 -translate-x-1/2"
         >
-          <ListingTable
-            tableFor="Offers"
-            hasSort={true}
-            hasPadding={true}
-            tableHeader={offersHeader}
-            OffersData={offers}
-          />
+          {offers.length == 0 ? (
+            <p className=" w-full text-center font-medium absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+              No Offers At The Moment
+            </p>
+          ) : (
+            <ListingTable
+              tableFor="Offers"
+              hasSort={true}
+              hasPadding={true}
+              tableHeader={offersHeader}
+              OffersData={offers}
+            />
+          )}
         </LoadingWrapper>
       </Layout>
     </>

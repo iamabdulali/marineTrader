@@ -6,27 +6,60 @@ const ServiceHours = () => {
   const handleTimeChange = (selectedDay, fieldName, value) => {
     const { service_hours } = values;
 
-    const updatedservice_hours = service_hours.map((day) => {
+    const updatedServiceHours = service_hours.map((day) => {
       if (day.day === selectedDay) {
-        // Ensure start time is not greater than end time
         if (fieldName === "start_time") {
-          const endTime = day.end_time || "23:59"; // Default to 23:59 if end time is not selected
-          if (value > endTime) {
-            // Set end time to the new start time if it's greater
+          const endTime = day.end_time || "23:59";
+          if (value >= endTime) {
+            // Adjust end time to the nearest 15-minute interval after the start time
+            const [startHours, startMinutes] = endTime.split(":").map(Number);
+            const [endHours, endMinutes] = value.split(":").map(Number);
+            const totalStartMinutes = startHours * 60 + startMinutes;
+            const totalEndMinutes = endHours * 60 + endMinutes;
+
+            const adjustedEndMinutes = totalStartMinutes - 15;
+            const adjustedEndHours = Math.floor(adjustedEndMinutes / 60);
+            const adjustedEndMinutesRemainder = adjustedEndMinutes % 60;
+
+            const adjustedEndTime =
+              (adjustedEndHours < 10 ? "0" : "") +
+              adjustedEndHours +
+              ":" +
+              (adjustedEndMinutesRemainder === 0
+                ? "00"
+                : adjustedEndMinutesRemainder < 10
+                ? "0" + adjustedEndMinutesRemainder
+                : adjustedEndMinutesRemainder);
             return {
               ...day,
-              [fieldName]: value,
-              end_time: value,
+              [fieldName]: adjustedEndTime,
             };
           }
         } else if (fieldName === "end_time") {
-          const startTime = day.start_time || "00:00"; // Default to 00:00 if start time is not selected
-          if (value < startTime) {
-            // Set start time to the new end time if it's smaller
+          const startTime = day.start_time || "00:00";
+          if (value <= startTime) {
+            // Adjust end time to the nearest 15-minute interval after the start time
+            const [startHours, startMinutes] = startTime.split(":").map(Number);
+            const [endHours, endMinutes] = value.split(":").map(Number);
+            const totalStartMinutes = startHours * 60 + startMinutes;
+            const totalEndMinutes = endHours * 60 + endMinutes;
+
+            const adjustedEndMinutes = totalStartMinutes + 15;
+            const adjustedEndHours = Math.floor(adjustedEndMinutes / 60);
+            const adjustedEndMinutesRemainder = adjustedEndMinutes % 60;
+
+            const adjustedEndTime =
+              (adjustedEndHours < 10 ? "0" : "") +
+              adjustedEndHours +
+              ":" +
+              (adjustedEndMinutesRemainder === 0
+                ? "00"
+                : adjustedEndMinutesRemainder < 10
+                ? "0" + adjustedEndMinutesRemainder
+                : adjustedEndMinutesRemainder);
             return {
               ...day,
-              [fieldName]: value,
-              start_time: value,
+              [fieldName]: adjustedEndTime,
             };
           }
         }
@@ -39,8 +72,9 @@ const ServiceHours = () => {
       return day;
     });
 
-    setValues({ ...values, service_hours: updatedservice_hours });
+    setValues({ ...values, service_hours: updatedServiceHours });
   };
+
   return (
     <div>
       {values.working_days.map((selectedDay) => {
