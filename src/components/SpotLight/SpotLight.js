@@ -45,7 +45,9 @@ const SpotLight = () => {
         className="-top-1/2 xl:-translate-x-0 -translate-x-1/2"
       >
         {homeSpotlights.length == 0 ? (
-          <p className="text-center mt-6">No SpotLights Found</p>
+          <p className="min-h-[40vh] flex items-center justify-center mt-6">
+            No SpotLights Found
+          </p>
         ) : (
           <>
             <div className="2xl:px-24 sm:px-10 px-6 mt-5 grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-10">

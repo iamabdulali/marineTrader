@@ -39,7 +39,8 @@ import { getToken, onMessage } from "firebase/messaging";
 import Message from "./components/Message";
 
 function App() {
-  const { user, dispatch, isAuthenticated, refresh } = useContext(AuthContext);
+  const { selectedCategory, user, dispatch, isAuthenticated, refresh } =
+    useContext(AuthContext);
   const token = localStorage.getItem("token");
   useEffect(() => {
     getUserData(user, dispatch, token);
@@ -58,8 +59,20 @@ function App() {
     }
     fetchDetailsUsingIP();
 
+    async function fetchCurrencyRates(params) {
+      const { data } = await axios.get(
+        `https://api.exchangerate-api.com/v4/latest/GBP`
+      );
+      dispatch({ type: "CURRENCY_RATES", payload: data?.rates });
+    }
+    fetchCurrencyRates();
+  }, []);
+
+  useEffect(() => {
     async function fetchOptions(url, type) {
-      const { data } = await axios.get(`${SERVER_BASE_URL}/${url}`);
+      const { data } = await axios.get(
+        `${SERVER_BASE_URL}/${url}?category_id=${selectedCategory?.id}`
+      );
       dispatch({ type: type, payload: data.data });
     }
     fetchOptions("categories", "CATEGORIES");
@@ -69,15 +82,7 @@ function App() {
     fetchOptions("types", "TYPES");
     fetchOptions("currencies", "CURRENCY");
     fetchOptions("taxes", "TAXES");
-
-    async function fetchCurrencyRates(params) {
-      const { data } = await axios.get(
-        `https://api.exchangerate-api.com/v4/latest/GBP`
-      );
-      dispatch({ type: "CURRENCY_RATES", payload: data?.rates });
-    }
-    fetchCurrencyRates();
-  }, []);
+  }, [selectedCategory]);
 
   async function requestPermission() {
     //requesting permission using Notification API
