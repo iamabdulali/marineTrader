@@ -12,16 +12,23 @@ import { Link } from "react-router-dom";
 import { isUserLoggedIn } from "../../utils/isLoggedIn.js";
 import { AuthContext } from "../../Context/AuthContext.js";
 import Skeleton from "react-loading-skeleton";
+import { GiGearStick, GiGearStickPattern, GiGears } from "react-icons/gi";
+import Modal from "../Modal.js";
+import {
+  closeModal,
+  openModal,
+} from "../../utils/ModalOpeningClosingFunctions.js";
+import DeleteListingModal from "../Selling/DeleteListingModal.js";
+import FeedbackModal from "../Feedback/FeedbackModal.js";
 
 const Header = ({ menuState, setMenuState }) => {
   const [languageDropdownOpen, setLanguageDropdownOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const isLogged = isUserLoggedIn();
   const [homePageMenu, setHomePageMenu] = useState(false);
-  const { user, userLocationDetails } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
   const { user_name, seller_type, image_field, main_picture } = Object(user);
-  const { countryCode } = Object(userLocationDetails);
 
   const toggleLanguageDropdown = () => {
     setLanguageDropdownOpen(!languageDropdownOpen);
@@ -35,6 +42,8 @@ const Header = ({ menuState, setMenuState }) => {
     // Example logic to toggle menu state
     setMenuState(!menuState);
   };
+
+  const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
 
   return (
     <>
@@ -163,6 +172,11 @@ const Header = ({ menuState, setMenuState }) => {
               <Link to="/notifications">
                 <img src={notificationIcon} className="sm:w-10 w-8" />
               </Link>
+              <GiGears
+                className="cursor-pointer"
+                onClick={() => openModal(setIsFeedbackModalOpen)}
+                size={30}
+              />
             </div>
           ) : (
             <div className="flex items-center gap-7">
@@ -232,6 +246,16 @@ const Header = ({ menuState, setMenuState }) => {
       ) : (
         ""
       )}
+
+      <Modal
+        isOpen={isFeedbackModalOpen}
+        onClose={() => closeModal(setIsFeedbackModalOpen)}
+        opacity="bg-opacity-40"
+        padding="p-6"
+        width="w-9/12"
+      >
+        <FeedbackModal onClick={() => closeModal(setIsFeedbackModalOpen)} />
+      </Modal>
     </>
   );
 };
