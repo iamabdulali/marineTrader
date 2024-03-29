@@ -56,7 +56,8 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
 
   const { currency_id, advert_package_id, advert_status, category_id } =
     Object(advert);
-  const { currency_id: user_currency_id } = Object(user);
+  const { currency_id: user_currency_id, seller_type } = Object(user);
+  const isPrivateSeller = seller_type == "private seller";
 
   const generateStripeToken = async () => {
     if (!stripe || !elements) {
@@ -147,12 +148,16 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
               <div className="flex smallLg:flex-row flex-col gap-7">
                 <div className="smallLg:w-1/2 w-full">
                   <PaymentSummary advert={advert} />
-                  <AvailableUpgrades
-                    className="bg-[#1CBF73] flex flex-col gap-5 mt-8 p-5 rounded-lg w-full"
-                    openModal={() => openModal(setIsSpotlightOpen)}
-                    addButton={true}
-                    openBundle={() => openModal(setIsBundleOpen)}
-                  />
+                  {!isPrivateSeller ? (
+                    <AvailableUpgrades
+                      className="bg-[#1CBF73] flex flex-col gap-5 mt-8 p-5 rounded-lg w-full"
+                      openModal={() => openModal(setIsSpotlightOpen)}
+                      addButton={true}
+                      openBundle={() => openModal(setIsBundleOpen)}
+                    />
+                  ) : (
+                    ""
+                  )}
                 </div>
                 <StripePaymentForm
                   id={category_id}

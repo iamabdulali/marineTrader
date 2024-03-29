@@ -25,8 +25,6 @@ const BundlesModal = ({ onClick, setSelectedBundle }) => {
 
   const { isValid } = useFormikContext();
 
-  console.log(isValid);
-
   const variants = [
     "border-[#1565D8]",
     "border-[#36B37E]",
