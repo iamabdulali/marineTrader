@@ -33,6 +33,8 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
   const [selectedBundle, setSelectedBundle] = useState(null);
   let [isSpotlightOpen, setIsSpotlightOpen] = useState(false);
   let [isBundleOpen, setIsBundleOpen] = useState(false);
+  const [hasBundle, setHasBundle] = useState(0);
+  const [hasSubscription, setHasSubscription] = useState(0);
   const [advert, setAdvert] = useState([]);
   const [packages, setPackages] = useState([]);
   const [bundles, setBundles] = useState([]);
@@ -44,7 +46,7 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
   const elements = useElements();
   const navigate = useNavigate();
 
-  const { user } = useContext(AuthContext);
+  const { user, selectedCategory } = useContext(AuthContext);
 
   const { currency_id: user_currency_id, seller_type } = Object(user);
   const isPrivateSeller = seller_type == "private seller";
@@ -62,6 +64,14 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
     setLoading(false);
   }, [user]);
 
+  useEffect(() => {
+    fetchOptions("bundle/advert/remains", setHasBundle);
+    fetchOptions(
+      `subscription/advert/remains/${selectedCategory?.id}`,
+      setHasSubscription
+    );
+  }, [id]);
+
   const {
     currency_id,
     advert_package_id,
@@ -72,6 +82,8 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
     continentCategorySpotlights,
     continentHomeSpotlights,
   } = Object(advert);
+
+  console.log(advert);
 
   let spotlights = 0;
 
@@ -182,6 +194,8 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
                     isBundleSelected={selectedBundle}
                     bundles={bundles}
                     spotlights={spotlights}
+                    hasBundle={hasBundle}
+                    hasSubscription={hasSubscription}
                   />
                   {!isPrivateSeller ? (
                     <AvailableUpgrades

@@ -10,13 +10,13 @@ const PaymentSummary = ({
   isBundleSelected,
   bundles,
   spotlights,
+  hasSubscription,
+  hasBundle,
 }) => {
   const { user, currencyRates } = useContext(AuthContext);
   const { currency } = Object(user);
 
   const { advert_package_id } = Object(advert);
-
-  console.log(advert_package_id);
 
   const filteredSubscriptions = subscription
     ? subscription.filter((sub) => sub?.id == id)
@@ -40,7 +40,7 @@ const PaymentSummary = ({
     filteredBundles[0] || {}
   );
 
-  console.log(spotlights);
+  console.log({ hasBundle, hasSubscription });
 
   const subtotal =
     (Number(amount) || 0) +
@@ -95,15 +95,26 @@ const PaymentSummary = ({
 
         {isSubscriptionPage != "subscription" ? (
           <>
-            <p className="text-[#0D1A8B] font-semibold mt-2">Ad</p>
-            <div className=" flex items-center justify-between mt-2">
-              <p className="text-[#696E9D]">{packageName}:</p>
-              <p className="text-[#11133D] font-semibold">
-                {`${currency?.symbol}${Number(
-                  packageAmount * currencyRates[currency?.currency_code]
-                ).toFixed(2)}`}
-              </p>
-            </div>
+            {(hasBundle == 0 &&
+              hasSubscription == 0 &&
+              advert_package_id == "4") ||
+            advert_package_id == "1" ||
+            advert_package_id == "2" ? (
+              <>
+                <p className="text-[#0D1A8B] font-semibold mt-2">Ad</p>
+                <div className=" flex items-center justify-between mt-2">
+                  <p className="text-[#696E9D]">{packageName}:</p>
+                  <p className="text-[#11133D] font-semibold">
+                    {`${currency?.symbol}${Number(
+                      packageAmount * currencyRates[currency?.currency_code]
+                    ).toFixed(2)}`}
+                  </p>
+                </div>
+              </>
+            ) : (
+              ""
+            )}
+
             {spotlights ? (
               <div className=" flex items-center justify-between mt-2">
                 <p className="text-[#696E9D]">Spotlights:</p>
