@@ -25,32 +25,6 @@ export default function AdSubscription() {
 
   const categoryToCheck = selectedCategory?.id;
 
-  const tabs = [
-    {
-      id: "Standard",
-      label: "Standard",
-    },
-    {
-      id: "Premium",
-      label: "Premium",
-    },
-    {
-      id: "Featured",
-      label: "Featured",
-    },
-  ];
-
-  if (isPrivateSeller) {
-    tabs.push({
-      id: "Basic",
-      label: "Basic",
-    });
-  }
-
-  const handleTabClick = (tab) => {
-    setSelectedTab(tab);
-  };
-
   const getPackages = async () => {
     try {
       const { data } = await axios.get(
@@ -69,6 +43,15 @@ export default function AdSubscription() {
   useEffect(() => {
     getPackages();
   }, []);
+
+  const tabs = packages.map((item) => ({
+    id: item.name,
+    label: item.name,
+  }));
+
+  const handleTabClick = (tab) => {
+    setSelectedTab(tab);
+  };
 
   useEffect(() => {
     fetchOptions("bundle/advert/remains", setHasBundle);
@@ -112,7 +95,7 @@ export default function AdSubscription() {
       <div>
         <Tabs
           className="lg:hidden sm:text-base text-sm bg-white justify-between block border-2 mt-8  rounded-md"
-          tabs={tabs}
+          tabs={tabs || [{}]}
           selectedTab={selectedTab}
           handleTabClick={handleTabClick}
         />
