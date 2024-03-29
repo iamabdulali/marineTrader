@@ -9,6 +9,7 @@ import { Oval } from "react-loader-spinner";
 import { stackIcon } from "../../assets";
 import { fetchOptions } from "../../utils/fetch/fetchData";
 import { AuthContext } from "../../Context/AuthContext";
+import { countryOptions } from "../../utils/DropdownOptions";
 
 const StripePaymentForm = ({ handlePaymentSubmit, spinner, id }) => {
   const [postalCode, setPostalCode] = useState("");
@@ -134,9 +135,10 @@ const StripePaymentForm = ({ handlePaymentSubmit, spinner, id }) => {
               required
               className="border-[#8891B2] font-medium text-[#8891B2] border-2 rounded-lg p-3 w-full text-sm"
             >
-              <option value="">Country</option>
-              <option value="us">United States</option>
-              <option value="uk">UK</option>
+              <option value={``}>Select Country</option>;
+              {countryOptions.map(({ name, id }) => {
+                return <option value={`${id}`}>{name}</option>;
+              })}
             </select>
           </div>
           <div className="w-full ">

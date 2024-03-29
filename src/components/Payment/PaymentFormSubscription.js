@@ -29,8 +29,7 @@ import {
 } from "../../utils/fetch/fetchData";
 import { AuthContext } from "../../Context/AuthContext";
 
-const PaymentFormSubscription = ({ setFieldValue, values }) => {
-  let [isSpotlightOpen, setIsSpotlightOpen] = useState(false);
+const PaymentFormSubscription = () => {
   let [isBundleOpen, setIsBundleOpen] = useState(false);
   const [advert, setAdvert] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -38,18 +37,25 @@ const PaymentFormSubscription = ({ setFieldValue, values }) => {
   const [success, setSuccess] = useState(false);
   const [showStatus, setShowStatus] = useState(false);
   const [subscription, setSubscriptions] = useState([]);
+  const [subscriptionsPlans, setSubscriptionsPlans] = useState([]);
   const [hasActiveSubscription, setHasActiveSubscription] = useState(false);
   const [hasActiveSubscriptionData, setHasActiveSubscriptionData] = useState(
     []
   );
+  const [selectedBundle, setSelectedBundle] = useState(null);
   const stripe = useStripe();
   const elements = useElements();
   const navigate = useNavigate();
 
   const pathArray = window.location.pathname.split("/");
+  const isSubscriptionPage = pathArray[2];
   const id = pathArray[3];
 
-  const { selectedCategory } = useContext(AuthContext);
+  const { selectedCategory, user } = useContext(AuthContext);
+
+  const { seller_type, currency_id } = Object(user);
+
+  const isPrivateSeller = seller_type == "private seller";
 
   const categoryToCheck = selectedCategory?.id;
 
@@ -59,6 +65,15 @@ const PaymentFormSubscription = ({ setFieldValue, values }) => {
     }
     fetchOptions("subscriptions", setSubscriptions, setLoading);
   }, []);
+
+  useEffect(() => {
+    fetchOptions(
+      `subscription-plans?category=${selectedCategory?.id}`,
+      setSubscriptionsPlans,
+      setLoading
+    );
+    console.log(subscriptionsPlans);
+  }, [selectedCategory]);
 
   useEffect(() => {
     checkCategorySubscription(
@@ -83,6 +98,21 @@ const PaymentFormSubscription = ({ setFieldValue, values }) => {
     return paymentMethod;
   };
 
+  const generateStripeToken = async () => {
+    if (!stripe || !elements) {
+      return;
+    }
+
+    const cardNumberElement = elements.getElement(CardNumberElement);
+    const { token, error } = await stripe.createToken(cardNumberElement);
+
+    if (!token || error) {
+      throw error;
+    }
+
+    return token;
+  };
+
   const handlePaymentSubmit = async (e) => {
     e.preventDefault();
     setSpinner(true);
@@ -103,6 +133,23 @@ const PaymentFormSubscription = ({ setFieldValue, values }) => {
         }
       );
       toast.success(data.message);
+      if (selectedBundle !== undefined && selectedBundle !== null) {
+        const bundleToken = await generateStripeToken();
+        const { data } = await axios.post(
+          `${SERVER_BASE_URL}/bundle-payment/${selectedBundle}`,
+          {
+            currency: currency_id,
+            stripe_token: bundleToken.id,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+
+        toast.success(data.message);
+      }
       navigate("/subscriptions");
       setSpinner(false);
     } catch (error) {
@@ -132,6 +179,23 @@ const PaymentFormSubscription = ({ setFieldValue, values }) => {
       console.log(data.data);
       toast.success(data.message);
       setSpinner(false);
+      if (selectedBundle !== undefined && selectedBundle !== null) {
+        const bundleToken = await generateStripeToken();
+        const { data } = await axios.post(
+          `${SERVER_BASE_URL}/bundle-payment/${selectedBundle}`,
+          {
+            currency: currency_id,
+            stripe_token: bundleToken.id,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+
+        toast.success(data.message);
+      }
       navigate("/subscriptions");
     } catch (error) {
       console.log(error);
@@ -152,13 +216,22 @@ const PaymentFormSubscription = ({ setFieldValue, values }) => {
               <Heading content="Payment Details" />
               <div className="flex smallLg:flex-row flex-col gap-7">
                 <div className="smallLg:w-1/2 w-full">
-                  <PaymentSummary advert={advert} />
-                  <AvailableUpgrades
-                    className="bg-[#1CBF73] flex flex-col gap-5 mt-8 p-5 rounded-lg w-full"
-                    showSpotlight={false}
-                    addButton={true}
-                    openBundle={() => openModal(setIsBundleOpen)}
+                  <PaymentSummary
+                    advert={advert}
+                    subscription={subscriptionsPlans}
+                    id={id}
+                    isSubscriptionPage={isSubscriptionPage}
                   />
+                  {!isPrivateSeller ? (
+                    <AvailableUpgrades
+                      className="bg-[#1CBF73] flex flex-col gap-5 mt-8 p-5 rounded-lg w-full"
+                      showSpotlight={false}
+                      addButton={true}
+                      openBundle={() => openModal(setIsBundleOpen)}
+                    />
+                  ) : (
+                    ""
+                  )}
                 </div>
                 <StripePaymentForm
                   handlePaymentSubmit={
@@ -176,7 +249,10 @@ const PaymentFormSubscription = ({ setFieldValue, values }) => {
               opacity="bg-opacity-40"
               width="xl:w-6/12 w-full"
             >
-              <BundlesModal onClick={() => closeModal(setIsBundleOpen)} />
+              <BundlesModal
+                setSelectedBundle={setSelectedBundle}
+                onClick={() => closeModal(setIsBundleOpen)}
+              />
             </Modal>
           </LoadingWrapper>
         </>

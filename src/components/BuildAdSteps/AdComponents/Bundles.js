@@ -11,6 +11,7 @@ const Bundles = ({
   bundleBorder,
   hasDiscount,
   oldPrice,
+  setSelectedBundle,
 }) => {
   return (
     <div
@@ -43,6 +44,11 @@ const Bundles = ({
         type="radio"
         name="bundles"
         value={`${checkbox}`}
+        onClick={() => {
+          if (setSelectedBundle != null && setSelectedBundle != undefined) {
+            setSelectedBundle(checkbox);
+          }
+        }}
         className="sm:w-[25px] sm:h-[25px] min-w-[20px] min-h-[20px] sm:ml-0 ml-2"
       />
     </div>

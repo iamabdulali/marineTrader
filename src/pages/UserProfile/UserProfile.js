@@ -51,14 +51,6 @@ const UserInfo = () => {
     user,
   };
 
-  let arrayOfDays = [];
-  let arrayOfFacilities = [];
-
-  if (!isPrivateSeller) {
-    arrayOfDays = user?.working_days.map((obj) => obj.day);
-    arrayOfFacilities = user?.facilities.map((obj) => obj.name);
-  }
-
   const onSubmit = async (values) => {
     let updatedValues = {};
 
@@ -93,25 +85,12 @@ const UserInfo = () => {
       );
     }
 
-    console.log(updatedValues);
-
     // Check if any updates are needed
     if (Object.keys(updatedValues).length === 0) {
       // If no differences, no need to send any updates
       return;
     }
-    // let updatedValues = {
-    //   ...values.user,
-    // };
-    // if (!isPrivateSeller) {
-    //   updatedValues = {
-    //     ...updatedValues,
-    //     service_hours: JSON.stringify(values.user.service_hours),
-    //     working_days: arrayOfDays,
-    //     facilities: arrayOfFacilities,
-    //   };
-    // }
-    // console.log(updatedValues);
+
     setSpinner(true);
     try {
       const { data } = await axios.post(

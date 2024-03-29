@@ -47,8 +47,8 @@ const CompanyInfo = ({ editable, isPrivateSeller }) => {
             label="Company Name"
             FieldType="text"
             inputField={false}
-            value="john23"
-            name="companyName"
+            value={values.user.company_name}
+            name="company_name"
             onChange={(e) => handleInputChange(e)}
             readOnly={!editable}
           />

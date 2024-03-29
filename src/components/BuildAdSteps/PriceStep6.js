@@ -152,8 +152,8 @@ const PriceStep6 = () => {
           ""
         )}
 
-        {(!isPrivateSeller && values?.advert_package == "2") ||
-        values?.advert_package == "3" ? (
+        {(!isPrivateSeller && values?.advert_package == "5") ||
+        values?.advert_package == "6" ? (
           <div className="mt-6 pt-6 border-t-2">
             <div className="flex items-center justify-between">
               <p className="text-[#0D1A8B] font-semibold capitalize sm:text-lg text-sm">

@@ -26,6 +26,7 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Context/AuthContext";
 
 const PaymentFormAd = ({ setFieldValue, values }) => {
+  const [selectedBundle, setSelectedBundle] = useState(null);
   let [isSpotlightOpen, setIsSpotlightOpen] = useState(false);
   let [isBundleOpen, setIsBundleOpen] = useState(false);
   const [advert, setAdvert] = useState([]);
@@ -37,7 +38,7 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
   const elements = useElements();
   const navigate = useNavigate();
 
-  const { user, selectedBundle } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
   console.log(selectedBundle);
 
@@ -70,70 +71,6 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
     }
 
     return token;
-  };
-
-  const handleAdPayment = async (e) => {
-    e.preventDefault();
-    setSpinner(true);
-    try {
-      const token = await generateStripeToken();
-      const { data } = await axios.post(
-        `${SERVER_BASE_URL}/advert-payment/${id}`,
-        {
-          advert_package: advert_package_id,
-          currency: currency_id,
-          stripe_token: token.id,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
-      console.log(data);
-      toast.success(data.message);
-      setSpinner(false);
-      setSuccess(true);
-      setShowStatus(true);
-    } catch (error) {
-      console.log(error);
-      setSpinner(false);
-      setSuccess(false);
-      setShowStatus(true);
-      toast.error(error.response.data.message);
-    }
-  };
-
-  const handleBundlePayment = async (e) => {
-    e.preventDefault();
-    setSpinner(true);
-    try {
-      const token = await generateStripeToken();
-      const { data } = await axios.post(
-        `${SERVER_BASE_URL}/bundle-payment/${id}`,
-        {
-          advert_package: advert_package_id,
-          currency: user_currency_id,
-          stripe_token: token.id,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
-      console.log(data);
-      toast.success(data.message);
-      setSpinner(false);
-      setSuccess(true);
-      setShowStatus(true);
-    } catch (error) {
-      console.log(error);
-      setSpinner(false);
-      setSuccess(false);
-      setShowStatus(true);
-      toast.error(error.response.data.message);
-    }
   };
 
   const handleCombinedPayments = async (e) => {
@@ -245,7 +182,10 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
               opacity="bg-opacity-40"
               width="xl:w-6/12 w-full"
             >
-              <BundlesModal onClick={() => closeModal(setIsBundleOpen)} />
+              <BundlesModal
+                setSelectedBundle={setSelectedBundle}
+                onClick={() => closeModal(setIsBundleOpen)}
+              />
             </Modal>
           </LoadingWrapper>
         </>

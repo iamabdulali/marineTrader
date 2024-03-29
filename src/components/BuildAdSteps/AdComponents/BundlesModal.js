@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Bundles from "./Bundles";
 import { fetchOptions } from "../../../utils/fetch/fetchData";
 import LoadingWrapper from "../../../utils/LoadingWrapper";
@@ -9,15 +9,19 @@ import axios from "axios";
 import { SERVER_BASE_URL } from "../../..";
 import { displayErrorMessages } from "../../../utils/displayErrors";
 import { Oval } from "react-loader-spinner";
+import { AuthContext } from "../../../Context/AuthContext";
 
-const BundlesModal = ({ onClick }) => {
+const BundlesModal = ({ onClick, setSelectedBundle }) => {
   const [bundles, setBundles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [spinner, setSpinner] = useState(false);
+  // const [selectedBundle] = useState(null);
 
   useEffect(() => {
     fetchOptions("bundles", setBundles, setLoading);
   }, []);
+
+  // const { selectedBundle } = useContext(AuthContext);
 
   const { isValid } = useFormikContext();
 
@@ -48,6 +52,11 @@ const BundlesModal = ({ onClick }) => {
   const showErrorMessage = () => {
     if (!isValid) toast.error("Please Fill All Fields To Buy Bundle");
   };
+
+  // const handleBundle = () =>{
+  //   dispatch({type:'SELECTED_BUNDLE', payload:})
+  // }
+
   return (
     <form>
       <div className="bg-gradient-to-t w-full py-4 rounded-tr-lg rounded-tl-lg from-[#0d1a8b] to-[#3241cb]">
@@ -77,6 +86,7 @@ const BundlesModal = ({ onClick }) => {
                 adverts={total_adverts}
                 price={amount}
                 checkbox={id}
+                setSelectedBundle={setSelectedBundle}
               />
             );
           })}
@@ -92,7 +102,7 @@ const BundlesModal = ({ onClick }) => {
         </button>
         <button
           onClick={!isValid ? showErrorMessage : onClick}
-          type={`${!isValid ? "button" : "submit"}`}
+          type="button"
           className="bg-[#0D1A8B] text-white py-3 px-7 rounded-md"
         >
           {spinner ? (

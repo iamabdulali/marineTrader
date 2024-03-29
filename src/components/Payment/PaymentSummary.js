@@ -1,59 +1,69 @@
-import React from "react";
+import React, { useContext } from "react";
+import { AuthContext } from "../../Context/AuthContext";
 
-const PaymentSummary = ({ advert }) => {
-  const advertPackages = [
-    {
-      packageName: "dummy",
-      price: "free",
-    },
-    {
-      packageName: "Standard",
-      price: "10.99",
-    },
-    {
-      packageName: "Premium",
-      price: "19.99",
-    },
-    {
-      packageName: "Featured",
-      price: "19.99",
-    },
-  ];
+const PaymentSummary = ({ advert, subscription, id, isSubscriptionPage }) => {
+  const { user, currencyRates } = useContext(AuthContext);
+  const { currency } = Object(user);
 
   const { advert_package_id } = Object(advert);
+
+  const filteredSubscriptions = subscription
+    ? subscription.filter((sub) => sub?.id == id)
+    : [];
+
+  const { name, amount } = Object(filteredSubscriptions[0] || {});
 
   return (
     <div className="bg-white shadow-[7px] rounded-md p-6 mt-6 w-full">
       <p className="text-[#11133D] font-semibold text-xl">Summary</p>
       <div className="mt-4 sm:text-base text-sm">
-        <div className=" flex items-center justify-between">
-          <p className="text-[#696E9D]">Subscription:</p>
-          <p className="text-[#11133D] font-semibold">Broker Plus</p>
-        </div>
-        <div className=" flex items-center justify-between mt-2">
-          <p className="text-[#696E9D]">Price:</p>
-          <p className="text-[#11133D] font-semibold">£1.49</p>
-        </div>
-        <p className="text-[#0D1A8B] font-semibold mt-2">Package</p>
-        <div className=" flex items-center justify-between mt-2">
-          <p className="text-[#696E9D]">
-            {advertPackages[advert_package_id]?.packageName}:
-          </p>
-          <p className="text-[#11133D] font-semibold">
-            £{advertPackages[advert_package_id]?.price}
-          </p>
-        </div>
-        <p className="text-[#0D1A8B] font-semibold mt-2">Ad</p>
-        <div className=" flex items-center justify-between mt-2">
-          <p className="text-[#696E9D]">
+        {isSubscriptionPage == "subscription" ? (
+          <>
             {" "}
-            {advertPackages[advert_package_id]?.packageName}:
-          </p>
-          <p className="text-[#11133D] font-semibold">
-            {" "}
-            £{advertPackages[advert_package_id]?.price}
-          </p>
-        </div>
+            <div className=" flex items-center justify-between">
+              <p className="text-[#696E9D]">Subscription:</p>
+              <p className="text-[#11133D] font-semibold">{name}</p>
+            </div>
+            <div className=" flex items-center justify-between mt-2">
+              <p className="text-[#696E9D]">Price:</p>
+              <p className="text-[#11133D] font-semibold">
+                {`${currency?.symbol}${Number(
+                  amount * currencyRates[currency?.currency_code]
+                ).toFixed(2)}`}
+              </p>
+            </div>
+          </>
+        ) : (
+          ""
+        )}
+
+        {isSubscriptionPage != "subscription" ? (
+          <>
+            <p className="text-[#0D1A8B] font-semibold mt-2">Package</p>
+            <div className=" flex items-center justify-between mt-2">
+              <p className="text-[#696E9D]">
+                {/* {advertPackages[advert_package_id]?.packageName}: */}
+              </p>
+              <p className="text-[#11133D] font-semibold">
+                {/* £{advertPackages[advert_package_id]?.price} */}
+              </p>
+            </div>
+            <p className="text-[#0D1A8B] font-semibold mt-2">Ad</p>
+            <div className=" flex items-center justify-between mt-2">
+              <p className="text-[#696E9D]">
+                {" "}
+                {/* {advertPackages[advert_package_id]?.packageName}: */}
+              </p>
+              <p className="text-[#11133D] font-semibold">
+                {" "}
+                {/* £{advertPackages[advert_package_id]?.price} */}
+              </p>
+            </div>
+          </>
+        ) : (
+          ""
+        )}
+
         <div className="mt-6 relative">
           <input
             type="text"
