@@ -17,7 +17,7 @@ const SpotLight = () => {
   const getHomePageSpotlight = async (country) => {
     try {
       const { data } = await axios.get(
-        `${SERVER_BASE_URL}/home/spotlight?${country}`
+        `${SERVER_BASE_URL}/home/spotlight?country=${country}`
       );
       setHomeSpotlights(data.data);
       console.log(data);
@@ -30,7 +30,7 @@ const SpotLight = () => {
 
   useEffect(() => {
     getHomePageSpotlight(country);
-  }, []);
+  }, [country]);
 
   return (
     <div className="mt-24 relative min-h-[40vh]">

@@ -109,7 +109,7 @@ const ItemDetailPage = () => {
           <div className="flex xl:flex-row flex-col gap-6 mt-8 items-start ">
             <div
               className={`${
-                price_type == "1" ? "xl:w-8/12" : "w-full"
+                price_type == "enterInfo" ? "xl:w-8/12" : "w-full"
               }  w-full overflow-x-hidden`}
             >
               <div className="sm:overflow-x-hidden overflow-x-scroll tabs-div">
@@ -130,7 +130,11 @@ const ItemDetailPage = () => {
                 {selectedTab === "itemVideos" && <ItemVideos advert={advert} />}
               </div>
             </div>
-            {price_type == "1" ? <MakeOfferSection advert={advert} /> : ""}
+            {price_type == "enterInfo" ? (
+              <MakeOfferSection advert={advert} />
+            ) : (
+              ""
+            )}
           </div>
           <div className="mt-28">
             <HomeHeading heading="You May Also Like" />
