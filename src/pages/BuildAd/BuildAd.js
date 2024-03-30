@@ -240,7 +240,7 @@ const BuildAd = () => {
           } else if (step === 4) {
             return ["images"].includes(field);
           } else if (step === 5) {
-            return ["currency", "price"].includes(field);
+            return ["currency", "price", "price_type"].includes(field);
           }
           return true; // Include all fields if not in a specific step
         }

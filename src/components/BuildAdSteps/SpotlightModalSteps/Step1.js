@@ -21,8 +21,6 @@ const Step1 = ({ showSpotlightSelection, spotlightFor }) => {
     fetchOptions("continents", setSelectedContinents, setLoading);
   }, []);
 
-  console.log(values);
-
   const handleInputChange = (e) => {
     const { name, value, checked } = e.target;
 
@@ -47,7 +45,7 @@ const Step1 = ({ showSpotlightSelection, spotlightFor }) => {
             ? selectedCountries
             : selectedContinents;
         const spotlightPrice = Number(
-          selectedType[value - 1]?.spotlight_price.match(/\d+\.\d+/)[0]
+          selectedType[value]?.spotlight_price.match(/\d+\.\d+/)[0]
         );
 
         if (!isNaN(spotlightPrice)) {
@@ -65,7 +63,7 @@ const Step1 = ({ showSpotlightSelection, spotlightFor }) => {
             ? selectedCountries
             : selectedContinents;
         const spotlightPrice = Number(
-          selectedType[value - 1]?.spotlight_price.match(/\d+\.\d+/)[0]
+          selectedType[value]?.spotlight_price.match(/\d+\.\d+/)[0]
         );
         if (!isNaN(spotlightPrice)) {
           setTotalCount((prevTotalCount) => prevTotalCount - spotlightPrice);
@@ -75,6 +73,8 @@ const Step1 = ({ showSpotlightSelection, spotlightFor }) => {
       setFieldValue(name, value);
     }
   };
+
+  console.log(selectedCountries);
 
   const renderSelectedCountriesTable = () => {
     const selectedCountriesArray =
@@ -92,8 +92,6 @@ const Step1 = ({ showSpotlightSelection, spotlightFor }) => {
           prevTotalCount - selectedCountries[country].spotlight_price
       );
     };
-
-    console.log(values?.home_spotlights_countries);
 
     if (selectedCountriesArray.length === 0) {
       return <p className="px-8">No countries selected.</p>;
@@ -115,16 +113,17 @@ const Step1 = ({ showSpotlightSelection, spotlightFor }) => {
           </thead>
           <tbody>
             {values[`${spotlightFor}_spotlights_countries`]?.map((country) => {
+              console.log(country);
               return (
                 <tr
-                  key={selectedCountries[country]?.name}
+                  key={selectedCountries[country - 1]?.name}
                   className=" text-[#11133D]"
                 >
                   <td className="py-2 px-4 font-semibold">
-                    {selectedCountries[country]?.name}
+                    {selectedCountries[country - 1]?.name}
                   </td>
                   <td className="py-2 px-4 font-semibold">
-                    £{selectedCountries[country]?.spotlight_price}
+                    £{selectedCountries[country - 1]?.spotlight_price}
                   </td>
                   <td className="py-2 px-4 font-semibold">
                     <button
