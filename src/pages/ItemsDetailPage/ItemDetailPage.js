@@ -11,7 +11,7 @@ import {
   FaShare,
   FaVideo,
 } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import SwiperSlider from "./SwiperSlider";
 import Tabs from "../../components/Tabs";
@@ -34,6 +34,7 @@ import axios from "axios";
 import { SERVER_BASE_URL } from "../..";
 
 const ItemDetailPage = () => {
+  const navigate = useNavigate();
   const [selectedTab, setSelectedTab] = useState("itemOverview");
   const [advert, setAdvert] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -50,7 +51,9 @@ const ItemDetailPage = () => {
 
   const { category, condition, price_type } = Object(advert);
 
-  console.log(category);
+  if (!advert) {
+    navigate("/list");
+  }
 
   const fetchSimilarListings = async () => {
     try {

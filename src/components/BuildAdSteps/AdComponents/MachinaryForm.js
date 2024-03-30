@@ -6,17 +6,18 @@ import { FormField } from "../../FormField";
 
 const MachinaryForm = ({ formFor }) => {
   const { makes, modals } = useContext(AuthContext);
+
   return (
     <>
       <div className="flex sm:flex-row flex-col gap-4">
         <CategorySelectDropdown
           label="Make"
-          name={`${formFor}_make`}
+          name={`${formFor}.make`}
           options={makes}
         />
         <CategorySelectDropdown
           label="Model"
-          name={`${formFor}_modal`}
+          name={`${formFor}.modal`}
           options={modals}
         />
       </div>
@@ -24,23 +25,23 @@ const MachinaryForm = ({ formFor }) => {
         <FormField
           FieldType="text"
           inputField={true}
-          name={`${formFor}_power`}
+          name={`${formFor}.power`}
           label="Power"
           className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
           placeholder={"Power (HP)"}
         />
         <CategorySelectDropdown
           label="Year"
-          name={`${formFor}_year`}
+          name={`${formFor}.year`}
           options={yearsArray}
         />
       </div>
-      {formFor == "generator" ? (
+      {formFor === "generator" && (
         <div className="flex sm:flex-row flex-col gap-4">
           <FormField
             FieldType="text"
             inputField={true}
-            name={`${formFor}_consumption`}
+            name={`${formFor}.consumption`}
             label="Consumption"
             className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
             placeholder={"Consumption (LPH)"}
@@ -48,20 +49,18 @@ const MachinaryForm = ({ formFor }) => {
           <FormField
             FieldType="text"
             inputField={true}
-            name={`${formFor}_hours`}
+            name={`${formFor}.hours`}
             label="Hours"
             className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
             placeholder={"Hours (HRS)"}
           />
         </div>
-      ) : (
-        ""
       )}
       <div className="flex sm:flex-row flex-col gap-4">
         <FormField
           FieldType="text"
           inputField={true}
-          name={`${formFor}_service_history`}
+          name={`${formFor}.service_history`}
           label="Service History (Optional)"
           className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
           placeholder={"Service History"}

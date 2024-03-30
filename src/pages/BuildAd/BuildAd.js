@@ -29,7 +29,7 @@ import { Oval } from "react-loader-spinner";
 import { fetchOptions, getOneAdvert } from "../../utils/fetch/fetchData";
 
 const BuildAd = () => {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(2);
   const [submit, setSubmit] = useState(false);
   const [spinner, setSpinner] = useState(false);
   const NavigateTo = useNavigate();
@@ -112,21 +112,41 @@ const BuildAd = () => {
   };
   const initialValuesBoatHome = {
     category: selectedCategory?.id,
-    title: "asdsa",
-    sub_title: "asd",
-    type: "1",
-    make: "2",
-    model: "3",
-    year: "2022",
-    condition: "4",
-    length: "23",
-    width: "132",
-    height: "23",
-    depth: "421",
-    hull_material: "42",
-    hull_shape: "42",
-    keel_type: "124",
-    description: "asdas",
+    title: "",
+    sub_title: "",
+    type: "",
+    make: "",
+    model: "",
+    year: "",
+    condition: "",
+    hull_material: "",
+    hull_shape: "",
+    keel_type: "",
+    capacity: "",
+    vessel_name: "",
+    hin_number: "",
+    registration: "",
+    vessel_type: "",
+    port: "",
+    registry_number: "",
+    length: "",
+    width: "",
+    height: "",
+    depth: "",
+    displacement: "",
+    dead_rise: "",
+    dry_weight: "",
+    crusing_speed: "",
+    maximum_speed: "",
+    economy: "",
+    water_tanks: "",
+    water_tanks_capacity: "",
+    fuel_tanks: "",
+    fuel_tanks_capacity: "",
+    holding_tanks: "",
+    holding_tanks_capacity: "",
+    powers: [],
+    description: "",
     tags: [],
     images: [],
     video: null,
@@ -144,20 +164,9 @@ const BuildAd = () => {
     engineCount: 0,
     selectedEngine: -1,
     engines: [],
-    bow_make: "1",
-    bow_power: "dasd",
-    bow_modal: "3",
-    bow_year: "2022",
-    stern_make: "1",
-    stern_power: "23",
-    stern_modal: "3",
-    stern_year: "2022",
-    generator_make: "1",
-    generator_power: "23",
-    generator_modal: "4",
-    generator_year: "2022",
-    generator_consumption: "asd",
-    generator_hours: "adsas",
+    bow: {},
+    stern: {},
+    generator: {},
   };
   const editValues = {
     advert,
@@ -194,23 +203,7 @@ const BuildAd = () => {
     "trailers",
   ];
 
-  const bigBoatValidationArrayStep2 = [
-    "engines",
-    "bow_make",
-    "bow_modal",
-    "bow_year",
-    "bow_power",
-    "stern_make",
-    "stern_modal",
-    "stern_year",
-    "stern_power",
-    "generator_make",
-    "generator_modal",
-    "generator_year",
-    "generator_power",
-    "generator_consumption",
-    "generator_hours",
-  ];
+  const bigBoatValidationArrayStep2 = ["engines", "bow", "stern", "generator"];
   const smallBoatsValidationArrayStep2 = [
     "modification",
     "feature",
@@ -255,7 +248,7 @@ const BuildAd = () => {
     } catch (error) {
       if (error.name === "ValidationError") {
         console.error("Validation errors:", error.errors);
-
+        toast.error("Please Fill All the Required Fields");
         const allFields = Object.keys(values);
         const touchedState = allFields.reduce((acc, field) => {
           acc[field] = true;

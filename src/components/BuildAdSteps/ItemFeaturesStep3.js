@@ -67,7 +67,6 @@ const ItemFeaturesStep3 = () => {
               </div>
               <FieldArray name="engines">
                 {({ push, remove, form: { errors, touched } }) => {
-                  console.log(errors);
                   return (
                     <>
                       <div className="flex gap-4 sm:flex-nowrap flex-wrap">
@@ -233,10 +232,14 @@ const ItemFeaturesStep3 = () => {
               </div>
 
               <div className="py-6">
-                {selectedTab === "bow" && <MachinaryForm formFor="bow" />}
-                {selectedTab === "stern" && <MachinaryForm formFor="stern" />}
+                {selectedTab === "bow" && (
+                  <MachinaryForm formFor="bow" index={0} />
+                )}
+                {selectedTab === "stern" && (
+                  <MachinaryForm formFor="stern" index={0} />
+                )}
                 {selectedTab === "generator" && (
-                  <MachinaryForm formFor="generator" />
+                  <MachinaryForm formFor="generator" index={0} />
                 )}
               </div>
             </div>
@@ -333,7 +336,7 @@ const ItemFeaturesStep3 = () => {
                         <Field
                           type="checkbox"
                           value={`${checkbox}`}
-                          name="power"
+                          name="powers"
                           className="min-w-[20px] min-h-[20px] text-blue-600 bg-gray-100 border-gray-300 rounded mr-3"
                         />
                         {checkbox}
