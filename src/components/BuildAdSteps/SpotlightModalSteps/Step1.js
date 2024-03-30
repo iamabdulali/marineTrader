@@ -107,7 +107,7 @@ const Step1 = ({ showSpotlightSelection, spotlightFor }) => {
         <table className="w-full sm:text-base text-sm text-left bg-[#f9f9f9] border-collapse border border-[#D8D8D8] mt-4">
           <thead>
             <tr className="text-[#8891B2] border-b-2">
-              <th className="py-2 px-4 font-medium">Countries</th>
+              <th className="py-2 px-4 font-medium capitalize">{tableFor}</th>
               <th className="py-2 px-4 font-medium">Price</th>
               <th className="py-2 px-4 font-medium">Action</th>
             </tr>

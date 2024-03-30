@@ -167,21 +167,24 @@ const PriceStep6 = () => {
                 Buy a Bundle
               </button>
             </div>
-            {values?.advert_package != 3 ? (
-              <p className="text-sm mt-3">
-                <button
-                  onClick={() => handlePackageUpgrade(values, setFieldValue)}
-                  type="button"
-                  className="text-[#0D1A8B] font-semibold underline "
-                >
-                  UPGRADE
-                </button>{" "}
-                to Premium or Featured Package
-              </p>
-            ) : (
-              ""
-            )}
           </div>
+        ) : (
+          ""
+        )}
+
+        {values?.advert_package == 3 || values?.advert_package != 6 ? (
+          <p className="text-sm mt-8">
+            <button
+              onClick={() =>
+                handlePackageUpgrade(values, setFieldValue, seller_type)
+              }
+              type="button"
+              className="text-[#0D1A8B] font-semibold underline "
+            >
+              UPGRADE
+            </button>{" "}
+            to Premium or Featured Package
+          </p>
         ) : (
           ""
         )}

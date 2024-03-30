@@ -50,7 +50,7 @@ const ItemDescriptionStep2 = () => {
         className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
         placeholder={"Sub Title"}
       />
-      {values?.advert_package == "1" ? (
+      {values?.advert_package == "1" || values?.advert_package == "4" ? (
         <UpdateSubtitleNotice values={values} setFieldValue={setFieldValue} />
       ) : (
         ""
