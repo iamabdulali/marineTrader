@@ -17,11 +17,12 @@ const SpotLightListings = ({
   category_id,
   image,
   advertID,
+  setRefresh,
 }) => {
   const { selectedCategory } = useContext(AuthContext);
 
   return (
-    <Link to={`/itemDetails/${id}`}>
+    <Link to={`/itemDetails/${id}`} onClick={() => setRefresh((prev) => !prev)}>
       {isNews ? (
         <div>
           <img src={thumbnail} className="w-full" />

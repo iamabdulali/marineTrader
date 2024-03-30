@@ -37,6 +37,7 @@ const ItemDetailPage = () => {
   const [selectedTab, setSelectedTab] = useState("itemOverview");
   const [advert, setAdvert] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [refresh, setRefresh] = useState(false);
   const [similarListings, setSimilarListings] = useState([]);
 
   const pathArray = window.location.pathname.split("/");
@@ -44,7 +45,8 @@ const ItemDetailPage = () => {
 
   useEffect(() => {
     getOneAdvert(setAdvert, setLoading, id, "advert-details");
-  }, []);
+    setLoading(true);
+  }, [refresh]);
 
   const { category, condition, price_type } = Object(advert);
 
@@ -61,11 +63,12 @@ const ItemDetailPage = () => {
         }
       );
       setSimilarListings(data.data);
-      setLoading(false);
     } catch (error) {
       console.log(error);
     }
   };
+
+  console.log(refresh);
 
   useEffect(() => {
     fetchSimilarListings();
@@ -190,6 +193,7 @@ const ItemDetailPage = () => {
                       price={price}
                       image={images[0]?.image}
                       advertID={advert_package_id}
+                      setRefresh={setRefresh}
                     />
                   )
                 )
