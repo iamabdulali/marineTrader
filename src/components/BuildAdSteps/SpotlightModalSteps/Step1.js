@@ -5,12 +5,14 @@ import { AuthContext } from "../../../Context/AuthContext";
 import { fetchOptions } from "../../../utils/fetch/fetchData";
 import { Field, useFormikContext } from "formik";
 import LoadingWrapper from "../../../utils/LoadingWrapper";
+import { ref } from "yup";
 
 const Step1 = ({ showSpotlightSelection, spotlightFor }) => {
   const { bundleName } = useContext(AuthContext);
 
   const [selectedCountries, setSelectedCountries] = useState([]);
   const [selectedContinents, setSelectedContinents] = useState([]);
+  const [refresh, setRefresh] = useState(false);
   const [loading, setLoading] = useState(true);
   const [totalCount, setTotalCount] = useState(0);
 
@@ -32,10 +34,12 @@ const Step1 = ({ showSpotlightSelection, spotlightFor }) => {
         // Uncheck all countries if a continent is selected
         if (name === `${spotlightFor}_spotlights_continents`) {
           setFieldValue(`${spotlightFor}_spotlights_countries`, []);
+          setRefresh(true);
         }
         // Uncheck all continents if a country is selected
         else if (name === `${spotlightFor}_spotlights_countries`) {
           setFieldValue(`${spotlightFor}_spotlights_continents`, []);
+          setRefresh(false);
         }
         // Add the value to the respective array
         setFieldValue(name, [...values[name], value]);
@@ -74,27 +78,24 @@ const Step1 = ({ showSpotlightSelection, spotlightFor }) => {
     }
   };
 
-  console.log(selectedCountries);
-
-  const renderSelectedCountriesTable = () => {
+  const renderSelectedCountriesTable = (tableFor, ArrayFor) => {
     const selectedCountriesArray =
-      values[`${spotlightFor}_spotlights_countries`];
+      values[`${spotlightFor}_spotlights_${tableFor}`];
 
     const handleRemove = (country) => {
       setFieldValue(
-        `${spotlightFor}_spotlights_countries`,
-        values[`${spotlightFor}_spotlights_countries`].filter(
+        `${spotlightFor}_spotlights_${tableFor}`,
+        values[`${spotlightFor}_spotlights_${tableFor}`].filter(
           (item) => item != country - 1
         )
       );
       setTotalCount(
-        (prevTotalCount) =>
-          prevTotalCount - selectedCountries[country].spotlight_price
+        (prevTotalCount) => prevTotalCount - ArrayFor[country].spotlight_price
       );
     };
 
     if (selectedCountriesArray.length === 0) {
-      return <p className="px-8">No countries selected.</p>;
+      return <p className="px-8">No {tableFor} selected.</p>;
     }
 
     return (
@@ -112,32 +113,32 @@ const Step1 = ({ showSpotlightSelection, spotlightFor }) => {
             </tr>
           </thead>
           <tbody>
-            {values[`${spotlightFor}_spotlights_countries`]?.map((country) => {
-              console.log(country);
-              return (
-                <tr
-                  key={selectedCountries[country - 1]?.name}
-                  className=" text-[#11133D]"
-                >
-                  <td className="py-2 px-4 font-semibold">
-                    {selectedCountries[country - 1]?.name}
-                  </td>
-                  <td className="py-2 px-4 font-semibold">
-                    £{selectedCountries[country - 1]?.spotlight_price}
-                  </td>
-                  <td className="py-2 px-4 font-semibold">
-                    <button
-                      className=" text-[#FC4040] flex items-center gap-3 px-3 py-1 rounded"
-                      onClick={() =>
-                        handleRemove(selectedCountries[country]?.id)
-                      }
-                    >
-                      <FaTrash /> Remove
-                    </button>
-                  </td>
-                </tr>
-              );
-            })}
+            {values[`${spotlightFor}_spotlights_${tableFor}`]?.map(
+              (country) => {
+                console.log(country);
+                return (
+                  <tr
+                    key={ArrayFor[country - 1]?.name}
+                    className=" text-[#11133D]"
+                  >
+                    <td className="py-2 px-4 font-semibold">
+                      {ArrayFor[country - 1]?.name}
+                    </td>
+                    <td className="py-2 px-4 font-semibold">
+                      £{ArrayFor[country - 1]?.spotlight_price}
+                    </td>
+                    <td className="py-2 px-4 font-semibold">
+                      <button
+                        className=" text-[#FC4040] flex items-center gap-3 px-3 py-1 rounded"
+                        onClick={() => handleRemove(ArrayFor[country]?.id)}
+                      >
+                        <FaTrash /> Remove
+                      </button>
+                    </td>
+                  </tr>
+                );
+              }
+            )}
           </tbody>
         </table>
       </div>
@@ -148,7 +149,11 @@ const Step1 = ({ showSpotlightSelection, spotlightFor }) => {
     <>
       <div className="py-5 min-h-[40vh]">
         {showSpotlightSelection ? (
-          renderSelectedCountriesTable()
+          <>
+            {refresh
+              ? renderSelectedCountriesTable("continents", selectedContinents)
+              : renderSelectedCountriesTable("countries", selectedCountries)}
+          </>
         ) : (
           <div className="py-5">
             <LoadingWrapper
