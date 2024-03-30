@@ -18,7 +18,7 @@ const ItemOverview = ({ advert }) => {
   } = Object(advert);
   return (
     <div>
-      <p className="text-[#11133D] font-semibold sm:text-2xl text-xl">
+      {/* <p className="text-[#11133D] font-semibold sm:text-2xl text-xl">
         About this Boat
       </p>
       <p className="text-[#696E9D] sm:leading-loose leading-loose mt-2 text-justify sm:text-base text-sm">
@@ -26,7 +26,7 @@ const ItemOverview = ({ advert }) => {
         lacus eu nunc nisl at vitae orci. Faucibus fermentum nibh pellentesque
         orci euismod enim. Tellus faucibus tempor sapien risus vitae adipiscing.
         Massa id morbi auctor cum amet.
-      </p>
+      </p> */}
       <div className="mt-7">
         <p className="text-[#11133D] font-semibold sm:text-2xl text-xl">
           Features
@@ -115,7 +115,7 @@ const ItemOverview = ({ advert }) => {
         </div>
         <p className="text-[#11133D] font-semibold text-2xl mt-14">Tags</p>
         <div className="flex flex-wrap items-center mt-5 gap-4 sm:text-base text-sm">
-          {tags.map(({ id, name }) => {
+          {tags?.map(({ id, name }) => {
             return (
               <p
                 key={id}

@@ -24,13 +24,20 @@ import { SpotLightListingsData2 } from "../../utils/DummyData";
 import SpotLightListings from "../../components/SpotLightListings/SpotLightListings";
 import MakeOfferSection from "./MakeOfferSection";
 import OfferSectionHeader from "./OfferSectionHeader";
-import { getAdvert, getOneAdvert } from "../../utils/fetch/fetchData";
+import {
+  fetchOptions,
+  getAdvert,
+  getOneAdvert,
+} from "../../utils/fetch/fetchData";
 import LoadingWrapper from "../../utils/LoadingWrapper";
+import axios from "axios";
+import { SERVER_BASE_URL } from "../..";
 
 const ItemDetailPage = () => {
   const [selectedTab, setSelectedTab] = useState("itemOverview");
   const [advert, setAdvert] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [similarListings, setSimilarListings] = useState([]);
 
   const pathArray = window.location.pathname.split("/");
   const id = pathArray[2];
@@ -40,7 +47,31 @@ const ItemDetailPage = () => {
   }, []);
 
   const { category, condition, price_type } = Object(advert);
-  console.log(advert);
+
+  console.log(category);
+
+  const fetchSimilarListings = async () => {
+    try {
+      const { data } = await axios.get(
+        `${SERVER_BASE_URL}?category=${category?.id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      setSimilarListings(data.data);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchSimilarListings();
+  }, [category]);
+
+  const sliceListings = similarListings?.slice(0, 4);
 
   const tabs = [
     {
@@ -80,7 +111,7 @@ const ItemDetailPage = () => {
       <BuyerLayout showCategoryList={false}>
         <div className="2xl:px-24 sm:px-10 px-4">
           <Link
-            to="/selling"
+            to="/list"
             className="text-[#696E9D] text-sm flex gap-3 items-center mt-4"
           >
             <FaArrowLeft /> Back
@@ -137,24 +168,30 @@ const ItemDetailPage = () => {
             )}
           </div>
           <div className="mt-28">
-            <HomeHeading heading="You May Also Like" />
+            <HomeHeading heading="More Like This" />
             <div className=" mt-5 grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-10">
-              {SpotLightListingsData2.map(
-                ({
-                  listingType,
-                  listingName,
-                  listingPrice,
-                  isFeatured,
-                  id,
-                }) => (
-                  <SpotLightListings
-                    id={id}
-                    key={id}
-                    listingType={listingType}
-                    listingName={listingName}
-                    listingPrice={listingPrice}
-                    isFeatured={isFeatured}
-                  />
+              {sliceListings?.length == 0 ? (
+                <p>No Related Listings Found</p>
+              ) : (
+                sliceListings?.map(
+                  ({
+                    id,
+                    title,
+                    price,
+                    category_id,
+                    images,
+                    advert_package_id,
+                  }) => (
+                    <SpotLightListings
+                      key={id}
+                      id={id}
+                      title={title}
+                      category_id={category_id}
+                      price={price}
+                      image={images[0]?.image}
+                      advertID={advert_package_id}
+                    />
+                  )
                 )
               )}
             </div>

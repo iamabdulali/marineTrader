@@ -24,7 +24,7 @@ const Footer = () => {
         </div>
 
         {/* Column 2 */}
-        <div className="w-full sm:w-1/2 md:w-1/4 lg:w-1/12 mb-4 sm:mb-0">
+        {/* <div className="w-full sm:w-1/2 md:w-1/4 lg:w-1/12 mb-4 sm:mb-0">
           <h4 className="text-lg font-semibold mb-6">Quick Links</h4>
           <ul className="list-none">
             <li>
@@ -39,12 +39,11 @@ const Footer = () => {
             <li className="mt-4">
               <Link>Contact</Link>
             </li>
-            {/* Add more links as needed */}
           </ul>
-        </div>
+        </div> */}
 
         {/* Column 3 */}
-        <div className="w-full sm:w-1/2 md:w-1/4 lg:w-1/12 mb-4 sm:mb-0">
+        {/* <div className="w-full sm:w-1/2 md:w-1/4 lg:w-1/12 mb-4 sm:mb-0">
           <h4 className="text-lg font-semibold mb-6">Useful Links</h4>
           <ul className="list-none">
             <li>
@@ -59,12 +58,11 @@ const Footer = () => {
             <li className="mt-4">
               <Link>News</Link>
             </li>
-            {/* Add more links as needed */}
           </ul>
-        </div>
+        </div> */}
 
         {/* Column 4 */}
-        <div className="w-full lg:w-1/3 lg:mt-0 mt-2">
+        {/* <div className="w-full lg:w-1/3 lg:mt-0 mt-2">
           <h4 className="text-lg font-semibold mb-4">Newsletter</h4>
           <div className="flex items-center relative mb-4">
             <input
@@ -76,16 +74,16 @@ const Footer = () => {
               Subscribe
             </button>
           </div>
-        </div>
+        </div> */}
       </div>
       <div className="flex md:flex-row flex-col md:items-center justify-between smallLg:px-24 px-5 py-7 border-t-[1px] border-white">
         <p className="md:order-[0] order-1">© 2023 Copyright Marine Trader</p>
         <div className="flex items-center gap-5 md:justify-normal justify-between md:mb-0 mb-7">
-          <div className="flex md:flex-row flex-col gap-3">
+          {/* <div className="flex md:flex-row flex-col gap-3">
             <Link>Privacy</Link>
             <Link>Terms Of Services</Link>
-          </div>
-          <div className="relative inline-block mr-7">
+          </div> */}
+          {/* <div className="relative inline-block mr-7">
             <div className="flex items-center gap-7 ">
               <button
                 onClick={toggleLanguageDropdown}
@@ -117,7 +115,7 @@ const Footer = () => {
                 </button>
               </div>
             )}
-          </div>
+          </div> */}
         </div>
       </div>
     </footer>

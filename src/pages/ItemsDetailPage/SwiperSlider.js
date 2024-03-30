@@ -61,7 +61,7 @@ const SwiperSlider = ({ advert }) => {
           asNavFor={nav1}
           ref={(slider) => setSlider1(slider)}
         >
-          {advert?.images.map((item, idx) => (
+          {advert?.images?.map((item, idx) => (
             <div
               key={item.id}
               className="max-h-[560px]"
@@ -77,7 +77,7 @@ const SwiperSlider = ({ advert }) => {
         </Slider>
         <div className="md:block hidden">
           <Slider {...thumbSetting} className="mt-4 thumb-slider">
-            {advert?.images.map((item, idx) => (
+            {advert?.images?.map((item, idx) => (
               <div
                 key={item.id}
                 onClick={() => {
@@ -106,7 +106,7 @@ const SwiperSlider = ({ advert }) => {
               infinite={false}
               initialSlide={modalIndex}
             >
-              {advert?.images.map((item) => (
+              {advert?.images?.map((item) => (
                 <div key={item.id}>
                   <img
                     className="w-full min-h-[95vh] object-contain"
