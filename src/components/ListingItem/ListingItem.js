@@ -108,8 +108,9 @@ const ListingItem = ({ itemData }) => {
               </div>
               <div>
                 <p className="font-semibold text-[#11133D] md:text-xl text-base">
-                  {`${currency?.symbol}${Number(
-                    Number(price) * currencyRates[currency?.currency_code]
+                  {`${currency?.symbol || "£"}${Number(
+                    Number(price) * currencyRates[currency?.currency_code] ||
+                      price
                   ).toFixed(2)}`}
                 </p>
                 <p className="text-[#8891B2] md:text-base text-sm">
