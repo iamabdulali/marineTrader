@@ -30,6 +30,7 @@ const ListingTable = ({
   sellingData,
   OffersData,
   onDelete,
+  setRefresh,
 }) => {
   let [isOfferOpen, setIsOfferOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -54,6 +55,7 @@ const ListingTable = ({
         }
       );
       toast.success(data.message);
+      setRefresh((prev) => !prev);
     } catch (error) {
       console.log(error);
       toast.success(error.response.data.message);
@@ -173,6 +175,7 @@ const ListingTable = ({
                     price,
                     expire_date,
                     view,
+                    spotlight_status,
                   }) => (
                     <tr
                       key={id}
@@ -223,19 +226,22 @@ const ListingTable = ({
                         <div className="flex font-semibold items-center justify-center">
                           <Link
                             to={
-                              advert_status == "draft"
+                              advert_status == "draft" ||
+                              spotlight_status == "draft"
                                 ? `/payment/advert/${id}`
                                 : "/"
                             }
                             className={` ${
-                              advert_status == "draft"
+                              advert_status == "draft" ||
+                              spotlight_status == "draft"
                                 ? "text-[#0D1A8B] border-2 border-[#0D1A8B] hover:bg-[#0D1A8B] hover:text-white"
                                 : advert_status == "paid"
                                 ? "text-[#FFB800] border-2 border-[#FFB800] hover:bg-[#FFB800] hover:text-white"
                                 : "text-[#2AD18A] border-2 border-[#2AD18A] hover:bg-[#2AD18A] hover:text-white"
                             } px-3 py-3 min-w-24 text-sm rounded-md block text-center`}
                           >
-                            {advert_status == "draft"
+                            {advert_status == "draft" ||
+                            spotlight_status == "draft"
                               ? "Pay Now"
                               : advert_status == "paid"
                               ? "Upgrade"

@@ -5,13 +5,16 @@ import { offersHeader } from "../../utils/DummyData";
 import Layout from "../../components/Layout/Layout";
 import { fetchOffers } from "../../utils/fetch/fetchData";
 import LoadingWrapper from "../../utils/LoadingWrapper";
+import { ref } from "yup";
 
 export default function Offer() {
   const [offers, setOffers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [refresh, setRefresh] = useState(false);
   useEffect(() => {
     fetchOffers(setOffers, setLoading);
-  }, []);
+  }, [refresh]);
+  console.log("HELo");
   return (
     <>
       <Layout>
@@ -33,6 +36,7 @@ export default function Offer() {
               hasPadding={true}
               tableHeader={offersHeader}
               OffersData={offers}
+              setRefresh={setRefresh}
             />
           )}
         </LoadingWrapper>

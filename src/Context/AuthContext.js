@@ -54,6 +54,8 @@ export const authReducer = (state, action) => {
       return { ...state, selectedBundle: action.payload };
     case "CURRENCY_RATES":
       return { ...state, currencyRates: action.payload };
+    case "SELECTED_COUNTRY":
+      return { ...state, country: action.payload };
     default:
       return state;
   }
@@ -62,6 +64,7 @@ export const authReducer = (state, action) => {
 export const AuthContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, {
     selectedBundle: null,
+    country: null,
     user: null, // Updated user initialization
     selectedCategory: null,
     listingTags: [],

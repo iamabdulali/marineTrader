@@ -26,13 +26,18 @@ import {
 } from "../../utils/ModalOpeningClosingFunctions.js";
 import DeleteListingModal from "../Selling/DeleteListingModal.js";
 import FeedbackModal from "../Feedback/FeedbackModal.js";
+import CustomDropdownMenu from "../CustomDropdownMenu.js";
+import { FiMoreVertical } from "react-icons/fi";
+import ListingMenu from "../Selling/ListingMenu.js";
+import CountriesDropdown from "./CountriesDropdown.js";
 
 const Header = ({ menuState, setMenuState }) => {
   const [languageDropdownOpen, setLanguageDropdownOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const isLogged = isUserLoggedIn();
   const [homePageMenu, setHomePageMenu] = useState(false);
-  const { user } = useContext(AuthContext);
+  const [countryCode, setCountryCode] = useState("US");
+  const { user, dispatch } = useContext(AuthContext);
 
   const { user_name, seller_type, image_field, main_picture } = Object(user);
 
@@ -125,49 +130,26 @@ const Header = ({ menuState, setMenuState }) => {
           </>
         )}
 
-        <div className="flex items-center">
-          {/* <img
-            src={`https://purecatamphetamine.github.io/country-flag-icons/3x2/${countryCode}.svg`}
-            className="w-10 h-10 object-contain block mr-6"
-          /> */}
+        <div className="flex items-baseline">
           {/* Language Dropdown */}
-          {/* <div className="relative inline-block mr-7">
-            <div className="flex items-center gap-7">
-              {isLogged ? (
-                ""
-              ) : (
-                <button
-                  onClick={toggleLanguageDropdown}
-                  className="flex items-center space-x-2 focus:outline-none"
-                >
-                  <FaGlobe size={20} color="#696E9D" />
-                  <FaChevronDown size={12} color="#696E9D" />
-                </button>
-              )}
-              <button
-                onClick={toggleLanguageDropdown}
-                className="flex items-center space-x-2 focus:outline-none"
-              >
-                <img src={flagUsa} className="w-6" />
-                <FaChevronDown size={12} color="#696E9D" />
-              </button>
-            </div>
-
-            {languageDropdownOpen && (
-              <div className="absolute w-max mt-2 bg-white border rounded shadow-lg">
-                <button className="py-2 px-3 flex items-center">
-                  {" "}
-                  <img src={flagUsa} className="w-6 mr-3" />
-                  English
-                </button>
-                <button className="py-2 px-3 flex items-center">
-                  {" "}
-                  <img src={flagUsa} className="w-6 mr-3" />
-                  French
-                </button>
-              </div>
-            )}
-          </div> */}
+          <div className="relative inline-block mr-7">
+            <CustomDropdownMenu
+              buttonToOpenMenu={
+                <>
+                  <img
+                    className="w-10 h-10 object-contain block"
+                    src={`https://purecatamphetamine.github.io/country-flag-icons/3x2/${countryCode}.svg`}
+                  />
+                </>
+              }
+              children={
+                <CountriesDropdown
+                  setCountryCode={setCountryCode}
+                  dispatch={dispatch}
+                />
+              }
+            />
+          </div>
 
           {/* Bell and Notification Icons */}
           {isLogged ? (

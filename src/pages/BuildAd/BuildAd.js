@@ -29,7 +29,7 @@ import { Oval } from "react-loader-spinner";
 import { fetchOptions, getOneAdvert } from "../../utils/fetch/fetchData";
 
 const BuildAd = () => {
-  const [step, setStep] = useState(2);
+  const [step, setStep] = useState(1);
   const [submit, setSubmit] = useState(false);
   const [spinner, setSpinner] = useState(false);
   const NavigateTo = useNavigate();
@@ -99,7 +99,7 @@ const BuildAd = () => {
     tags: ["OK"],
     images: [],
     video: null,
-    price_type: "wda",
+    price_type: "enterInfo",
     currency: "dwd",
     price: "dwa",
     facilities: [],

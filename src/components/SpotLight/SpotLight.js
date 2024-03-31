@@ -1,18 +1,18 @@
 import React, { useContext, useEffect, useState } from "react";
 import HomeHeading from "../HomeHeading";
 import SpotLightListings from "../SpotLightListings/SpotLightListings";
-import { SpotLightListingsData, newsData } from "../../utils/DummyData";
 import axios from "axios";
 import { AuthContext } from "../../Context/AuthContext";
 import { SERVER_BASE_URL } from "../..";
 import LoadingWrapper from "../../utils/LoadingWrapper";
 
 const SpotLight = () => {
-  const { userLocationDetails } = useContext(AuthContext);
+  const { userLocationDetails, country } = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
   const [homeSpotlights, setHomeSpotlights] = useState([]);
 
-  const { country } = Object(userLocationDetails);
+  // const { country } = Object(userLocationDetails);
+  console.log(country);
 
   const getHomePageSpotlight = async (country) => {
     try {
