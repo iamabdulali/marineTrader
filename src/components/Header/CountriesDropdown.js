@@ -17,12 +17,10 @@ const CountriesDropdown = ({ setCountryCode, dispatch }) => {
           onClick={() => {
             setCountryCode(countryCode);
             dispatch({ type: "SELECTED_COUNTRY", payload: name });
-            alert("HELO");
           }}
           onTouchStart={() => {
             setCountryCode(countryCode);
             dispatch({ type: "SELECTED_COUNTRY", payload: name });
-            alert("HELO");
           }}
         >
           <label className="flex cursor-pointer items-center gap-2 text-[#11133D] whitespace-nowrap mb-2 text-sm font-medium">

@@ -145,7 +145,7 @@ const AdSubscriptionComponent = ({
           </div>
         )}
 
-        {variantStyles.bundleAllowance && hasBundle != "0" ? (
+        {variantStyles.bundleAllowance && hasBundle != "" ? (
           <div className="text-sm text-[#11133D] font-medium">
             <p className="mt-2 mb-3">
               Bundle Balance:{" "}
