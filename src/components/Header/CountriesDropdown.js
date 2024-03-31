@@ -19,6 +19,11 @@ const CountriesDropdown = ({ setCountryCode, dispatch }) => {
             dispatch({ type: "SELECTED_COUNTRY", payload: name });
             alert("HELO");
           }}
+          onTouchStart={() => {
+            setCountryCode(countryCode);
+            dispatch({ type: "SELECTED_COUNTRY", payload: name });
+            alert("HELO");
+          }}
         >
           <label className="flex cursor-pointer items-center gap-2 text-[#11133D] whitespace-nowrap mb-2 text-sm font-medium">
             <img src={flag} alt={`${name} flag`} className="w-6 h-6" />
