@@ -130,7 +130,9 @@ const Header = ({ menuState, setMenuState }) => {
           </>
         )}
 
-        <div className="flex items-baseline">
+        <div
+          className={`flex ${isLogged ? "items-baseline" : "items-center"} `}
+        >
           {/* Language Dropdown */}
           <div className="relative inline-block mr-7">
             <CustomDropdownMenu
