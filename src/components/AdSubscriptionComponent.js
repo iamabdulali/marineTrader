@@ -97,7 +97,7 @@ const AdSubscriptionComponent = ({
         ribbonImage: ribbon,
         searchResult: featuredSearchResult,
         monthlyAllowance: false,
-        bundleAllowance: false,
+        bundleAllowance: true,
       };
       break;
     default:

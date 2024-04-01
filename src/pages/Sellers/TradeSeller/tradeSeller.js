@@ -237,11 +237,7 @@ const TradeSeller = () => {
       </div>
 
       <div className="w-5/12 xl:static fixed right-0 lg:block hidden">
-        <img
-          className="xl:h-auto min-h-screen object-cover"
-          src={Ship}
-          alt="Ship"
-        />
+        <img className="xl:h-auto min-h-screen" src={Ship} alt="Ship" />
       </div>
     </div>
   );
