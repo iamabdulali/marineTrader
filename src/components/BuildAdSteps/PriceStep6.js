@@ -16,8 +16,9 @@ import { FormField } from "../FormField";
 import { AuthContext } from "../../Context/AuthContext";
 import { toast } from "react-toastify";
 import { handlePackageUpgrade } from "../../utils/handlePackageUpgrade";
+import { handleInputChange } from "../../utils/handleInputChange";
 
-const PriceStep6 = () => {
+const PriceStep6 = ({ isEditMode }) => {
   const [priceInfoType, setPriceInfoType] = useState("enterInfo");
   let [isBundleOpen, setIsBundleOpen] = useState(false);
   let [isSpotlightOpen, setIsSpotlightOpen] = useState(false);
@@ -42,10 +43,10 @@ const PriceStep6 = () => {
 
   const isPrivateSeller = seller_type == "private seller";
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFieldValue(name, value);
-  };
+  // const handleInputChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setFieldValue(name, value);
+  // };
 
   return (
     <BuildLayout heading="Set Price">
@@ -62,7 +63,17 @@ const PriceStep6 = () => {
               value="enterInfo"
               checked={values?.price_type == "enterInfo"}
               onChange={(e) => {
-                handleInputChange(e);
+                // handleInputChange(e);
+                isEditMode
+                  ? handleInputChange(e, "advert", isEditMode, setFieldValue)
+                  : handleInputChange(
+                      e,
+                      null,
+                      null,
+                      null,
+                      isEditMode,
+                      setFieldValue
+                    );
                 setPriceInfoType("enterInfo");
               }}
             />
@@ -78,7 +89,17 @@ const PriceStep6 = () => {
               value="poa"
               checked={values?.price_type == "poa"}
               onChange={(e) => {
-                handleInputChange(e);
+                // handleInputChange(e);
+                isEditMode
+                  ? handleInputChange(e, "advert", isEditMode, setFieldValue)
+                  : handleInputChange(
+                      e,
+                      null,
+                      null,
+                      null,
+                      isEditMode,
+                      setFieldValue
+                    );
                 setPriceInfoType("poa");
               }}
             />
@@ -93,6 +114,25 @@ const PriceStep6 = () => {
               label="Currency"
               name="currency"
               options={currency}
+              onChange={(e) =>
+                isEditMode
+                  ? handleInputChange(
+                      e,
+                      "currency",
+                      currency,
+                      "advert",
+                      isEditMode,
+                      setFieldValue
+                    )
+                  : handleInputChange(
+                      e,
+                      null,
+                      null,
+                      null,
+                      isEditMode,
+                      setFieldValue
+                    )
+              }
             />
             <FormField
               FieldType="number"
@@ -100,6 +140,18 @@ const PriceStep6 = () => {
               name="price"
               label="Price"
               className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
+              onChange={(e) =>
+                isEditMode
+                  ? handleInputChange(e, "advert", isEditMode, setFieldValue)
+                  : handleInputChange(
+                      e,
+                      null,
+                      null,
+                      null,
+                      isEditMode,
+                      setFieldValue
+                    )
+              }
             />
             <CategorySelectDropdown label="Tax" name="tax" options={taxes} />
           </div>

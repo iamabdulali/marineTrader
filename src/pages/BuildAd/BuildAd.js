@@ -360,7 +360,7 @@ const BuildAd = () => {
             {step === 2 && <ItemFeaturesStep3 isEditMode={EditMode} />}
             {step === 3 && <NotesSteps4 isEditMode={EditMode} />}
             {step === 4 && <GalleryStep5 />}
-            {step === 5 && <PriceStep6 />}
+            {step === 5 && <PriceStep6 isEditMode={EditMode} />}
             {/* Navigation buttons */}
             <div className="flex sm:flex-row flex-col-reverse align-center justify-between mt-10 mb-24">
               <div className="sm:w-auto w-full flex gap-5 items-center sm:flex-row flex-col sm:mt-0 mt-5">

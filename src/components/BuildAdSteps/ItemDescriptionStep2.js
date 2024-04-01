@@ -103,7 +103,7 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
 
       <ContentToggle
         title={`${
-          selectedCategory?.name || categoriesList[values?.advert.category_id]
+          selectedCategory?.name || categoriesList[values?.advert?.category_id]
         } Details`}
         setShowContent={setShowDetails}
         textStyles="font-semibold text-[#11133D]"
