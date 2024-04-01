@@ -4,7 +4,6 @@ export const CategorySelectDropdown = ({
   label,
   name,
   options,
-  multiple,
   value,
   onChange,
 }) => (
@@ -17,7 +16,6 @@ export const CategorySelectDropdown = ({
     </label>
     <Field
       as="select"
-      multiple={multiple}
       name={name}
       className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full sm:appearance-auto appearance-none"
       value={value}

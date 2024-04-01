@@ -9,8 +9,9 @@ const ModificationMenu = ({
   dispatch,
   actionType,
   name,
+  isEditMode,
 }) => {
-  const { values } = useFormikContext();
+  const { values, setFieldValue } = useFormikContext();
   const [newCheckboxText, setNewCheckboxText] = useState(menuLabel);
   const [editedCheckboxIndex, setEditedCheckboxIndex] = useState(null);
 
@@ -42,8 +43,35 @@ const ModificationMenu = ({
     setEditedCheckboxIndex(null);
   };
 
-  console.log(name);
-  console.log(values?.advert?.[name]);
+  const handleInputChange = (e) => {
+    const { name, checked, value } = e.target;
+    const valueToModify = values?.advert?.[name];
+
+    if (checked) {
+      // Checkbox is checked, add value to the array
+      const updatedFeatures = [
+        ...valueToModify,
+        {
+          id: valueToModify.length + 1,
+          name: value,
+          pivot: {
+            advert_id: values?.advert?.id,
+            modification_id: valueToModify.length + 1,
+          },
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+        },
+      ];
+
+      setFieldValue(`advert.${name}`, updatedFeatures);
+    } else {
+      // Checkbox is unchecked, remove value from the array
+      const updatedFeatures = valueToModify.filter(
+        (item) => item.name !== value
+      );
+      setFieldValue(`advert.${name}`, updatedFeatures);
+    }
+  };
 
   return (
     <Menu.Items className="absolute bg-white custom-shadow rounded-lg p-4 w-full max-h-[200px] overflow-y-auto">
@@ -61,12 +89,13 @@ const ModificationMenu = ({
             className="w-[20px] h-[20px]"
             name={name}
             value={checkbox}
-            checked={values?.advert?.[name].some(
-              (item) => item.name === checkbox
-            )}
-            onChange={() => console.log("HELO")}
+            {...(isEditMode && {
+              checked: values?.advert?.[name].some(
+                (item) => item.name === checkbox
+              ),
+              onChange: (e) => handleInputChange(e),
+            })}
           />
-          {console.log(checkbox)}
           {editedCheckboxIndex === index ? (
             <input
               type="text"

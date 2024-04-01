@@ -48,8 +48,6 @@ const ItemFeaturesStep3 = ({ isEditMode }) => {
   const { advert } = Object(values);
   const { modifications, features, conveniences, accessories } = Object(advert);
 
-  console.log(modificationCheckboxes);
-
   return (
     <>
       <BuildLayout heading="Items Features">
@@ -364,7 +362,7 @@ const ItemFeaturesStep3 = ({ isEditMode }) => {
                     <>
                       <p className="border-[#CECED7] text-[#8891B2] px-3 py-[13px] border-2 rounded-md  w-full text-left">
                         {isEditMode
-                          ? modifications.length > 0
+                          ? modifications?.length > 0
                             ? modifications.map((item) => item.name).join(", ")
                             : "Select Modifications"
                           : modificationCheckboxes
@@ -377,6 +375,7 @@ const ItemFeaturesStep3 = ({ isEditMode }) => {
                   }
                   children={
                     <ModificationMenu
+                      isEditMode={isEditMode}
                       menuLabel="Select Modification"
                       MenuFor={modificationCheckboxes}
                       dispatch={dispatch}
@@ -396,7 +395,7 @@ const ItemFeaturesStep3 = ({ isEditMode }) => {
                     <>
                       <p className="border-[#CECED7] text-[#8891B2] px-3 py-[13px] border-2 rounded-md  w-full text-left">
                         {isEditMode
-                          ? features.length > 0
+                          ? features?.length > 0
                             ? features.map((item) => item.name).join(", ")
                             : "Select Features"
                           : featuresCheckboxes
@@ -431,7 +430,7 @@ const ItemFeaturesStep3 = ({ isEditMode }) => {
                     <>
                       <p className="border-[#CECED7] text-[#8891B2] px-3 py-[13px] border-2 rounded-md  w-full text-left">
                         {isEditMode
-                          ? conveniences.length > 0
+                          ? conveniences?.length > 0
                             ? conveniences.map((item) => item.name).join(", ")
                             : "Select Conveniences"
                           : convenienceCheckboxes
@@ -463,7 +462,7 @@ const ItemFeaturesStep3 = ({ isEditMode }) => {
                     <>
                       <p className="border-[#CECED7] text-[#8891B2] px-3 py-[13px] border-2 rounded-md  w-full text-left">
                         {isEditMode
-                          ? accessories.length > 0
+                          ? accessories?.length > 0
                             ? accessories.map((item) => item.name).join(", ")
                             : "Select Accessories"
                           : accessoriesCheckboxes

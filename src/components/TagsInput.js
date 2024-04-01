@@ -3,12 +3,14 @@ import { FaTimes } from "react-icons/fa";
 import { AuthContext } from "../Context/AuthContext";
 import { useFormikContext } from "formik";
 
-export const TagsInput = ({ field, form }) => {
+export const TagsInput = ({ field, form, isEditMode }) => {
   const [tags, setTags] = useState([]);
   const { listingTags, dispatch } = useContext(AuthContext);
 
   const { values } = useFormikContext();
-  console.log(values.tags);
+  const { advert } = Object(values);
+
+  const { tags: oldTags } = Object(advert);
 
   useEffect(() => {
     // Set the tags array when the listingTags change
@@ -17,7 +19,10 @@ export const TagsInput = ({ field, form }) => {
 
   const handleTagInput = (e) => {
     const inputValue = e.target.value.trim();
-    form.setFieldValue(field.name, inputValue);
+    if (isEditMode) {
+      form.setFieldValue(`advert.tags`, inputValue);
+    }
+    // form.setFieldValue(field.name, inputValue);
   };
 
   const handleKeyDown = (e) => {
@@ -64,15 +69,25 @@ export const TagsInput = ({ field, form }) => {
         className="border-[#CECED7] mb-4 text-[#8891B2] border-2 rounded-md p-3 w-full"
       />
       <div className="flex items-center gap-5 flex-wrap">
-        {tags.map((tag, index) => (
-          <span
-            key={index}
-            className="tag bg-white flex items-center gap-2 justify-between w-max text-[#3B3B3B] border-[1px]  border-[#d6d6d6] rounded-lg py-2 px-3"
-          >
-            {tag}
-            <FaTimes onClick={() => handleTagRemoval(tag)} />
-          </span>
-        ))}
+        {isEditMode
+          ? oldTags?.map(({ name, id }) => (
+              <span
+                key={id}
+                className="tag bg-white flex items-center gap-2 justify-between w-max text-[#3B3B3B] border-[1px]  border-[#d6d6d6] rounded-lg py-2 px-3"
+              >
+                {name}
+                <FaTimes onClick={() => handleTagRemoval(name)} />
+              </span>
+            ))
+          : tags.map((tag, index) => (
+              <span
+                key={index}
+                className="tag bg-white flex items-center gap-2 justify-between w-max text-[#3B3B3B] border-[1px]  border-[#d6d6d6] rounded-lg py-2 px-3"
+              >
+                {tag}
+                <FaTimes onClick={() => handleTagRemoval(tag)} />
+              </span>
+            ))}
       </div>
     </div>
   );

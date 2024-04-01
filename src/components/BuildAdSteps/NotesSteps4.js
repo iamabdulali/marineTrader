@@ -1,15 +1,13 @@
 import React from "react";
 import BuildLayout from "./BuildLayout";
-import { ErrorMessage, Field, useFormikContext } from "formik";
+import { ErrorMessage, Field } from "formik";
 import { TagsInput } from "../TagsInput";
 
-const NotesSteps4 = () => {
-  const { values } = useFormikContext();
-  console.log(values?.tags);
+const NotesSteps4 = ({ isEditMode }) => {
   return (
     <>
       <BuildLayout heading="Notes">
-        <Field name="tags" component={TagsInput} />
+        <Field name="tags" component={TagsInput} isEditMode={isEditMode} />
         <Field
           name="description"
           children={({ field }) => (

@@ -351,14 +351,14 @@ const BuildAd = () => {
               : initialValuesJetSki
             : editValues
         }
-        validationSchema={validationSchema}
+        // validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
         {({ isValid, values, setErrors, setTouched, setFieldValue }) => (
           <Form>
             {step === 1 && <ItemDescriptionStep2 isEditMode={EditMode} />}
             {step === 2 && <ItemFeaturesStep3 isEditMode={EditMode} />}
-            {step === 3 && <NotesSteps4 />}
+            {step === 3 && <NotesSteps4 isEditMode={EditMode} />}
             {step === 4 && <GalleryStep5 />}
             {step === 5 && <PriceStep6 />}
             {/* Navigation buttons */}
