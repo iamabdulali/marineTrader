@@ -36,10 +36,10 @@ const BuildAd = () => {
   const [advertID, setAdvertID] = useState(null);
   const [hasSubscription, setHasSubscription] = useState(0);
   const [hasBundle, setHasBundle] = useState(0);
-  const [refresh, setRefresh] = useState(false);
-
   const [advert, setAdvert] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { selectedPackage, selectedCategory, dispatch } =
+    useContext(AuthContext);
 
   const pathArray = window.location.pathname.split("/");
   const id = pathArray[4];
@@ -51,22 +51,19 @@ const BuildAd = () => {
 
   const EditMode = IsEditMode();
 
-  // useEffect(() => {
-  //   if (EditMode) {
-  //     getOneAdvert(setAdvert, setLoading, id);
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (EditMode) {
+      getOneAdvert(setAdvert, setLoading, id, "advert");
+    }
+  }, []);
 
   useEffect(() => {
-    getOneAdvert(setAdvert, setLoading, advertID, "advert");
+    if (advertID) {
+      getOneAdvert(setAdvert, setLoading, advertID, "advert");
+    }
   }, [advertID]);
 
   const stepLabels = ["Description", "Features", "Notes", "Gallery", "Price"];
-
-  const { selectedPackage, selectedCategory, dispatch } =
-    useContext(AuthContext);
-
-  console.log(selectedPackage);
 
   let validationSchema;
 
@@ -78,30 +75,30 @@ const BuildAd = () => {
 
   const initialValuesJetSki = {
     category: selectedCategory?.id,
-    title: "ads",
-    sub_title: "asd",
-    type: "3",
-    make: "1",
-    model: "1",
-    year: "2022",
-    condition: "1",
-    color: "Red",
-    service_history: "Ok",
-    passenger: "2",
-    length: "3",
-    hours: "4",
-    trailers: "No",
-    modifications: ["OK"],
-    features: ["OK"],
-    conveniences: ["OK"],
-    accessories: ["OK"],
+    title: "",
+    sub_title: "",
+    type: "",
+    make: "",
+    model: "",
+    year: "",
+    condition: "",
+    color: "",
+    service_history: "",
+    passenger: "",
+    length: "",
+    hours: "",
+    trailers: "",
+    modifications: [],
+    features: [],
+    conveniences: [],
+    accessories: [],
     description: "",
-    tags: ["OK"],
+    tags: [],
     images: [],
     video: null,
-    price_type: "enterInfo",
-    currency: "dwd",
-    price: "dwa",
+    price_type: "",
+    currency: "",
+    price: "",
     facilities: [],
     advert_package: selectedPackage,
     category_spotlights_countries: [],
@@ -212,60 +209,60 @@ const BuildAd = () => {
   ];
 
   const prevStep = () => setStep(step - 1);
-  // const nextStep = () => setStep(step + 1);
+  const nextStep = () => setStep(step + 1);
   const [isPaymentOptionOpen, setIsPaymentOptionOpen] = useState(false);
   let [isVideoOpen, setIsVideoOpen] = useState(false);
 
-  const nextStep = (values, { setTouched, setErrors }) => {
-    try {
-      const fieldsToValidate = Object.keys(validationSchema.fields).filter(
-        (field) => {
-          if (step === 1) {
-            return selectedCategory?.name == "Boat Home"
-              ? bigBoatValidationArrayStep1.includes(field)
-              : smallBoatsValidationArrayStep1.includes(field);
-          } else if (step === 2) {
-            return selectedCategory?.name == "Boat Home"
-              ? bigBoatValidationArrayStep2.includes(field)
-              : smallBoatsValidationArrayStep2.includes(field);
-          } else if (step === 3) {
-            return ["description", "tags"].includes(field);
-          } else if (step === 4) {
-            return ["images"].includes(field);
-          } else if (step === 5) {
-            return ["currency", "price", "price_type"].includes(field);
-          }
-          return true; // Include all fields if not in a specific step
-        }
-      );
+  // const nextStep = (values, { setTouched, setErrors }) => {
+  //   try {
+  //     const fieldsToValidate = Object.keys(validationSchema.fields).filter(
+  //       (field) => {
+  //         if (step === 1) {
+  //           return selectedCategory?.name == "Boat Home"
+  //             ? bigBoatValidationArrayStep1.includes(field)
+  //             : smallBoatsValidationArrayStep1.includes(field);
+  //         } else if (step === 2) {
+  //           return selectedCategory?.name == "Boat Home"
+  //             ? bigBoatValidationArrayStep2.includes(field)
+  //             : smallBoatsValidationArrayStep2.includes(field);
+  //         } else if (step === 3) {
+  //           return ["description", "tags"].includes(field);
+  //         } else if (step === 4) {
+  //           return ["images"].includes(field);
+  //         } else if (step === 5) {
+  //           return ["currency", "price", "price_type"].includes(field);
+  //         }
+  //         return true; // Include all fields if not in a specific step
+  //       }
+  //     );
 
-      validationSchema.pick(fieldsToValidate).validateSync(values, {
-        abortEarly: false,
-      });
+  //     validationSchema.pick(fieldsToValidate).validateSync(values, {
+  //       abortEarly: false,
+  //     });
 
-      // Increment the step
-      setStep((prevStep) => prevStep + 1);
-    } catch (error) {
-      if (error.name === "ValidationError") {
-        console.error("Validation errors:", error.errors);
-        toast.error("Please Fill All the Required Fields");
-        const allFields = Object.keys(values);
-        const touchedState = allFields.reduce((acc, field) => {
-          acc[field] = true;
-          return acc;
-        }, {});
-        setTouched(touchedState);
+  //     // Increment the step
+  //     setStep((prevStep) => prevStep + 1);
+  //   } catch (error) {
+  //     if (error.name === "ValidationError") {
+  //       console.error("Validation errors:", error.errors);
+  //       toast.error("Please Fill All the Required Fields");
+  //       const allFields = Object.keys(values);
+  //       const touchedState = allFields.reduce((acc, field) => {
+  //         acc[field] = true;
+  //         return acc;
+  //       }, {});
+  //       setTouched(touchedState);
 
-        const errorState = error.errors.reduce((acc, error) => {
-          acc[error.path] = error.message;
-          return acc;
-        }, {});
-        setErrors(errorState);
-      } else {
-        console.error("Error:", error.message);
-      }
-    }
-  };
+  //       const errorState = error.errors.reduce((acc, error) => {
+  //         acc[error.path] = error.message;
+  //         return acc;
+  //       }, {});
+  //       setErrors(errorState);
+  //     } else {
+  //       console.error("Error:", error.message);
+  //     }
+  //   }
+  // };
 
   useEffect(() => {
     fetchOptions("bundle/advert/remains", setHasBundle);
@@ -323,15 +320,13 @@ const BuildAd = () => {
       countryCategorySpotlights,
     } = Object(advert);
 
-    console.log(advert);
-
     const hasAnyValue =
       continentCategorySpotlights?.length > 0 ||
       countryCategorySpotlights?.length > 0 ||
       continentHomeSpotlights?.length > 0 ||
       countryHomeSpotlights?.length > 0;
 
-    if (hasAnyValue) {
+    if (hasAnyValue && !EditMode) {
       NavigateTo(`/payment/advert/${advertID}`);
     }
   }, [advertID, advert, spinner]);
@@ -348,18 +343,21 @@ const BuildAd = () => {
         stepLabels={stepLabels}
       />
       <Formik
+        enableReinitialize={true}
         initialValues={
-          bigBoats.includes(selectedCategory?.name)
-            ? initialValuesBoatHome
-            : initialValuesJetSki
+          !EditMode
+            ? bigBoats.includes(selectedCategory?.name)
+              ? initialValuesBoatHome
+              : initialValuesJetSki
+            : editValues
         }
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
         {({ isValid, values, setErrors, setTouched, setFieldValue }) => (
           <Form>
-            {step === 1 && <ItemDescriptionStep2 />}
-            {step === 2 && <ItemFeaturesStep3 />}
+            {step === 1 && <ItemDescriptionStep2 isEditMode={EditMode} />}
+            {step === 2 && <ItemFeaturesStep3 isEditMode={EditMode} />}
             {step === 3 && <NotesSteps4 />}
             {step === 4 && <GalleryStep5 />}
             {step === 5 && <PriceStep6 />}

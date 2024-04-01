@@ -1,5 +1,5 @@
 import { Menu } from "@headlessui/react";
-import { Field } from "formik";
+import { Field, useFormikContext } from "formik";
 import React, { useEffect, useState } from "react";
 import { FaPlus } from "react-icons/fa";
 
@@ -10,6 +10,7 @@ const ModificationMenu = ({
   actionType,
   name,
 }) => {
+  const { values } = useFormikContext();
   const [newCheckboxText, setNewCheckboxText] = useState(menuLabel);
   const [editedCheckboxIndex, setEditedCheckboxIndex] = useState(null);
 
@@ -41,6 +42,9 @@ const ModificationMenu = ({
     setEditedCheckboxIndex(null);
   };
 
+  console.log(name);
+  console.log(values?.advert?.[name]);
+
   return (
     <Menu.Items className="absolute bg-white custom-shadow rounded-lg p-4 w-full max-h-[200px] overflow-y-auto">
       {MenuFor.map((checkbox, index) => (
@@ -57,7 +61,12 @@ const ModificationMenu = ({
             className="w-[20px] h-[20px]"
             name={name}
             value={checkbox}
+            checked={values?.advert?.[name].some(
+              (item) => item.name === checkbox
+            )}
+            onChange={() => console.log("HELO")}
           />
+          {console.log(checkbox)}
           {editedCheckboxIndex === index ? (
             <input
               type="text"

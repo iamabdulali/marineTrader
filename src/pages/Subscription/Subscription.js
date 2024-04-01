@@ -101,44 +101,47 @@ const Subscription = () => {
             categories={categories}
           />
         </div>
-        {subscription.length == 0 ? (
-          <div>You don't have any subscriptions at the moment</div>
+        {subscription.length == 0 && hasSubscription ? (
+          <p className=" font-medium mt-6">
+            You don't have any subscriptions at the moment
+          </p>
         ) : (
-          <>
-            {hasSubscription ? (
-              <div>
-                {subscription.map(
-                  (
-                    { subscription_plan, end_date, id, subscription_plan_id },
-                    index
-                  ) => {
-                    const { category_id, name } = subscription_plan;
-                    return (
-                      <div key={index}>
-                        <p className="font-semibold text-[#11133D] my-5">
-                          Subscription For {categoriesList[category_id]}
-                        </p>
-                        <CurrentSubscription
-                          packageName={name}
-                          categoryId={category_id}
-                          category={categoriesList[category_id]}
-                          isStandard={false}
-                          featuresArray={featuresObject[name] || ServicePlus}
-                          expiry_date={end_date}
-                          id={id}
-                          subscription_plan_id={subscription_plan_id}
-                          setHasSubscription={setHasSubscription}
-                        />
-                      </div>
-                    );
-                  }
-                )}
-              </div>
-            ) : (
-              <SubscriptionStep2 selectedCategory={selectedCategory?.name} />
-            )}
-          </>
+          ""
         )}
+        <>
+          {hasSubscription ? (
+            <div>
+              {subscription.map(
+                (
+                  { subscription_plan, end_date, id, subscription_plan_id },
+                  index
+                ) => {
+                  const { category_id, name } = subscription_plan;
+                  return (
+                    <div key={index}>
+                      <p className="font-semibold text-[#11133D] my-5">
+                        Subscription For {categoriesList[category_id]}
+                      </p>
+                      <CurrentSubscription
+                        packageName={name}
+                        categoryId={category_id}
+                        category={categoriesList[category_id]}
+                        isStandard={false}
+                        featuresArray={featuresObject[name] || ServicePlus}
+                        expiry_date={end_date}
+                        id={id}
+                        subscription_plan_id={subscription_plan_id}
+                        setHasSubscription={setHasSubscription}
+                      />
+                    </div>
+                  );
+                }
+              )}
+            </div>
+          ) : (
+            <SubscriptionStep2 selectedCategory={selectedCategory?.name} />
+          )}
+        </>
       </LoadingWrapper>
       <VideoBtn onClick={() => openModal(setIsVideoOpen)} />
       <Modal

@@ -12,8 +12,8 @@ import Tabs from "../Tabs.js";
 import MachinaryForm from "./AdComponents/MachinaryForm.js";
 import { bigBoats } from "../../index.js";
 
-const ItemFeaturesStep3 = () => {
-  const { values } = useFormikContext();
+const ItemFeaturesStep3 = ({ isEditMode }) => {
+  const { values, setFieldValue } = useFormikContext();
   const [showBorder, setShowBorders] = useState(false);
   const [refresh, setRefresh] = useState(false);
   const [showEngine, setShowEngine] = useState(true);
@@ -45,7 +45,11 @@ const ItemFeaturesStep3 = () => {
     selectedCategory,
   } = useContext(AuthContext);
 
-  console.log(values);
+  const { advert } = Object(values);
+  const { modifications, features, conveniences, accessories } = Object(advert);
+
+  console.log(modificationCheckboxes);
+
   return (
     <>
       <BuildLayout heading="Items Features">
@@ -359,11 +363,15 @@ const ItemFeaturesStep3 = () => {
                   buttonToOpenMenu={
                     <>
                       <p className="border-[#CECED7] text-[#8891B2] px-3 py-[13px] border-2 rounded-md  w-full text-left">
-                        {modificationCheckboxes
-                          .filter((modification) =>
-                            values?.modifications.includes(modification)
-                          )
-                          .join(", ") || "Select Modifications"}
+                        {isEditMode
+                          ? modifications.length > 0
+                            ? modifications.map((item) => item.name).join(", ")
+                            : "Select Modifications"
+                          : modificationCheckboxes
+                              .filter((modification) =>
+                                values?.modifications.includes(modification)
+                              )
+                              .join(", ") || "Select Modifications"}
                       </p>
                     </>
                   }
@@ -387,11 +395,15 @@ const ItemFeaturesStep3 = () => {
                   buttonToOpenMenu={
                     <>
                       <p className="border-[#CECED7] text-[#8891B2] px-3 py-[13px] border-2 rounded-md  w-full text-left">
-                        {featuresCheckboxes
-                          .filter((features) =>
-                            values?.features.includes(features)
-                          )
-                          .join(", ") || "Select Features"}
+                        {isEditMode
+                          ? features.length > 0
+                            ? features.map((item) => item.name).join(", ")
+                            : "Select Features"
+                          : featuresCheckboxes
+                              .filter((features) =>
+                                values?.features.includes(features)
+                              )
+                              .join(", ") || "Select Features"}
                       </p>
                     </>
                   }
@@ -418,11 +430,15 @@ const ItemFeaturesStep3 = () => {
                   buttonToOpenMenu={
                     <>
                       <p className="border-[#CECED7] text-[#8891B2] px-3 py-[13px] border-2 rounded-md  w-full text-left">
-                        {convenienceCheckboxes
-                          .filter((conveniences) =>
-                            values?.conveniences.includes(conveniences)
-                          )
-                          .join(", ") || "Select Conveniences"}
+                        {isEditMode
+                          ? conveniences.length > 0
+                            ? conveniences.map((item) => item.name).join(", ")
+                            : "Select Conveniences"
+                          : convenienceCheckboxes
+                              .filter((conveniences) =>
+                                values?.conveniences.includes(conveniences)
+                              )
+                              .join(", ") || "Select Conveniences"}
                       </p>
                     </>
                   }
@@ -446,11 +462,15 @@ const ItemFeaturesStep3 = () => {
                   buttonToOpenMenu={
                     <>
                       <p className="border-[#CECED7] text-[#8891B2] px-3 py-[13px] border-2 rounded-md  w-full text-left">
-                        {accessoriesCheckboxes
-                          .filter((accessories) =>
-                            values?.accessories.includes(accessories)
-                          )
-                          .join(", ") || "Select Accessories"}
+                        {isEditMode
+                          ? accessories.length > 0
+                            ? accessories.map((item) => item.name).join(", ")
+                            : "Select Accessories"
+                          : accessoriesCheckboxes
+                              .filter((accessories) =>
+                                values?.accessories.includes(accessories)
+                              )
+                              .join(", ") || "Select Accessories"}
                       </p>
                     </>
                   }

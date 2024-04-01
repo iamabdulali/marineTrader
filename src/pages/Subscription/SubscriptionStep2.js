@@ -63,6 +63,7 @@ const SubscriptionStep2 = () => {
     toast.error("You are already subscribed to the highest package");
   }
 
+  console.log(subscriptionsPlan);
   const featuresArray = [DealerPlus, ServicePlus];
 
   return (
