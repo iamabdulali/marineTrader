@@ -32,7 +32,7 @@ const Subscription = () => {
   const { seller_type } = Object(user);
 
   useEffect(() => {
-    fetchOptions("subscriptions", setSubscriptions);
+    fetchOptions("subscriptions", setSubscriptions, setLoading);
   }, []);
 
   const isPrivateSeller = seller_type == "private seller";
