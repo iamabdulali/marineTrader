@@ -26,7 +26,7 @@ export default function Dashboard() {
   const [showNotification, setShowNotification] = useState(true);
 
   useEffect(() => {
-    fetchOptions("notification", setNotifications, setLoading(false));
+    fetchOptions("notification", setNotifications, setLoading);
   }, []);
 
   const latestNotification = notifications[notifications.length - 1];
@@ -50,6 +50,14 @@ export default function Dashboard() {
     });
   };
 
+  // useEffect(() => {
+  //   if (user) {
+  //     setLoading(false);
+  //   } else {
+  //     setLoading(true);
+  //   }
+  // }, [user]);
+
   return (
     <>
       <Layout>
@@ -69,14 +77,18 @@ export default function Dashboard() {
             linkClass="underline font-bold text-[#0D1A8B]"
           /> */}
           {showNotification ? (
-            <PackageMessage
-              className="bg-white flex items-center justify-between p-4 rounded-xl font-medium shadow-[3px]"
-              image={packageIcon}
-              content={latestNotification?.body || <Skeleton width={200} />}
-              icon={<FaTimes color="#fff" />}
-              loading={loading}
-              onClick={() => setShowNotification(false)}
-            />
+            notifications.length != 0 ? (
+              <PackageMessage
+                className="bg-white flex items-center justify-between p-4 rounded-xl font-medium shadow-[3px]"
+                image={packageIcon}
+                content={latestNotification?.body || <Skeleton width={200} />}
+                icon={<FaTimes color="#fff" />}
+                loading={loading}
+                onClick={() => setShowNotification(false)}
+              />
+            ) : (
+              ""
+            )
           ) : (
             ""
           )}

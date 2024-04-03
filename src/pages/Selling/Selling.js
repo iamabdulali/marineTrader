@@ -108,15 +108,6 @@ export default function Selling() {
               <AdSubscription />
             </div>
           )}
-          <VideoBtn onClick={() => openModal(setIsVideoOpen)} />
-          <Modal
-            isOpen={isVideoOpen}
-            onClose={() => closeModal(setIsVideoOpen)}
-            opacity="bg-opacity-40"
-            width="xl:w-6/12 sm:w-10/12 w-full"
-          >
-            <VideoModal />
-          </Modal>
         </LoadingWrapper>
       </Layout>
       {/* <BuildAd /> */}

@@ -32,7 +32,7 @@ const Subscription = () => {
   const { seller_type } = Object(user);
 
   useEffect(() => {
-    fetchOptions("subscriptions", setSubscriptions, setLoading);
+    fetchOptions("subscriptions", setSubscriptions);
   }, []);
 
   const isPrivateSeller = seller_type == "private seller";
@@ -143,15 +143,6 @@ const Subscription = () => {
           )}
         </>
       </LoadingWrapper>
-      <VideoBtn onClick={() => openModal(setIsVideoOpen)} />
-      <Modal
-        isOpen={isVideoOpen}
-        onClose={() => closeModal(setIsVideoOpen)}
-        opacity="bg-opacity-40"
-        width="xl:w-6/12 sm:w-10/12 w-full"
-      >
-        <VideoModal />
-      </Modal>
     </Layout>
   );
 };

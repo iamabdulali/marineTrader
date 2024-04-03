@@ -5,9 +5,8 @@ import { AuthContext } from "../../../Context/AuthContext";
 import { fetchOptions } from "../../../utils/fetch/fetchData";
 import { Field, useFormikContext } from "formik";
 import LoadingWrapper from "../../../utils/LoadingWrapper";
-import { ref } from "yup";
 
-const Step1 = ({ showSpotlightSelection, spotlightFor }) => {
+const Step1 = ({ showSpotlightSelection, spotlightFor, isEditMode }) => {
   const { bundleName } = useContext(AuthContext);
 
   const [selectedCountries, setSelectedCountries] = useState([]);
@@ -17,35 +16,29 @@ const Step1 = ({ showSpotlightSelection, spotlightFor }) => {
   const [totalCount, setTotalCount] = useState(0);
 
   const { values, setFieldValue } = useFormikContext();
+  const { advert } = Object(values);
 
   useEffect(() => {
     fetchOptions("countries", setSelectedCountries, setLoading);
     fetchOptions("continents", setSelectedContinents, setLoading);
   }, []);
 
+  function generateUniqueId(maxId) {
+    return maxId + 1;
+  }
+
   const handleInputChange = (e) => {
     const { name, value, checked } = e.target;
 
+    const valueToModify = values?.advert?.[name];
+
     if (
-      name === `${spotlightFor}_spotlights_countries` ||
-      name === `${spotlightFor}_spotlights_continents`
+      name === `country${spotlightFor}Spotlights` ||
+      name === `continent${spotlightFor}Spotlights`
     ) {
       if (checked) {
-        // Uncheck all countries if a continent is selected
-        if (name === `${spotlightFor}_spotlights_continents`) {
-          setFieldValue(`${spotlightFor}_spotlights_countries`, []);
-          setRefresh(true);
-        }
-        // Uncheck all continents if a country is selected
-        else if (name === `${spotlightFor}_spotlights_countries`) {
-          setFieldValue(`${spotlightFor}_spotlights_continents`, []);
-          setRefresh(false);
-        }
-        // Add the value to the respective array
-        setFieldValue(name, [...values[name], value]);
-        // Update the total count if the value is valid
         const selectedType =
-          name === `${spotlightFor}_spotlights_countries`
+          name === `country${spotlightFor}Spotlights`
             ? selectedCountries
             : selectedContinents;
         const spotlightPrice = Number(
@@ -55,15 +48,38 @@ const Step1 = ({ showSpotlightSelection, spotlightFor }) => {
         if (!isNaN(spotlightPrice)) {
           setTotalCount((prevTotalCount) => prevTotalCount + spotlightPrice);
         }
+
+        if (isEditMode) {
+          const id = valueToModify.reduce(
+            (max, item) => Math.max(max, item.id),
+            0
+          );
+
+          const updatedFeatures = [
+            ...valueToModify,
+            {
+              id: generateUniqueId(id),
+              country_id: value,
+              advert_id: advert?.id,
+              created_at: new Date().toISOString(),
+              updated_at: new Date().toISOString(),
+            },
+          ];
+
+          setFieldValue(`advert.${name}`, updatedFeatures);
+        } else {
+          if (name === `continent${spotlightFor}Spotlights`) {
+            setFieldValue(`country${spotlightFor}Spotlights`, []);
+            setRefresh(true);
+          } else if (name === `country${spotlightFor}Spotlights`) {
+            setFieldValue(`continent${spotlightFor}Spotlights`, []);
+            setRefresh(false);
+          }
+          setFieldValue(name, [...values[name], value]);
+        }
       } else {
-        // Remove the value from the respective array
-        setFieldValue(
-          name,
-          values[name].filter((item) => item !== value)
-        );
-        // Update the total count if the value is valid
         const selectedType =
-          name === `${spotlightFor}_spotlights_countries`
+          name === `country${spotlightFor}Spotlights`
             ? selectedCountries
             : selectedContinents;
         const spotlightPrice = Number(
@@ -72,20 +88,40 @@ const Step1 = ({ showSpotlightSelection, spotlightFor }) => {
         if (!isNaN(spotlightPrice)) {
           setTotalCount((prevTotalCount) => prevTotalCount - spotlightPrice);
         }
+        if (isEditMode) {
+          if (name === `country${spotlightFor}Spotlights`) {
+            const updatedFeatures = valueToModify.filter(
+              (item) => item.country_id !== value
+            );
+            setFieldValue(`advert.${name}`, updatedFeatures);
+          } else {
+            const updatedFeatures = valueToModify.filter(
+              (item) => item.continent_id !== value
+            );
+            setFieldValue(`advert.${name}`, updatedFeatures);
+          }
+        } else {
+          setFieldValue(
+            name,
+            values[name].filter((item) => item !== value)
+          );
+        }
       }
     } else {
       setFieldValue(name, value);
     }
   };
 
+  console.log(advert);
+
   const renderSelectedCountriesTable = (tableFor, ArrayFor) => {
     const selectedCountriesArray =
-      values[`${spotlightFor}_spotlights_${tableFor}`];
+      values[`${tableFor}${spotlightFor}Spotlights`];
 
     const handleRemove = (country) => {
       setFieldValue(
-        `${spotlightFor}_spotlights_${tableFor}`,
-        values[`${spotlightFor}_spotlights_${tableFor}`].filter(
+        `${tableFor}${spotlightFor}Spotlights`,
+        values[`${tableFor}${spotlightFor}Spotlights`].filter(
           (item) => item != country - 1
         )
       );
@@ -94,7 +130,7 @@ const Step1 = ({ showSpotlightSelection, spotlightFor }) => {
       );
     };
 
-    if (selectedCountriesArray.length === 0) {
+    if (selectedCountriesArray?.length === 0) {
       return <p className="px-8">No {tableFor} selected.</p>;
     }
 
@@ -113,37 +149,50 @@ const Step1 = ({ showSpotlightSelection, spotlightFor }) => {
             </tr>
           </thead>
           <tbody>
-            {values[`${spotlightFor}_spotlights_${tableFor}`]?.map(
-              (country) => {
-                console.log(country);
-                return (
-                  <tr
-                    key={ArrayFor[country - 1]?.name}
-                    className=" text-[#11133D]"
-                  >
-                    <td className="py-2 px-4 font-semibold">
-                      {ArrayFor[country - 1]?.name}
-                    </td>
-                    <td className="py-2 px-4 font-semibold">
-                      £{ArrayFor[country - 1]?.spotlight_price}
-                    </td>
-                    <td className="py-2 px-4 font-semibold">
-                      <button
-                        className=" text-[#FC4040] flex items-center gap-3 px-3 py-1 rounded"
-                        onClick={() => handleRemove(ArrayFor[country]?.id)}
-                      >
-                        <FaTrash /> Remove
-                      </button>
-                    </td>
-                  </tr>
-                );
-              }
-            )}
+            {values[`${tableFor}${spotlightFor}Spotlights`]?.map((country) => {
+              console.log(country);
+              return (
+                <tr
+                  key={ArrayFor[country - 1]?.name}
+                  className=" text-[#11133D]"
+                >
+                  <td className="py-2 px-4 font-semibold">
+                    {ArrayFor[country - 1]?.name}
+                  </td>
+                  <td className="py-2 px-4 font-semibold">
+                    £{ArrayFor[country - 1]?.spotlight_price}
+                  </td>
+                  <td className="py-2 px-4 font-semibold">
+                    <button
+                      className=" text-[#FC4040] flex items-center gap-3 px-3 py-1 rounded"
+                      onClick={() => handleRemove(ArrayFor[country]?.id)}
+                    >
+                      <FaTrash /> Remove
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
     );
   };
+
+  useEffect(() => {
+    if (isEditMode) {
+      const lengthOfCountryArray =
+        advert[`country${spotlightFor}Spotlights`]?.length;
+
+      const lengthOfContinentArray =
+        advert[`continent${spotlightFor}Spotlights`]?.length;
+
+      const totalSpotlights = lengthOfContinentArray + lengthOfCountryArray;
+      setTotalCount(
+        lengthOfCountryArray * 6.99 + lengthOfContinentArray * 89.99
+      );
+    }
+  });
 
   return (
     <>
@@ -151,8 +200,8 @@ const Step1 = ({ showSpotlightSelection, spotlightFor }) => {
         {showSpotlightSelection ? (
           <>
             {refresh
-              ? renderSelectedCountriesTable("continents", selectedContinents)
-              : renderSelectedCountriesTable("countries", selectedCountries)}
+              ? renderSelectedCountriesTable("continent", selectedContinents)
+              : renderSelectedCountriesTable("country", selectedCountries)}
           </>
         ) : (
           <div className="py-5">
@@ -177,8 +226,13 @@ const Step1 = ({ showSpotlightSelection, spotlightFor }) => {
                         <Field
                           className="min-w-[20px] min-h-[20px] text-blue-600 bg-gray-100 border-gray-300 rounded mr-3"
                           type="checkbox"
-                          name={`${spotlightFor}_spotlights_countries`}
+                          name={`country${spotlightFor}Spotlights`}
                           value={`${id}`}
+                          {...(isEditMode && {
+                            checked: advert[
+                              `country${spotlightFor}Spotlights`
+                            ].some((item) => item.country_id == id),
+                          })}
                           onChange={(e) => handleInputChange(e)}
                         />
                         {name} (+ {spotlight_price})
@@ -199,9 +253,14 @@ const Step1 = ({ showSpotlightSelection, spotlightFor }) => {
                         <Field
                           className="min-w-[20px] min-h-[20px] text-blue-600 bg-gray-100 border-gray-300 rounded mr-3"
                           type="checkbox"
-                          name={`${spotlightFor}_spotlights_continents`}
+                          name={`continent${spotlightFor}Spotlights`}
                           value={`${id}`}
                           onChange={(e) => handleInputChange(e)}
+                          {...(isEditMode && {
+                            checked: advert[
+                              `continent${spotlightFor}Spotlights`
+                            ].some((item) => item.continent_id == id),
+                          })}
                         />
                         {name} (+ £{spotlight_price})
                       </label>

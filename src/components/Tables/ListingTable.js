@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FiSearch, FiEye, FiMoreVertical } from "react-icons/fi";
 import SortDropdown from "../SortDropdown";
 import { Link } from "react-router-dom";
@@ -15,6 +15,8 @@ import { FaCheck, FaDollarSign, FaTimes } from "react-icons/fa";
 import { SERVER_BASE_URL, categoriesList } from "../..";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { getPackages } from "../../utils/fetch/fetchData";
+import { AuthContext } from "../../Context/AuthContext";
 
 const ListingTable = ({
   hasSort,
@@ -36,6 +38,12 @@ const ListingTable = ({
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [counterOfferId, setCounterOfferId] = useState(null);
   const [deleteAdvertId, setDeleteAdvertId] = useState(null);
+  const [packages, setPackages] = useState([]);
+
+  const { user } = useContext(AuthContext);
+
+  const { seller_type } = Object(user);
+
   // Callback function to update isDeleteModalOpen state
   const handleDeleteModalOpen = (isOpen) => {
     setIsDeleteModalOpen(isOpen);
@@ -61,6 +69,17 @@ const ListingTable = ({
       toast.success(error.response.data.message);
     }
   };
+
+  useEffect(() => {
+    getPackages(setPackages, seller_type);
+  }, [user]);
+
+  function getPackageName(advert_package_id) {
+    const filteredPackages = packages
+      ? packages.filter((ad) => ad?.id == advert_package_id)
+      : [];
+    return filteredPackages[0]?.name;
+  }
 
   return (
     <>
@@ -176,6 +195,7 @@ const ListingTable = ({
                     expire_date,
                     view,
                     spotlight_status,
+                    advert_package_id,
                   }) => (
                     <tr
                       key={id}
@@ -191,13 +211,29 @@ const ListingTable = ({
                             />
                           </Link>
                           <div>
-                            <p className="text-[#11133D] font-semibold text-base mb-1">
+                            <p className="text-[#11133D] capitalize font-semibold text-base mb-1">
                               {/* {category.name} */}
                               {title}
                             </p>
                             <p>
                               {currency.symbol}
                               {price}
+                            </p>
+
+                            <p
+                              className={`text-sm mt-1 ${
+                                getPackageName(advert_package_id) == "Standard"
+                                  ? "text-[#36B37E]"
+                                  : getPackageName(advert_package_id) ==
+                                    "Premium"
+                                  ? "text-[#E6AB13]"
+                                  : getPackageName(advert_package_id) ==
+                                    "Featured"
+                                  ? "text-[#00CFCF]"
+                                  : "text-[#1565D8]"
+                              } font-semibold `}
+                            >
+                              {getPackageName(advert_package_id)}
                             </p>
                           </div>
                         </div>
@@ -243,9 +279,11 @@ const ListingTable = ({
                             {advert_status == "draft" ||
                             spotlight_status == "draft"
                               ? "Pay Now"
-                              : advert_status == "paid"
+                              : advert_status == "paid" &&
+                                advert_package_id != "3" &&
+                                advert_package_id != "6"
                               ? "Upgrade"
-                              : ""}
+                              : "Maxed"}
                           </Link>
                         </div>
                       </td>
@@ -292,7 +330,7 @@ const ListingTable = ({
                         <img
                           src={images[0]?.image}
                           alt="Item"
-                          className="sm:w-4/12 smallLg:max-h-[auto] max-h-[250px]  w-full object-cover rounded-lg sm:mr-2 mb-4"
+                          className=" smallLg:max-h-[auto] max-h-[250px]  w-full object-cover rounded-lg sm:mr-2 mb-4"
                         />
                       </Link>
                       <div className="sm:w-8/12 w-full">

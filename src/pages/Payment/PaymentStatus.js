@@ -1,12 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { error, success } from "../../assets";
 import Layout from "../../components/Layout/Layout";
 import { FaArrowLeft } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const PaymentStatus = ({ successStatus, paymentType }) => {
   const pathArray = window.location.pathname.split("/");
   const id = pathArray[2];
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setTimeout(() => {
+      navigate("/dashboard");
+    }, 5000);
+  }, []);
+
   return (
     <Layout>
       <div className="absolute -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2 w-full mx-auto">

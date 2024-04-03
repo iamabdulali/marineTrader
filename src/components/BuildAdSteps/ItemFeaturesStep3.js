@@ -413,6 +413,7 @@ const ItemFeaturesStep3 = ({ isEditMode }) => {
                       dispatch={dispatch}
                       actionType="UPDATE_FEATURES"
                       name="features"
+                      isEditMode={isEditMode}
                     />
                   }
                 />
@@ -448,6 +449,7 @@ const ItemFeaturesStep3 = ({ isEditMode }) => {
                       dispatch={dispatch}
                       actionType="UPDATE_CONVENIENCE"
                       name="conveniences"
+                      isEditMode={isEditMode}
                     />
                   }
                 />
@@ -480,6 +482,7 @@ const ItemFeaturesStep3 = ({ isEditMode }) => {
                       dispatch={dispatch}
                       actionType="UPDATE_ACCESSORIES"
                       name="accessories"
+                      isEditMode={isEditMode}
                     />
                   }
                 />

@@ -20,6 +20,7 @@ import { convertTimestampToMonthYear } from "../../utils/TimeStampConverter";
 import { AuthContext } from "../../Context/AuthContext";
 import { makeOfferValidationSchema } from "../../utils/ValidationSchema";
 import { toast } from "react-toastify";
+import { Tooltip } from "react-tooltip";
 
 const MakeOfferSection = ({ advert }) => {
   const [spinner, setSpinner] = useState(false);
@@ -27,7 +28,7 @@ const MakeOfferSection = ({ advert }) => {
   const [showFacilities, setShowFacilities] = useState(true);
 
   const { currency_id, advert_package_id, user, id } = Object(advert);
-  const { image_field, created_at, name, seller_type, facilities } =
+  const { image_field, created_at, name, seller_type, facilities, user_name } =
     Object(user);
 
   const isPrivateSeller = seller_type == "private seller";
@@ -74,19 +75,27 @@ const MakeOfferSection = ({ advert }) => {
             Dealer Plus Member
           </p>
           <div className="flex items-center sm:gap-5 gap-4">
-            <FaHandHoldingUsd size={24} />
-            <CiDeliveryTruck size={30} fill="#696E9D" />
-            <BiDroplet size={20} />
-            <FaTools size={20} />
+            <FaHandHoldingUsd data-tooltip-id={"my-tooltip-5"} size={24} />
+            <CiDeliveryTruck
+              data-tooltip-id={"my-tooltip-6"}
+              size={30}
+              fill="#696E9D"
+            />
+            <BiDroplet data-tooltip-id={"my-tooltip-7"} size={20} />
+            <FaTools data-tooltip-id={"my-tooltip-8"} size={20} />
           </div>
         </div>
+        <Tooltip id="my-tooltip-5" place="bottom" content="Pay Now" />
+        <Tooltip id="my-tooltip-6" place="bottom" content="Delivery" />
+        <Tooltip id="my-tooltip-7" place="bottom" content="Droplet" />
+        <Tooltip id="my-tooltip-8" place="bottom" content="Tools" />
         <div className="flex gap-4 items-center sm:px-7 py-6 px-4">
           <img
             src={image_field || userProfile}
             className="rounded-full w-20 h-20 object-cover"
           />
           <div>
-            <p className="text-[#11133D] font-semibold">{name}</p>
+            <p className="text-[#11133D] font-semibold">{user_name}</p>
             <p className="text-sm text-[#696E9D]">
               Member Since {convertTimestampToMonthYear(created_at)}
             </p>

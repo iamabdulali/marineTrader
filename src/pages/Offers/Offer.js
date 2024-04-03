@@ -14,7 +14,6 @@ export default function Offer() {
   useEffect(() => {
     fetchOffers(setOffers, setLoading);
   }, [refresh]);
-  console.log("HELo");
   return (
     <>
       <Layout>

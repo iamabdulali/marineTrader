@@ -10,14 +10,18 @@ export const getAdvert = async (setData, setLoading) => {
       },
     });
     setData(data.data);
-    setLoading(false);
   } catch (error) {
     console.log(error);
-    setLoading(true);
+  } finally {
+    if (setLoading) {
+      setLoading(false);
+    } else {
+      console.error("setLoading function is not defined.");
+    }
   }
 };
 
-export const getOneAdvert = async (setData, setLoading, id, url) => {
+export const getOneAdvert = async (setData, id, url, setLoading) => {
   try {
     const { data } = await axios.get(`${SERVER_BASE_URL}/${url}/${id}`, {
       headers: {
@@ -25,10 +29,14 @@ export const getOneAdvert = async (setData, setLoading, id, url) => {
       },
     });
     setData(data.data);
-    setLoading(false);
   } catch (error) {
     console.log(error);
-    setLoading(true);
+  } finally {
+    if (setLoading) {
+      setLoading(false);
+    } else {
+      console.error("setLoading function is not defined.");
+    }
   }
 };
 
@@ -40,11 +48,14 @@ export const fetchOptions = async (url, setData, setLoading) => {
       },
     });
     setData(data.data);
-    if (setLoading) {
-      setLoading(false);
-    }
   } catch (error) {
     console.log(error);
+  } finally {
+    if (setLoading) {
+      setLoading(false);
+    } else {
+      console.error("setLoading function is not defined.");
+    }
   }
 };
 
@@ -57,9 +68,14 @@ export const fetchOffers = async (setData, setLoading) => {
     });
     setData(data.data);
     console.log(data.data);
-    setLoading(false);
   } catch (error) {
     console.log(error);
+  } finally {
+    if (setLoading) {
+      setLoading(false);
+    } else {
+      console.error("setLoading function is not defined.");
+    }
   }
 };
 
@@ -85,12 +101,20 @@ export const getPackages = async (setPackages, seller_type, setLoading) => {
     const { data } = await axios.get(
       `${SERVER_BASE_URL}/advert-packages?advert_for=${seller_type}`
     );
-    setLoading(false);
+
     setPackages(data.data);
   } catch (error) {
     console.error("An unexpected error occurred:", error);
-    const { errors } = error.response.data;
-    displayErrorMessages(errors);
-    setLoading(true);
+    if (error.response && error.response.data && error.response.data.errors) {
+      displayErrorMessages(error.response.data.errors);
+    } else {
+      console.error("Error response structure is unexpected:", error.response);
+    }
+  } finally {
+    if (setLoading) {
+      setLoading(false);
+    } else {
+      console.error("setLoading function is not defined.");
+    }
   }
 };

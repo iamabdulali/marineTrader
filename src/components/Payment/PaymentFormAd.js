@@ -57,20 +57,28 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
   const isBundlePayment = pathArray.includes("bundle");
 
   useEffect(() => {
-    getOneAdvert(setAdvert, setLoading, id, "advert");
+    getOneAdvert(setAdvert, id, "advert", setLoading);
     getPackages(setPackages, seller_type, setLoading);
     fetchOptions("bundles", setBundles, setLoading);
-
-    // setLoading(false);
   }, [user]);
 
   useEffect(() => {
-    fetchOptions("bundle/advert/remains", setHasBundle);
+    fetchOptions("bundle/advert/remains", setHasBundle, setLoading);
     fetchOptions(
       `subscription/advert/remains/${selectedCategory?.id}`,
-      setHasSubscription
+      setHasSubscription,
+      setLoading
     );
   }, [id]);
+
+  // useEffect(() => {
+  //   if (packages?.length != 0 && bundles?.length != 0 && advert?.length != 0) {
+  //     console.log("fetched");
+  //     setLoading(false);
+  //   } else {
+  //     setLoading(true);
+  //   }
+  // }, [packages, bundles, advert]);
 
   const {
     currency_id,

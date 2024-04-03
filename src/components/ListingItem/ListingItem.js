@@ -66,9 +66,9 @@ const ListingItem = ({ itemData }) => {
         to={`/itemDetails/${id}`}
         className={`${
           advert_package_id == "3"
-            ? "bg-[#FEF9EE] border-4 mt-11 border-[#FFB800]"
+            ? "bg-[#FEF9EE] border-4  border-[#FFB800]"
             : "bg-[#F9FBFE]"
-        } rounded-lg sm:px-5 sm:py-5 p-4 block`}
+        } rounded-lg sm:px-5 sm:py-5 p-4 block mt-11`}
       >
         <div className={`flex md:flex-row flex-col gap-5 `}>
           <div className="lg:w-2/12 md:w-4/12 w-full relative">
@@ -120,9 +120,9 @@ const ListingItem = ({ itemData }) => {
             </div>
 
             {/* Item Description */}
-            <p className="text-[#696E9D] lg:w-9/12 lg:mt-0 mt-5 w-full md:text-base text-sm">
+            {/* <p className="text-[#696E9D] lg:w-9/12 lg:mt-0 mt-5 w-full md:text-base text-sm">
               {description}
-            </p>
+            </p> */}
 
             {/* List of Features */}
             <div className="flex mt-6 gap-5 w-full lg:flex-nowrap flex-wrap">
@@ -189,10 +189,10 @@ const ListingItem = ({ itemData }) => {
         </div>
         <div
           className={`flex justify-between sm:items-center mt-8 sm:flex-row flex-col ${
-            advert_package_id == "2" ? "border-t-2 pt-6 pb-3" : ""
+            advert_package_id == "3" ? "border-t-2 pt-6 pb-3" : ""
           }`}
         >
-          {advert_package_id == "2" ? (
+          {advert_package_id == "3" ? (
             <div className="flex gap-8">
               <img
                 src={logo}

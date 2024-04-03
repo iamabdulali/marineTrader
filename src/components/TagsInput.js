@@ -7,10 +7,8 @@ export const TagsInput = ({ field, form, isEditMode }) => {
   const [tags, setTags] = useState([]);
   const { listingTags, dispatch } = useContext(AuthContext);
 
-  const { values } = useFormikContext();
+  const { values, setFieldValue } = useFormikContext();
   const { advert } = Object(values);
-
-  const { tags: oldTags } = Object(advert);
 
   useEffect(() => {
     // Set the tags array when the listingTags change
@@ -19,24 +17,46 @@ export const TagsInput = ({ field, form, isEditMode }) => {
 
   const handleTagInput = (e) => {
     const inputValue = e.target.value.trim();
-    if (isEditMode) {
-      form.setFieldValue(`advert.tags`, inputValue);
-    }
-    // form.setFieldValue(field.name, inputValue);
+    form.setFieldValue(field.name, inputValue);
   };
+
+  console.log(advert);
+
+  function generateUniqueId(maxId) {
+    return maxId + 1;
+  }
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
       const newTag = e.target.value.trim();
       if (newTag !== "") {
-        setTags((prevTags) => {
-          const updatedTags = [...prevTags, newTag];
-          form.setFieldValue(field.name, updatedTags);
-          return updatedTags;
-        });
-        dispatch({ type: "ADD_TAG", payload: newTag });
-        // Delay clearing the input to ensure state is updated
+        if (isEditMode) {
+          const valuesToModify = advert?.tags;
+          const id = valuesToModify.reduce(
+            (max, item) => Math.max(max, item.id),
+            0
+          );
+
+          const updatedFeatures = [
+            ...valuesToModify,
+            {
+              id: generateUniqueId(id),
+              name: newTag,
+              created_at: new Date().toISOString(),
+              updated_at: new Date().toISOString(),
+              pivot: { advert_id: advert?.id, tag_id: generateUniqueId(id) },
+            },
+          ];
+          setFieldValue(`advert.tags`, updatedFeatures);
+        } else {
+          setTags((prevTags) => {
+            const updatedTags = [...prevTags, newTag];
+            form.setFieldValue(field.name, updatedTags);
+            return updatedTags;
+          });
+          dispatch({ type: "ADD_TAG", payload: newTag });
+        }
         setTimeout(() => {
           e.target.value = "";
         }, 10);
@@ -45,10 +65,18 @@ export const TagsInput = ({ field, form, isEditMode }) => {
   };
 
   const handleTagRemoval = (tagToRemove) => {
-    const updatedTags = tags.filter((tag) => tag !== tagToRemove);
-    setTags(updatedTags);
-    form.setFieldValue(field.name, updatedTags);
-    dispatch({ type: "REMOVE_TAG", payload: tagToRemove });
+    if (isEditMode) {
+      const valuesToModify = advert?.tags;
+      const updatedTags = valuesToModify.filter(
+        (item) => item.name !== tagToRemove
+      );
+      setFieldValue(`advert.tags`, updatedTags);
+    } else {
+      const updatedTags = tags.filter((tag) => tag !== tagToRemove);
+      setTags(updatedTags);
+      form.setFieldValue(field.name, updatedTags);
+      dispatch({ type: "REMOVE_TAG", payload: tagToRemove });
+    }
   };
 
   return (
@@ -70,7 +98,7 @@ export const TagsInput = ({ field, form, isEditMode }) => {
       />
       <div className="flex items-center gap-5 flex-wrap">
         {isEditMode
-          ? oldTags?.map(({ name, id }) => (
+          ? advert?.tags.map(({ name, id }) => (
               <span
                 key={id}
                 className="tag bg-white flex items-center gap-2 justify-between w-max text-[#3B3B3B] border-[1px]  border-[#d6d6d6] rounded-lg py-2 px-3"

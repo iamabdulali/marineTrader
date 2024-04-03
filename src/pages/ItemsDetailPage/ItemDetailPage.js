@@ -32,6 +32,7 @@ import {
 import LoadingWrapper from "../../utils/LoadingWrapper";
 import axios from "axios";
 import { SERVER_BASE_URL } from "../..";
+import { Tooltip } from "react-tooltip";
 
 const ItemDetailPage = () => {
   const navigate = useNavigate();
@@ -45,7 +46,7 @@ const ItemDetailPage = () => {
   const id = pathArray[2];
 
   useEffect(() => {
-    getOneAdvert(setAdvert, setLoading, id, "advert-details");
+    getOneAdvert(setAdvert, id, "advert-details", setLoading);
     setLoading(true);
   }, [refresh]);
 
@@ -127,10 +128,25 @@ const ItemDetailPage = () => {
               {category?.name}
             </p>
             <div className="flex items-center gap-4">
-              <FaHeart color="#696E9D" size={20} />
-              <FaShare color="#696E9D" size={20} />
+              <FaHeart
+                color="#696E9D"
+                size={20}
+                data-tooltip-id="my-tooltip-3"
+              />
+              <FaShare
+                color="#696E9D"
+                size={20}
+                data-tooltip-id="my-tooltip-4"
+              />
             </div>
           </div>
+          <Tooltip
+            id="my-tooltip-3"
+            place="bottom"
+            content="Add To Favourites"
+          />
+          <Tooltip id="my-tooltip-4" place="bottom" content="Share Now" />
+
           <p className="text-sm font-semibold text-[#696E9D] mt-3">
             {condition?.name}
           </p>

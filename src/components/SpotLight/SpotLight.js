@@ -10,6 +10,7 @@ const SpotLight = () => {
   const { userLocationDetails, country } = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
   const [homeSpotlights, setHomeSpotlights] = useState([]);
+  const [refresh, setRefresh] = useState(false);
 
   // const { country } = Object(userLocationDetails);
   console.log(country);
@@ -68,6 +69,7 @@ const SpotLight = () => {
                     price={price}
                     image={images[0]?.image}
                     advertID={advert_package_id}
+                    setRefresh={setRefresh}
                   />
                 )
               )}

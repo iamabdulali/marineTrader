@@ -12,7 +12,7 @@ const UpdateSubtitleNotice = ({ values, setFieldValue }) => {
         {" "}
         <div className=" smallLg:order-none order-1">
           <FaInfoCircle size={20} className="mr-2 inline" color="#1CBF73" />
-          You can upgrade if you want to write more than 100 characters.
+          Upgrade to Premium or Featured if you want to add a Sub Title.
           <button
             type="button"
             onClick={() =>
@@ -23,7 +23,7 @@ const UpdateSubtitleNotice = ({ values, setFieldValue }) => {
             Upgrade Now
           </button>
         </div>
-        <p className="text-right smallLg:mb-0 mb-4">100 Characters</p>
+        {/* <p className="text-right smallLg:mb-0 mb-4">100 Characters</p> */}
       </div>
     </>
   );

@@ -27,6 +27,7 @@ import { displayErrorMessages } from "../../utils/displayErrors";
 import axios from "axios";
 import { Oval } from "react-loader-spinner";
 import { fetchOptions, getOneAdvert } from "../../utils/fetch/fetchData";
+import LoadingWrapper from "../../utils/LoadingWrapper";
 
 const BuildAd = () => {
   const [step, setStep] = useState(1);
@@ -53,13 +54,13 @@ const BuildAd = () => {
 
   useEffect(() => {
     if (EditMode) {
-      getOneAdvert(setAdvert, setLoading, id, "advert");
+      getOneAdvert(setAdvert, id, "advert", setLoading);
     }
   }, []);
 
   useEffect(() => {
     if (advertID) {
-      getOneAdvert(setAdvert, setLoading, advertID, "advert");
+      getOneAdvert(setAdvert, advertID, "advert", setLoading);
     }
   }, [advertID]);
 
@@ -101,10 +102,10 @@ const BuildAd = () => {
     price: "",
     facilities: [],
     advert_package: selectedPackage,
-    category_spotlights_countries: [],
-    category_spotlights_continents: [],
-    home_spotlights_countries: [],
-    home_spotlights_continents: [],
+    countryCategorySpotlights: [],
+    continentCategorySpotlights: [],
+    countryHomeSpotlights: [],
+    continentHomeSpotlights: [],
     stripe_token: "",
   };
   const initialValuesBoatHome = {
@@ -152,10 +153,10 @@ const BuildAd = () => {
     price: "",
     facilities: [],
     advert_package: selectedPackage,
-    category_spotlights_countries: [],
-    category_spotlights_continents: [],
-    home_spotlights_countries: [],
-    home_spotlights_continents: [],
+    countryCategorySpotlights: [],
+    continentCategorySpotlights: [],
+    countryHomeSpotlights: [],
+    continentHomeSpotlights: [],
     advert_status: "",
     stripe_token: "",
     engineCount: 0,
@@ -187,7 +188,7 @@ const BuildAd = () => {
   ];
   const smallBoatsValidationArrayStep1 = [
     "title",
-    "sub_title",
+    // "sub_title",
     "make",
     "model",
     "year",
@@ -290,13 +291,11 @@ const BuildAd = () => {
       toast.success(data.message);
       setAdvertID(data.data?.id);
 
-      // if (isBundleSelected) NavigateTo(`/payment/bundle/${values?.bundles}`);
       if (selectedPackage != "2") {
         openModal(setIsPaymentOptionOpen);
       } else if (hasSubscription == 0 && hasBundle == 0) {
         openModal(setIsPaymentOptionOpen);
       }
-      // setFieldValue("bundles", null);
       setSpinner(false);
     } catch (error) {
       console.error("An unexpected error occurred:", error);
@@ -312,24 +311,24 @@ const BuildAd = () => {
     }
   }, []);
 
-  useEffect(() => {
-    const {
-      continentCategorySpotlights,
-      continentHomeSpotlights,
-      countryHomeSpotlights,
-      countryCategorySpotlights,
-    } = Object(advert);
+  // useEffect(() => {
+  //   const {
+  //     continentCategorySpotlights,
+  //     continentHomeSpotlights,
+  //     countryHomeSpotlights,
+  //     countryCategorySpotlights,
+  //   } = Object(advert);
 
-    const hasAnyValue =
-      continentCategorySpotlights?.length > 0 ||
-      countryCategorySpotlights?.length > 0 ||
-      continentHomeSpotlights?.length > 0 ||
-      countryHomeSpotlights?.length > 0;
+  //   const hasAnyValue =
+  //     continentCategorySpotlights?.length > 0 ||
+  //     countryCategorySpotlights?.length > 0 ||
+  //     continentHomeSpotlights?.length > 0 ||
+  //     countryHomeSpotlights?.length > 0;
 
-    if (hasAnyValue && !EditMode) {
-      NavigateTo(`/payment/advert/${advertID}`);
-    }
-  }, [advertID, advert, spinner]);
+  //   if (hasAnyValue && !EditMode) {
+  //     NavigateTo(`/payment/advert/${advertID}`);
+  //   }
+  // }, [advertID, advert, spinner]);
 
   return (
     <Layout>
@@ -355,98 +354,93 @@ const BuildAd = () => {
         onSubmit={handleSubmit}
       >
         {({ isValid, values, setErrors, setTouched, setFieldValue }) => (
-          <Form>
-            {step === 1 && <ItemDescriptionStep2 isEditMode={EditMode} />}
-            {step === 2 && <ItemFeaturesStep3 isEditMode={EditMode} />}
-            {step === 3 && <NotesSteps4 isEditMode={EditMode} />}
-            {step === 4 && <GalleryStep5 />}
-            {step === 5 && <PriceStep6 isEditMode={EditMode} />}
-            {/* Navigation buttons */}
-            <div className="flex sm:flex-row flex-col-reverse align-center justify-between mt-10 mb-24">
-              <div className="sm:w-auto w-full flex gap-5 items-center sm:flex-row flex-col sm:mt-0 mt-5">
-                <Link
-                  to={"/selling"}
-                  type="button"
-                  className="bg-white text-center sm:order-none order-1 hover:bg-[#8891B2] hover:text-white border-2 sm:w-28 min-h-[48px] w-full border-[#8891B2] text-[#8891B2] p-3 rounded-md  text-sm font-medium "
-                >
-                  Cancel
-                </Link>
-                {/* <button
+          <LoadingWrapper loading={EditMode ? loading : false}>
+            <Form>
+              {step === 1 && <ItemDescriptionStep2 isEditMode={EditMode} />}
+              {step === 2 && <ItemFeaturesStep3 isEditMode={EditMode} />}
+              {step === 3 && <NotesSteps4 isEditMode={EditMode} />}
+              {step === 4 && <GalleryStep5 isEditMode={EditMode} />}
+              {step === 5 && <PriceStep6 isEditMode={EditMode} />}
+              {/* Navigation buttons */}
+              <div className="flex sm:flex-row flex-col-reverse align-center justify-between mt-10 mb-24">
+                <div className="sm:w-auto w-full flex gap-5 items-center sm:flex-row flex-col sm:mt-0 mt-5">
+                  <Link
+                    to={"/selling"}
+                    type="button"
+                    className="bg-white text-center sm:order-none order-1 hover:bg-[#8891B2] hover:text-white border-2 sm:w-28 min-h-[48px] w-full border-[#8891B2] text-[#8891B2] p-3 rounded-md  text-sm font-medium "
+                  >
+                    Cancel
+                  </Link>
+                  {/* <button
                   type="button"
                   className="bg-white border-2 sm:w-auto w-full hover:bg-[#0D1A8B] hover:text-white border-[#0D1A8B] text-[#0D1A8B] font-medium p-3 rounded-md text-sm"
                 >
                   Save To Draft
                 </button> */}
-              </div>
-              <div className="text-right flex items-center gap-5">
-                {step > 1 && (
-                  <button
-                    type="button"
-                    onClick={prevStep}
-                    className="bg-[#8891B2] hover:bg-[#a3aac4] sm:w-28 w-full  text-white p-3 rounded-md "
-                  >
-                    Back
-                  </button>
-                )}
+                </div>
+                <div className="text-right flex items-center gap-5">
+                  {step > 1 && (
+                    <button
+                      type="button"
+                      onClick={prevStep}
+                      className="bg-[#8891B2] hover:bg-[#a3aac4] sm:w-28 w-full  text-white p-3 rounded-md "
+                    >
+                      Back
+                    </button>
+                  )}
 
-                {step < 5 ? (
-                  <button
-                    type="button"
-                    onClick={() => nextStep(values, { setTouched, setErrors })}
-                    className={`bg-[#0D1A8B] hover:bg-[#0a1dbd] text-white p-3 rounded-md sm:w-28 w-full`}
-                  >
-                    Next
-                  </button>
-                ) : (
-                  <button
-                    to="/"
-                    type={submit ? "submit" : "button"}
-                    onClick={() => {
-                      setSubmit(true);
-                    }}
-                    disabled={spinner}
-                    className={`bg-[#0D1A8B] hover:bg-[#0a1dbd] text-white p-3 rounded-md inline-block text-center sm:w-28 w-full  ${
-                      isValid ? "opacity-100" : "opacity-70"
-                    }`}
-                  >
-                    {spinner ? (
-                      <Oval
-                        secondaryColor="#fff"
-                        color="#fff"
-                        width={20}
-                        height={20}
-                        wrapperClass="justify-center"
-                      />
-                    ) : (
-                      "List Item"
-                    )}
-                  </button>
-                )}
+                  {step < 5 ? (
+                    <button
+                      type="button"
+                      onClick={() =>
+                        nextStep(values, { setTouched, setErrors })
+                      }
+                      className={`bg-[#0D1A8B] hover:bg-[#0a1dbd] text-white p-3 rounded-md sm:w-28 w-full`}
+                    >
+                      Next
+                    </button>
+                  ) : (
+                    <button
+                      to="/"
+                      type={submit ? "submit" : "button"}
+                      onClick={() => {
+                        setSubmit(true);
+                      }}
+                      disabled={spinner}
+                      className={`bg-[#0D1A8B] hover:bg-[#0a1dbd] text-white p-3 rounded-md inline-block text-center sm:w-28 w-full  ${
+                        isValid ? "opacity-100" : "opacity-70"
+                      }`}
+                    >
+                      {spinner ? (
+                        <Oval
+                          secondaryColor="#fff"
+                          color="#fff"
+                          width={20}
+                          height={20}
+                          wrapperClass="justify-center"
+                        />
+                      ) : (
+                        "List Item"
+                      )}
+                    </button>
+                  )}
+                </div>
               </div>
-            </div>
-            <Modal
-              isOpen={isPaymentOptionOpen}
-              onClose={() => closeModal(setIsPaymentOptionOpen)}
-              opacity="bg-opacity-40"
-              width="lg:w-1/3"
-            >
-              <PaymentOptionModal
-                id={advertID}
+              <Modal
+                isOpen={isPaymentOptionOpen}
                 onClose={() => closeModal(setIsPaymentOptionOpen)}
-              />
-            </Modal>
-          </Form>
+                opacity="bg-opacity-40"
+                width="lg:w-1/3"
+              >
+                <PaymentOptionModal
+                  id={advertID}
+                  onClose={() => closeModal(setIsPaymentOptionOpen)}
+                />
+              </Modal>
+            </Form>
+          </LoadingWrapper>
         )}
       </Formik>
-      <VideoBtn onClick={() => openModal(setIsVideoOpen)} />
-      <Modal
-        isOpen={isVideoOpen}
-        onClose={() => closeModal(setIsVideoOpen)}
-        opacity="bg-opacity-40"
-        width="xl:w-6/12 sm:w-10/12 w-full"
-      >
-        <VideoModal />
-      </Modal>
     </Layout>
   );
 };

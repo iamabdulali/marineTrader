@@ -31,8 +31,6 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
 
   const { values, setFieldValue } = useFormikContext();
 
-  console.log(values);
-
   const { advert } = Object(values);
 
   const {
@@ -48,6 +46,7 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
     passenger,
     year,
     length,
+    trailers: trailersField,
   } = Object(advert);
 
   return (
@@ -74,31 +73,37 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
         }
       />
 
-      <FormField
-        FieldType="text"
-        inputField={true}
-        name="sub_title"
-        label="Subtitle"
-        value={isEditMode ? sub_title : values?.sub_title}
-        onChange={(e) =>
-          isEditMode
-            ? handleInputChange(
-                e,
-                null,
-                null,
-                "advert",
-                isEditMode,
-                setFieldValue
-              )
-            : handleInputChange(e, null, null, null, isEditMode, setFieldValue)
-        }
-        className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
-        placeholder={"Sub Title"}
-      />
-      {values?.advert_package == "1" || values?.advert_package == "4" ? (
+      {values?.advert_package == "7" || values?.advert_package == "4" ? (
         <UpdateSubtitleNotice values={values} setFieldValue={setFieldValue} />
       ) : (
-        ""
+        <FormField
+          FieldType="text"
+          inputField={true}
+          name="sub_title"
+          label="Subtitle"
+          value={isEditMode ? sub_title : values?.sub_title}
+          onChange={(e) =>
+            isEditMode
+              ? handleInputChange(
+                  e,
+                  null,
+                  null,
+                  "advert",
+                  isEditMode,
+                  setFieldValue
+                )
+              : handleInputChange(
+                  e,
+                  null,
+                  null,
+                  null,
+                  isEditMode,
+                  setFieldValue
+                )
+          }
+          className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
+          placeholder={"Sub Title"}
+        />
       )}
 
       <ContentToggle
@@ -274,7 +279,14 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
               value={isEditMode ? color : values?.color}
               onChange={(e) =>
                 isEditMode
-                  ? handleInputChange(e, "advert", isEditMode, setFieldValue)
+                  ? handleInputChange(
+                      e,
+                      null,
+                      null,
+                      "advert",
+                      isEditMode,
+                      setFieldValue
+                    )
                   : handleInputChange(
                       e,
                       null,
@@ -292,7 +304,14 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
               value={isEditMode ? service_history : values?.service_history}
               onChange={(e) =>
                 isEditMode
-                  ? handleInputChange(e, "advert", isEditMode, setFieldValue)
+                  ? handleInputChange(
+                      e,
+                      null,
+                      null,
+                      "advert",
+                      isEditMode,
+                      setFieldValue
+                    )
                   : handleInputChange(
                       e,
                       null,
@@ -316,7 +335,14 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
               value={isEditMode ? passenger : values?.passenger}
               onChange={(e) =>
                 isEditMode
-                  ? handleInputChange(e, "advert", isEditMode, setFieldValue)
+                  ? handleInputChange(
+                      e,
+                      null,
+                      null,
+                      "advert",
+                      isEditMode,
+                      setFieldValue
+                    )
                   : handleInputChange(
                       e,
                       null,
@@ -337,7 +363,14 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
               value={isEditMode ? length : values?.length}
               onChange={(e) =>
                 isEditMode
-                  ? handleInputChange(e, "advert", isEditMode, setFieldValue)
+                  ? handleInputChange(
+                      e,
+                      null,
+                      null,
+                      "advert",
+                      isEditMode,
+                      setFieldValue
+                    )
                   : handleInputChange(
                       e,
                       null,
@@ -364,7 +397,14 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
               value={isEditMode ? hours : values?.hours}
               onChange={(e) =>
                 isEditMode
-                  ? handleInputChange(e, "advert", isEditMode, setFieldValue)
+                  ? handleInputChange(
+                      e,
+                      null,
+                      null,
+                      "advert",
+                      isEditMode,
+                      setFieldValue
+                    )
                   : handleInputChange(
                       e,
                       null,
@@ -379,10 +419,17 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
               label="Trailers"
               name="trailers"
               options={trailers}
-              value={isEditMode ? trailers : values?.trailers}
+              value={isEditMode ? trailersField : values?.trailers}
               onChange={(e) =>
                 isEditMode
-                  ? handleInputChange(e, "advert", isEditMode, setFieldValue)
+                  ? handleInputChange(
+                      e,
+                      null,
+                      null,
+                      "advert",
+                      isEditMode,
+                      setFieldValue
+                    )
                   : handleInputChange(
                       e,
                       null,

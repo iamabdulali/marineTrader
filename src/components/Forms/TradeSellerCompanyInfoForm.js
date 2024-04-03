@@ -18,7 +18,7 @@ export default function TradeSellerCompanyInfoForm() {
   const [loading, setLoading] = useState(true);
   const [currency, setCurrency] = useState([]);
   useEffect(() => {
-    fetchOptions("currencies", setCurrency, setLoading);
+    fetchOptions("currencies", setCurrency);
   }, []);
 
   const togglePasswordVisibility = (field) => {

@@ -39,11 +39,12 @@ export default function AdSubscription() {
   };
 
   useEffect(() => {
-    fetchOptions("bundle/advert/remains", setHasBundle);
+    fetchOptions("bundle/advert/remains", setHasBundle, setLoading);
     if (!isPrivateSeller) {
       fetchOptions(
         `subscription/advert/remains/${selectedCategory?.id}`,
-        setHasActiveSubscription
+        setHasActiveSubscription,
+        setLoading
       );
     }
   }, [categoryToCheck]);

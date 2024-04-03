@@ -18,7 +18,7 @@ const PrivateSellerSignUpForm = ({ setFieldValue, values }) => {
   const [loading, setLoading] = useState(true);
   const [currency, setCurrency] = useState([]);
   useEffect(() => {
-    fetchOptions("currencies", setCurrency, setLoading);
+    fetchOptions("currencies", setCurrency);
   }, []);
   return (
     <>

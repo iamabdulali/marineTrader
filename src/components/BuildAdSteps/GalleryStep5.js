@@ -4,7 +4,7 @@ import { Field } from "formik";
 import ImageAndVideoHandler from "./ImageAndVideoHandler";
 import { AuthContext } from "../../Context/AuthContext";
 
-const GalleryStep5 = () => {
+const GalleryStep5 = ({ isEditMode }) => {
   const { selectedPackage } = useContext(AuthContext);
 
   return (
@@ -14,6 +14,7 @@ const GalleryStep5 = () => {
         <Field
           uploadingText="Upto 5 Photos"
           name="images"
+          isEditMode={isEditMode}
           component={ImageAndVideoHandler}
           accept="image/jpeg, image/png" // You can customize the accepted file types
           allowMultiple={true} // Set to true if you want to allow multiple files

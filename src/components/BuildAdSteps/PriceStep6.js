@@ -27,12 +27,12 @@ const PriceStep6 = ({ isEditMode }) => {
 
   // Function to handle home spotlight click
   const handleHomeSpotlightClick = () => {
-    setSpotlightType("home");
+    setSpotlightType("Home");
   };
 
   // Function to handle category spotlight click
   const handleCategorySpotlightClick = () => {
-    setSpotlightType("category");
+    setSpotlightType("Category");
   };
 
   const { values, setFieldValue } = useFormikContext();
@@ -48,6 +48,9 @@ const PriceStep6 = ({ isEditMode }) => {
   //   setFieldValue(name, value);
   // };
 
+  const { advert } = Object(values);
+  const { price_type, currency: advert_currency, price } = Object(advert);
+
   return (
     <BuildLayout heading="Set Price">
       <div>
@@ -60,12 +63,23 @@ const PriceStep6 = ({ isEditMode }) => {
               name="price_type"
               id="priceInfoRadio"
               type="radio"
-              value="enterInfo"
-              checked={values?.price_type == "enterInfo"}
+              value={"enterInfo"}
+              checked={
+                isEditMode
+                  ? price_type == "enterInfo"
+                  : values?.price_type == "enterInfo"
+              }
               onChange={(e) => {
                 // handleInputChange(e);
                 isEditMode
-                  ? handleInputChange(e, "advert", isEditMode, setFieldValue)
+                  ? handleInputChange(
+                      e,
+                      null,
+                      null,
+                      "advert",
+                      isEditMode,
+                      setFieldValue
+                    )
                   : handleInputChange(
                       e,
                       null,
@@ -86,12 +100,21 @@ const PriceStep6 = ({ isEditMode }) => {
               name="price_type"
               id="poa"
               type="radio"
-              value="poa"
-              checked={values?.price_type == "poa"}
+              value={"poa"}
+              checked={
+                isEditMode ? price_type == "poa" : values?.price_type == "poa"
+              }
               onChange={(e) => {
                 // handleInputChange(e);
                 isEditMode
-                  ? handleInputChange(e, "advert", isEditMode, setFieldValue)
+                  ? handleInputChange(
+                      e,
+                      null,
+                      null,
+                      "advert",
+                      isEditMode,
+                      setFieldValue
+                    )
                   : handleInputChange(
                       e,
                       null,
@@ -114,6 +137,7 @@ const PriceStep6 = ({ isEditMode }) => {
               label="Currency"
               name="currency"
               options={currency}
+              value={isEditMode ? advert_currency?.id : values?.currency}
               onChange={(e) =>
                 isEditMode
                   ? handleInputChange(
@@ -139,6 +163,7 @@ const PriceStep6 = ({ isEditMode }) => {
               inputField={true}
               name="price"
               label="Price"
+              value={isEditMode ? price : values?.price}
               className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
               onChange={(e) =>
                 isEditMode
@@ -265,6 +290,7 @@ const PriceStep6 = ({ isEditMode }) => {
         width="xl:w-9/12 w-full"
       >
         <SpotlightModal
+          isEditMode={isEditMode}
           spotlightFor={spotlightType}
           value={values}
           setFieldValue={setFieldValue}

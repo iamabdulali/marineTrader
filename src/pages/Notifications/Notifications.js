@@ -11,14 +11,17 @@ export default function Notifications() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchOptions("notification", (data) => {
-      // Sort notifications based on created_at timestamp
-      const sortedNotifications = data.sort(
-        (a, b) => new Date(b.created_at) - new Date(a.created_at)
-      );
-      setNotifications(sortedNotifications);
-      setLoading(false);
-    });
+    fetchOptions(
+      "notification",
+      (data) => {
+        // Sort notifications based on created_at timestamp
+        const sortedNotifications = data.sort(
+          (a, b) => new Date(b.created_at) - new Date(a.created_at)
+        );
+        setNotifications(sortedNotifications);
+      },
+      setLoading
+    );
   }, []);
 
   return (
