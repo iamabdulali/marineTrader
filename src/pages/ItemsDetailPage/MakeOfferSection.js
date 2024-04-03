@@ -28,8 +28,16 @@ const MakeOfferSection = ({ advert }) => {
   const [showFacilities, setShowFacilities] = useState(true);
 
   const { currency_id, advert_package_id, user, id } = Object(advert);
-  const { image_field, created_at, name, seller_type, facilities, user_name } =
-    Object(user);
+  const {
+    image_field,
+    created_at,
+    name,
+    seller_type,
+    facilities,
+    user_name,
+    city,
+    country,
+  } = Object(user);
 
   const isPrivateSeller = seller_type == "private seller";
 
@@ -98,6 +106,9 @@ const MakeOfferSection = ({ advert }) => {
             <p className="text-[#11133D] font-semibold">{user_name}</p>
             <p className="text-sm text-[#696E9D]">
               Member Since {convertTimestampToMonthYear(created_at)}
+            </p>
+            <p className="text-[#11133D] font-semibold text-sm">
+              {city}, {country}
             </p>
           </div>
         </div>

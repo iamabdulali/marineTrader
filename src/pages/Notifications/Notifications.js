@@ -30,7 +30,10 @@ export default function Notifications() {
         Notifications
       </p>
       <div className="mt-6 shadow-[7px] bg-white rounded-lg p-7 max-h-[60vh] overflow-y-auto">
-        <LoadingWrapper loading={loading} className="top-0">
+        <LoadingWrapper
+          loading={loading}
+          className="top-0 xl:-translate-x-0 -translate-x-1/2"
+        >
           {notifications.map(({ body, created_at, id }) => {
             return (
               <Link

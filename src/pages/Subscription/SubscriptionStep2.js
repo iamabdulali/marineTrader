@@ -41,10 +41,11 @@ const SubscriptionStep2 = () => {
   const categoryToCheck = selectedCategory?.id;
 
   useEffect(() => {
-    fetchOptions("subscriptions", setSubscriptions);
+    fetchOptions("subscriptions", setSubscriptions, setLoading);
     fetchOptions(
       `subscription-plans?category=${selectedCategory?.id || "1"}`,
-      setSubscriptionsPlans
+      setSubscriptionsPlans,
+      setLoading
     );
   }, [selectedCategory]);
 

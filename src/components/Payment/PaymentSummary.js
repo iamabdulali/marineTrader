@@ -1,5 +1,8 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../Context/AuthContext";
+import axios from "axios";
+import { SERVER_BASE_URL } from "../..";
+import { toast } from "react-toastify";
 
 const PaymentSummary = ({
   advert,
@@ -15,7 +18,8 @@ const PaymentSummary = ({
 }) => {
   const { user, currencyRates } = useContext(AuthContext);
   const { currency } = Object(user);
-
+  const [coupenCode, setCoupenCode] = useState("");
+  const [couponApplied, setCouponApplied] = useState(false);
   const { advert_package_id } = Object(advert);
 
   const filteredSubscriptions = subscription
@@ -42,6 +46,8 @@ const PaymentSummary = ({
 
   console.log({ hasBundle, hasSubscription });
 
+  const [totalAmount, setTotalAmount] = useState(0);
+
   const subtotal =
     (Number(amount) || 0) +
     (Number(bundleAmount) || 0) +
@@ -50,7 +56,34 @@ const PaymentSummary = ({
 
   const tax = subtotal * 0.2;
 
-  const totalAmount = subtotal + tax;
+  useEffect(() => {
+    setTotalAmount(subtotal + tax);
+  }, []);
+
+  const handleCoupenDiscount = async () => {
+    try {
+      if (couponApplied) {
+        toast.error("Coupon already applied");
+        return;
+      }
+
+      const { data } = await axios.get(
+        `${SERVER_BASE_URL}/coupon-discount?coupon_code=${coupenCode}`
+      );
+      if (data.data.length === 0) {
+        toast.error("Invalid Coupon Code");
+      } else {
+        toast.success(`Total Discount ${data.data}%`);
+        const discountPercentage = Number(data.data);
+        const discountAmount = totalAmount * (discountPercentage / 100);
+        const amountAfterDiscount = totalAmount - discountAmount;
+        setTotalAmount(amountAfterDiscount);
+        setCouponApplied(true); // Mark coupon as applied
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="bg-white shadow-[7px] rounded-md p-6 mt-6 w-full">
@@ -169,8 +202,13 @@ const PaymentSummary = ({
             type="text"
             className="uppercase w-full border-[#8891B2] text-[#8891b2] border-2 py-4 rounded-md px-3"
             placeholder="Promo Code"
+            value={coupenCode}
+            onChange={(e) => setCoupenCode(e.target.value)}
           />
-          <button className="text-white bg-[#0D1A8B] hover:bg-[#0a1dbd] py-2 rounded-md px-6 font-semibold top-1/2 -translate-y-1/2 absolute right-3">
+          <button
+            onClick={handleCoupenDiscount}
+            className="text-white bg-[#0D1A8B] hover:bg-[#0a1dbd] py-2 rounded-md px-6 font-semibold top-1/2 -translate-y-1/2 absolute right-3"
+          >
             Apply
           </button>
         </div>

@@ -97,7 +97,7 @@ const BuildAd = () => {
     tags: [],
     images: [],
     video: null,
-    price_type: "",
+    price_type: "enterInfo",
     currency: "",
     price: "",
     facilities: [],
@@ -148,7 +148,7 @@ const BuildAd = () => {
     tags: [],
     images: [],
     video: null,
-    price_type: "",
+    price_type: "enterInfo",
     currency: "",
     price: "",
     facilities: [],
@@ -288,7 +288,7 @@ const BuildAd = () => {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-      toast.success(data.message);
+      toast.success("Almost There!");
       setAdvertID(data.data?.id);
 
       if (selectedPackage != "2") {
@@ -302,6 +302,7 @@ const BuildAd = () => {
       const { errors } = error.response.data;
       displayErrorMessages(errors);
       setSpinner(false);
+      openModal(setIsPaymentOptionOpen);
     }
   };
 
@@ -430,7 +431,7 @@ const BuildAd = () => {
                 isOpen={isPaymentOptionOpen}
                 onClose={() => closeModal(setIsPaymentOptionOpen)}
                 opacity="bg-opacity-40"
-                width="lg:w-1/3"
+                width="w-1/3"
               >
                 <PaymentOptionModal
                   id={advertID}

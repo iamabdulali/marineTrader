@@ -184,21 +184,27 @@ export default function TradeSellerServiceHoursForm() {
         <div className="bg-[#0D1A8B] w-[5px] h-8 rounded-xl"></div>
         Company Info
       </h2>
-      <div className="w-full flex gap-5 mt-6 md:flex-row flex-col text-[#8891B2] ">
-        <Field
-          name="company_logo"
-          component={FileInput}
-          label="Company Logo"
-          accept="image/jpeg, image/png"
-          fieldName="company_logo"
-        />
-        <Field
-          name="main_picture"
-          component={FileInput}
-          label="Main Picture"
-          accept="image/jpeg, image/png"
-          fieldName="main_picture"
-        />
+      <div className="w-full flex gap-5 mt-6  flex-col text-[#8891B2] ">
+        <div className="w-full">
+          <Field
+            name="company_logo"
+            component={FileInput}
+            label="Company Logo"
+            accept="image/jpeg, image/png"
+            fieldName="company_logo"
+          />
+          <p className="mt-2 font-medium">Upload an image of 156x156</p>
+        </div>
+        <div className="w-full">
+          <Field
+            name="main_picture"
+            component={FileInput}
+            label="Company Photos"
+            accept="image/jpeg, image/png"
+            fieldName="main_picture"
+          />
+          <p className="mt-2 font-medium">Upload an image of 156x156</p>
+        </div>
       </div>
     </div>
   );

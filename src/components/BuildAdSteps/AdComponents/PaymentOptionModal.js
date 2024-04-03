@@ -22,7 +22,7 @@ const PaymentOptionModal = ({ onClose, id }) => {
             htmlFor="paypal"
             className="radio-label mr-5 font-medium text-[#11133D]"
           >
-            Paypal
+            Paypal (Coming Soon)
           </label>
         </div>
         {/* <div className="radio mt-3">

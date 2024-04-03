@@ -39,8 +39,14 @@ import { getToken, onMessage } from "firebase/messaging";
 import Message from "./components/Message";
 
 function App() {
-  const { selectedCategory, user, dispatch, isAuthenticated, refresh } =
-    useContext(AuthContext);
+  const {
+    selectedCategory,
+    userLocationDetails,
+    user,
+    dispatch,
+    isAuthenticated,
+    refresh,
+  } = useContext(AuthContext);
   const token = localStorage.getItem("token");
   useEffect(() => {
     getUserData(user, dispatch, token);
@@ -83,6 +89,9 @@ function App() {
     fetchOptions("currencies", "CURRENCY");
     fetchOptions("taxes", "TAXES");
   }, [selectedCategory]);
+
+  console.log(user);
+  console.log(userLocationDetails);
 
   async function requestPermission() {
     //requesting permission using Notification API

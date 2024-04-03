@@ -29,105 +29,99 @@ const Step1 = ({ showSpotlightSelection, spotlightFor, isEditMode }) => {
 
   const handleInputChange = (e) => {
     const { name, value, checked } = e.target;
+    const isCountrySpotlight = name === `country${spotlightFor}Spotlights`;
+    const isContinentSpotlight = name === `continent${spotlightFor}Spotlights`;
+    const selectedType = isCountrySpotlight
+      ? selectedCountries
+      : selectedContinents;
+    const valueToModify = values?.advert?.[name] || [];
 
-    const valueToModify = values?.advert?.[name];
+    if (isCountrySpotlight || isContinentSpotlight) {
+      const spotlightPrice = Number(
+        selectedType[value]?.spotlight_price.match(/\d+\.\d+/)[0]
+      );
 
-    if (
-      name === `country${spotlightFor}Spotlights` ||
-      name === `continent${spotlightFor}Spotlights`
-    ) {
-      if (checked) {
-        const selectedType =
-          name === `country${spotlightFor}Spotlights`
-            ? selectedCountries
-            : selectedContinents;
-        const spotlightPrice = Number(
-          selectedType[value]?.spotlight_price.match(/\d+\.\d+/)[0]
-        );
-
-        if (!isNaN(spotlightPrice)) {
-          setTotalCount((prevTotalCount) => prevTotalCount + spotlightPrice);
-        }
-
-        if (isEditMode) {
-          const id = valueToModify.reduce(
-            (max, item) => Math.max(max, item.id),
-            0
-          );
-
-          const updatedFeatures = [
+      const updatedFeatures = checked
+        ? [
             ...valueToModify,
             {
-              id: generateUniqueId(id),
-              country_id: value,
+              id: generateUniqueId(
+                valueToModify.reduce((max, item) => Math.max(max, item.id), 0)
+              ),
+              [isCountrySpotlight ? "country_id" : "continent_id"]: value,
               advert_id: advert?.id,
               created_at: new Date().toISOString(),
               updated_at: new Date().toISOString(),
             },
-          ];
+          ]
+        : valueToModify.filter(
+            (item) =>
+              item[isCountrySpotlight ? "country_id" : "continent_id"] !== value
+          );
 
-          setFieldValue(`advert.${name}`, updatedFeatures);
-        } else {
-          if (name === `continent${spotlightFor}Spotlights`) {
-            setFieldValue(`country${spotlightFor}Spotlights`, []);
-            setRefresh(true);
-          } else if (name === `country${spotlightFor}Spotlights`) {
-            setFieldValue(`continent${spotlightFor}Spotlights`, []);
-            setRefresh(false);
-          }
-          setFieldValue(name, [...values[name], value]);
+      if (checked && !isNaN(spotlightPrice)) {
+        setTotalCount((prevTotalCount) => prevTotalCount + spotlightPrice);
+      } else if (!checked && !isNaN(spotlightPrice)) {
+        setTotalCount((prevTotalCount) => prevTotalCount - spotlightPrice);
+      }
+
+      if (isEditMode) {
+        setFieldValue(`advert.${name}`, updatedFeatures);
+        if (isContinentSpotlight) {
+          setFieldValue(`advert.country${spotlightFor}Spotlights`, []);
+          setRefresh(true);
+        } else if (isCountrySpotlight) {
+          setFieldValue(`advert.continent${spotlightFor}Spotlights`, []);
+          setRefresh(false);
         }
       } else {
-        const selectedType =
-          name === `country${spotlightFor}Spotlights`
-            ? selectedCountries
-            : selectedContinents;
-        const spotlightPrice = Number(
-          selectedType[value]?.spotlight_price.match(/\d+\.\d+/)[0]
+        if (isContinentSpotlight) {
+          setFieldValue(`country${spotlightFor}Spotlights`, []);
+          setRefresh(true);
+        } else if (isCountrySpotlight) {
+          setFieldValue(`continent${spotlightFor}Spotlights`, []);
+          setRefresh(false);
+        }
+        setFieldValue(
+          name,
+          checked
+            ? [...values[name], value]
+            : values[name].filter((item) => item !== value)
         );
-        if (!isNaN(spotlightPrice)) {
-          setTotalCount((prevTotalCount) => prevTotalCount - spotlightPrice);
-        }
-        if (isEditMode) {
-          if (name === `country${spotlightFor}Spotlights`) {
-            const updatedFeatures = valueToModify.filter(
-              (item) => item.country_id !== value
-            );
-            setFieldValue(`advert.${name}`, updatedFeatures);
-          } else {
-            const updatedFeatures = valueToModify.filter(
-              (item) => item.continent_id !== value
-            );
-            setFieldValue(`advert.${name}`, updatedFeatures);
-          }
-        } else {
-          setFieldValue(
-            name,
-            values[name].filter((item) => item !== value)
-          );
-        }
       }
     } else {
       setFieldValue(name, value);
     }
   };
 
-  console.log(advert);
-
   const renderSelectedCountriesTable = (tableFor, ArrayFor) => {
     const selectedCountriesArray =
       values[`${tableFor}${spotlightFor}Spotlights`];
 
     const handleRemove = (country) => {
-      setFieldValue(
-        `${tableFor}${spotlightFor}Spotlights`,
-        values[`${tableFor}${spotlightFor}Spotlights`].filter(
-          (item) => item != country - 1
-        )
-      );
-      setTotalCount(
-        (prevTotalCount) => prevTotalCount - ArrayFor[country].spotlight_price
-      );
+      const valueToModify =
+        values?.advert?.[`${tableFor}${spotlightFor}Spotlights`];
+
+      if (isEditMode) {
+        const updatedFeatures = valueToModify.filter(
+          (item) => item[`${tableFor}_id`] != country
+        );
+        setFieldValue(
+          `advert.${tableFor}${spotlightFor}Spotlights`,
+          updatedFeatures
+        );
+        console.log(updatedFeatures);
+      } else {
+        setFieldValue(
+          `${tableFor}${spotlightFor}Spotlights`,
+          values[`${tableFor}${spotlightFor}Spotlights`].filter(
+            (item) => item != country - 1
+          )
+        );
+        setTotalCount(
+          (prevTotalCount) => prevTotalCount - ArrayFor[country].spotlight_price
+        );
+      }
     };
 
     if (selectedCountriesArray?.length === 0) {
@@ -149,30 +143,67 @@ const Step1 = ({ showSpotlightSelection, spotlightFor, isEditMode }) => {
             </tr>
           </thead>
           <tbody>
-            {values[`${tableFor}${spotlightFor}Spotlights`]?.map((country) => {
-              console.log(country);
-              return (
-                <tr
-                  key={ArrayFor[country - 1]?.name}
-                  className=" text-[#11133D]"
-                >
-                  <td className="py-2 px-4 font-semibold">
-                    {ArrayFor[country - 1]?.name}
-                  </td>
-                  <td className="py-2 px-4 font-semibold">
-                    £{ArrayFor[country - 1]?.spotlight_price}
-                  </td>
-                  <td className="py-2 px-4 font-semibold">
-                    <button
-                      className=" text-[#FC4040] flex items-center gap-3 px-3 py-1 rounded"
-                      onClick={() => handleRemove(ArrayFor[country]?.id)}
-                    >
-                      <FaTrash /> Remove
-                    </button>
-                  </td>
-                </tr>
-              );
-            })}
+            {isEditMode
+              ? advert[`${tableFor}${spotlightFor}Spotlights`]?.map(
+                  (spotlight) => {
+                    console.log(`${tableFor}_id`);
+                    console.log(spotlight[`${tableFor}_id`]);
+                    return (
+                      <tr
+                        key={ArrayFor[spotlight[`${tableFor}_id`] - 1]?.name}
+                        className=" text-[#11133D]"
+                      >
+                        <td className="py-2 px-4 font-semibold">
+                          {ArrayFor[spotlight[`${tableFor}_id`] - 1]?.name}
+                        </td>
+                        <td className="py-2 px-4 font-semibold">
+                          £
+                          {
+                            ArrayFor[spotlight[`${tableFor}_id`] - 1]
+                              ?.spotlight_price
+                          }
+                        </td>
+                        <td className="py-2 px-4 font-semibold">
+                          <button
+                            className=" text-[#FC4040] flex items-center gap-3 px-3 py-1 rounded"
+                            onClick={() =>
+                              handleRemove(
+                                ArrayFor[spotlight[`${tableFor}_id`] - 1]?.id
+                              )
+                            }
+                          >
+                            <FaTrash /> Remove
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  }
+                )
+              : values[`${tableFor}${spotlightFor}Spotlights`]?.map(
+                  (country) => {
+                    return (
+                      <tr
+                        key={ArrayFor[country - 1]?.name}
+                        className=" text-[#11133D]"
+                      >
+                        <td className="py-2 px-4 font-semibold">
+                          {ArrayFor[country - 1]?.name}
+                        </td>
+                        <td className="py-2 px-4 font-semibold">
+                          £{ArrayFor[country - 1]?.spotlight_price}
+                        </td>
+                        <td className="py-2 px-4 font-semibold">
+                          <button
+                            className=" text-[#FC4040] flex items-center gap-3 px-3 py-1 rounded"
+                            onClick={() => handleRemove(ArrayFor[country]?.id)}
+                          >
+                            <FaTrash /> Remove
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  }
+                )}
           </tbody>
         </table>
       </div>

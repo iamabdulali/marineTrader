@@ -2,7 +2,9 @@
 import * as Yup from "yup";
 
 export const validationSchema = Yup.object().shape({
-  user_name: Yup.string().required("User Name is required"),
+  user_name: Yup.string()
+    .required("User Name is required")
+    .matches(/^\S*$/, "Username must not contain spaces"),
   company_name: Yup.string().required("Company Info is required"),
   building_number: Yup.string().required("Building Number is required"),
   street_name: Yup.string().required("Street Name is required"),
