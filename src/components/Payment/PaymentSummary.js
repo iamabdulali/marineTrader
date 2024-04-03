@@ -58,7 +58,7 @@ const PaymentSummary = ({
 
   useEffect(() => {
     setTotalAmount(subtotal + tax);
-  }, []);
+  }, [subtotal]);
 
   const handleCoupenDiscount = async () => {
     try {
