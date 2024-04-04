@@ -12,7 +12,7 @@ import {
   yearsArray,
 } from "../../utils/DummyData";
 import ContentToggle from "../ItemDetailsPage/ToggleContent";
-import { bigBoats, categoriesList } from "../..";
+import { advertPackages, bigBoats, categoriesList } from "../..";
 import { useFormikContext } from "formik";
 import { handleInputChange } from "../../utils/handleInputChange";
 
@@ -50,7 +50,12 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
   } = Object(advert);
 
   return (
-    <BuildLayout heading="Item Description">
+    <BuildLayout
+      heading="Item Description"
+      otherContent={`Current Package: ${
+        advertPackages[values?.advert_package]
+      }`}
+    >
       <FormField
         FieldType="text"
         name="title"
@@ -73,7 +78,9 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
         }
       />
 
-      {values?.advert_package == "7" || values?.advert_package == "4" ? (
+      {/* <UpdateSubtitleNotice values={values} setFieldValue={setFieldValue} /> */}
+      {console.log(values?.advert_package)}
+      {values?.advert_package < "2" ? (
         <UpdateSubtitleNotice values={values} setFieldValue={setFieldValue} />
       ) : (
         <FormField

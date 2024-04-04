@@ -162,6 +162,7 @@ const PriceStep6 = ({ isEditMode }) => {
               FieldType="number"
               inputField={true}
               name="price"
+              placeholder="Enter Price"
               label="Price"
               value={isEditMode ? price : values?.price}
               className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
@@ -229,7 +230,7 @@ const PriceStep6 = ({ isEditMode }) => {
           ""
         )}
 
-        {(!isPrivateSeller && values?.advert_package == "5") ||
+        {/* {(!isPrivateSeller && values?.advert_package == "5") ||
         values?.advert_package == "6" ? (
           <div className="mt-6 pt-6 border-t-2">
             <div className="flex items-center justify-between">
@@ -247,9 +248,9 @@ const PriceStep6 = ({ isEditMode }) => {
           </div>
         ) : (
           ""
-        )}
+        )} */}
 
-        {values?.advert_package == 3 || values?.advert_package != 6 ? (
+        {values?.advert_package != 3 ? (
           <p className="text-sm mt-8">
             <button
               onClick={() =>
@@ -260,7 +261,8 @@ const PriceStep6 = ({ isEditMode }) => {
             >
               UPGRADE
             </button>{" "}
-            to Premium or Featured Package
+            to {values?.advert_package < 2 ? "Premium or Featured" : "Featured"}{" "}
+            Package
           </p>
         ) : (
           ""

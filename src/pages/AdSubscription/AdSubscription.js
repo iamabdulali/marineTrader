@@ -58,7 +58,7 @@ export default function AdSubscription() {
       </div>
       <div className="lg:flex gap-8 hidden">
         <LoadingWrapper className="top-44" loading={loading}>
-          {packages.map(({ name, amount, id, ...props }) => {
+          {packages.map(({ name, amount, id, specificity_order, ...props }) => {
             return (
               <AdSubscriptionComponent
                 hasBundle={hasBundle}
@@ -70,7 +70,7 @@ export default function AdSubscription() {
                 buttonText="Get Started"
                 text="View Display Results"
                 key={id}
-                id={id}
+                id={specificity_order}
                 hasActiveSubscription={hasActiveSubscription}
                 featuresArray={props}
               />
@@ -87,27 +87,29 @@ export default function AdSubscription() {
         />
         <div className="lg:hidden block py-10">
           <LoadingWrapper loading={loading}>
-            {packages.map(({ name, amount, id, ...props }) => {
-              return (
-                selectedTab === name && (
-                  <AdSubscriptionComponent
-                    hasBundle={hasBundle}
-                    packageName={name}
-                    price={`${currency?.symbol}${Number(
-                      amount * currencyRates[currency?.currency_code]
-                    ).toFixed(2)}`}
-                    buttonText="Get Started"
-                    text="View Display Results"
-                    packageHeading={`${name} package includes the following.`}
-                    variant={name}
-                    featuresArray={props}
-                    key={id}
-                    id={id}
-                    hasActiveSubscription={hasActiveSubscription}
-                  />
-                )
-              );
-            })}
+            {packages.map(
+              ({ name, amount, specificity_order, id, ...props }) => {
+                return (
+                  selectedTab === name && (
+                    <AdSubscriptionComponent
+                      hasBundle={hasBundle}
+                      packageName={name}
+                      price={`${currency?.symbol}${Number(
+                        amount * currencyRates[currency?.currency_code]
+                      ).toFixed(2)}`}
+                      buttonText="Get Started"
+                      text="View Display Results"
+                      packageHeading={`${name} package includes the following.`}
+                      variant={name}
+                      featuresArray={props}
+                      key={id}
+                      id={specificity_order}
+                      hasActiveSubscription={hasActiveSubscription}
+                    />
+                  )
+                );
+              }
+            )}
           </LoadingWrapper>
         </div>
       </div>

@@ -34,7 +34,8 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
   let [isSpotlightOpen, setIsSpotlightOpen] = useState(false);
   let [isBundleOpen, setIsBundleOpen] = useState(false);
   const [hasBundle, setHasBundle] = useState(0);
-  const [hasSubscription, setHasSubscription] = useState(0);
+  const [categorySubscription, setCategorySubscription] = useState(0);
+  const [subscritpions, setSubscriptions] = useState([]);
   const [advert, setAdvert] = useState([]);
   const [packages, setPackages] = useState([]);
   const [bundles, setBundles] = useState([]);
@@ -62,24 +63,6 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
     fetchOptions("bundles", setBundles, setLoading);
   }, [user]);
 
-  useEffect(() => {
-    fetchOptions("bundle/advert/remains", setHasBundle, setLoading);
-    fetchOptions(
-      `subscription/advert/remains/${selectedCategory?.id}`,
-      setHasSubscription,
-      setLoading
-    );
-  }, [id]);
-
-  // useEffect(() => {
-  //   if (packages?.length != 0 && bundles?.length != 0 && advert?.length != 0) {
-  //     console.log("fetched");
-  //     setLoading(false);
-  //   } else {
-  //     setLoading(true);
-  //   }
-  // }, [packages, bundles, advert]);
-
   const {
     currency_id,
     advert_package_id,
@@ -91,7 +74,35 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
     continentHomeSpotlights,
   } = Object(advert);
 
-  console.log(advert);
+  console.log(category_id);
+
+  useEffect(() => {
+    fetchOptions("bundle/advert/remains", setHasBundle, setLoading);
+    fetchOptions(
+      `subscription/advert/remains/${category_id}`,
+      setCategorySubscription,
+      setLoading
+    );
+    fetchOptions("subscriptions", setSubscriptions, setLoading);
+  }, [id]);
+
+  const hasBrokerOrDealerSubscription = () => {
+    return subscritpions.some((subscription) => {
+      return (
+        subscription.subscription_plan.name === "Broker plus" ||
+        subscription.subscription_plan.name === "Dealer plus"
+      );
+    });
+  };
+
+  // useEffect(() => {
+  //   if (packages?.length != 0 && bundles?.length != 0 && advert?.length != 0) {
+  //     console.log("fetched");
+  //     setLoading(false);
+  //   } else {
+  //     setLoading(true);
+  //   }
+  // }, [packages, bundles, advert]);
 
   let spotlights = 0;
 
@@ -203,9 +214,9 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
                     bundles={bundles}
                     spotlights={spotlights}
                     hasBundle={hasBundle}
-                    hasSubscription={hasSubscription}
+                    hasSubscription={categorySubscription}
                   />
-                  {!isPrivateSeller ? (
+                  {!isPrivateSeller && hasBrokerOrDealerSubscription() ? (
                     <AvailableUpgrades
                       className="bg-[#1CBF73] flex flex-col gap-5 mt-8 p-5 rounded-lg w-full"
                       openModal={() => openModal(setIsSpotlightOpen)}

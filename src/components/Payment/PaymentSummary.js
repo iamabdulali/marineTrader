@@ -26,25 +26,25 @@ const PaymentSummary = ({
     ? subscription.filter((sub) => sub?.id == id)
     : [];
 
+  const { name, amount } = Object(filteredSubscriptions[0] || {});
+
   const filteredPackages = packages
     ? packages.filter((ad) => ad?.id == advert_package_id)
     : [];
-
-  const filteredBundles = bundles
-    ? bundles.filter((bundle) => bundle?.id == isBundleSelected)
-    : [];
-
-  const { name, amount } = Object(filteredSubscriptions[0] || {});
 
   const { name: packageName, amount: packageAmount } = Object(
     filteredPackages[0] || {}
   );
 
+  const filteredBundles = bundles
+    ? bundles.filter((bundle) => bundle?.id == isBundleSelected)
+    : [];
+
   const { name: bundleName, amount: bundleAmount } = Object(
     filteredBundles[0] || {}
   );
 
-  console.log({ hasBundle, hasSubscription });
+  console.log(filteredSubscriptions);
 
   const [totalAmount, setTotalAmount] = useState(0);
 
@@ -194,8 +194,6 @@ const PaymentSummary = ({
         ) : (
           ""
         )}
-
-        {console.log(isBundleSelected)}
 
         <div className="mt-6 relative">
           <input

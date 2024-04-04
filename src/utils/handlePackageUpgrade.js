@@ -1,22 +1,16 @@
 import { toast } from "react-toastify";
 
-export const handlePackageUpgrade = (values, setFieldValue, sellerType) => {
+export const handlePackageUpgrade = (values, setFieldValue) => {
   const currentPackage = values.advert_package || 0; // Default to 0 if advert_package is not set
-  let maxPackage;
-  if (sellerType === "private seller") {
-    maxPackage = 3;
-  } else if (sellerType === "trade seller") {
-    maxPackage = 6;
-  } else {
-    // Default max package if sellerType is not recognized
-    maxPackage = 3;
-  }
+  const maxPackage = 3; // Maximum package set to 3
 
-  const updatedPackage = currentPackage + 1;
+  const updatedPackage =
+    currentPackage > 2 ? currentPackage : Number(currentPackage) + 1;
   const nextPackage = updatedPackage > maxPackage ? maxPackage : updatedPackage;
 
-  setFieldValue("advert_package", nextPackage);
+  setFieldValue("advert_package", updatedPackage);
 
+  console.log(values.advert_package);
   // Show toast notification for every upgrade
   if (currentPackage < maxPackage && nextPackage <= maxPackage) {
     toast.success(`Advert Upgraded`);

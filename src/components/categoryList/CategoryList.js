@@ -37,15 +37,15 @@ const CategoryList = ({
   );
 
   const categoryIcons = {
-    Jetski: jetskiIcon,
-    "Boat Home": boatHomeIcon,
-    Commercial: commercialIcon,
-    Yacht: motorYachtIcon,
-    "Sail Boat": sailboatIcon,
-    "Small Craft": smallcraftIcon,
-    Fishing: fishingIcon,
-    RIB: ribIcon,
-    "Non Motor": nonMotorIcon,
+    jetski: jetskiIcon,
+    "boat-home": boatHomeIcon,
+    commercial: commercialIcon,
+    yacht: motorYachtIcon,
+    "sail-boat": sailboatIcon,
+    "small-craft": smallcraftIcon,
+    fishing: fishingIcon,
+    rib: ribIcon,
+    "non-motor": nonMotorIcon,
   };
 
   const { dispatch } = useContext(AuthContext);
@@ -68,7 +68,7 @@ const CategoryList = ({
 
     // Pass both category name and ID to the onCategoryClick callback
     const selectedCategoryId = categories.find(
-      (cat) => cat.name === category
+      (cat) => cat.slug === category
     )?.id;
     onCategoryClick({ name: category, id: selectedCategoryId });
     dispatch({
@@ -99,16 +99,16 @@ const CategoryList = ({
     <div className={`category-list ${className}`}>
       {categories?.map((category) => (
         <div
-          key={category.name} // Assuming 'name' is a unique identifier
-          onClick={() => handleCategoryClick(category.name)} // Use category name as identifier
+          key={category.slug} // Assuming 'name' is a unique identifier
+          onClick={() => handleCategoryClick(category.slug)} // Use category name as identifier
           className={`category-item cursor-pointer ${
-            selectedCategories.includes(category.name)
+            selectedCategories.includes(category.slug)
               ? `${activeCategory}`
               : `${unActiveCategory}`
           }`}
         >
           <span className="category-icon">
-            {getCategoryIcon(category.name)}
+            {getCategoryIcon(category.slug)}
           </span>
         </div>
       ))}

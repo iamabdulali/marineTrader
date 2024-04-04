@@ -42,6 +42,7 @@ const BuildAd = () => {
   const { selectedPackage, selectedCategory, dispatch } =
     useContext(AuthContext);
 
+  console.log(selectedPackage);
   const pathArray = window.location.pathname.split("/");
   const id = pathArray[4];
 

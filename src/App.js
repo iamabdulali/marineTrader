@@ -90,9 +90,6 @@ function App() {
     fetchOptions("taxes", "TAXES");
   }, [selectedCategory]);
 
-  console.log(user);
-  console.log(userLocationDetails);
-
   async function requestPermission() {
     //requesting permission using Notification API
     const permission = await Notification.requestPermission();
