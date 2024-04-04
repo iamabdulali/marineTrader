@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import {
   FaHome,
@@ -12,8 +12,16 @@ import {
 } from "react-icons/fa";
 import { blueBg, logo, msgIcon, phoneIcon } from "../../assets";
 import { AuthContext } from "../../Context/AuthContext";
+import Modal from "../Modal";
+import SignOutModal from "../SignOutModal";
+import {
+  closeModal,
+  openModal,
+} from "../../utils/ModalOpeningClosingFunctions";
 
 const VerticalMenu = ({ menuState, setMenuState }) => {
+  const [isSignOutModalOpen, setIsSignOutModalOpen] = useState(false);
+
   const { dispatch, user } = useContext(AuthContext);
   const toggleMenu = () => {
     setMenuState(!menuState);
@@ -120,19 +128,10 @@ const VerticalMenu = ({ menuState, setMenuState }) => {
               </NavLink>
             </li>
             <li
-              className="mb-4"
-              onClick={() => {
-                localStorage.removeItem("token");
-                dispatch({ type: "LOGOUT" });
-              }}
+              className="flex cursor-pointer items-center py-4 px-4 text-[#8891B2] rounded-xl hover:bg-gray-200"
+              onClick={() => openModal(setIsSignOutModalOpen)}
             >
-              <NavLink
-                to="/login"
-                className="flex items-center py-4 px-4 text-[#8891B2] rounded-xl hover:bg-gray-200"
-              >
-                <FaSignOutAlt className="mr-3" size={18} />
-                Sign Out
-              </NavLink>
+              <FaSignOutAlt className="mr-3" size={18} /> Sign Out
             </li>
           </ul>
         </nav>
@@ -157,6 +156,15 @@ const VerticalMenu = ({ menuState, setMenuState }) => {
       ) : (
         ""
       )}
+
+      <Modal
+        isOpen={isSignOutModalOpen}
+        onClose={() => closeModal(setIsSignOutModalOpen)}
+        opacity="bg-opacity-40"
+        padding="p-6"
+      >
+        <SignOutModal onClick={() => closeModal(setIsSignOutModalOpen)} />
+      </Modal>
     </>
   );
 };

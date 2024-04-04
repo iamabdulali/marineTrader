@@ -50,6 +50,7 @@ const ListingItem = ({ itemData }) => {
     tags,
     user: listItemUser,
     images,
+    price_type,
     advert_package_id,
   } = Object(itemData);
 
@@ -107,12 +108,19 @@ const ListingItem = ({ itemData }) => {
                 </p>
               </div>
               <div>
-                <p className="font-semibold text-[#11133D] md:text-xl text-base">
-                  {`${currency?.symbol || "£"}${Number(
-                    Number(price) * currencyRates[currency?.currency_code] ||
-                      price
-                  ).toFixed(2)}`}
-                </p>
+                {price_type == "poa" ? (
+                  <p className="font-semibold text-right text-[#11133D] md:text-xl text-base">
+                    POA
+                  </p>
+                ) : (
+                  <p className="font-semibold text-[#11133D] md:text-xl text-base">
+                    {`${currency?.symbol || "£"}${Number(
+                      Number(price) * currencyRates[currency?.currency_code] ||
+                        price
+                    ).toFixed(2)}`}
+                  </p>
+                )}
+
                 <p className="text-[#8891B2] md:text-base text-sm">
                   Tax Not Paid
                 </p>

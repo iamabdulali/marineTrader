@@ -63,7 +63,6 @@ const SubscriptionStep2 = () => {
     toast.error("You are already subscribed to the highest package");
   }
 
-  console.log(subscriptionsPlan);
   const featuresArray = [DealerPlus, ServicePlus];
 
   return (
@@ -71,12 +70,12 @@ const SubscriptionStep2 = () => {
       <LoadingWrapper className="top-44" loading={loading}>
         <Heading content="Select Subscription Plan" className="mt-8" />
         <div className="lg:flex hidden gap-5 mt-10 pb-20">
-          {subscriptionsPlan?.map(({ name, amount, id }, index) => {
+          {subscriptionsPlan?.map(({ name, amount, id, ...props }, index) => {
             return (
               <Subscriptions
                 key={id}
                 id={id}
-                featuresArray={featuresArray[index]}
+                featuresArray={props}
                 packagePrice={`£${Number(amount).toFixed(0)}`}
                 packageName={name}
                 subHeading="/12 months package"

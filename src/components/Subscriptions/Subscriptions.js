@@ -1,5 +1,5 @@
 import React from "react";
-import { FaCheck, FaInfo } from "react-icons/fa";
+import { FaCheck, FaCheckCircle, FaInfo } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { star } from "../../assets";
 import { Tooltip } from "react-tooltip";
@@ -13,6 +13,39 @@ const Subscriptions = ({
   textColor,
   id,
 }) => {
+  const mapFeaturesToText = (features) => {
+    const featureText = {
+      customer_reviews:
+        features.customer_reviews === "yes" ? "Customer Reviews" : null,
+      virtual_showroom:
+        features.virtual_showroom === "yes" ? "Virtual Showroom" : null,
+      search_result_boost:
+        features.search_result_boost > 0
+          ? `${features.search_result_boost}x Search Results Boost`
+          : null,
+      website_link: features.website_link === "yes" ? "Website Link" : null,
+      picture_gallery:
+        features.picture_gallery === "yes" ? "Picture Gallery" : null,
+      promotional_discount:
+        features.promotional_discount === "yes"
+          ? "Enables Promotional Discount Offers"
+          : null,
+      company_profile:
+        features.company_profile === "yes" ? "Company Profile" : null,
+      listings_in_business:
+        features.listings_in_business > 0
+          ? `${features.listings_in_business}x Listings in Business Plus+ Directory`
+          : null,
+      premium_per_month:
+        features.premium_per_month > 0
+          ? `${features.premium_per_month} Ads/Month`
+          : null,
+    };
+
+    // Filter out null values (for features that should not be displayed)
+    return Object.values(featureText).filter((text) => text !== null);
+  };
+
   return (
     <div
       key={id}
@@ -79,56 +112,24 @@ const Subscriptions = ({
         </div>
       </div>
       <div className="mt-8 min-h-80">
-        {featuresArray.map(({ id, featureName, standOut }) => {
-          if (featureName === "Ads/Month") {
-            // If the feature is "Ads/Month", display the appropriate number of ads based on the package
-            return (
-              <div
-                key={id}
-                className={`${standOut ? "font-semibold" : ""} flex gap-4 mt-5`}
+        {mapFeaturesToText(featuresArray).map((featureText, index) => {
+          return (
+            <div className="flex items-baseline font-medium gap-4">
+              <p
+                className={`bg-[#e1f4ec] mt-5 rounded-full h-6 w-6 flex items-center justify-center`}
               >
-                {packageName == "Dealer Plus" ||
-                packageName == "Broker Plus" ? (
-                  <p
-                    className={`bg-[#e1f4ec] rounded-full h-6 w-6 flex items-center justify-center`}
-                  >
-                    <FaCheck color="#36B37E" size={10} />
-                  </p>
+                <FaCheck color="#36B37E" size={10} />
+              </p>
+              <div className="flex items-end gap-3">
+                {featureText}{" "}
+                {featureText.endsWith("Ads/Month") ? (
+                  <img className="w-6" src={star} alt="star" />
                 ) : (
                   ""
                 )}
-                {packageName === "Dealer Plus"
-                  ? 15
-                  : packageName == "Broker Plus"
-                  ? `25 ${featureName} ${
-                      standOut ? (
-                        <img className="w-6" src={star} alt="star" />
-                      ) : (
-                        ""
-                      )
-                    }`
-                  : ""}{" "}
               </div>
-            );
-          } else {
-            // For other features, display them as usual
-            return (
-              <div
-                key={id}
-                className={`${
-                  standOut ? "items-center font-semibold" : ""
-                } flex gap-4 mt-5`}
-              >
-                <p
-                  className={`bg-[#e1f4ec] rounded-full h-6 w-6 flex items-center justify-center`}
-                >
-                  <FaCheck color="#36B37E" size={10} />
-                </p>
-                {featureName}
-                {standOut ? <img className="w-6" src={star} alt="star" /> : ""}
-              </div>
-            );
-          }
+            </div>
+          );
         })}
       </div>
       <Link
