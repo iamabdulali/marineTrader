@@ -201,18 +201,18 @@ const ListingItem = ({ itemData }) => {
           }`}
         >
           {advert_package_id == "3" ? (
-            <div className="flex gap-8">
+            <div className="flex gap-8 w-full">
               <img
                 src={logo}
                 className="border-[1px] w-20 object-cover bg-white rounded-lg"
               />
-              <div>
+              <div className="w-full">
                 <p className="text-[#11133D] font-semibold">Marine Trader</p>
                 <p className="text-[#8891B2] font-medium mt-1 mb-2 text-sm">
                   Trade Seller
                 </p>
                 <p className="flex text-sm font-semibold items-center gap-3 text-[#11133D]">
-                  <FaMapMarkedAlt color="#8891B2" size={18} /> United Kingdom
+                  <FaMapMarkedAlt color="#8891B2" size={28} /> United Kingdom
                 </p>
               </div>
             </div>

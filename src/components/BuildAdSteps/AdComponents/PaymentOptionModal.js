@@ -16,7 +16,7 @@ const PaymentOptionModal = ({ onClose, id }) => {
         />
       </div>
       <div className="mt-6">
-        <div className="radio">
+        {/* <div className="radio">
           <Field name="paymentMethod" id="paypal" type="radio" value="paypal" />
           <label
             htmlFor="paypal"
@@ -24,7 +24,7 @@ const PaymentOptionModal = ({ onClose, id }) => {
           >
             Paypal (Coming Soon)
           </label>
-        </div>
+        </div> */}
         {/* <div className="radio mt-3">
           <Field
             name="paymentMethod"

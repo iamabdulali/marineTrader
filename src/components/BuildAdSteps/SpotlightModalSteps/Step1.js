@@ -38,8 +38,10 @@ const Step1 = ({ showSpotlightSelection, spotlightFor, isEditMode }) => {
 
     if (isCountrySpotlight || isContinentSpotlight) {
       const spotlightPrice = Number(
-        selectedType[value]?.spotlight_price.match(/\d+\.\d+/)[0]
+        selectedType[value - 1]?.spotlight_price.match(/\d+\.\d+/)[0]
       );
+
+      console.log(spotlightPrice);
 
       const updatedFeatures = checked
         ? [

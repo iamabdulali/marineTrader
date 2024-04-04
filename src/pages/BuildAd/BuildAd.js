@@ -101,6 +101,7 @@ const BuildAd = () => {
     price_type: "enterInfo",
     currency: "",
     price: "",
+    paymentMethod: "checkout",
     facilities: [],
     advert_package: selectedPackage,
     countryCategorySpotlights: [],
@@ -152,6 +153,7 @@ const BuildAd = () => {
     price_type: "enterInfo",
     currency: "",
     price: "",
+    paymentMethod: "checkout",
     facilities: [],
     advert_package: selectedPackage,
     countryCategorySpotlights: [],
@@ -212,7 +214,7 @@ const BuildAd = () => {
 
   const prevStep = () => setStep(step - 1);
   const nextStep = () => setStep(step + 1);
-  const [isPaymentOptionOpen, setIsPaymentOptionOpen] = useState(false);
+  const [isPaymentOptionOpen, setIsPaymentOptionOpen] = useState(true);
   let [isVideoOpen, setIsVideoOpen] = useState(false);
 
   // const nextStep = (values, { setTouched, setErrors }) => {
@@ -432,7 +434,7 @@ const BuildAd = () => {
                 isOpen={isPaymentOptionOpen}
                 onClose={() => closeModal(setIsPaymentOptionOpen)}
                 opacity="bg-opacity-40"
-                width="w-1/3"
+                width="md:w-1/2 xl:w-1/3 w-full"
               >
                 <PaymentOptionModal
                   id={advertID}

@@ -54,6 +54,8 @@ export const authReducer = (state, action) => {
       return { ...state, selectedBundle: action.payload };
     case "CURRENCY_RATES":
       return { ...state, currencyRates: action.payload };
+    case "SPOTLIGHT_COUNTRIES":
+      return { ...state, spotlightCountries: action.payload };
     case "SELECTED_COUNTRY":
       return { ...state, country: action.payload };
     default:
@@ -120,6 +122,7 @@ export const AuthContextProvider = ({ children }) => {
     taxes: [],
     fcmToken: "",
     currencyRates: [],
+    spotlightCountries: [],
   });
 
   // console.log("Auth context state: ", state);

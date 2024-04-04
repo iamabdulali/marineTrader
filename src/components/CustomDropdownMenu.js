@@ -11,7 +11,7 @@ export default function CustomDropdownMenu({
         {buttonToOpenMenu}
       </Menu.Button>
       <Transition
-        className="relative"
+        className="relative z-10"
         enter="transition duration-500 ease-out"
         enterFrom=" transition duration-500 opacity-0"
         enterTo=" transition duration-500 opacity-100"

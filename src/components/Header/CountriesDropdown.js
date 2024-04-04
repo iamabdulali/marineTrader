@@ -1,30 +1,35 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { fetchOptions } from "../../utils/fetch/fetchData";
+import { AuthContext } from "../../Context/AuthContext";
 
 const CountriesDropdown = ({ setCountryCode, dispatch }) => {
+  const { spotlightCountries } = useContext(AuthContext);
+
+  console.log(spotlightCountries);
+
   const flagImage =
     "https://purecatamphetamine.github.io/country-flag-icons/3x2/";
-  const countryData = [
-    { name: "United Kingdom", flag: `${flagImage}GB.svg`, countryCode: "GB" },
-    { name: "France", flag: `${flagImage}FR.svg`, countryCode: "FR" },
-    { name: "Germany", flag: `${flagImage}DE.svg`, countryCode: "DE" },
-    { name: "Pakistan", flag: `${flagImage}PK.svg`, countryCode: "PK" },
-  ];
+
   return (
-    <div className="absolute bg-white custom-shadow rounded-lg px-2 pt-2 min-w-40 sm:right-0">
-      {countryData.map(({ name, flag, countryCode }) => (
+    <div className="absolute z-[100] max-h-80 overflow-y-auto bg-white custom-shadow rounded-lg px-2 pt-2 min-w-48 sm:right-0">
+      {spotlightCountries.map(({ name, country_code }) => (
         <div
           key={name}
           onClick={() => {
-            setCountryCode(countryCode);
+            setCountryCode(country_code);
             dispatch({ type: "SELECTED_COUNTRY", payload: name });
           }}
           onTouchStart={() => {
-            setCountryCode(countryCode);
+            setCountryCode(country_code);
             dispatch({ type: "SELECTED_COUNTRY", payload: name });
           }}
         >
           <label className="flex cursor-pointer items-center gap-2 text-[#11133D] whitespace-nowrap mb-2 text-sm font-medium">
-            <img src={flag} alt={`${name} flag`} className="w-6 h-6" />
+            <img
+              src={`${flagImage}${country_code}.svg`}
+              alt={`${name} flag`}
+              className="w-6 h-6"
+            />
             {name}
           </label>
         </div>

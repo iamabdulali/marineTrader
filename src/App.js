@@ -72,6 +72,11 @@ function App() {
       dispatch({ type: "CURRENCY_RATES", payload: data?.rates });
     }
     fetchCurrencyRates();
+    async function fetchOptions(url, type) {
+      const { data } = await axios.get(`${SERVER_BASE_URL}/${url}`);
+      dispatch({ type: type, payload: data.data });
+    }
+    fetchOptions("countries", "SPOTLIGHT_COUNTRIES");
   }, []);
 
   useEffect(() => {

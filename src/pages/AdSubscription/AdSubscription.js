@@ -29,7 +29,16 @@ export default function AdSubscription() {
     getPackages(setPackages, seller_type, setLoading);
   }, []);
 
-  const tabs = packages.map((item) => ({
+  const sortedPackages = packages.sort((a, b) => {
+    // Convert specificity_order to numbers before comparison
+    const orderA = parseInt(a.specificity_order);
+    const orderB = parseInt(b.specificity_order);
+
+    // Compare the specificity_order values
+    return orderA - orderB;
+  });
+
+  const tabs = sortedPackages.map((item) => ({
     id: item.name,
     label: item.name,
   }));
@@ -58,24 +67,26 @@ export default function AdSubscription() {
       </div>
       <div className="lg:flex gap-8 hidden">
         <LoadingWrapper className="top-44" loading={loading}>
-          {packages.map(({ name, amount, id, specificity_order, ...props }) => {
-            return (
-              <AdSubscriptionComponent
-                hasBundle={hasBundle}
-                packageName={name}
-                variant={name}
-                price={`${currency?.symbol}${Number(
-                  amount * currencyRates[currency?.currency_code]
-                ).toFixed(2)}`}
-                buttonText="Get Started"
-                text="View Display Results"
-                key={id}
-                id={specificity_order}
-                hasActiveSubscription={hasActiveSubscription}
-                featuresArray={props}
-              />
-            );
-          })}
+          {sortedPackages.map(
+            ({ name, amount, id, specificity_order, ...props }) => {
+              return (
+                <AdSubscriptionComponent
+                  hasBundle={hasBundle}
+                  packageName={name}
+                  variant={name}
+                  price={`${currency?.symbol}${Number(
+                    amount * currencyRates[currency?.currency_code]
+                  ).toFixed(2)}`}
+                  buttonText="Get Started"
+                  text="View Display Results"
+                  key={id}
+                  id={specificity_order}
+                  hasActiveSubscription={hasActiveSubscription}
+                  featuresArray={props}
+                />
+              );
+            }
+          )}
         </LoadingWrapper>
       </div>
       <div>
@@ -87,7 +98,7 @@ export default function AdSubscription() {
         />
         <div className="lg:hidden block py-10">
           <LoadingWrapper loading={loading}>
-            {packages.map(
+            {sortedPackages.map(
               ({ name, amount, specificity_order, id, ...props }) => {
                 return (
                   selectedTab === name && (
