@@ -22,13 +22,13 @@ export const categoriesList = [
   "Non Motor",
 ];
 
-export const smallBoats = ["Jetski", "Non Motor", "RIB", "Small Craft"];
+export const smallBoats = ["jetski", "non-motor", "rib", "small-craft"];
 export const bigBoats = [
-  "Fishing",
-  "Boat Home",
-  "Sailboat",
-  "Yacht",
-  "Commercial",
+  "fishing",
+  "boat-home",
+  "sail-boat",
+  "yacht",
+  "commercial",
 ];
 
 export const advertPackages = ["Basic", "Standard", "Premium", "Featured"];
