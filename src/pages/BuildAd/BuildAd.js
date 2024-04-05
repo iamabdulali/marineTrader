@@ -102,10 +102,10 @@ const BuildAd = () => {
     paymentMethod: "checkout",
     facilities: [],
     advert_package: selectedPackage,
-    countryCategorySpotlights: [],
-    continentCategorySpotlights: [],
-    countryHomeSpotlights: [],
-    continentHomeSpotlights: [],
+    category_spotlights_countries: [],
+    category_spotlights_continents: [],
+    home_spotlights_countries: [],
+    home_spotlights_continents: [],
     stripe_token: "",
   };
   const initialValuesBoatHome = {
@@ -154,10 +154,10 @@ const BuildAd = () => {
     paymentMethod: "checkout",
     facilities: [],
     advert_package: selectedPackage,
-    countryCategorySpotlights: [],
-    continentCategorySpotlights: [],
-    countryHomeSpotlights: [],
-    continentHomeSpotlights: [],
+    category_spotlights_countries: [],
+    category_spotlights_continents: [],
+    home_spotlights_countries: [],
+    home_spotlights_continents: [],
     advert_status: "",
     stripe_token: "",
     engineCount: 0,
@@ -314,17 +314,17 @@ const BuildAd = () => {
 
   // useEffect(() => {
   //   const {
-  //     continentCategorySpotlights,
-  //     continentHomeSpotlights,
-  //     countryHomeSpotlights,
-  //     countryCategorySpotlights,
+  //     category_spotlights_continents,
+  //     home_spotlights_continents,
+  //     home_spotlights_countries,
+  //     category_spotlights_countries,
   //   } = Object(advert);
 
   //   const hasAnyValue =
-  //     continentCategorySpotlights?.length > 0 ||
-  //     countryCategorySpotlights?.length > 0 ||
-  //     continentHomeSpotlights?.length > 0 ||
-  //     countryHomeSpotlights?.length > 0;
+  //     category_spotlights_continents?.length > 0 ||
+  //     category_spotlights_countries?.length > 0 ||
+  //     home_spotlights_continents?.length > 0 ||
+  //     home_spotlights_countries?.length > 0;
 
   //   if (hasAnyValue && !EditMode) {
   //     NavigateTo(`/payment/advert/${advertID}`);

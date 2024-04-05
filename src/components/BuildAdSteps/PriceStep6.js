@@ -27,12 +27,12 @@ const PriceStep6 = ({ isEditMode }) => {
 
   // Function to handle home spotlight click
   const handleHomeSpotlightClick = () => {
-    setSpotlightType("Home");
+    setSpotlightType("home");
   };
 
   // Function to handle category spotlight click
   const handleCategorySpotlightClick = () => {
-    setSpotlightType("Category");
+    setSpotlightType("category");
   };
 
   const { values, setFieldValue } = useFormikContext();
