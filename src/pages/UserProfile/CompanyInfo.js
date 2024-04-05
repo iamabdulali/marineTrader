@@ -61,11 +61,46 @@ const CompanyInfo = ({ editable, isPrivateSeller }) => {
     );
   }, []);
 
-  // console.log(countries[values.user.country]);
-  console.log(values.user.country);
+  function getCountry(countryName) {
+    const country = countries.find((country) => country?.id == countryName);
+    return country;
+  }
 
-  console.log(countries[values.user.country]);
-  console.log(countries);
+  function getState(stateID) {
+    const state = statesByCountries?.find((state) => state?.id == stateID);
+    return state;
+  }
+
+  function getStatesByCountry(countryId) {
+    const statesByCountries = states?.find((state) => state?.id == countryId);
+    setStatesByCountries(statesByCountries?.states);
+  }
+
+  useEffect(() => {
+    setAllStates((prevStates) => {
+      const newStates = cities?.reduce((acc, city) => {
+        return acc.concat(Object(city)?.states);
+      }, []);
+
+      return [...prevStates, ...newStates];
+    });
+  }, [cities]);
+
+  function getCitiesByStates(stateID) {
+    const selectedCities = AllStates?.find((state) => state?.id == stateID);
+    setCitiesByStates(selectedCities?.cities);
+  }
+
+  function getCity(ID) {
+    const city = cityByStates?.find((city) => city?.id == ID);
+    return city;
+  }
+
+  useEffect(() => {
+    getStatesByCountry(values.user.country);
+    getCitiesByStates(values.user.region);
+    getCity(values.user.city);
+  }, [editable, states, countries, AllStates]);
 
   return (
     <>
@@ -121,26 +156,7 @@ const CompanyInfo = ({ editable, isPrivateSeller }) => {
           readOnly={!editable}
         />
       </div>
-      <div className="flex sm:gap-6 items-center sm:flex-row flex-col">
-        <FormField
-          label="Town/City"
-          FieldType="text"
-          inputField={false}
-          value={values.user.city}
-          name="city"
-          onChange={(e) => handleInputChange(e)}
-          readOnly={!editable}
-        />
-        <FormField
-          label="Postal Code"
-          FieldType="text"
-          inputField={false}
-          value={values.user.postcode}
-          name="postcode"
-          onChange={(e) => handleInputChange(e)}
-          readOnly={!editable}
-        />
-      </div>
+
       <div className="flex sm:gap-6 items-center sm:flex-row flex-col">
         <div className="w-full mb-4">
           <label
@@ -150,8 +166,11 @@ const CompanyInfo = ({ editable, isPrivateSeller }) => {
             Country
           </label>
           <Field
-            onChange={(e) => handleInputChange(e)}
-            value={countries[values.user.country + 1]?.id}
+            onChange={(e) => {
+              handleInputChange(e);
+              getStatesByCountry(e.target.value);
+            }}
+            value={getCountry(values.user.country)?.id}
             disabled={!editable}
             as="select"
             className={`border-b-2 text-sm font-semibold outline-none ${
@@ -160,7 +179,7 @@ const CompanyInfo = ({ editable, isPrivateSeller }) => {
             name={"country"}
           >
             <option>Select a {"country"}</option>
-            {countries.map(({ name, id }) => {
+            {countries?.map(({ name, id }) => {
               return (
                 <option key={id} value={id}>
                   {name}
@@ -178,8 +197,11 @@ const CompanyInfo = ({ editable, isPrivateSeller }) => {
             Region
           </label>
           <Field
-            onChange={(e) => handleInputChange(e)}
-            value={values.user.region}
+            onChange={(e) => {
+              handleInputChange(e);
+              getCitiesByStates(e.target.value);
+            }}
+            value={getState(values.user.region)?.id}
             disabled={!editable}
             as="select"
             className={`border-b-2 text-sm font-semibold outline-none ${
@@ -188,13 +210,64 @@ const CompanyInfo = ({ editable, isPrivateSeller }) => {
             name={"region"}
           >
             <option>Select a {"Region"}</option>
-            {regionOptions.map((option) => (
-              <option key={option.id} value={option.id} label={option.name}>
-                {option.name}
-              </option>
-            ))}
+            {statesByCountries?.map(({ name, id }) => {
+              return (
+                <option key={id} value={id}>
+                  {name}
+                </option>
+              );
+            })}
           </Field>
         </div>
+      </div>
+      <div className="flex sm:gap-6 items-center sm:flex-row flex-col">
+        {/* <FormField
+          label="Town/City"
+          FieldType="text"
+          inputField={false}
+          value={values.user.city}
+          name="city"
+          onChange={(e) => handleInputChange(e)}
+          readOnly={!editable}
+        /> */}
+        <div className="w-full mb-4">
+          <label
+            className="block text-[#8891B2] text-sm font-medium"
+            htmlFor={"country"}
+          >
+            City
+          </label>
+          <Field
+            onChange={(e) => {
+              handleInputChange(e);
+            }}
+            value={getCity(values.user.city)?.id}
+            disabled={!editable}
+            as="select"
+            className={`border-b-2 text-sm font-semibold outline-none ${
+              !editable ? "border-[#f1f1f1]" : "border-[#000]"
+            }  py-2 px-0 text-[#11133D] w-full`}
+            name={"city"}
+          >
+            <option>Select a {"City"}</option>
+            {cityByStates?.map(({ name, id }) => {
+              return (
+                <option key={id} value={id}>
+                  {name}
+                </option>
+              );
+            })}
+          </Field>
+        </div>
+        <FormField
+          label="Postal Code"
+          FieldType="text"
+          inputField={false}
+          value={values.user.postcode}
+          name="postcode"
+          onChange={(e) => handleInputChange(e)}
+          readOnly={!editable}
+        />
       </div>
       <div className="flex sm:gap-6 items-center sm:flex-row flex-col">
         <FormField

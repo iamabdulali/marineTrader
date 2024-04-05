@@ -12,19 +12,19 @@ import {
   yearsArray,
 } from "../../utils/DummyData";
 import ContentToggle from "../ItemDetailsPage/ToggleContent";
-import { advertPackages, bigBoats, categoriesList } from "../..";
+import {
+  SERVER_BASE_URL,
+  advertPackages,
+  bigBoats,
+  categoriesList,
+} from "../..";
 import { useFormikContext } from "formik";
 import { handleInputChange } from "../../utils/handleInputChange";
+import axios from "axios";
 
 const ItemDescriptionStep2 = ({ isEditMode }) => {
-  const {
-    selectedPackage,
-    selectedCategory,
-    conditions,
-    makes,
-    types,
-    modals,
-  } = useContext(AuthContext);
+  const { selectedPackage, selectedCategory, conditions, makes, types } =
+    useContext(AuthContext);
   const [showDetails, setShowDetails] = useState(true);
   const [showDimensions, setShowDimensions] = useState(true);
   const [showPerformance, setShowPerformance] = useState(true);
@@ -48,6 +48,27 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
     length,
     trailers: trailersField,
   } = Object(advert);
+
+  const [modals, setModals] = useState([]);
+  const [modelValue, setModelValue] = useState("");
+  const [isCustomModelSelected, setIsCustomModelSelected] = useState(false);
+
+  const handleModelChange = (e) => {
+    const selectedValue = e.target.value;
+    setModelValue(selectedValue);
+    setIsCustomModelSelected(selectedValue === "custom");
+  };
+
+  const fetchModalsByMake = async () => {
+    try {
+      const { data } = await axios.get(
+        `${SERVER_BASE_URL}/models?make_id=${values.make}&category_id=${selectedCategory?.id}`
+      );
+      setModals(data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <BuildLayout
@@ -122,13 +143,25 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
         className="flex justify-between border-2 cursor-pointer items-center mb-6 bg-[#f6f6f6] p-3"
       />
       <div className={`${showDetails ? "block" : "hidden"}`}>
-        <div className="flex sm:flex-row flex-col gap-4">
+        <div className="flex sm:flex-row flex-col gap-4 relative">
+          {isCustomModelSelected ? (
+            <button
+              onClick={() => setIsCustomModelSelected(false)}
+              type="button"
+              className="absolute underline right-0 text-sm font-medium cursor-pointer text-[#11133D]"
+            >
+              Go Back
+            </button>
+          ) : (
+            ""
+          )}
+
           <CategorySelectDropdown
             value={isEditMode ? make?.id : values?.make}
             label="Make"
             name="make"
             options={makes}
-            onChange={(e) =>
+            onChange={(e) => {
               isEditMode
                 ? handleInputChange(
                     e,
@@ -145,34 +178,72 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
                     null,
                     isEditMode,
                     setFieldValue
-                  )
-            }
+                  );
+
+              fetchModalsByMake();
+            }}
           />
-          <CategorySelectDropdown
-            label="Model"
-            name="model"
-            options={modals}
-            value={isEditMode ? model?.id : values?.model}
-            onChange={(e) =>
-              isEditMode
-                ? handleInputChange(
-                    e,
-                    "model",
-                    modals,
-                    "advert",
-                    isEditMode,
-                    setFieldValue
-                  )
-                : handleInputChange(
-                    e,
-                    null,
-                    null,
-                    null,
-                    isEditMode,
-                    setFieldValue
-                  )
-            }
-          />
+
+          {isCustomModelSelected ? (
+            <FormField
+              FieldType="text"
+              inputField={true}
+              name="model"
+              label="Model"
+              className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
+              placeholder={"Model"}
+              value={isEditMode ? model : values?.model}
+              // value={modelValue}
+              onChange={(e) => {
+                isEditMode
+                  ? handleInputChange(
+                      e,
+                      null,
+                      null,
+                      "advert",
+                      isEditMode,
+                      setFieldValue
+                    )
+                  : handleInputChange(
+                      e,
+                      null,
+                      null,
+                      null,
+                      isEditMode,
+                      setFieldValue
+                    );
+                setModelValue(e.target.value);
+              }}
+            />
+          ) : (
+            <CategorySelectDropdown
+              label="Model"
+              addCustomOption={true}
+              name="model"
+              options={modals}
+              value={isEditMode ? model?.id : values?.model}
+              onChange={(e) => {
+                isEditMode
+                  ? handleInputChange(
+                      e,
+                      "model",
+                      modals,
+                      "advert",
+                      isEditMode,
+                      setFieldValue
+                    )
+                  : handleInputChange(
+                      e,
+                      null,
+                      null,
+                      null,
+                      isEditMode,
+                      setFieldValue
+                    );
+                handleModelChange(e);
+              }}
+            />
+          )}
         </div>
 
         <div className="flex sm:flex-row flex-col  gap-4">

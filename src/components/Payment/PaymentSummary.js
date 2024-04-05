@@ -29,8 +29,10 @@ const PaymentSummary = ({
   const { name, amount } = Object(filteredSubscriptions[0] || {});
 
   const filteredPackages = packages
-    ? packages.filter((ad) => ad?.id == advert_package_id)
+    ? packages.filter((ad) => ad?.specificity_order == advert_package_id)
     : [];
+
+  console.log(filteredPackages);
 
   const { name: packageName, amount: packageAmount } = Object(
     filteredPackages[0] || {}
@@ -43,8 +45,6 @@ const PaymentSummary = ({
   const { name: bundleName, amount: bundleAmount } = Object(
     filteredBundles[0] || {}
   );
-
-  console.log(filteredSubscriptions);
 
   const [totalAmount, setTotalAmount] = useState(0);
 

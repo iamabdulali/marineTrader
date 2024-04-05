@@ -6,6 +6,7 @@ export const CategorySelectDropdown = ({
   options,
   value,
   onChange,
+  addCustomOption,
 }) => (
   <div className="mb-4 w-full text-sm">
     <label
@@ -27,6 +28,11 @@ export const CategorySelectDropdown = ({
           {name}
         </option>
       ))}
+      {addCustomOption ? (
+        <option value="custom" label={`Select a Custom Modal`} />
+      ) : (
+        ""
+      )}
     </Field>
     <ErrorMessage component="span" name={name} className="text-[red]" />
   </div>

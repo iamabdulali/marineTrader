@@ -86,9 +86,10 @@ function App() {
       );
       dispatch({ type: type, payload: data.data });
     }
+
     fetchOptions("categories", "CATEGORIES");
     fetchOptions("make", "MAKES");
-    fetchOptions("models", "MODALS");
+    // fetchOptions("models", "MODALS");
     fetchOptions("conditions", "CONDITIONS");
     fetchOptions("types", "TYPES");
     fetchOptions("currencies", "CURRENCY");

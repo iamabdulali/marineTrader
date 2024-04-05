@@ -27,6 +27,8 @@ const Step1 = ({ showSpotlightSelection, spotlightFor, isEditMode }) => {
     return maxId + 1;
   }
 
+  console.log(values);
+
   const handleInputChange = (e) => {
     const { name, value, checked } = e.target;
     const isCountrySpotlight = name === `country${spotlightFor}Spotlights`;
