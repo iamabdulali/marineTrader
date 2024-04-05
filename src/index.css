@@ -178,6 +178,28 @@ code {
   border-top: 4px solid #0d1a8b;
 }
 
+.stdropdown-container {
+  background-color: white;
+  padding: 0.92em 0.75em;
+  border: 2px solid #ceced7 !important;
+}
+
+.stsearch-box input {
+  border: none !important;
+  outline: none !important;
+  padding: 0 !important;
+}
+
+.stdropdown-tool svg {
+  fill: #8891b2;
+  width: 16px;
+  height: 16px;
+}
+
+.stsearch-box {
+  padding: 0 !important;
+}
+
 @media (min-width: 1250px) {
   .dashboard-page {
     transform: translateX(0) !important;

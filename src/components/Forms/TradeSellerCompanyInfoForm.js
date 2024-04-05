@@ -1,24 +1,33 @@
 import React, { useEffect, useState } from "react";
 import { eye } from "../../assets";
 import { FaChevronDown, FaEye } from "react-icons/fa";
-import { Field, ErrorMessage } from "formik";
+import { Field, ErrorMessage, useFormikContext } from "formik";
 import SelectDropdown from "./FormElements/SelectDropdown";
-import {
-  countryOptions,
-  currencyOptions,
-  regionOptions,
-} from "../../utils/DropdownOptions";
+
 import Heading from "../Heading";
 import { fetchOptions } from "../../utils/fetch/fetchData";
+import {
+  CitySelect,
+  CountrySelect,
+  StateSelect,
+  GetCountries,
+} from "react-country-state-city";
+import "react-country-state-city/dist/react-country-state-city.css";
+import CountryRegionDropdown from "../CountryRegionDropdown";
 
 export default function TradeSellerCompanyInfoForm() {
   const [showPassword1, setShowPassword1] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
-
-  const [loading, setLoading] = useState(true);
+  const [countryid, setCountryid] = useState(0);
+  const [stateid, setstateid] = useState(0);
   const [currency, setCurrency] = useState([]);
+  const [countries, setCountries] = useState([]);
   useEffect(() => {
     fetchOptions("currencies", setCurrency);
+    GetCountries().then((result) => {
+      console.log(result);
+      setCountries(result);
+    });
   }, []);
 
   const togglePasswordVisibility = (field) => {
@@ -27,6 +36,18 @@ export default function TradeSellerCompanyInfoForm() {
     } else if (field === 2) {
       setShowPassword2(!showPassword2);
     }
+  };
+
+  const { values, setFieldValue } = useFormikContext();
+
+  function getPhoneCodeByCountryName(countryName) {
+    const country = countries.find((country) => country.id == countryName);
+    return country ? country?.phone_code : null;
+  }
+
+  const clearValues = (name) => {
+    document.querySelector(`.${name}`).value = "";
+    console.log(`.${name}`);
   };
 
   return (
@@ -93,85 +114,27 @@ export default function TradeSellerCompanyInfoForm() {
             />
           </div>
         </div>
-        <div className="flex gap-4 sm:flex-row flex-col">
-          <div className="w-full">
-            <Field
-              name="city"
-              type="text"
-              placeholder="Town/City"
-              className="border-[#CECED7] border-2 rounded-md p-3 w-full"
-            />
-            <ErrorMessage
-              name="city"
-              component="span"
-              className="text-red-500"
-            />
-          </div>
-          <div className="w-full">
-            <Field
-              name="postcode"
-              type="text"
-              placeholder="Postal Code"
-              className="border-[#CECED7] border-2 rounded-md p-3 w-full"
-            />
-            <ErrorMessage
-              name="postcode"
-              component="span"
-              className="text-red-500"
-            />
-          </div>
-        </div>
-        <div className="flex gap-4 sm:flex-row flex-col">
-          <div className="w-full ">
-            <div className="flex items-center">
-              <FaChevronDown
-                className="absolute right-6 block sm:hidden"
-                size={12}
-              />
-              <SelectDropdown
-                name="country"
-                options={countryOptions}
-                className="border-[#CECED7] border-2 rounded-md p-3 w-full appearance-none sm:appearance-auto bg-white"
-              />
-            </div>
-            <ErrorMessage
-              name="country"
-              component="span"
-              className="text-red-500"
-            />
-          </div>
 
-          <div className="w-full ">
-            <div className="items-center flex">
-              <FaChevronDown
-                className="absolute right-6 block sm:hidden"
-                size={12}
-              />
-              <SelectDropdown
-                name="region"
-                options={regionOptions}
-                className="border-[#CECED7] border-2 rounded-md p-3 w-full appearance-none sm:appearance-auto bg-white"
-              />
-            </div>
-            <ErrorMessage
-              name="region"
-              component="span"
-              className="text-red-500"
-            />
-          </div>
-        </div>
+        <CountryRegionDropdown />
+
         <div className="flex gap-4 sm:flex-row flex-col">
           <div className="w-full relative">
             {/* Country Code Dropdown */}
             <div className="flex items-center">
-              <div className="absolute left-3 flex items-center ">
+              <div className="absolute left-2 flex items-center ">
                 <Field
+                  value={getPhoneCodeByCountryName(values?.country)}
                   as="select"
                   name="countryCode"
                   className="rounded-md py-2 w-full appearance-none sm:appearance-auto bg-white"
                 >
-                  <option value="+1">+1 (USA)</option>
-                  <option value="+44">+44 (UK)</option>
+                  {countries.map(({ phone_code, iso2, id }) => {
+                    return (
+                      <option key={id} value={phone_code}>
+                        + {phone_code} ({iso2})
+                      </option>
+                    );
+                  })}
                 </Field>
                 <FaChevronDown className=" block sm:hidden" size={12} />
               </div>
@@ -182,7 +145,7 @@ export default function TradeSellerCompanyInfoForm() {
                   type="tel"
                   name="phone_no"
                   placeholder="7700900077"
-                  className="border-[#CECED7] border-2 rounded-md p-3 pl-24 sm:pl-28 w-full bg-white"
+                  className="border-[#CECED7] border-2 rounded-md p-3 pl-28 w-full bg-white"
                 />
               </div>
             </div>

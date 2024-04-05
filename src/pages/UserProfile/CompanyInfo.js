@@ -1,12 +1,22 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FormField } from "../../components/FormField";
 import { Field, useFormikContext } from "formik";
 import SelectDropdown from "../../components/SelectDropdown";
 import { AuthContext } from "../../Context/AuthContext";
 import { isEditable } from "@testing-library/user-event/dist/utils";
 import { countryOptions, regionOptions } from "../../utils/DropdownOptions";
+import { GetCountries } from "react-country-state-city/dist/cjs";
+import axios from "axios";
 
 const CompanyInfo = ({ editable, isPrivateSeller }) => {
+  const [countries, setCountries] = useState([]);
+  const [states, setStates] = useState([]);
+  const [statesByCountries, setStatesByCountries] = useState([]);
+  const [country, setCountry] = useState([]);
+  const [cities, setCities] = useState([]);
+  const [AllStates, setAllStates] = useState([]);
+  const [cityByStates, setCitiesByStates] = useState([]);
+
   const { currency } = useContext(AuthContext);
 
   const { values, setFieldValue } = useFormikContext();
@@ -27,7 +37,35 @@ const CompanyInfo = ({ editable, isPrivateSeller }) => {
     }
   };
 
-  console.log(values);
+  const getOptions = async (url, setData) => {
+    try {
+      const { data } = await axios.get(url);
+      setData(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    GetCountries().then((result) => {
+      setCountries(result);
+    });
+    getOptions(
+      "https://venkatmcajj.github.io/react-country-state-city/data/statesminified.json",
+      setStates
+    );
+
+    getOptions(
+      "https://venkatmcajj.github.io/react-country-state-city/data/citiesminified.json",
+      setCities
+    );
+  }, []);
+
+  // console.log(countries[values.user.country]);
+  console.log(values.user.country);
+
+  console.log(countries[values.user.country]);
+  console.log(countries);
 
   return (
     <>
@@ -113,7 +151,7 @@ const CompanyInfo = ({ editable, isPrivateSeller }) => {
           </label>
           <Field
             onChange={(e) => handleInputChange(e)}
-            value={values.user.country}
+            value={countries[values.user.country + 1]?.id}
             disabled={!editable}
             as="select"
             className={`border-b-2 text-sm font-semibold outline-none ${
@@ -122,11 +160,13 @@ const CompanyInfo = ({ editable, isPrivateSeller }) => {
             name={"country"}
           >
             <option>Select a {"country"}</option>
-            {countryOptions.map((option) => (
-              <option key={option.id} value={option.id} label={option.name}>
-                {option.name}
-              </option>
-            ))}
+            {countries.map(({ name, id }) => {
+              return (
+                <option key={id} value={id}>
+                  {name}
+                </option>
+              );
+            })}
           </Field>
         </div>
 

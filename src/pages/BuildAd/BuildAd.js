@@ -19,8 +19,6 @@ import {
   closeModal,
   openModal,
 } from "../../utils/ModalOpeningClosingFunctions";
-import VideoModal from "../../components/VideoTutorial/VideoModal";
-import VideoBtn from "../../components/VideoTutorial/VideoBtn";
 import { SERVER_BASE_URL, bigBoats, smallBoats } from "../..";
 import { toast } from "react-toastify";
 import { displayErrorMessages } from "../../utils/displayErrors";
@@ -214,7 +212,7 @@ const BuildAd = () => {
 
   const prevStep = () => setStep(step - 1);
   const nextStep = () => setStep(step + 1);
-  const [isPaymentOptionOpen, setIsPaymentOptionOpen] = useState(true);
+  const [isPaymentOptionOpen, setIsPaymentOptionOpen] = useState(false);
   let [isVideoOpen, setIsVideoOpen] = useState(false);
 
   // const nextStep = (values, { setTouched, setErrors }) => {
@@ -305,7 +303,6 @@ const BuildAd = () => {
       const { errors } = error.response.data;
       displayErrorMessages(errors);
       setSpinner(false);
-      openModal(setIsPaymentOptionOpen);
     }
   };
 
