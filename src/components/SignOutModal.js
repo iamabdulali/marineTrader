@@ -10,9 +10,6 @@ const SignOutModal = ({ onClick }) => {
   const handleSignOut = () => {
     localStorage.removeItem("token");
     dispatch({ type: "LOGOUT" });
-    setTimeout(() => {
-      window.location.reload();
-    }, 500);
   };
 
   return (

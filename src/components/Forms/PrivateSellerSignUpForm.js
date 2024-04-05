@@ -10,6 +10,7 @@ import {
 } from "../../utils/DropdownOptions";
 import { eye } from "../../assets";
 import { fetchOptions } from "../../utils/fetch/fetchData";
+import CountryRegionDropdown from "../CountryRegionDropdown";
 
 const PrivateSellerSignUpForm = ({ setFieldValue, values }) => {
   const togglePasswordVisibility = (field, setFieldValue, values) => {
@@ -81,7 +82,7 @@ const PrivateSellerSignUpForm = ({ setFieldValue, values }) => {
         </div>
       </div>
 
-      <div className="flex gap-4 sm:flex-row flex-col">
+      {/* <div className="flex gap-4 sm:flex-row flex-col">
         <div className="w-full">
           <Field
             type="text"
@@ -148,7 +149,9 @@ const PrivateSellerSignUpForm = ({ setFieldValue, values }) => {
             className="text-red-500"
           />
         </div>
-      </div>
+      </div> */}
+
+      <CountryRegionDropdown />
 
       <div className="flex gap-4 sm:flex-row flex-col">
         <div className="w-full relative">
@@ -302,6 +305,7 @@ const PrivateSellerSignUpForm = ({ setFieldValue, values }) => {
           accept="image/jpeg, image/png"
           fieldName="image_field"
         />
+        <p className="mt-2 font-medium">Upload an image of 156x156</p>
       </div>
     </>
   );

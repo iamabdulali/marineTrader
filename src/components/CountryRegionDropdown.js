@@ -82,6 +82,8 @@ const CountryRegionDropdown = () => {
             onChange={(e) => {
               getStatesByCountry(e.target.value);
               setFieldValue("country", getCountry(e.target.value).id);
+              setFieldValue("city", "");
+              setFieldValue("region", "");
             }}
           >
             <option>Select a Country</option>
@@ -108,6 +110,7 @@ const CountryRegionDropdown = () => {
             onChange={(e) => {
               getCitiesByStates(e.target.value);
               setFieldValue("region", getState(e.target.value).id);
+              setFieldValue("city", "");
             }}
           >
             <option>Select a Region</option>
