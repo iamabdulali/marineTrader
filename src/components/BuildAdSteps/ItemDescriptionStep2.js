@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { CategorySelectDropdown } from "../CategorySelectDropdown";
 import { FormField } from "../FormField";
 import UpdateSubtitleNotice from "../UpdateSubtitleNotice";
@@ -69,6 +69,14 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    if (isEditMode) {
+      if (!Number(model?.name)) {
+        setIsCustomModelSelected(true);
+      }
+    }
+  }, []);
 
   return (
     <BuildLayout
@@ -162,6 +170,8 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
             name="make"
             options={makes}
             onChange={(e) => {
+              fetchModalsByMake();
+
               isEditMode
                 ? handleInputChange(
                     e,
@@ -179,8 +189,6 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
                     isEditMode,
                     setFieldValue
                   );
-
-              fetchModalsByMake();
             }}
           />
 
@@ -192,7 +200,7 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
               label="Model"
               className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
               placeholder={"Model"}
-              value={isEditMode ? model : values?.model}
+              value={isEditMode ? model?.name : values?.model}
               // value={modelValue}
               onChange={(e) => {
                 isEditMode

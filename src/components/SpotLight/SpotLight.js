@@ -10,17 +10,18 @@ const SpotLight = () => {
   const { userLocationDetails, country } = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
   const [homeSpotlights, setHomeSpotlights] = useState([]);
+  const [categorySpotlights, setCategorySpotlights] = useState([]);
   const [refresh, setRefresh] = useState(false);
 
   // const { country } = Object(userLocationDetails);
   console.log(country);
 
-  const getHomePageSpotlight = async (country) => {
+  const getSpotlight = async (country, setData, url) => {
     try {
       const { data } = await axios.get(
-        `${SERVER_BASE_URL}/home/spotlight?country=${country}`
+        `${SERVER_BASE_URL}/${url}/spotlight?country=${country}`
       );
-      setHomeSpotlights(data.data);
+      setData(data.data);
       console.log(data);
       setLoading(false);
     } catch (error) {
@@ -30,7 +31,8 @@ const SpotLight = () => {
   };
 
   useEffect(() => {
-    getHomePageSpotlight(country);
+    getSpotlight(country, setHomeSpotlights, "home");
+    getSpotlight(country, setCategorySpotlights, "category");
   }, [country]);
 
   return (
