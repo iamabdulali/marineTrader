@@ -69,10 +69,11 @@ export default function Selling() {
           <p className="font-semibold text-[#11133D] mt-5">
             {hasListing ? "Select a category to start" : ""}
           </p>
-          <div className="overflow-x-scroll category-menu">
+          <div className="category-menu">
             <CategoryList
               initialCategory={-1}
-              className="flex lg:w-full min-h-[88px] mt-5 justify-between px-4 bg-white border-2 rounded-lg border-[#D9DFF5] smallLg:w-auto w-[1300px]"
+              className="flex smallLg:flex-nowrap smallLg:justify-between flex-wrap lg:w-full min-h-[88px] mt-5 justify-start smallLg:gap-0  gap-4 px-4 bg-white border-2 rounded-lg border-[#D9DFF5]
+               smallLg:w-auto"
               activeCategory="border-b-4 border-[#0D1A8B] py-3"
               unActiveCategory="py-3"
               onCategoryChange={(category) => {

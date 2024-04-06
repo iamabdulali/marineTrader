@@ -100,13 +100,13 @@ const SubscriptionStep2 = () => {
             handleTabClick={handleTabClick}
           />
           <div className="lg:hidden block pt-10 pb-20">
-            {subscriptionsPlan?.map(({ name, amount, id }, index) => {
+            {subscriptionsPlan?.map(({ name, amount, id, ...props }, index) => {
               return (
                 selectedTab === name && (
                   <Subscriptions
                     key={id}
                     id={id}
-                    featuresArray={featuresArray[index]}
+                    featuresArray={props}
                     packagePrice={`£${Number(amount).toFixed(0)}`}
                     packageName={name}
                     subHeading="/12 months package"
