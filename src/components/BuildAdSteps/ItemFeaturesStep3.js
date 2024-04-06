@@ -38,11 +38,16 @@ const ItemFeaturesStep3 = ({ isEditMode }) => {
       console.log(error);
     }
   };
-  const selectedEngine = values?.selectedEngine;
+  let engineMakeValue;
+  const selectedEngine = values?.selectedEngine || 0;
+  if (values?.engines != undefined) {
+    engineMakeValue = values?.engines[selectedEngine]?.make;
+  }
+  console.log(values?.engines);
 
   useEffect(() => {
     fetchModalsByMake();
-  }, [values?.engines[selectedEngine]?.make]);
+  }, [engineMakeValue]);
 
   const handleTabClick = (tab) => {
     setSelectedTab(tab);
