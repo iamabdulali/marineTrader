@@ -52,6 +52,8 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
   const [modals, setModals] = useState([]);
   const [modelValue, setModelValue] = useState("");
   const [isCustomModelSelected, setIsCustomModelSelected] = useState(false);
+  const [makeValue, setMakeValue] = useState("");
+  const [isCustomMakeSelected, setIsCustomMakeSelected] = useState(false);
 
   const handleModelChange = (e) => {
     const selectedValue = e.target.value;
@@ -59,7 +61,11 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
     setIsCustomModelSelected(selectedValue === "custom");
   };
 
-  console.log(values?.make);
+  const handleMakeChange = (e) => {
+    const selectedValue = e.target.value;
+    setMakeValue(selectedValue);
+    setIsCustomMakeSelected(selectedValue === "custom");
+  };
 
   useEffect(() => {
     if (isEditMode) {
@@ -158,9 +164,12 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
       />
       <div className={`${showDetails ? "block" : "hidden"}`}>
         <div className="flex sm:flex-row flex-col gap-4 relative">
-          {isCustomModelSelected ? (
+          {isCustomModelSelected && isCustomMakeSelected ? (
             <button
-              onClick={() => setIsCustomModelSelected(false)}
+              onClick={() => {
+                setIsCustomModelSelected(false);
+                setIsCustomMakeSelected(false);
+              }}
               type="button"
               className="absolute underline right-0 text-sm font-medium cursor-pointer text-[#11133D]"
             >
@@ -170,31 +179,67 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
             ""
           )}
 
-          <CategorySelectDropdown
-            value={isEditMode ? make?.id : values?.make}
-            label="Make"
-            name="make"
-            options={makes}
-            onChange={(e) => {
-              isEditMode
-                ? handleInputChange(
-                    e,
-                    "make",
-                    makes,
-                    "advert",
-                    isEditMode,
-                    setFieldValue
-                  )
-                : handleInputChange(
-                    e,
-                    null,
-                    null,
-                    null,
-                    isEditMode,
-                    setFieldValue
-                  );
-            }}
-          />
+          {isCustomMakeSelected ? (
+            <FormField
+              FieldType="text"
+              inputField={true}
+              name="make"
+              label="Make"
+              className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
+              placeholder={"Make"}
+              value={isEditMode ? make?.name : values?.make}
+              // value={modelValue}
+              onChange={(e) => {
+                isEditMode
+                  ? handleInputChange(
+                      e,
+                      null,
+                      null,
+                      "advert",
+                      isEditMode,
+                      setFieldValue
+                    )
+                  : handleInputChange(
+                      e,
+                      null,
+                      null,
+                      null,
+                      isEditMode,
+                      setFieldValue
+                    );
+                setModelValue(e.target.value);
+              }}
+            />
+          ) : (
+            <CategorySelectDropdown
+              valueAsString={true}
+              value={isEditMode ? make?.id : values?.make}
+              label="Make"
+              name="make"
+              addCustomOption={true}
+              options={makes}
+              onChange={(e) => {
+                isEditMode
+                  ? handleInputChange(
+                      e,
+                      "make",
+                      makes,
+                      "advert",
+                      isEditMode,
+                      setFieldValue
+                    )
+                  : handleInputChange(
+                      e,
+                      null,
+                      null,
+                      null,
+                      isEditMode,
+                      setFieldValue
+                    );
+                handleMakeChange(e);
+              }}
+            />
+          )}
 
           {isCustomModelSelected ? (
             <FormField
@@ -229,6 +274,7 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
             />
           ) : (
             <CategorySelectDropdown
+              valueAsString={true}
               label="Model"
               addCustomOption={true}
               name="model"

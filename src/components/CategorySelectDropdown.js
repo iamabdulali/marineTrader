@@ -7,6 +7,7 @@ export const CategorySelectDropdown = ({
   value,
   onChange,
   addCustomOption,
+  valueAsString,
 }) => (
   <div className="mb-4 w-full text-sm">
     <label
@@ -23,13 +24,20 @@ export const CategorySelectDropdown = ({
       onChange={onChange}
     >
       <option value="" label={`Select a ${label.toLowerCase()}`} />
-      {options.map(({ id, name }) => (
-        <option key={id} value={id}>
-          {name}
-        </option>
-      ))}
+      {valueAsString
+        ? options.map(({ id, name }) => (
+            <option key={id} value={name}>
+              {name}
+            </option>
+          ))
+        : options.map(({ id, name }) => (
+            <option key={id} value={id}>
+              {name}
+            </option>
+          ))}
+
       {addCustomOption ? (
-        <option value="custom" label={`Select a Custom Modal`} />
+        <option value="custom" label={`Select a custom ${name}`} />
       ) : (
         ""
       )}

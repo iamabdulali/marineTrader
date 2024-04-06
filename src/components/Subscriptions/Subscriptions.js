@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FaCheck, FaCheckCircle, FaInfo } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { star } from "../../assets";
+import { selected, star } from "../../assets";
 import { Tooltip } from "react-tooltip";
 
 const Subscriptions = ({
@@ -12,6 +12,7 @@ const Subscriptions = ({
   subHeading,
   textColor,
   id,
+  selectedSubscription,
 }) => {
   const mapFeaturesToText = (features) => {
     const featureText = {
@@ -45,11 +46,13 @@ const Subscriptions = ({
     // Filter out null values (for features that should not be displayed)
     return Object.values(featureText).filter((text) => text !== null);
   };
+  const { subscription_plan_id } = Object(selectedSubscription);
 
   return (
     <div
       key={id}
-      className={`bg-white shadow-[7px] lg:w-6/12 w-full border-t-4 relative py-6 sm:px-5 px-3 ${borderColor}`}
+      className={`bg-white   
+       shadow-[7px] lg:w-6/12 w-full border-t-4 relative py-6 sm:px-5 px-3 ${borderColor}`}
     >
       <p className="text-[#11133D] font-bold text-3xl ">
         {packagePrice}
@@ -132,12 +135,24 @@ const Subscriptions = ({
           );
         })}
       </div>
-      <Link
-        to={`/payment/subscription/${id}`}
-        className="block mt-6 text-center w-11/12 mx-auto border-[3px] border-[#0D1A8B] rounded-lg p-2 text-[#0D1A8B] font-semibold hover:bg-[#0D1A8B] hover:text-white"
-      >
-        Select
-      </Link>
+      {subscription_plan_id == id ? (
+        <>
+          <img
+            src={selected}
+            className="sm:w-40 w-20 -top-4 -right-1 absolute z-10"
+          />
+          <button className="block mt-6 text-center w-11/12 mx-auto border-[3px] border-[#0D1A8B] rounded-lg p-2 text-[#0D1A8B] font-semibold hover:bg-[#0D1A8B] hover:text-white">
+            You're Currently Subscribed To This
+          </button>
+        </>
+      ) : (
+        <Link
+          to={`/payment/subscription/${id}`}
+          className="block mt-6 text-center w-11/12 mx-auto border-[3px] border-[#0D1A8B] rounded-lg p-2 text-[#0D1A8B] font-semibold hover:bg-[#0D1A8B] hover:text-white"
+        >
+          Select
+        </Link>
+      )}
     </div>
   );
 };

@@ -58,11 +58,7 @@ const SubscriptionStep2 = () => {
     );
   }, [selectedCategory, subscriptions]);
 
-  if (hasActiveSubscriptionData?.subscription_plan_id == "2") {
-    navigate("/dashboard");
-    toast.error("You are already subscribed to the highest package");
-  }
-
+  console.log({ subscriptionsPlan, hasActiveSubscriptionData });
   const featuresArray = [DealerPlus, ServicePlus];
 
   return (
@@ -87,6 +83,7 @@ const SubscriptionStep2 = () => {
                     ? "border-[#36B37E]"
                     : "border-[#FFB800]"
                 }
+                selectedSubscription={hasActiveSubscriptionData}
               />
             );
           })}
@@ -105,6 +102,7 @@ const SubscriptionStep2 = () => {
                 selectedTab === name && (
                   <Subscriptions
                     key={id}
+                    selectedSubscription={hasActiveSubscriptionData}
                     id={id}
                     featuresArray={props}
                     packagePrice={`£${Number(amount).toFixed(0)}`}
