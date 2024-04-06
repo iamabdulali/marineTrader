@@ -3,7 +3,7 @@ import React from "react";
 import { FaTimes } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
-const PaymentOptionModal = ({ onClose, id, hasSubscription }) => {
+const PaymentOptionModal = ({ onClose, id, hasSubscription, hasSpotlight }) => {
   return (
     <div className="bg-white rounded-lg border-t-8 border-[#0D1A8B] py-3 px-6">
       <div className={`flex items-center justify-between mt-3`}>
@@ -41,14 +41,14 @@ const PaymentOptionModal = ({ onClose, id, hasSubscription }) => {
             Inclusive Monthly Allowance
           </label>
         </div> */}
-        {hasSubscription ? (
+        {hasSubscription && !hasSpotlight ? (
           <div className="radio mt-3">
             <label
               htmlFor="allowance"
               className="radio-label mr-5 font-medium text-[#11133D]"
             >
-              You Payment has been completed and deducted from your Inclusive
-              Allowance/Bundle Allowance
+              Dont worry, Your subscription allowance or your bundle has covered
+              this ad!
             </label>
           </div>
         ) : (
@@ -68,7 +68,7 @@ const PaymentOptionModal = ({ onClose, id, hasSubscription }) => {
           </div>
         )}
       </div>
-      {hasSubscription ? (
+      {hasSubscription && !hasSpotlight ? (
         <Link
           to="/dashboard"
           className="py-3 w-full text-center block mt-7 mb-4 text-white hover:bg-[#0a1dbd] bg-[#0D1A8B] rounded-md"

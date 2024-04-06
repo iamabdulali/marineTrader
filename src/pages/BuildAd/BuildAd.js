@@ -37,6 +37,7 @@ const BuildAd = () => {
   const [hasBundle, setHasBundle] = useState(0);
   const [advert, setAdvert] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [hasSpotlight, setHasSpotlights] = useState(false);
   const { selectedPackage, selectedCategory, dispatch } =
     useContext(AuthContext);
 
@@ -302,24 +303,24 @@ const BuildAd = () => {
     }
   }, []);
 
-  // useEffect(() => {
-  //   const {
-  //     category_spotlights_continents,
-  //     home_spotlights_continents,
-  //     home_spotlights_countries,
-  //     category_spotlights_countries,
-  //   } = Object(advert);
+  useEffect(() => {
+    const {
+      category_spotlights_continents,
+      home_spotlights_continents,
+      home_spotlights_countries,
+      category_spotlights_countries,
+    } = Object(advert);
 
-  //   const hasAnyValue =
-  //     category_spotlights_continents?.length > 0 ||
-  //     category_spotlights_countries?.length > 0 ||
-  //     home_spotlights_continents?.length > 0 ||
-  //     home_spotlights_countries?.length > 0;
+    const hasAnyValue =
+      category_spotlights_continents?.length > 0 ||
+      category_spotlights_countries?.length > 0 ||
+      home_spotlights_continents?.length > 0 ||
+      home_spotlights_countries?.length > 0;
 
-  //   if (hasAnyValue && !EditMode) {
-  //     NavigateTo(`/payment/advert/${advertID}`);
-  //   }
-  // }, [advertID, advert, spinner]);
+    if (hasAnyValue && !EditMode) {
+      setHasSpotlights(true);
+    }
+  }, [advertID, advert, spinner]);
 
   return (
     <Layout>
@@ -427,6 +428,7 @@ const BuildAd = () => {
                   id={advertID}
                   onClose={() => closeModal(setIsPaymentOptionOpen)}
                   hasSubscription={hasSubscription}
+                  hasSpotlight={hasSpotlight}
                 />
               </Modal>
             </Form>
