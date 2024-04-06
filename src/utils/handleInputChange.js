@@ -7,8 +7,8 @@ export const handleInputChange = (
   setFieldValue
 ) => {
   const { name, value } = e.target;
+  console.log(name);
   if (isEditMode) {
-    console.log(name, value);
     if (name == dropdownName) {
       const selectedCurrency = dropdownOptions.find(
         (c) => c.id === parseInt(value)

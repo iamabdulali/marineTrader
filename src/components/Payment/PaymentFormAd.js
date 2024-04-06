@@ -68,10 +68,10 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
     advert_package_id,
     advert_status,
     category_id,
-    countryCategorySpotlights,
-    countryHomeSpotlights,
-    continentCategorySpotlights,
-    continentHomeSpotlights,
+    category_spotlights_countries,
+    category_spotlights_continents,
+    home_spotlights_countries,
+    home_spotlights_continents,
   } = Object(advert);
 
   console.log(category_id);
@@ -107,18 +107,18 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
   let spotlights = 0;
 
   if (
-    countryCategorySpotlights?.length === 0 &&
-    countryHomeSpotlights?.length === 0 &&
-    continentCategorySpotlights?.length === 0 &&
-    continentHomeSpotlights?.length === 0
+    category_spotlights_countries?.length === 0 &&
+    category_spotlights_continents?.length === 0 &&
+    home_spotlights_countries?.length === 0 &&
+    home_spotlights_continents?.length === 0
   ) {
     spotlights = false;
   } else {
     spotlights =
-      countryHomeSpotlights?.length * 6.99 +
-      countryCategorySpotlights?.length * 6.99 +
-      continentHomeSpotlights?.length * 89.99 +
-      continentCategorySpotlights?.length * 89.99;
+      category_spotlights_countries?.length * 6.99 +
+      category_spotlights_continents?.length * 6.99 +
+      home_spotlights_countries?.length * 89.99 +
+      home_spotlights_continents?.length * 89.99;
   }
 
   const generateStripeToken = async () => {

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import BuildLayout from "./BuildLayout";
 import { Field, FieldArray, useFormikContext } from "formik";
 import { CategorySelectDropdown } from "../CategorySelectDropdown";
@@ -10,7 +10,9 @@ import ModificationMenu from "./AdComponents/ModificationMenu.js";
 import ContentToggle from "../ItemDetailsPage/ToggleContent.js";
 import Tabs from "../Tabs.js";
 import MachinaryForm from "./AdComponents/MachinaryForm.js";
-import { bigBoats } from "../../index.js";
+import { SERVER_BASE_URL, bigBoats } from "../../index.js";
+import { handleInputChange } from "../../utils/handleInputChange.js";
+import axios from "axios";
 
 const ItemFeaturesStep3 = ({ isEditMode }) => {
   const { values, setFieldValue } = useFormikContext();
@@ -21,6 +23,26 @@ const ItemFeaturesStep3 = ({ isEditMode }) => {
   const [showTanks, setShowTanks] = useState(true);
   const [showMachinary, setShowMachinary] = useState(true);
   const [selectedTab, setSelectedTab] = useState("bow");
+  const [modals, setModals] = useState([]);
+
+  const fetchModalsByMake = async () => {
+    console.log(values);
+    try {
+      const { data } = await axios.get(
+        `${SERVER_BASE_URL}/models?make_id=${
+          values?.engines[values?.selectedEngine]?.make
+        }&category_id=${selectedCategory?.id}`
+      );
+      setModals(data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const selectedEngine = values?.selectedEngine;
+
+  useEffect(() => {
+    fetchModalsByMake();
+  }, [values?.engines[selectedEngine]?.make]);
 
   const handleTabClick = (tab) => {
     setSelectedTab(tab);
@@ -34,7 +56,6 @@ const ItemFeaturesStep3 = ({ isEditMode }) => {
 
   const {
     makes,
-    modals,
     types,
     conditions,
     dispatch,
@@ -65,6 +86,26 @@ const ItemFeaturesStep3 = ({ isEditMode }) => {
                   label="Engine"
                   name="engineCount"
                   options={engineCount}
+                  value={isEditMode ? values?.engineCount : values?.engineCount}
+                  onChange={(e) => {
+                    isEditMode
+                      ? handleInputChange(
+                          e,
+                          null,
+                          null,
+                          "advert",
+                          isEditMode,
+                          setFieldValue
+                        )
+                      : handleInputChange(
+                          e,
+                          null,
+                          null,
+                          null,
+                          isEditMode,
+                          setFieldValue
+                        );
+                  }}
                 />
               </div>
               <FieldArray name="engines">
@@ -103,17 +144,61 @@ const ItemFeaturesStep3 = ({ isEditMode }) => {
                           (_, index) => (
                             <div key={index}>
                               <div className="flex sm:flex-row flex-col gap-4">
-                                {values.selectedEngine === index && (
+                                {values.selectedEngine == index && (
                                   <>
                                     <CategorySelectDropdown
                                       label="Make"
                                       name={`engines.${index}.make`}
                                       options={makes}
+                                      value={
+                                        values?.engines[selectedEngine]?.make
+                                      }
+                                      onChange={(e) => {
+                                        isEditMode
+                                          ? handleInputChange(
+                                              e,
+                                              "make",
+                                              makes,
+                                              "advert",
+                                              isEditMode,
+                                              setFieldValue
+                                            )
+                                          : handleInputChange(
+                                              e,
+                                              null,
+                                              null,
+                                              null,
+                                              isEditMode,
+                                              setFieldValue
+                                            );
+                                      }}
                                     />
                                     <CategorySelectDropdown
                                       label="Model"
                                       name={`engines.${index}.model`}
                                       options={modals}
+                                      value={
+                                        values?.engines[selectedEngine]?.model
+                                      }
+                                      onChange={(e) => {
+                                        isEditMode
+                                          ? handleInputChange(
+                                              e,
+                                              "model",
+                                              modals,
+                                              "advert",
+                                              isEditMode,
+                                              setFieldValue
+                                            )
+                                          : handleInputChange(
+                                              e,
+                                              null,
+                                              null,
+                                              null,
+                                              isEditMode,
+                                              setFieldValue
+                                            );
+                                      }}
                                     />
                                   </>
                                 )}
@@ -125,11 +210,56 @@ const ItemFeaturesStep3 = ({ isEditMode }) => {
                                       label="Condition"
                                       name={`engines.${index}.condition`}
                                       options={conditions}
+                                      value={
+                                        values?.engines[selectedEngine]
+                                          ?.condition
+                                      }
+                                      onChange={(e) => {
+                                        isEditMode
+                                          ? handleInputChange(
+                                              e,
+                                              "condition",
+                                              conditions,
+                                              "advert",
+                                              isEditMode,
+                                              setFieldValue
+                                            )
+                                          : handleInputChange(
+                                              e,
+                                              null,
+                                              null,
+                                              null,
+                                              isEditMode,
+                                              setFieldValue
+                                            );
+                                      }}
                                     />
                                     <CategorySelectDropdown
                                       label="Type"
                                       name={`engines.${index}.type`}
                                       options={types}
+                                      value={
+                                        values?.engines[selectedEngine]?.type
+                                      }
+                                      onChange={(e) => {
+                                        isEditMode
+                                          ? handleInputChange(
+                                              e,
+                                              "type",
+                                              types,
+                                              "advert",
+                                              isEditMode,
+                                              setFieldValue
+                                            )
+                                          : handleInputChange(
+                                              e,
+                                              null,
+                                              null,
+                                              null,
+                                              isEditMode,
+                                              setFieldValue
+                                            );
+                                      }}
                                     />
                                   </>
                                 )}

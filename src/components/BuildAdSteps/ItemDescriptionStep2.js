@@ -59,6 +59,16 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
     setIsCustomModelSelected(selectedValue === "custom");
   };
 
+  console.log(values?.make);
+
+  useEffect(() => {
+    if (isEditMode) {
+      if (!Number(model?.name)) {
+        setIsCustomModelSelected(true);
+      }
+    }
+  }, []);
+
   const fetchModalsByMake = async () => {
     try {
       const { data } = await axios.get(
@@ -71,12 +81,8 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
   };
 
   useEffect(() => {
-    if (isEditMode) {
-      if (!Number(model?.name)) {
-        setIsCustomModelSelected(true);
-      }
-    }
-  }, []);
+    fetchModalsByMake();
+  }, [values?.make]);
 
   return (
     <BuildLayout
@@ -170,8 +176,6 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
             name="make"
             options={makes}
             onChange={(e) => {
-              fetchModalsByMake();
-
               isEditMode
                 ? handleInputChange(
                     e,
