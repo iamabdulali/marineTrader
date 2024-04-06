@@ -127,7 +127,7 @@ const BuildAd = () => {
     vessel_type: "",
     port: "",
     registry_number: "",
-    length: "",
+    length: "123",
     width: "",
     height: "",
     depth: "",
@@ -274,13 +274,8 @@ const BuildAd = () => {
     );
   }, [id]);
 
-  let isBundleSelected;
-
   const handleSubmit = async (values, { setFieldValue }) => {
     setSpinner(true);
-    isBundleSelected = values?.bundles != undefined;
-
-    dispatch({ type: "SELECTED_BUNDLE", payload: values?.bundles });
 
     try {
       const { data } = await axios.post(`${SERVER_BASE_URL}/advert`, values, {
@@ -291,12 +286,7 @@ const BuildAd = () => {
       });
       toast.success("Almost There!");
       setAdvertID(data.data?.id);
-
-      if (selectedPackage != "2") {
-        openModal(setIsPaymentOptionOpen);
-      } else if (hasSubscription == 0 && hasBundle == 0) {
-        openModal(setIsPaymentOptionOpen);
-      }
+      openModal(setIsPaymentOptionOpen);
       setSpinner(false);
     } catch (error) {
       console.error("An unexpected error occurred:", error);
@@ -436,6 +426,7 @@ const BuildAd = () => {
                 <PaymentOptionModal
                   id={advertID}
                   onClose={() => closeModal(setIsPaymentOptionOpen)}
+                  hasSubscription={hasSubscription}
                 />
               </Modal>
             </Form>

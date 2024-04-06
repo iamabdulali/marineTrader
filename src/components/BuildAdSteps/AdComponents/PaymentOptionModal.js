@@ -3,11 +3,12 @@ import React from "react";
 import { FaTimes } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
-const PaymentOptionModal = ({ onClose, id }) => {
+const PaymentOptionModal = ({ onClose, id, hasSubscription }) => {
   return (
     <div className="bg-white rounded-lg border-t-8 border-[#0D1A8B] py-3 px-6">
-      <div className="flex items-center justify-between mt-3">
+      <div className={`flex items-center justify-between mt-3`}>
         <p className="text-[#0D1A8B] font-semibold">How do you want to pay?</p>
+
         <FaTimes
           className="cursor-pointer"
           onClick={onClose}
@@ -15,6 +16,7 @@ const PaymentOptionModal = ({ onClose, id }) => {
           size={24}
         />
       </div>
+
       <div className="mt-6">
         {/* <div className="radio">
           <Field name="paymentMethod" id="paypal" type="radio" value="paypal" />
@@ -39,27 +41,48 @@ const PaymentOptionModal = ({ onClose, id }) => {
             Inclusive Monthly Allowance
           </label>
         </div> */}
-        <div className="radio mt-3">
-          <Field
-            name="paymentMethod"
-            id="checkout"
-            type="radio"
-            value="checkout"
-          />
-          <label
-            htmlFor="checkout"
-            className="radio-label mr-5 font-medium text-[#11133D]"
-          >
-            Checkout
-          </label>
-        </div>
+        {hasSubscription ? (
+          <div className="radio mt-3">
+            <label
+              htmlFor="allowance"
+              className="radio-label mr-5 font-medium text-[#11133D]"
+            >
+              You Payment has been completed and deducted from your Inclusive
+              Allowance/Bundle Allowance
+            </label>
+          </div>
+        ) : (
+          <div className="radio mt-3">
+            <Field
+              name="paymentMethod"
+              id="checkout"
+              type="radio"
+              value="checkout"
+            />
+            <label
+              htmlFor="checkout"
+              className="radio-label mr-5 font-medium text-[#11133D]"
+            >
+              Checkout
+            </label>
+          </div>
+        )}
       </div>
-      <Link
-        to={`/payment/advert/${id}`}
-        className="py-3 w-full text-center block mt-7 mb-4 text-white hover:bg-[#0a1dbd] bg-[#0D1A8B] rounded-md"
-      >
-        Submit
-      </Link>
+      {hasSubscription ? (
+        <Link
+          to="/dashboard"
+          className="py-3 w-full text-center block mt-7 mb-4 text-white hover:bg-[#0a1dbd] bg-[#0D1A8B] rounded-md"
+        >
+          Back To Dashboard
+        </Link>
+      ) : (
+        <Link
+          to={`/payment/advert/${id}`}
+          className="py-3 w-full text-center block mt-7 mb-4 text-white hover:bg-[#0a1dbd] bg-[#0D1A8B] rounded-md"
+        >
+          Submit
+        </Link>
+      )}
     </div>
   );
 };
