@@ -10,7 +10,7 @@ import { validationSchema } from "../../../utils/ValidationSchema";
 import ProgressSteps from "../../../components/ProgressSteps";
 import { toast } from "react-toastify";
 import { displayErrorMessages } from "../../../utils/displayErrors";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Oval } from "react-loader-spinner";
 import axios from "axios";
 import { SERVER_BASE_URL } from "../../..";
@@ -170,7 +170,9 @@ const TradeSeller = () => {
   return (
     <div className="flex">
       <div className="lg:w-7/12 p-4 w-full">
-        <img className="w-32 sm:mx-0 mx-auto" src={logo} alt="logo" />
+        <Link to="/register">
+          <img className="w-32 sm:mx-0 mx-auto" src={logo} alt="logo" />
+        </Link>
         <h1 className="capitalize font-bold text-[#11133D] md:ml-8 mt-10 ml-3">
           Sign up as Trade
         </h1>

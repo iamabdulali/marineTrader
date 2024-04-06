@@ -4,6 +4,7 @@ import { ErrorMessage, Field, useFormikContext } from "formik";
 import { useEffect, useState } from "react";
 import { GetCity, GetCountries, GetState } from "react-country-state-city";
 import "react-country-state-city/dist/react-country-state-city.css";
+import { FaChevronDown } from "react-icons/fa";
 
 const CountryRegionDropdown = () => {
   const [countries, setCountries] = useState([]);
@@ -74,27 +75,33 @@ const CountryRegionDropdown = () => {
     <>
       <div className="flex gap-4 sm:flex-row flex-col">
         <div className="w-full">
-          <Field
-            value={values.country}
-            as="select"
-            name="country"
-            className="border-[#CECED7] border-2 rounded-md p-3 w-full"
-            onChange={(e) => {
-              getStatesByCountry(e.target.value);
-              setFieldValue("country", getCountry(e.target.value).id);
-              setFieldValue("city", "");
-              setFieldValue("region", "");
-            }}
-          >
-            <option>Select a Country</option>
-            {countries.map(({ name, id }) => {
-              return (
-                <option key={id} value={id}>
-                  {name}
-                </option>
-              );
-            })}
-          </Field>
+          <div className="flex items-center">
+            <FaChevronDown
+              className="absolute right-6 block sm:hidden"
+              size={12}
+            />
+            <Field
+              value={values.country}
+              as="select"
+              name="country"
+              className="border-[#CECED7] border-2 rounded-md p-3 w-full appearance-none sm:appearance-auto bg-white"
+              onChange={(e) => {
+                getStatesByCountry(e.target.value);
+                setFieldValue("country", getCountry(e.target.value).id);
+                setFieldValue("city", "");
+                setFieldValue("region", "");
+              }}
+            >
+              <option>Select a Country</option>
+              {countries.map(({ name, id }) => {
+                return (
+                  <option key={id} value={id}>
+                    {name}
+                  </option>
+                );
+              })}
+            </Field>
+          </div>
           <ErrorMessage
             name="country"
             component="span"
@@ -102,26 +109,32 @@ const CountryRegionDropdown = () => {
           />
         </div>
         <div className="w-full">
-          <Field
-            value={values?.region}
-            name="region"
-            className="border-[#CECED7] border-2 rounded-md p-3 w-full"
-            as="select"
-            onChange={(e) => {
-              getCitiesByStates(e.target.value);
-              setFieldValue("region", getState(e.target.value).id);
-              setFieldValue("city", "");
-            }}
-          >
-            <option>Select a Region</option>
-            {statesByCountries.map(({ name, id }) => {
-              return (
-                <option key={id} value={id}>
-                  {name}
-                </option>
-              );
-            })}
-          </Field>
+          <div className="flex items-center">
+            <FaChevronDown
+              className="absolute right-6 block sm:hidden"
+              size={12}
+            />
+            <Field
+              value={values?.region}
+              name="region"
+              className="border-[#CECED7] border-2 rounded-md p-3 w-full appearance-none sm:appearance-auto bg-white"
+              as="select"
+              onChange={(e) => {
+                getCitiesByStates(e.target.value);
+                setFieldValue("region", getState(e.target.value).id);
+                setFieldValue("city", "");
+              }}
+            >
+              <option>Select a Region</option>
+              {statesByCountries.map(({ name, id }) => {
+                return (
+                  <option key={id} value={id}>
+                    {name}
+                  </option>
+                );
+              })}
+            </Field>
+          </div>
           <ErrorMessage
             name="region"
             component="span"
@@ -131,20 +144,26 @@ const CountryRegionDropdown = () => {
       </div>
       <div className="flex gap-4 sm:flex-row flex-col">
         <div className="w-full">
-          <Field
-            as="select"
-            name="city"
-            className="border-[#CECED7] border-2 rounded-md p-3 w-full"
-          >
-            <option>Select a City</option>
-            {cityByStates?.map(({ name, id }) => {
-              return (
-                <option key={id} value={id}>
-                  {name}
-                </option>
-              );
-            })}
-          </Field>
+          <div className="flex items-center">
+            <FaChevronDown
+              className="absolute right-6 block sm:hidden"
+              size={12}
+            />
+            <Field
+              as="select"
+              name="city"
+              className="border-[#CECED7] border-2 rounded-md p-3 w-full appearance-none sm:appearance-auto bg-white"
+            >
+              <option>Select a City</option>
+              {cityByStates?.map(({ name, id }) => {
+                return (
+                  <option key={id} value={id}>
+                    {name}
+                  </option>
+                );
+              })}
+            </Field>
+          </div>
           <ErrorMessage name="city" component="span" className="text-red-500" />
         </div>
         <div className="w-full">

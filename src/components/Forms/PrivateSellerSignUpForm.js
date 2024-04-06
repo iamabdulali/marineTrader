@@ -11,16 +11,28 @@ import {
 import { eye } from "../../assets";
 import { fetchOptions } from "../../utils/fetch/fetchData";
 import CountryRegionDropdown from "../CountryRegionDropdown";
+import { GetCountries } from "react-country-state-city/dist/cjs";
 
 const PrivateSellerSignUpForm = ({ setFieldValue, values }) => {
+  const [countries, setCountries] = useState([]);
+
   const togglePasswordVisibility = (field, setFieldValue, values) => {
     setFieldValue(`showPassword${field}`, !values[`showPassword${field}`]);
   };
-  const [loading, setLoading] = useState(true);
   const [currency, setCurrency] = useState([]);
   useEffect(() => {
     fetchOptions("currencies", setCurrency);
+    GetCountries().then((result) => {
+      console.log(result);
+      setCountries(result);
+    });
   }, []);
+
+  function getPhoneCodeByCountryName(countryName) {
+    const country = countries.find((country) => country.id == countryName);
+    return country ? country?.phone_code : null;
+  }
+
   return (
     <>
       {/* Form rows */}
@@ -81,90 +93,25 @@ const PrivateSellerSignUpForm = ({ setFieldValue, values }) => {
           />
         </div>
       </div>
-
-      {/* <div className="flex gap-4 sm:flex-row flex-col">
-        <div className="w-full">
-          <Field
-            type="text"
-            name="city"
-            placeholder="Town/City"
-            className={`border-[#CECED7] border-2 rounded-md p-3 w-full`}
-          />
-          <ErrorMessage
-            name="city"
-            component="p"
-            className="text-red-500 mt-1 ml-2"
-          />
-        </div>
-        <div className="w-full">
-          <Field
-            type="text"
-            name="postcode"
-            placeholder="Postal Code"
-            className={`border-[#CECED7] border-2 rounded-md p-3 w-full`}
-          />
-          <ErrorMessage
-            name="postcode"
-            component="p"
-            className="text-red-500 mt-1 ml-2"
-          />
-        </div>
-      </div>
-
-      <div className="flex gap-4 sm:flex-row flex-col">
-        <div className="w-full ">
-          <div className="flex items-center">
-            <FaChevronDown
-              className="absolute right-6 block sm:hidden"
-              size={12}
-            />
-            <SelectDropdown
-              name="country"
-              options={countryOptions}
-              className="border-[#CECED7] border-2 rounded-md p-3 w-full appearance-none sm:appearance-auto bg-white"
-            />
-          </div>
-          <ErrorMessage
-            name="country"
-            component="span"
-            className="text-red-500"
-          />
-        </div>
-
-        <div className="w-full ">
-          <div className="items-center flex">
-            <FaChevronDown
-              className="absolute right-6 block sm:hidden"
-              size={12}
-            />
-            <SelectDropdown
-              name="region"
-              options={regionOptions}
-              className="border-[#CECED7] border-2 rounded-md p-3 w-full appearance-none sm:appearance-auto bg-white"
-            />
-          </div>
-          <ErrorMessage
-            name="region"
-            component="span"
-            className="text-red-500"
-          />
-        </div>
-      </div> */}
-
       <CountryRegionDropdown />
-
       <div className="flex gap-4 sm:flex-row flex-col">
         <div className="w-full relative">
           {/* Country Code Dropdown */}
           <div className="flex items-center">
-            <div className="absolute left-3 flex items-center ">
+            <div className="absolute left-2 flex items-center ">
               <Field
+                value={getPhoneCodeByCountryName(values?.country)}
                 as="select"
                 name="countryCode"
                 className="rounded-md py-2 w-full appearance-none sm:appearance-auto bg-white"
               >
-                <option value="+1">+1 (USA)</option>
-                <option value="+44">+44 (UK)</option>
+                {countries.map(({ phone_code, iso2, id }) => {
+                  return (
+                    <option key={id} value={phone_code}>
+                      + {phone_code} ({iso2})
+                    </option>
+                  );
+                })}
               </Field>
               <FaChevronDown className=" block sm:hidden" size={12} />
             </div>
@@ -174,8 +121,8 @@ const PrivateSellerSignUpForm = ({ setFieldValue, values }) => {
               <Field
                 type="tel"
                 name="phone_no"
-                placeholder="00000000000"
-                className="border-[#CECED7] border-2 rounded-md p-3 pl-24 sm:pl-28 w-full bg-white"
+                placeholder="7700900077"
+                className="border-[#CECED7] border-2 rounded-md p-3 pl-28 w-full bg-white"
               />
             </div>
           </div>
@@ -301,7 +248,7 @@ const PrivateSellerSignUpForm = ({ setFieldValue, values }) => {
         <Field
           name="image_field"
           component={FileInput}
-          label="Main Picture"
+          label="Cover Photo"
           accept="image/jpeg, image/png"
           fieldName="image_field"
         />

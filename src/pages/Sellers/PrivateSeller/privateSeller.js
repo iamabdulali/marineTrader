@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Formik, Form } from "formik";
 import { privateSellerValidationSchema } from "../../../utils/ValidationSchema.js";
 import PrivateSellerSignUpForm from "../../../components/Forms/PrivateSellerSignUpForm.js";
@@ -65,7 +65,9 @@ const PrivateSeller = () => {
   return (
     <div className="flex">
       <div className="lg:w-7/12 p-4 w-full">
-        <img className="w-32 sm:mx-0 mx-auto" src={logo} alt="logo" />
+        <Link to="/register">
+          <img className="w-32 sm:mx-0 mx-auto" src={logo} alt="logo" />
+        </Link>
         <Heading
           content="Signup As Private Seller"
           className="md:ml-8 mt-10 ml-0"

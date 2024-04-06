@@ -45,11 +45,6 @@ export default function TradeSellerCompanyInfoForm() {
     return country ? country?.phone_code : null;
   }
 
-  const clearValues = (name) => {
-    document.querySelector(`.${name}`).value = "";
-    console.log(`.${name}`);
-  };
-
   return (
     <div className="md:mx-8 mx-0 ">
       <Heading content="Company Info" />
