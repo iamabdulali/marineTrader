@@ -14,6 +14,7 @@ const CountryRegionDropdown = () => {
   const [cities, setCities] = useState([]);
   const [AllStates, setAllStates] = useState([]);
   const [cityByStates, setCitiesByStates] = useState([]);
+  const [customCity, setCustomCity] = useState(false);
 
   const { values, setFieldValue } = useFormikContext();
 
@@ -70,6 +71,8 @@ const CountryRegionDropdown = () => {
     const selectedCities = AllStates.find((state) => state.id == stateID);
     setCitiesByStates(selectedCities.cities);
   }
+
+  console.log(values);
 
   return (
     <>
@@ -144,25 +147,48 @@ const CountryRegionDropdown = () => {
       </div>
       <div className="flex gap-4 sm:flex-row flex-col">
         <div className="w-full">
-          <div className="flex items-center">
-            <FaChevronDown
-              className="absolute right-6 block sm:hidden"
-              size={12}
-            />
-            <Field
-              as="select"
-              name="city"
-              className="border-[#CECED7] border-2 rounded-md p-3 w-full appearance-none sm:appearance-auto bg-white"
-            >
-              <option>Select a City</option>
-              {cityByStates?.map(({ name, id }) => {
-                return (
-                  <option key={id} value={id}>
-                    {name}
-                  </option>
-                );
-              })}
-            </Field>
+          <div className="flex items-center relative">
+            {customCity ? (
+              <button
+                onClick={() => setCustomCity(false)}
+                type="button"
+                className="absolute right-4 block text-sm underline"
+              >
+                Go Back
+              </button>
+            ) : (
+              <button
+                onClick={() => setCustomCity(true)}
+                type="button"
+                className="absolute right-4 block text-sm underline"
+              >
+                Add City
+              </button>
+            )}
+
+            {customCity ? (
+              <Field
+                type="text"
+                name="city"
+                placeholder="Write City Here"
+                className="border-[#CECED7] border-2 rounded-md p-3 w-full appearance-none  bg-white"
+              />
+            ) : (
+              <Field
+                as="select"
+                name="city"
+                className="border-[#CECED7] border-2 rounded-md p-3 w-full appearance-none  bg-white"
+              >
+                <option>Select a City</option>
+                {cityByStates?.map(({ name, id }) => {
+                  return (
+                    <option key={id} value={id}>
+                      {name}
+                    </option>
+                  );
+                })}
+              </Field>
+            )}
           </div>
           <ErrorMessage name="city" component="span" className="text-red-500" />
         </div>

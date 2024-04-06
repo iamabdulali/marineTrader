@@ -76,8 +76,9 @@ const ListingTable = ({
 
   function getPackageName(advert_package_id) {
     const filteredPackages = packages
-      ? packages.filter((ad) => ad?.id == advert_package_id)
+      ? packages.filter((ad) => ad?.specificity_order == advert_package_id)
       : [];
+    console.log(packages);
     return filteredPackages[0]?.name;
   }
 
