@@ -162,12 +162,16 @@ const Header = ({ menuState, setMenuState }) => {
               <Link to="/notifications">
                 <img src={notificationIcon} className="sm:w-10 w-8" />
               </Link>
-              <FaCog
-                className="cursor-pointer"
-                onClick={() => openModal(setIsFeedbackModalOpen)}
-                size={24}
-                color="#0D1A8B"
-              />
+              {isLogged ? (
+                <FaCog
+                  className="cursor-pointer"
+                  onClick={() => openModal(setIsFeedbackModalOpen)}
+                  size={24}
+                  color="#0D1A8B"
+                />
+              ) : (
+                ""
+              )}
             </div>
           ) : (
             <div className="flex items-center gap-7">

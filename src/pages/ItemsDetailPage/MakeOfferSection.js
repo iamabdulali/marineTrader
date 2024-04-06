@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import MakeOfferForm from "../../components/ItemDetailsPage/MakeOfferForm";
 import { CiDeliveryTruck } from "react-icons/ci";
 import { BiDroplet } from "react-icons/bi";
@@ -21,17 +21,24 @@ import { AuthContext } from "../../Context/AuthContext";
 import { makeOfferValidationSchema } from "../../utils/ValidationSchema";
 import { toast } from "react-toastify";
 import { Tooltip } from "react-tooltip";
+import { GetCountries } from "react-country-state-city/dist/cjs";
 
 const MakeOfferSection = ({ advert }) => {
   const [spinner, setSpinner] = useState(false);
   const [showTiming, setShowTiming] = useState(true);
   const [showFacilities, setShowFacilities] = useState(true);
+  const [countries, setCountries] = useState([]);
+  const [states, setStates] = useState([]);
+  const [cities, setCities] = useState([]);
+  const [AllStates, setAllStates] = useState([]);
+  const [cityByStates, setCitiesByStates] = useState([]);
 
   const { currency_id, advert_package_id, user, id } = Object(advert);
   const {
     image_field,
     created_at,
     name,
+    region,
     seller_type,
     facilities,
     user_name,
@@ -72,6 +79,60 @@ const MakeOfferSection = ({ advert }) => {
     }
   };
 
+  const getOptions = async (url, setData) => {
+    try {
+      const { data } = await axios.get(url);
+      setData(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    GetCountries().then((result) => {
+      setCountries(result);
+    });
+    getOptions(
+      "https://venkatmcajj.github.io/react-country-state-city/data/statesminified.json",
+      setStates
+    );
+
+    getOptions(
+      "https://venkatmcajj.github.io/react-country-state-city/data/citiesminified.json",
+      setCities
+    );
+  }, []);
+
+  function getCountry(countryName) {
+    const country = countries.find((country) => country?.id == countryName);
+    return country;
+  }
+
+  useEffect(() => {
+    setAllStates((prevStates) => {
+      const newStates = cities?.reduce((acc, city) => {
+        return acc.concat(Object(city)?.states);
+      }, []);
+
+      return [...prevStates, ...newStates];
+    });
+  }, [cities]);
+
+  function getCitiesByStates(stateID) {
+    const selectedCities = AllStates?.find((state) => state?.id == stateID);
+    setCitiesByStates(selectedCities?.cities);
+  }
+
+  function getCity(ID) {
+    const city = cityByStates?.find((city) => city?.id == ID);
+    return city;
+  }
+
+  useEffect(() => {
+    getCitiesByStates(region);
+    getCity(city);
+  }, [states, countries, AllStates]);
+
   return (
     <div className="xl:w-4/12 w-full">
       <div className="rounded-lg border-2">
@@ -79,8 +140,8 @@ const MakeOfferSection = ({ advert }) => {
           <OfferSectionHeader advert={advert} />
         </div>
         <div className="flex items-center justify-between py-6 sm:px-7 px-4 text-[#696E9D]  border-b-2">
-          <p className="text-[#11133D] font-medium sm:text-base text-sm">
-            Dealer Plus Member
+          <p className="text-[#11133D] font-medium sm:text-base text-sm capitalize">
+            {user?.seller_type}
           </p>
           <div className="flex items-center sm:gap-5 gap-4">
             <FaHandHoldingUsd data-tooltip-id={"my-tooltip-5"} size={24} />
@@ -108,7 +169,7 @@ const MakeOfferSection = ({ advert }) => {
               Member Since {convertTimestampToMonthYear(created_at)}
             </p>
             <p className="text-[#11133D] font-semibold text-sm">
-              {city}, {country}
+              {getCity(city)?.name} , {getCountry(country)?.name}
             </p>
           </div>
         </div>
@@ -127,7 +188,7 @@ const MakeOfferSection = ({ advert }) => {
       {!isPrivateSeller ? (
         <>
           {" "}
-          <div className="rounded-lg border-2 mt-5">
+          {/* <div className="rounded-lg border-2 mt-5">
             <ContentToggle
               className="flex justify-between cursor-pointer items-center py-6 px-7"
               title="Opening Times"
@@ -153,7 +214,7 @@ const MakeOfferSection = ({ advert }) => {
                 );
               })}
             </div>
-          </div>
+          </div> */}
           {facilities?.length == 0 || facilities?.length == undefined ? (
             ""
           ) : (

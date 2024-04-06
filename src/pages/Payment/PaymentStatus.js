@@ -48,7 +48,6 @@ const PaymentStatus = ({ successStatus, paymentType }) => {
           </p>
         </div>
         <Link
-          reloadDocument={true}
           to={successStatus ? "/dashboard" : `/payment/${id}`}
           className="text-[#0D1A8B] font-semibold underline flex items-center gap-4 justify-center mt-5"
         >
