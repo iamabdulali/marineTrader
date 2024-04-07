@@ -4,12 +4,14 @@ import { deleteIcon } from "../assets";
 import { FaSignOutAlt } from "react-icons/fa";
 import { GiPowerButton } from "react-icons/gi";
 
-const SignOutModal = ({ onClick }) => {
+const SignOutModal = ({ onClick, setMenuState }) => {
   const { refresh, dispatch } = useContext(AuthContext);
 
   const handleSignOut = () => {
     localStorage.removeItem("token");
     dispatch({ type: "LOGOUT" });
+    setMenuState(false);
+    onClick();
   };
 
   return (

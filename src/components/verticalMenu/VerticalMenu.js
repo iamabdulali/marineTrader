@@ -163,7 +163,13 @@ const VerticalMenu = ({ menuState, setMenuState }) => {
         opacity="bg-opacity-40"
         padding="p-6"
       >
-        <SignOutModal onClick={() => closeModal(setIsSignOutModalOpen)} />
+        <SignOutModal
+          setMenuState={setMenuState}
+          onClick={() => {
+            setMenuState(false);
+            closeModal(setIsSignOutModalOpen);
+          }}
+        />
       </Modal>
     </>
   );
