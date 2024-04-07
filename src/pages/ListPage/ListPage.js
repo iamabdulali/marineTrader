@@ -6,6 +6,9 @@ import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { SERVER_BASE_URL } from "../..";
 import LoadingWrapper from "../../utils/LoadingWrapper";
+import { FaChevronDown } from "react-icons/fa";
+import SortingOptionsMenu from "../../components/SortingOptionsMenu";
+import CustomDropdownMenu from "../../components/CustomDropdownMenu";
 
 const ListPage = () => {
   const location = useLocation();
@@ -46,6 +49,24 @@ const ListPage = () => {
     searchedListing();
   }, []);
 
+  const handleSortByPrice = (ascending) => {
+    const sortedAdverts = [...searchedListings];
+    sortedAdverts.sort((a, b) => {
+      return ascending ? a.price - b.price : b.price - a.price;
+    });
+    setSearchedListings(sortedAdverts);
+  };
+
+  const handleSortByDate = (ascending) => {
+    const sortedAdverts = [...searchedListings];
+    sortedAdverts.sort((a, b) => {
+      return ascending
+        ? new Date(a.created_at) - new Date(b.created_at)
+        : new Date(b.created_at) - new Date(a.created_at);
+    });
+    setSearchedListings(sortedAdverts);
+  };
+
   return (
     <BuyerLayout showCategoryList={true}>
       <div className="2xl:px-24 sm:px-10 px-4">
@@ -57,13 +78,28 @@ const ListPage = () => {
           <p className="md:text-2xl text-xl text-[#11133D] font-semibold">
             Jet Ski For Sale
           </p>
-          <select
-            id="sort-dropdown"
-            className="border-2 hover:bg-[#8891B2] hover:text-white hover:border-[#8891B2] text-sm border-[#C8C8C8] rounded-lg md:px-5 md:py-3 px-3 py-2 text-[#8891B2]"
-            name="sortLists"
-          >
-            <option>Sort By</option>
-          </select>
+
+          <div className="relative inline-block mr-7">
+            <CustomDropdownMenu
+              buttonToOpenMenu={
+                <>
+                  <button
+                    className="border-2 hover:bg-[#8891B2] hover:text-white hover:border-[#8891B2] text-sm border-[#C8C8C8] rounded-lg flex items-center gap-4 md:py-3 px-3 py-2 text-[#8891B2]"
+                    name="sortLists"
+                  >
+                    Sort By
+                    <FaChevronDown size={12} />
+                  </button>
+                </>
+              }
+              children={
+                <SortingOptionsMenu
+                  handleSortByDate={handleSortByDate}
+                  handleSortByPrice={handleSortByPrice}
+                />
+              }
+            />
+          </div>
         </div>
 
         <div className="min-h-[50vh]">

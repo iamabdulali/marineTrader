@@ -3,6 +3,8 @@ import React, { useContext } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { Tooltip } from "react-tooltip";
+
 import {
   FaCalendarAlt,
   FaChevronLeft,
@@ -196,8 +198,10 @@ const ListingItem = ({ itemData }) => {
           </div>
         </div>
         <div
-          className={`flex justify-between sm:items-center mt-8 sm:flex-row flex-col ${
-            advert_package_id == "3" ? "border-t-2 pt-6 pb-3" : ""
+          className={`flex  sm:items-center mt-8 sm:flex-row flex-col ${
+            advert_package_id == "3"
+              ? "border-t-2 pt-6 pb-3 justify-between"
+              : "justify-end"
           }`}
         >
           {advert_package_id == "3" ? (
@@ -225,6 +229,7 @@ const ListingItem = ({ itemData }) => {
             }`}
           >
             <a
+              data-tooltip-id="my-tooltip-8"
               onClick={(e) => {
                 e.preventDefault();
                 window.location.href = `mailto:${email}`;
@@ -233,10 +238,9 @@ const ListingItem = ({ itemData }) => {
             >
               <FaEnvelope size={24} color="#fff" />
             </a>
-            {/* <p className="bg-[#0D1A8B] hover:bg-[#0a1dbd] w-12 h-12 rounded-xl flex items-center justify-center">
-              <FaSms size={24} color="#fff" />
-            </p> */}
+            <Tooltip id="my-tooltip-8" place="bottom" content={email} />
             <a
+              data-tooltip-id="my-tooltip-9"
               onClick={(e) => {
                 e.preventDefault();
                 window.location.href = `tel:${phone_no}`;
@@ -245,6 +249,7 @@ const ListingItem = ({ itemData }) => {
             >
               <FaPhone size={24} color="#fff" />
             </a>
+            <Tooltip id="my-tooltip-9" place="bottom" content={phone_no} />
           </div>
         </div>
       </Link>

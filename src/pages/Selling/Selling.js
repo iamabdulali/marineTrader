@@ -41,6 +41,26 @@ export default function Selling() {
     });
   };
 
+  const handleSortByPrice = (ascending) => {
+    const sortedAdverts = [...adverts];
+    sortedAdverts.sort((a, b) => {
+      return ascending ? a.price - b.price : b.price - a.price;
+    });
+    setAdverts(sortedAdverts);
+  };
+
+  const handleSortByDate = (ascending) => {
+    const sortedAdverts = [...adverts];
+    sortedAdverts.sort((a, b) => {
+      return ascending
+        ? new Date(a.created_at) - new Date(b.created_at)
+        : new Date(b.created_at) - new Date(a.created_at);
+    });
+    setAdverts(sortedAdverts);
+  };
+
+  console.log(adverts);
+
   return (
     <>
       <Layout>
@@ -95,6 +115,8 @@ export default function Selling() {
                     tableHeader={sellingHeader}
                     sellingData={adverts}
                     onDelete={handleDelete}
+                    handleSortByDate={handleSortByDate}
+                    handleSortByPrice={handleSortByPrice}
                   />
                 </div>
               ) : (

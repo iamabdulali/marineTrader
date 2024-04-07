@@ -11,12 +11,13 @@ import {
   openModal,
 } from "../../utils/ModalOpeningClosingFunctions";
 import DeleteListingModal from "../Selling/DeleteListingModal";
-import { FaCheck, FaDollarSign, FaTimes } from "react-icons/fa";
+import { FaCheck, FaChevronDown, FaDollarSign, FaTimes } from "react-icons/fa";
 import { SERVER_BASE_URL, categoriesList } from "../..";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { getPackages } from "../../utils/fetch/fetchData";
 import { AuthContext } from "../../Context/AuthContext";
+import SortingOptionsMenu from "../SortingOptionsMenu";
 
 const ListingTable = ({
   hasSort,
@@ -33,6 +34,8 @@ const ListingTable = ({
   OffersData,
   onDelete,
   setRefresh,
+  handleSortByDate,
+  handleSortByPrice,
 }) => {
   let [isOfferOpen, setIsOfferOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -78,7 +81,6 @@ const ListingTable = ({
     const filteredPackages = packages
       ? packages.filter((ad) => ad?.specificity_order == advert_package_id)
       : [];
-    console.log(packages);
     return filteredPackages[0]?.name;
   }
 
@@ -117,7 +119,31 @@ const ListingTable = ({
             ""
           )}
 
-          {hasSort ? <SortDropdown /> : ""}
+          {hasSort ? (
+            <div className="relative inline-block ">
+              <CustomDropdownMenu
+                buttonToOpenMenu={
+                  <>
+                    <button
+                      className="border-2 hover:bg-[#8891B2] hover:text-white hover:border-[#8891B2] text-sm border-[#C8C8C8] rounded-lg flex items-center gap-4 md:py-3 px-3 py-2 text-[#8891B2]"
+                      name="sortLists"
+                    >
+                      Sort By
+                      <FaChevronDown size={12} />
+                    </button>
+                  </>
+                }
+                children={
+                  <SortingOptionsMenu
+                    handleSortByDate={handleSortByDate}
+                    handleSortByPrice={handleSortByPrice}
+                  />
+                }
+              />
+            </div>
+          ) : (
+            ""
+          )}
         </div>
 
         {/* Table */}
