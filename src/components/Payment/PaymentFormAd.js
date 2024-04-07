@@ -55,7 +55,8 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
   const pathArray = window.location.pathname.split("/");
   const id = pathArray[3];
 
-  const isBundlePayment = pathArray.includes("bundle");
+  const isAdvertUpgrade = pathArray.includes("advert-upgrade");
+  console.log(isAdvertUpgrade);
 
   useEffect(() => {
     getOneAdvert(setAdvert, id, "advert", setLoading);
@@ -72,6 +73,7 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
     category_spotlights_continents,
     home_spotlights_countries,
     home_spotlights_continents,
+    spotlight_status,
   } = Object(advert);
 
   console.log(category_id);
@@ -95,22 +97,14 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
     });
   };
 
-  // useEffect(() => {
-  //   if (packages?.length != 0 && bundles?.length != 0 && advert?.length != 0) {
-  //     console.log("fetched");
-  //     setLoading(false);
-  //   } else {
-  //     setLoading(true);
-  //   }
-  // }, [packages, bundles, advert]);
-
   let spotlights = 0;
 
   if (
-    category_spotlights_countries?.length === 0 &&
-    category_spotlights_continents?.length === 0 &&
-    home_spotlights_countries?.length === 0 &&
-    home_spotlights_continents?.length === 0
+    (category_spotlights_countries?.length === 0 &&
+      category_spotlights_continents?.length === 0 &&
+      home_spotlights_countries?.length === 0 &&
+      home_spotlights_continents?.length === 0) ||
+    spotlight_status == "paid"
   ) {
     spotlights = false;
   } else {
@@ -144,19 +138,35 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
       let adPaymentResponse, bundlePaymentResponse;
 
       // Ad Payment
-      adPaymentResponse = await axios.post(
-        `${SERVER_BASE_URL}/advert-payment/${id}`,
-        {
-          advert_package: advert_package_id,
-          currency: currency_id,
-          stripe_token: adToken.id,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
+      if (!isAdvertUpgrade) {
+        adPaymentResponse = await axios.post(
+          `${SERVER_BASE_URL}/advert-payment/${id}`,
+          {
+            advert_package: advert_package_id,
+            currency: currency_id,
+            stripe_token: adToken.id,
           },
-        }
-      );
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+      } else {
+        adPaymentResponse = await axios.post(
+          `${SERVER_BASE_URL}/advert-upgrade/${id}`,
+          {
+            advert_package: Number(advert_package_id) + 1,
+            currency: currency_id,
+            stripe_token: adToken.id,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+      }
 
       toast.success(adPaymentResponse.data.message);
 
@@ -196,6 +206,8 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
   //   navigate("/dashboard");
   // }
 
+  console.log(packages);
+
   return (
     <>
       {showStatus ? (
@@ -215,6 +227,7 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
                     spotlights={spotlights}
                     hasBundle={hasBundle}
                     hasSubscription={categorySubscription}
+                    isAdvertUpgrade={isAdvertUpgrade}
                   />
                   {!isPrivateSeller && hasBrokerOrDealerSubscription() ? (
                     <AvailableUpgrades

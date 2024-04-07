@@ -155,15 +155,14 @@ function App() {
             </GuestRoute>
           }
         />
-        {/* <Route
+        <Route
           path="/dashboard"
           element={
             <ProtectedRoute>
               <Dashboard />
             </ProtectedRoute>
           }
-        /> */}
-        <Route path="/dashboard" element={<Dashboard />} />
+        />
 
         <Route
           path="/selling"
@@ -241,6 +240,14 @@ function App() {
         />
         <Route
           path="/payment/advert/:id"
+          element={
+            <ProtectedRoute>
+              <Payment />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/payment/advert-upgrade/:id"
           element={
             <ProtectedRoute>
               <Payment />

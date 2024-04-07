@@ -261,7 +261,7 @@ const ListingTable = ({
                       </td>
                       <td className="py-4 px-4">
                         <div className="flex font-semibold items-center justify-center">
-                          <Link
+                          {/* <Link
                             to={
                               advert_status == "draft" ||
                               spotlight_status == "draft"
@@ -285,7 +285,31 @@ const ListingTable = ({
                                 advert_package_id != "6"
                               ? "Upgrade"
                               : "Maxed"}
-                          </Link>
+                          </Link> */}
+                          {spotlight_status == "draft" ||
+                          advert_status == "draft" ? (
+                            <Link
+                              to={`/payment/advert/${id}`}
+                              className={`text-[#0D1A8B] border-2 border-[#0D1A8B] hover:bg-[#0D1A8B] hover:text-white px-3 py-3 min-w-24 text-sm rounded-md block text-center`}
+                            >
+                              Pay Now
+                            </Link>
+                          ) : advert_status == "paid" &&
+                            advert_package_id != "3" ? (
+                            <Link
+                              to={`/payment/advert-upgrade/${id}`}
+                              className={`text-[#FFB800] border-2 border-[#FFB800] hover:bg-[#FFB800] hover:text-white px-3 py-3 min-w-24 text-sm rounded-md block text-center`}
+                            >
+                              Upgrade
+                            </Link>
+                          ) : (
+                            <button
+                              className={`text-[#2AD18A] border-2 border-[#2AD18A] hover:bg-[#2AD18A] hover:text-white px-3 py-3 min-w-24 text-sm rounded-md block text-center`}
+                              disabled
+                            >
+                              Maxed
+                            </button>
+                          )}
                         </div>
                       </td>
                       <td>

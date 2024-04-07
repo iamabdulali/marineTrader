@@ -15,6 +15,7 @@ const PaymentSummary = ({
   spotlights,
   hasSubscription,
   hasBundle,
+  isAdvertUpgrade,
 }) => {
   const { user, currencyRates } = useContext(AuthContext);
   const { currency } = Object(user);
@@ -28,8 +29,17 @@ const PaymentSummary = ({
 
   const { name, amount } = Object(filteredSubscriptions[0] || {});
 
+  let upgradedPackage = 0;
+
+  if (isAdvertUpgrade) {
+    upgradedPackage = 1;
+  }
+
   const filteredPackages = packages
-    ? packages.filter((ad) => ad?.specificity_order == advert_package_id)
+    ? packages.filter(
+        (ad) =>
+          ad?.specificity_order == Number(advert_package_id) + upgradedPackage
+      )
     : [];
 
   console.log(filteredPackages);
@@ -68,13 +78,15 @@ const PaymentSummary = ({
       }
 
       const { data } = await axios.get(
-        `${SERVER_BASE_URL}/coupon-discount?coupon_code=${coupenCode}`
+        `${SERVER_BASE_URL}/coupon-discount?coupon_code=${coupenCode}&apply_on=${
+          isSubscriptionPage ? "subscription" : "advert"
+        }`
       );
       if (data.data.length === 0) {
         toast.error("Invalid Coupon Code");
       } else {
-        toast.success(`Total Discount ${data.data}%`);
-        const discountPercentage = Number(data.data);
+        toast.success(`Total Discount ${data.data.total_discount}%`);
+        const discountPercentage = Number(data.data.total_discount);
         const discountAmount = totalAmount * (discountPercentage / 100);
         const amountAfterDiscount = totalAmount - discountAmount;
         setTotalAmount(amountAfterDiscount);
