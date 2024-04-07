@@ -342,6 +342,8 @@ const ListingTable = ({
                     category,
                     title,
                     currency,
+                    spotlight_status,
+                    advert_package_id,
                     price,
                     expire_date,
                     advert_status,
@@ -363,13 +365,29 @@ const ListingTable = ({
                           {/* {category?.name} */}
                           {title}
                         </p>
-                        <p className="text-[#8891B2] font-medium">
-                          Price:
-                          <span className="text-[#696E9D] font-semibold">
-                            {currency?.symbol}
-                            {price}
-                          </span>
-                        </p>
+                        <div className="flex items-center justify-between">
+                          <p className="text-[#8891B2] font-medium">
+                            Price:
+                            <span className="text-[#696E9D] font-semibold">
+                              {currency?.symbol}
+                              {price}
+                            </span>
+                          </p>
+                          <p
+                            className={`text-sm mt-1 ${
+                              getPackageName(advert_package_id) == "Standard"
+                                ? "text-[#36B37E]"
+                                : getPackageName(advert_package_id) == "Premium"
+                                ? "text-[#E6AB13]"
+                                : getPackageName(advert_package_id) ==
+                                  "Featured"
+                                ? "text-[#00CFCF]"
+                                : "text-[#1565D8]"
+                            } font-semibold `}
+                          >
+                            {getPackageName(advert_package_id)}
+                          </p>
+                        </div>
                         <p className="text-[#8891B2] font-medium mt-4">
                           {" "}
                           Ad Expires Date:{" "}
@@ -401,7 +419,7 @@ const ListingTable = ({
                           </span>
                         </p>
                         <div className="flex mt-5 font-semibold items-center justify-center">
-                          <Link
+                          {/* <Link
                             to={
                               advert_status == "draft"
                                 ? `/payment/advert/${id}`
@@ -416,7 +434,31 @@ const ListingTable = ({
                             } px-3 py-3 min-w-24 text-sm rounded-md block text-center w-full`}
                           >
                             {advert_status == "draft" ? "Pay Now" : "Upgrade"}
-                          </Link>
+                          </Link> */}
+                          {spotlight_status == "draft" ||
+                          advert_status == "draft" ? (
+                            <Link
+                              to={`/payment/advert/${id}`}
+                              className={`text-[#0D1A8B] border-2 border-[#0D1A8B] hover:bg-[#0D1A8B] hover:text-white px-3 py-3 w-full text-sm rounded-md block text-center`}
+                            >
+                              Pay Now
+                            </Link>
+                          ) : advert_status == "paid" &&
+                            advert_package_id != "3" ? (
+                            <Link
+                              to={`/payment/advert-upgrade/${id}`}
+                              className={`text-[#FFB800] border-2 border-[#FFB800] hover:bg-[#FFB800] hover:text-white px-3 py-3 w-full text-sm rounded-md block text-center`}
+                            >
+                              Upgrade
+                            </Link>
+                          ) : (
+                            <button
+                              className={`text-[#2AD18A] border-2 border-[#2AD18A] hover:bg-[#2AD18A] hover:text-white px-3 py-3 w-full text-sm rounded-md block text-center`}
+                              disabled
+                            >
+                              Maxed
+                            </button>
+                          )}
                           <CustomDropdownMenu
                             buttonToOpenMenu={
                               <FiMoreVertical
