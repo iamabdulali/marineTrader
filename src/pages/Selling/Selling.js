@@ -44,7 +44,7 @@ export default function Selling() {
   const handleSortByPrice = (ascending) => {
     const sortedAdverts = [...adverts];
     sortedAdverts.sort((a, b) => {
-      return ascending ? a.price - b.price : b.price - a.price;
+      return ascending ? a?.price - b?.price : b?.price - a?.price;
     });
     setAdverts(sortedAdverts);
   };
@@ -53,8 +53,8 @@ export default function Selling() {
     const sortedAdverts = [...adverts];
     sortedAdverts.sort((a, b) => {
       return ascending
-        ? new Date(a.created_at) - new Date(b.created_at)
-        : new Date(b.created_at) - new Date(a.created_at);
+        ? new Date(a?.created_at) - new Date(b?.created_at)
+        : new Date(b?.created_at) - new Date(a?.created_at);
     });
     setAdverts(sortedAdverts);
   };
@@ -117,6 +117,7 @@ export default function Selling() {
                     onDelete={handleDelete}
                     handleSortByDate={handleSortByDate}
                     handleSortByPrice={handleSortByPrice}
+                    setItemsData={setAdverts}
                   />
                 </div>
               ) : (

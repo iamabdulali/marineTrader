@@ -18,6 +18,10 @@ import { fetchOptions, getAdvert } from "../../utils/fetch/fetchData";
 import LoadingWrapper from "../../utils/LoadingWrapper";
 import Skeleton from "react-loading-skeleton";
 import CountryRegionDropdown from "../../components/CountryRegionDropdown";
+import {
+  handleSortByDate,
+  handleSortByPrice,
+} from "../../utils/SortingFunctions";
 
 export default function Dashboard() {
   let [isVideoOpen, setIsVideoOpen] = useState(false);
@@ -115,6 +119,9 @@ export default function Dashboard() {
                   tableHeader={sellingHeader}
                   onDelete={handleDelete}
                   sellingData={adverts}
+                  handleSortByDate={handleSortByDate}
+                  handleSortByPrice={handleSortByPrice}
+                  setItemsData={setAdverts}
                 />
               </div>
             ) : (

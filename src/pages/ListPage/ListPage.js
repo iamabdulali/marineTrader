@@ -9,6 +9,10 @@ import LoadingWrapper from "../../utils/LoadingWrapper";
 import { FaChevronDown } from "react-icons/fa";
 import SortingOptionsMenu from "../../components/SortingOptionsMenu";
 import CustomDropdownMenu from "../../components/CustomDropdownMenu";
+import {
+  handleSortByDate,
+  handleSortByPrice,
+} from "../../utils/SortingFunctions";
 
 const ListPage = () => {
   const location = useLocation();
@@ -49,24 +53,6 @@ const ListPage = () => {
     searchedListing();
   }, []);
 
-  const handleSortByPrice = (ascending) => {
-    const sortedAdverts = [...searchedListings];
-    sortedAdverts.sort((a, b) => {
-      return ascending ? a.price - b.price : b.price - a.price;
-    });
-    setSearchedListings(sortedAdverts);
-  };
-
-  const handleSortByDate = (ascending) => {
-    const sortedAdverts = [...searchedListings];
-    sortedAdverts.sort((a, b) => {
-      return ascending
-        ? new Date(a.created_at) - new Date(b.created_at)
-        : new Date(b.created_at) - new Date(a.created_at);
-    });
-    setSearchedListings(sortedAdverts);
-  };
-
   return (
     <BuyerLayout showCategoryList={true}>
       <div className="2xl:px-24 sm:px-10 px-4">
@@ -96,6 +82,8 @@ const ListPage = () => {
                 <SortingOptionsMenu
                   handleSortByDate={handleSortByDate}
                   handleSortByPrice={handleSortByPrice}
+                  items={searchedListings}
+                  setItems={setSearchedListings}
                 />
               }
             />

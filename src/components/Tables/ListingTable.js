@@ -36,6 +36,7 @@ const ListingTable = ({
   setRefresh,
   handleSortByDate,
   handleSortByPrice,
+  setItemsData,
 }) => {
   let [isOfferOpen, setIsOfferOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -137,6 +138,8 @@ const ListingTable = ({
                   <SortingOptionsMenu
                     handleSortByDate={handleSortByDate}
                     handleSortByPrice={handleSortByPrice}
+                    items={sellingData}
+                    setItems={setItemsData}
                   />
                 }
               />
@@ -223,6 +226,7 @@ const ListingTable = ({
                     view,
                     spotlight_status,
                     advert_package_id,
+                    price_type,
                   }) => (
                     <tr
                       key={id}
