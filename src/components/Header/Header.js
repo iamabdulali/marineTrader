@@ -32,12 +32,22 @@ import ListingMenu from "../Selling/ListingMenu.js";
 import CountriesDropdown from "./CountriesDropdown.js";
 
 const Header = ({ menuState, setMenuState }) => {
+  const { country } = useContext(AuthContext);
   const [languageDropdownOpen, setLanguageDropdownOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const isLogged = isUserLoggedIn();
   const [homePageMenu, setHomePageMenu] = useState(false);
-  const [countryCode, setCountryCode] = useState("US");
+  const [countryCode, setCountryCode] = useState(
+    country ? country.countryCode : "UK"
+  );
   const { user, dispatch } = useContext(AuthContext);
+
+  useEffect(() => {
+    if (country) {
+      setCountryCode(country.countryCode);
+    }
+  }, [country]);
+  console.log({ country, countryCode });
 
   const { user_name, seller_type, image_field, main_picture } = Object(user);
 
@@ -140,7 +150,9 @@ const Header = ({ menuState, setMenuState }) => {
                 <>
                   <img
                     className="w-10 h-10 object-contain block"
-                    src={`https://purecatamphetamine.github.io/country-flag-icons/3x2/${countryCode}.svg`}
+                    src={`https://purecatamphetamine.github.io/country-flag-icons/3x2/${
+                      countryCode || "GB"
+                    }.svg`}
                   />
                 </>
               }

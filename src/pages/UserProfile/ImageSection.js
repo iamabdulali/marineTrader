@@ -39,7 +39,7 @@ const ImageSection = ({
       ) : (
         <div className="relative">
           <img
-            src={coverPhotoSrc || company_logo}
+            src={coverPhotoSrc || main_picture}
             className="min-h-[270px] smallLg:max-h-[270px] max-h-[450px] w-full object-cover"
           />
           <label
@@ -66,7 +66,7 @@ const ImageSection = ({
         }  w-40 mx-auto`}
       >
         <img
-          src={profilePhotoSrc || image_field || main_picture}
+          src={profilePhotoSrc || image_field || company_logo}
           alt="Profile Photo"
           className="rounded-full w-40 h-40 object-cover object-top border-4 border-[#CDD0F0]"
         />

@@ -119,6 +119,14 @@ function App() {
     requestPermission();
   }, []);
 
+  useEffect(() => {
+    const storedCountry = JSON.parse(localStorage.getItem("selectedCountry"));
+    dispatch({
+      type: "SELECTED_COUNTRY",
+      payload: storedCountry || {},
+    });
+  }, []);
+
   onMessage(messaging, (payload) => {
     toast(<Message notification={payload.notification} />);
   });

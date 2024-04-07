@@ -4,8 +4,26 @@ import { AuthContext } from "../../Context/AuthContext";
 
 const CountriesDropdown = ({ setCountryCode, dispatch }) => {
   const { spotlightCountries } = useContext(AuthContext);
+  const [selectedCountry, setSelectedCountry] = useState(
+    JSON.parse(localStorage.getItem("selectedCountry")) || {}
+  );
 
-  console.log(spotlightCountries);
+  useEffect(() => {
+    // Update localStorage when selectedCountry changes
+    localStorage.setItem("selectedCountry", JSON.stringify(selectedCountry));
+    console.log(selectedCountry);
+  }, [selectedCountry]);
+
+  const handleCountrySelection = (name, country_code) => {
+    setCountryCode(country_code);
+    console.log(selectedCountry);
+    setSelectedCountry({ countryName: name, countryCode: country_code });
+    console.log(selectedCountry);
+    dispatch({
+      type: "SELECTED_COUNTRY",
+      payload: { countryName: name, countryCode: country_code },
+    });
+  };
 
   const flagImage =
     "https://purecatamphetamine.github.io/country-flag-icons/3x2/";
@@ -15,14 +33,8 @@ const CountriesDropdown = ({ setCountryCode, dispatch }) => {
       {spotlightCountries.map(({ name, country_code }) => (
         <div
           key={name}
-          onClick={() => {
-            setCountryCode(country_code);
-            dispatch({ type: "SELECTED_COUNTRY", payload: name });
-          }}
-          onTouchStart={() => {
-            setCountryCode(country_code);
-            dispatch({ type: "SELECTED_COUNTRY", payload: name });
-          }}
+          onClick={() => handleCountrySelection(name, country_code)}
+          onTouchStart={() => handleCountrySelection(name, country_code)}
         >
           <label className="flex cursor-pointer items-center gap-2 text-[#11133D] whitespace-nowrap mb-2 text-sm font-medium">
             <img
