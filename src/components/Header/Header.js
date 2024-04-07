@@ -31,7 +31,6 @@ const Header = ({ menuState, setMenuState }) => {
       setCountryCode(country.countryCode);
     }
   }, [country]);
-  console.log({ country, countryCode });
 
   const { user_name, seller_type, image_field, main_picture } = Object(user);
 

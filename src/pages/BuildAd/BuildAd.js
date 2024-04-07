@@ -212,60 +212,60 @@ const BuildAd = () => {
   ];
 
   const prevStep = () => setStep(step - 1);
-  const nextStep = () => setStep(step + 1);
+  // const nextStep = () => setStep(step + 1);
   const [isPaymentOptionOpen, setIsPaymentOptionOpen] = useState(false);
   let [isVideoOpen, setIsVideoOpen] = useState(false);
 
-  // const nextStep = (values, { setTouched, setErrors }) => {
-  //   try {
-  //     const fieldsToValidate = Object.keys(validationSchema.fields).filter(
-  //       (field) => {
-  //         if (step === 1) {
-  //           return selectedCategory?.name == "Boat Home"
-  //             ? bigBoatValidationArrayStep1.includes(field)
-  //             : smallBoatsValidationArrayStep1.includes(field);
-  //         } else if (step === 2) {
-  //           return selectedCategory?.name == "Boat Home"
-  //             ? bigBoatValidationArrayStep2.includes(field)
-  //             : smallBoatsValidationArrayStep2.includes(field);
-  //         } else if (step === 3) {
-  //           return ["description", "tags"].includes(field);
-  //         } else if (step === 4) {
-  //           return ["images"].includes(field);
-  //         } else if (step === 5) {
-  //           return ["currency", "price", "price_type"].includes(field);
-  //         }
-  //         return true; // Include all fields if not in a specific step
-  //       }
-  //     );
+  const nextStep = (values, { setTouched, setErrors }) => {
+    try {
+      const fieldsToValidate = Object.keys(validationSchema.fields).filter(
+        (field) => {
+          if (step === 1) {
+            return selectedCategory?.name == "Boat Home"
+              ? bigBoatValidationArrayStep1.includes(field)
+              : smallBoatsValidationArrayStep1.includes(field);
+          } else if (step === 2) {
+            return selectedCategory?.name == "Boat Home"
+              ? bigBoatValidationArrayStep2.includes(field)
+              : smallBoatsValidationArrayStep2.includes(field);
+          } else if (step === 3) {
+            return ["description", "tags"].includes(field);
+          } else if (step === 4) {
+            return ["images"].includes(field);
+          } else if (step === 5) {
+            return ["currency", "price", "price_type"].includes(field);
+          }
+          return true; // Include all fields if not in a specific step
+        }
+      );
 
-  //     validationSchema.pick(fieldsToValidate).validateSync(values, {
-  //       abortEarly: false,
-  //     });
+      validationSchema.pick(fieldsToValidate).validateSync(values, {
+        abortEarly: false,
+      });
 
-  //     // Increment the step
-  //     setStep((prevStep) => prevStep + 1);
-  //   } catch (error) {
-  //     if (error.name === "ValidationError") {
-  //       console.error("Validation errors:", error.errors);
-  //       toast.error("Please Fill All the Required Fields");
-  //       const allFields = Object.keys(values);
-  //       const touchedState = allFields.reduce((acc, field) => {
-  //         acc[field] = true;
-  //         return acc;
-  //       }, {});
-  //       setTouched(touchedState);
+      // Increment the step
+      setStep((prevStep) => prevStep + 1);
+    } catch (error) {
+      if (error.name === "ValidationError") {
+        console.error("Validation errors:", error.errors);
+        toast.error("Please Fill All the Required Fields");
+        const allFields = Object.keys(values);
+        const touchedState = allFields.reduce((acc, field) => {
+          acc[field] = true;
+          return acc;
+        }, {});
+        setTouched(touchedState);
 
-  //       const errorState = error.errors.reduce((acc, error) => {
-  //         acc[error.path] = error.message;
-  //         return acc;
-  //       }, {});
-  //       setErrors(errorState);
-  //     } else {
-  //       console.error("Error:", error.message);
-  //     }
-  //   }
-  // };
+        const errorState = error.errors.reduce((acc, error) => {
+          acc[error.path] = error.message;
+          return acc;
+        }, {});
+        setErrors(errorState);
+      } else {
+        console.error("Error:", error.message);
+      }
+    }
+  };
 
   useEffect(() => {
     fetchOptions("bundle/advert/remains", setHasBundle);
@@ -342,7 +342,7 @@ const BuildAd = () => {
               : initialValuesJetSki
             : editValues
         }
-        // validationSchema={validationSchema}
+        validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
         {({ isValid, values, setErrors, setTouched, setFieldValue }) => (

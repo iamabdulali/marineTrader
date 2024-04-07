@@ -113,7 +113,12 @@ const ItemOverview = ({ advert }) => {
             </p>
           </div>
         </div>
-        <p className="text-[#11133D] font-semibold text-2xl mt-14">Tags</p>
+        {tags.length != 0 ? (
+          <p className="text-[#11133D] font-semibold text-2xl mt-14">Tags</p>
+        ) : (
+          ""
+        )}
+
         <div className="flex flex-wrap items-center mt-5 gap-4 sm:text-base text-sm">
           {tags?.map(({ id, name }) => {
             return (

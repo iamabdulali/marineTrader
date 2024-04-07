@@ -6,8 +6,12 @@ import BuildLayout from "./BuildLayout";
 import { AuthContext } from "../../Context/AuthContext";
 import {
   colors,
+  hullMaterialArray,
+  hullShapes,
+  keelTypeArray,
   passengers,
   serviceHistory,
+  status,
   trailers,
   yearsArray,
 } from "../../utils/DummyData";
@@ -355,48 +359,63 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
               <CategorySelectDropdown
                 label="Hull Shape"
                 name="hull_shape"
-                options={yearsArray}
+                options={hullShapes}
               />
               <CategorySelectDropdown
                 label="Hull Material"
                 name="hull_material"
-                options={conditions}
+                options={hullMaterialArray}
               />
             </div>
             <div className="flex sm:flex-row flex-col  gap-4">
               <CategorySelectDropdown
                 label="Keel Type"
                 name="keel_type"
-                options={yearsArray}
+                options={keelTypeArray}
               />
-              <CategorySelectDropdown
-                label="Capacity (Optional)"
+              <FormField
+                FieldType="text"
+                inputField={true}
                 name="capacity"
-                options={conditions}
+                label="Capacity (Optional)"
+                className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
+                placeholder={"Capacity"}
               />
             </div>
             <div className="flex sm:flex-row flex-col  gap-4">
-              <CategorySelectDropdown
-                label="Vessel Name (Optional)"
+              <FormField
+                FieldType="text"
+                inputField={true}
                 name="vessel_name"
-                options={yearsArray}
+                label="Vessel Name (Optional)"
+                className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
+                placeholder={"Vessel Name"}
               />
-              <CategorySelectDropdown
-                label="HIN Number (Optional)"
+              <FormField
+                FieldType="text"
+                inputField={true}
                 name="hin_number"
-                options={conditions}
+                label="HIN Number (Optional)"
+                className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
+                placeholder={"HIN Number"}
               />
             </div>
             <div className="flex sm:flex-row flex-col  gap-4">
-              <CategorySelectDropdown
-                label="Registration (Optional)"
+              <FormField
+                FieldType="text"
+                inputField={true}
                 name="registration"
-                options={yearsArray}
+                label="Registration (Optional)"
+                className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
+                placeholder={"Registration "}
               />
-              <CategorySelectDropdown
-                label="Registry Number (Optional)"
+              <FormField
+                FieldType="text"
+                inputField={true}
                 name="registry_number"
-                options={conditions}
+                label="Registry Number (Optional)"
+                className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
+                placeholder={"Registry Number"}
               />
             </div>
           </>
@@ -589,9 +608,9 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
               placeholder={"Port/Marina"}
             />
             <CategorySelectDropdown
-              label="Vessel Type"
-              name="vessel_type"
-              options={trailers}
+              label="Boat Status"
+              name="status"
+              options={status}
             />
           </div>
         ) : (

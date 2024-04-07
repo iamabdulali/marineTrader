@@ -370,13 +370,31 @@ const ItemFeaturesStep3 = ({ isEditMode }) => {
 
               <div className="py-6">
                 {selectedTab === "bow" && (
-                  <MachinaryForm formFor="bow" index={0} />
+                  <MachinaryForm
+                    values={values}
+                    setFieldValue={setFieldValue}
+                    isEditMode={isEditMode}
+                    formFor="bow"
+                    index={0}
+                  />
                 )}
                 {selectedTab === "stern" && (
-                  <MachinaryForm formFor="stern" index={0} />
+                  <MachinaryForm
+                    values={values}
+                    setFieldValue={setFieldValue}
+                    isEditMode={isEditMode}
+                    formFor="stern"
+                    index={0}
+                  />
                 )}
                 {selectedTab === "generator" && (
-                  <MachinaryForm formFor="generator" index={0} />
+                  <MachinaryForm
+                    values={values}
+                    setFieldValue={setFieldValue}
+                    isEditMode={isEditMode}
+                    formFor="generator"
+                    index={0}
+                  />
                 )}
               </div>
             </div>

@@ -510,16 +510,16 @@ export const links = [
     colorChange: false,
     onClick: false,
   },
-  {
-    href: "/selling/buildAd/advert",
-    label: (
-      <>
-        <FaPencilAlt /> Edit
-      </>
-    ),
-    colorChange: false,
-    onClick: false,
-  },
+  // {
+  //   href: "/selling/buildAd/advert",
+  //   label: (
+  //     <>
+  //       <FaPencilAlt /> Edit
+  //     </>
+  //   ),
+  //   colorChange: false,
+  //   onClick: false,
+  // },
   {
     href: "/selling/buildAd",
     label: (
@@ -553,6 +553,60 @@ const years = [
 export const yearsArray = years.map((year, index) => {
   return { id: year, name: year };
 });
+
+export const hullShapes = [
+  { id: "Deep V Bottom", name: "Deep V Bottom" },
+  { id: "Flat Bottom", name: "Flat Bottom" },
+  { id: "Multi Hull", name: "Multi Hull" },
+  { id: "Planing", name: "Planing" },
+  { id: "Pontoon", name: "Pontoon" },
+  { id: "Round Bottom", name: "Round Bottom" },
+  { id: "Semi Displacement", name: "Semi Displacement" },
+  { id: "Semi Round", name: "Semi Round" },
+];
+
+export const hullMaterialArray = [
+  { id: "Aluminium", name: "Aluminium" },
+  { id: "Composite", name: "Composite" },
+  { id: "Ferro-Cement", name: "Ferro-Cement" },
+  { id: "Fibreglass", name: "Fibreglass" },
+  { id: "Hypalon", name: "Hypalon" },
+  { id: "Other", name: "Other" },
+  { id: "PVC", name: "PVC" },
+  { id: "Roplene", name: "Roplene" },
+  { id: "Steel", name: "Steel" },
+  { id: "Wood", name: "Wood" },
+];
+
+export const keelTypeArray = [
+  { id: "Bilge Keel", name: "Bilge Keel" },
+  { id: "Bilgeboard", name: "Bilgeboard" },
+  { id: "Bruce Foil", name: "Bruce Foil" },
+  { id: "Bulb Keel", name: "Bulb Keel" },
+  { id: "Canting Keel", name: "Canting Keel" },
+  { id: "Centreboard", name: "Centreboard" },
+  { id: "Daggerboard", name: "Daggerboard" },
+  { id: "False Keel", name: "False Keel" },
+  { id: "Fin Keel", name: "Fin Keel" },
+  { id: "Full Keel", name: "Full Keel" },
+  { id: "Leeboards", name: "Leeboards" },
+  { id: "Lifting Keel", name: "Lifting Keel" },
+  { id: "Long Keel", name: "Long Keel" },
+  { id: "Shoal Keel", name: "Shoal Keel" },
+  { id: "Swing Keel", name: "Swing Keel" },
+  { id: "Winged Keel", name: "Winged Keel" },
+];
+
+export const status = [
+  {
+    id: "ashore",
+    name: "Ashore",
+  },
+  {
+    id: "afloat",
+    name: "Afloat",
+  },
+];
 
 export const colors = [
   { id: "black", name: "Black" },
