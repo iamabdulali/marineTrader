@@ -7,9 +7,16 @@ import FileInput from "./FormElements/FileInput";
 import Heading from "../Heading";
 import ServiceHours from "./FormElements/ServiceHours";
 import { initialFacilities } from "../../utils/DummyData";
+import Modal from "../Modal";
+import {
+  closeModal,
+  openModal,
+} from "../../utils/ModalOpeningClosingFunctions";
+import FacilitiesModal from "./FacilitiesModal";
 
 export default function TradeSellerServiceHoursForm() {
   const { values, setValues } = useFormikContext();
+  const [isFacilitiesOpen, setIsFacilitiesOpen] = useState(false);
 
   const handleDayClick = (day) => {
     const { working_days } = values;
@@ -47,6 +54,7 @@ export default function TradeSellerServiceHoursForm() {
       }));
       setNewFacility("");
     }
+    closeModal(setIsFacilitiesOpen);
   };
 
   return (
@@ -158,12 +166,15 @@ export default function TradeSellerServiceHoursForm() {
 
       <div className="flex items-center gap-4 my-8">
         <img className="w-5" src={plusSign} alt="plus-sign" />
-        <p className="text-[#0D1A8B] underline font-semibold">
+        <button
+          onClick={() => openModal(setIsFacilitiesOpen)}
+          className="text-[#0D1A8B] underline font-semibold"
+        >
           Add More Facility
-        </p>
+        </button>
       </div>
 
-      <div className="flex items-center  sm:flex-row flex-col gap-5">
+      {/* <div className="flex items-center  sm:flex-row flex-col gap-5">
         <input
           type="text"
           placeholder="New Facility"
@@ -179,7 +190,7 @@ export default function TradeSellerServiceHoursForm() {
         >
           Add
         </button>
-      </div>
+      </div> */}
       <h2 className=" text-[#0D1A8B] font-semibold text-xl mt-10 flex items-center gap-2">
         <div className="bg-[#0D1A8B] w-[5px] h-8 rounded-xl"></div>
         Company Info
@@ -206,6 +217,19 @@ export default function TradeSellerServiceHoursForm() {
           <p className="mt-2 font-medium">Upload an image of 156x156</p>
         </div>
       </div>
+      <Modal
+        isOpen={isFacilitiesOpen}
+        onClose={() => closeModal(setIsFacilitiesOpen)}
+        opacity="bg-opacity-40"
+        width="md:w-1/2 xl:w-1/3 w-full"
+      >
+        <FacilitiesModal
+          onClick={handleAddFacility}
+          value={newFacility}
+          onChange={handleNewFacilityChange}
+          onClose={() => closeModal(setIsFacilitiesOpen)}
+        />
+      </Modal>
     </div>
   );
 }

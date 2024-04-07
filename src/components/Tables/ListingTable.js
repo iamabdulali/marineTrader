@@ -247,8 +247,15 @@ const ListingTable = ({
                               {title}
                             </p>
                             <p>
-                              {currency.symbol}
-                              {price}
+                              {price_type == "enterInfo" ? (
+                                <>
+                                  {" "}
+                                  {currency.symbol}
+                                  {price}
+                                </>
+                              ) : (
+                                "POA"
+                              )}
                             </p>
 
                             <p
