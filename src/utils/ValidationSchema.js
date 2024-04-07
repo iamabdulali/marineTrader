@@ -92,7 +92,9 @@ export const buildAdSmallBoatsValidationSchema = Yup.object().shape({
   type: Yup.string().required("Type is required"),
   images: Yup.array().min(1, "Please upload at least one image"),
   currency: Yup.string().required("Currency is required"),
-  price: Yup.string().required("Price is required"),
+  price: Yup.number()
+    .required("Price is required")
+    .positive("Price must be greater than 0"),
 });
 
 export const buildAdBigBoatsValidationSchema = Yup.object().shape({
@@ -143,7 +145,9 @@ export const buildAdBigBoatsValidationSchema = Yup.object().shape({
   type: Yup.string().required("Type is required"),
   images: Yup.array().min(1, "Please upload at least one image"),
   currency: Yup.string().required("Currency is required"),
-  price: Yup.string().required("Price is required"),
+  price: Yup.number()
+    .required("Price is required")
+    .positive("Price must be greater than 0"),
 });
 
 export const privateSellerValidationSchema = Yup.object({
