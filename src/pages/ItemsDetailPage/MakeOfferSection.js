@@ -44,6 +44,7 @@ const MakeOfferSection = ({ advert }) => {
     user_name,
     city,
     country,
+    main_picture,
   } = Object(user);
 
   const isPrivateSeller = seller_type == "private seller";
@@ -160,7 +161,7 @@ const MakeOfferSection = ({ advert }) => {
         <Tooltip id="my-tooltip-8" place="bottom" content="Tools" />
         <div className="flex gap-4 items-center sm:px-7 py-6 px-4">
           <img
-            src={image_field || userProfile}
+            src={image_field || main_picture || userProfile}
             className="rounded-full w-20 h-20 object-cover"
           />
           <div>
