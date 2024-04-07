@@ -78,7 +78,7 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
   const fetchModalsByMake = async () => {
     try {
       const { data } = await axios.get(
-        `${SERVER_BASE_URL}/models?make_id=${values.make}&category_id=${selectedCategory?.id}`
+        `${SERVER_BASE_URL}/models?make=${values.make}&category_id=${selectedCategory?.id}`
       );
       setModals(data.data);
     } catch (error) {

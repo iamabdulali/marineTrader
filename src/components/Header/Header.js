@@ -1,35 +1,19 @@
 import React, { useContext, useEffect, useState } from "react";
-import {
-  FaBars,
-  FaChevronDown,
-  FaCog,
-  FaGlobe,
-  FaHamburger,
-} from "react-icons/fa";
-import {
-  bars,
-  flagUsa,
-  logo,
-  notificationIcon,
-  offerIcon,
-  userProfile,
-} from "../../assets";
+import { FaCog } from "react-icons/fa";
+import { bars, logo, notificationIcon, offerIcon } from "../../assets";
 import { Link } from "react-router-dom";
 import { isUserLoggedIn } from "../../utils/isLoggedIn.js";
 import { AuthContext } from "../../Context/AuthContext.js";
 import Skeleton from "react-loading-skeleton";
-import { GiGearStick, GiGearStickPattern, GiGears } from "react-icons/gi";
 import Modal from "../Modal.js";
 import {
   closeModal,
   openModal,
 } from "../../utils/ModalOpeningClosingFunctions.js";
-import DeleteListingModal from "../Selling/DeleteListingModal.js";
 import FeedbackModal from "../Feedback/FeedbackModal.js";
 import CustomDropdownMenu from "../CustomDropdownMenu.js";
-import { FiMoreVertical } from "react-icons/fi";
-import ListingMenu from "../Selling/ListingMenu.js";
 import CountriesDropdown from "./CountriesDropdown.js";
+import { useLocation } from "react-router-dom";
 
 const Header = ({ menuState, setMenuState }) => {
   const { country } = useContext(AuthContext);
@@ -65,6 +49,13 @@ const Header = ({ menuState, setMenuState }) => {
   };
 
   const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
+
+  const paths = ["/"];
+
+  const IsHomePage = () => {
+    const location = useLocation();
+    return paths.includes(location.pathname);
+  };
 
   return (
     <>
@@ -144,26 +135,30 @@ const Header = ({ menuState, setMenuState }) => {
           className={`flex ${isLogged ? "items-baseline" : "items-center"} `}
         >
           {/* Language Dropdown */}
-          <div className="relative inline-block mr-7">
-            <CustomDropdownMenu
-              buttonToOpenMenu={
-                <>
-                  <img
-                    className="w-10 h-10 object-contain block"
-                    src={`https://purecatamphetamine.github.io/country-flag-icons/3x2/${
-                      countryCode || "GB"
-                    }.svg`}
+          {IsHomePage() ? (
+            <div className="relative inline-block mr-7">
+              <CustomDropdownMenu
+                buttonToOpenMenu={
+                  <>
+                    <img
+                      className="w-10 h-10 object-contain block"
+                      src={`https://purecatamphetamine.github.io/country-flag-icons/3x2/${
+                        countryCode || "GB"
+                      }.svg`}
+                    />
+                  </>
+                }
+                children={
+                  <CountriesDropdown
+                    setCountryCode={setCountryCode}
+                    dispatch={dispatch}
                   />
-                </>
-              }
-              children={
-                <CountriesDropdown
-                  setCountryCode={setCountryCode}
-                  dispatch={dispatch}
-                />
-              }
-            />
-          </div>
+                }
+              />
+            </div>
+          ) : (
+            ""
+          )}
 
           {/* Bell and Notification Icons */}
           {isLogged ? (

@@ -29,7 +29,7 @@ const ItemFeaturesStep3 = ({ isEditMode }) => {
     console.log(values);
     try {
       const { data } = await axios.get(
-        `${SERVER_BASE_URL}/models?make_id=${
+        `${SERVER_BASE_URL}/models?make=${
           values?.engines[values?.selectedEngine]?.make
         }&category_id=${selectedCategory?.id}`
       );

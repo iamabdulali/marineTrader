@@ -127,7 +127,7 @@ const ItemDetailPage = () => {
             <p className="text-2xl font-semibold text-[#11133D]">
               {category?.name}
             </p>
-            <div className="flex items-center gap-4">
+            {/* <div className="flex items-center gap-4">
               <FaHeart
                 color="#696E9D"
                 size={20}
@@ -138,7 +138,7 @@ const ItemDetailPage = () => {
                 size={20}
                 data-tooltip-id="my-tooltip-4"
               />
-            </div>
+            </div> */}
           </div>
           <Tooltip
             id="my-tooltip-3"

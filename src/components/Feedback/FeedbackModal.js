@@ -23,6 +23,9 @@ const FeedbackModal = () => {
         },
       });
       toast.success(data.message);
+      toast.success(
+        "You will get Free Ads if the issue you highlighed is genuine"
+      );
       setSpinner(false);
     } catch (error) {
       console.log(error);
@@ -39,6 +42,10 @@ const FeedbackModal = () => {
       <Form>
         <p className="text-[#11133D] font-medium">
           We would love to hear your feedback
+        </p>
+        <p className="text-[#11133D]  text-sm mt-2">
+          <span className="text-[#11133D] font-medium">Note:</span> You will get
+          Free Ads if the issue your highlighed is genuine
         </p>
         <p className="text-[#11133D] font-medium text-sm mt-6">Select Type</p>
         <div className="mt-5 flex">
