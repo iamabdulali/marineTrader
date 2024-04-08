@@ -42,15 +42,20 @@ const PaymentSummary = ({
       )
     : [];
 
-  console.log(filteredPackages);
-
-  const { name: packageName, amount: packageAmount } = Object(
+  let { name: packageName, amount: packageAmount } = Object(
     filteredPackages[0] || {}
   );
+
+  if (hasBundle) {
+    packageAmount = 0;
+  }
+  console.log({ isBundleSelected });
 
   const filteredBundles = bundles
     ? bundles.filter((bundle) => bundle?.id == isBundleSelected)
     : [];
+
+  console.log({ bundles });
 
   const { name: bundleName, amount: bundleAmount } = Object(
     filteredBundles[0] || {}

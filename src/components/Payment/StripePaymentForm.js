@@ -11,7 +11,12 @@ import { fetchOptions } from "../../utils/fetch/fetchData";
 import { AuthContext } from "../../Context/AuthContext";
 import { countryOptions } from "../../utils/DropdownOptions";
 
-const StripePaymentForm = ({ handlePaymentSubmit, spinner, id }) => {
+const StripePaymentForm = ({
+  handlePaymentSubmit,
+  spinner,
+  id,
+  bundleType,
+}) => {
   const [postalCode, setPostalCode] = useState("");
   const [country, setCountry] = useState("");
   const [isFormValid, setIsFormValid] = useState(false);
@@ -24,9 +29,11 @@ const StripePaymentForm = ({ handlePaymentSubmit, spinner, id }) => {
   const isPrivateSeller = seller_type == "private seller";
 
   useEffect(() => {
-    fetchOptions("bundle/advert/remains", setHasBundle);
+    fetchOptions(`bundle/advert/remains?type=${bundleType}`, setHasBundle);
     fetchOptions(`subscription/advert/remains/${id}`, setHasSubscription);
-  }, [id]);
+  }, [id, hasBundle]);
+
+  console.log(hasBundle);
 
   useEffect(() => {
     const checkValidity = () => {

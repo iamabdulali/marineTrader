@@ -15,7 +15,8 @@ export default function AdSubscription() {
   const [packages, setPackages] = useState([]);
   const [hasActiveSubscription, setHasActiveSubscription] = useState("");
 
-  const [hasBundle, setHasBundle] = useState("");
+  const [hasPremiumBundle, setHasPremiumBundle] = useState("");
+  const [hasFeaturedBundle, setHasFeaturedBundle] = useState("");
 
   const { selectedCategory, user, currencyRates } = useContext(AuthContext);
 
@@ -47,8 +48,19 @@ export default function AdSubscription() {
     setSelectedTab(tab);
   };
 
+  console.log(tabs);
+
   useEffect(() => {
-    fetchOptions("bundle/advert/remains", setHasBundle, setLoading);
+    fetchOptions(
+      `bundle/advert/remains?type=premium`,
+      setHasPremiumBundle,
+      setLoading
+    );
+    fetchOptions(
+      `bundle/advert/remains?type=featured`,
+      setHasFeaturedBundle,
+      setLoading
+    );
     if (!isPrivateSeller) {
       fetchOptions(
         `subscription/advert/remains/${selectedCategory?.id}`,
@@ -71,7 +83,8 @@ export default function AdSubscription() {
             ({ name, amount, id, specificity_order, ...props }) => {
               return (
                 <AdSubscriptionComponent
-                  hasBundle={hasBundle}
+                  hasPremiumBundle={hasPremiumBundle}
+                  hasFeaturedBundle={hasFeaturedBundle}
                   packageName={name}
                   variant={name}
                   price={`${currency?.symbol}${Number(
@@ -103,7 +116,8 @@ export default function AdSubscription() {
                 return (
                   selectedTab === name && (
                     <AdSubscriptionComponent
-                      hasBundle={hasBundle}
+                      hasPremiumBundle={hasPremiumBundle}
+                      hasFeaturedBundle={hasFeaturedBundle}
                       packageName={name}
                       price={`${currency?.symbol}${Number(
                         amount * currencyRates[currency?.currency_code]

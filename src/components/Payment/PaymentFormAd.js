@@ -21,7 +21,7 @@ import {
   getPackages,
 } from "../../utils/fetch/fetchData";
 import axios from "axios";
-import { SERVER_BASE_URL } from "../..";
+import { SERVER_BASE_URL, advertPackages } from "../..";
 import { toast } from "react-toastify";
 import PaymentStatus from "../../pages/Payment/PaymentStatus";
 import StripePaymentForm from "./StripePaymentForm";
@@ -56,13 +56,6 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
   const id = pathArray[3];
 
   const isAdvertUpgrade = pathArray.includes("advert-upgrade");
-  console.log(isAdvertUpgrade);
-
-  useEffect(() => {
-    getOneAdvert(setAdvert, id, "advert", setLoading);
-    getPackages(setPackages, seller_type, setLoading);
-    fetchOptions("bundles", setBundles, setLoading);
-  }, [user]);
 
   const {
     currency_id,
@@ -76,17 +69,34 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
     spotlight_status,
   } = Object(advert);
 
-  console.log(category_id);
+  console.log(advertPackages[advert_package_id]);
 
   useEffect(() => {
-    fetchOptions("bundle/advert/remains", setHasBundle, setLoading);
+    getOneAdvert(setAdvert, id, "advert", setLoading);
+    getPackages(setPackages, seller_type, setLoading);
+  }, [user]);
+
+  useEffect(() => {
+    fetchOptions(
+      `bundles?type=${advertPackages[advert_package_id]}`,
+      setBundles,
+      setLoading
+    );
+  }, [advert]);
+
+  useEffect(() => {
+    fetchOptions(
+      `bundle/advert/remains?type=${advertPackages[advert_package_id]}`,
+      setHasBundle,
+      setLoading
+    );
     fetchOptions(
       `subscription/advert/remains/${category_id}`,
       setCategorySubscription,
       setLoading
     );
     fetchOptions("subscriptions", setSubscriptions, setLoading);
-  }, [id]);
+  }, [id, advert_package_id]);
 
   const hasBrokerOrDealerSubscription = () => {
     return subscritpions.some((subscription) => {
@@ -206,8 +216,6 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
   //   navigate("/dashboard");
   // }
 
-  console.log(packages);
-
   return (
     <>
       {showStatus ? (
@@ -247,6 +255,7 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
                     handleCombinedPayments
                   }
                   spinner={spinner}
+                  bundleType={advertPackages[advert_package_id]}
                 />
               </div>
             </Layout>
@@ -271,6 +280,7 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
               <BundlesModal
                 setSelectedBundle={setSelectedBundle}
                 onClick={() => closeModal(setIsBundleOpen)}
+                bundleType={advertPackages[advert_package_id]}
               />
             </Modal>
           </LoadingWrapper>

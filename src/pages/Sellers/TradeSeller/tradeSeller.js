@@ -17,7 +17,6 @@ import { SERVER_BASE_URL } from "../../..";
 import { AuthContext } from "../../../Context/AuthContext";
 
 const initialValues = {
-  name: "dummy10",
   user_name: "",
   company_name: "",
   building_number: "",

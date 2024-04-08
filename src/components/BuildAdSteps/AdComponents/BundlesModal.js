@@ -11,13 +11,13 @@ import { displayErrorMessages } from "../../../utils/displayErrors";
 import { Oval } from "react-loader-spinner";
 import { AuthContext } from "../../../Context/AuthContext";
 
-const BundlesModal = ({ onClick, setSelectedBundle }) => {
+const BundlesModal = ({ onClick, setSelectedBundle, bundleType }) => {
   const [bundles, setBundles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [spinner, setSpinner] = useState(false);
 
   useEffect(() => {
-    fetchOptions("bundles", setBundles, setLoading);
+    fetchOptions(`bundles?type=${bundleType}`, setBundles, setLoading);
   }, []);
 
   const { isValid } = useFormikContext();

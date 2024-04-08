@@ -21,7 +21,8 @@ const AdSubscriptionComponent = ({
   featuresArray,
   id,
   hasActiveSubscription,
-  hasBundle,
+  hasFeaturedBundle,
+  hasPremiumBundle,
 }) => {
   let variantStyles = {};
   let [isSearchResultOpen, setIsSearchResultOpen] = useState(false);
@@ -108,6 +109,13 @@ const AdSubscriptionComponent = ({
       };
   }
 
+  const bundleToUse =
+    packageName == "Premium"
+      ? hasPremiumBundle
+      : packageName == "Featured"
+      ? hasFeaturedBundle
+      : "";
+
   return (
     <div
       className={`block bg-white ad-subscription w-full mt-6 shadow-[8px] rounded-lg`}
@@ -145,12 +153,14 @@ const AdSubscriptionComponent = ({
           </div>
         )}
 
-        {variantStyles.bundleAllowance && hasBundle != "" ? (
+        {console.log(hasPremiumBundle)}
+
+        {variantStyles.bundleAllowance && bundleToUse != "" ? (
           <div className="text-sm text-[#11133D] font-medium">
             <p className="mt-2 mb-3">
               Bundle Balance:{" "}
               <span className="text-[#FF4A6B] font-semibold">
-                {hasBundle} Remaining
+                {bundleToUse} Remaining
               </span>
             </p>
           </div>
