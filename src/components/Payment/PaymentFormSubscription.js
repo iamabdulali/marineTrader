@@ -256,6 +256,7 @@ const PaymentFormSubscription = () => {
               <BundlesModal
                 setSelectedBundle={setSelectedBundle}
                 onClick={() => closeModal(setIsBundleOpen)}
+                bundleType={"premium"}
               />
             </Modal>
           </LoadingWrapper>
