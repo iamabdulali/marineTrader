@@ -56,7 +56,7 @@ const TradeSeller = () => {
   const { dispatch } = useContext(AuthContext);
   const [spinner, setSpinner] = useState(false);
   const NavigateTo = useNavigate();
-  const [step, setStep] = useState(2);
+  const [step, setStep] = useState(1);
   const stepLabels = [
     "Company Info",
     "Business Details",
