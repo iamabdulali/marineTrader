@@ -46,12 +46,20 @@ const Subscriptions = ({
     // Filter out null values (for features that should not be displayed)
     return Object.values(featureText).filter((text) => text !== null);
   };
-  const { subscription_plan_id } = Object(selectedSubscription);
+  const { subscription_plan_id, subscription_plan } =
+    Object(selectedSubscription);
+  const { name } = Object(subscription_plan);
 
   return (
     <div
       key={id}
-      className={`bg-white   
+      className={`${
+        packageName == name
+          ? "bg-white"
+          : name == undefined
+          ? "bg-white"
+          : "opacity-80"
+      }  
        shadow-[7px] lg:w-6/12 w-full border-t-4 relative py-6 sm:px-5 px-3 ${borderColor}`}
     >
       <p className="text-[#11133D] font-bold text-3xl ">
@@ -135,7 +143,8 @@ const Subscriptions = ({
           );
         })}
       </div>
-      {subscription_plan_id == id ? (
+      {/* subscription_plan_id == id */}
+      {packageName == name ? (
         <>
           <img
             src={selected}
@@ -145,13 +154,17 @@ const Subscriptions = ({
             You're Currently Subscribed To This
           </button>
         </>
-      ) : (
+      ) : name == undefined ? (
         <Link
           to={`/payment/subscription/${id}`}
           className="block mt-6 text-center w-11/12 mx-auto border-[3px] border-[#0D1A8B] rounded-lg p-2 text-[#0D1A8B] font-semibold hover:bg-[#0D1A8B] hover:text-white"
         >
           Select
         </Link>
+      ) : (
+        <button className="block mt-6 text-center w-11/12 mx-auto border-[3px] border-[#0D1A8B] rounded-lg p-2 text-[#0D1A8B] font-semibold hover:bg-[#0D1A8B] hover:text-white">
+          Already Subscribed To Higher Package
+        </button>
       )}
     </div>
   );
