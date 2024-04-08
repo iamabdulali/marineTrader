@@ -38,7 +38,7 @@ const ItemOverview = ({ advert }) => {
           </div>
           <div className="flex justify-between items-center">
             <p className="text-[#8891B2] sm:text-base text-sm">
-              {category} Make
+              {category?.name} Make
             </p>
             <p className="text-[#11133D] font-semibold sm:text-base text-sm">
               {make?.name}
