@@ -28,7 +28,7 @@ import { fetchOptions, getOneAdvert } from "../../utils/fetch/fetchData";
 import LoadingWrapper from "../../utils/LoadingWrapper";
 
 const BuildAd = () => {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(2);
   const [submit, setSubmit] = useState(false);
   const [spinner, setSpinner] = useState(false);
   const NavigateTo = useNavigate();
@@ -128,7 +128,8 @@ const BuildAd = () => {
     vessel_type: "",
     port: "",
     registry_number: "",
-    length: "123",
+    boat_status: "",
+    length: "",
     width: "",
     height: "",
     depth: "",

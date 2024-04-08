@@ -360,11 +360,37 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
                 label="Hull Shape"
                 name="hull_shape"
                 options={hullShapes}
+                value={isEditMode ? "hull_shape" : values?.hull_shape}
+                onChange={(e) =>
+                  isEditMode
+                    ? handleInputChange(e, "advert", isEditMode, setFieldValue)
+                    : handleInputChange(
+                        e,
+                        null,
+                        null,
+                        null,
+                        isEditMode,
+                        setFieldValue
+                      )
+                }
               />
               <CategorySelectDropdown
                 label="Hull Material"
                 name="hull_material"
                 options={hullMaterialArray}
+                value={isEditMode ? "hull_material" : values?.hull_material}
+                onChange={(e) =>
+                  isEditMode
+                    ? handleInputChange(e, "advert", isEditMode, setFieldValue)
+                    : handleInputChange(
+                        e,
+                        null,
+                        null,
+                        null,
+                        isEditMode,
+                        setFieldValue
+                      )
+                }
               />
             </div>
             <div className="flex sm:flex-row flex-col  gap-4">
@@ -372,6 +398,19 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
                 label="Keel Type"
                 name="keel_type"
                 options={keelTypeArray}
+                value={isEditMode ? "keel_type" : values?.keel_type}
+                onChange={(e) =>
+                  isEditMode
+                    ? handleInputChange(e, "advert", isEditMode, setFieldValue)
+                    : handleInputChange(
+                        e,
+                        null,
+                        null,
+                        null,
+                        isEditMode,
+                        setFieldValue
+                      )
+                }
               />
               <FormField
                 FieldType="text"
@@ -380,6 +419,26 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
                 label="Capacity (Optional)"
                 className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
                 placeholder={"Capacity"}
+                value={isEditMode ? "capacity" : values?.capacity}
+                onChange={(e) =>
+                  isEditMode
+                    ? handleInputChange(
+                        e,
+                        null,
+                        null,
+                        "advert",
+                        isEditMode,
+                        setFieldValue
+                      )
+                    : handleInputChange(
+                        e,
+                        null,
+                        null,
+                        null,
+                        isEditMode,
+                        setFieldValue
+                      )
+                }
               />
             </div>
             <div className="flex sm:flex-row flex-col  gap-4">
@@ -390,6 +449,26 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
                 label="Vessel Name (Optional)"
                 className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
                 placeholder={"Vessel Name"}
+                value={isEditMode ? "vessel_name" : values?.vessel_name}
+                onChange={(e) =>
+                  isEditMode
+                    ? handleInputChange(
+                        e,
+                        null,
+                        null,
+                        "advert",
+                        isEditMode,
+                        setFieldValue
+                      )
+                    : handleInputChange(
+                        e,
+                        null,
+                        null,
+                        null,
+                        isEditMode,
+                        setFieldValue
+                      )
+                }
               />
               <FormField
                 FieldType="text"
@@ -398,6 +477,26 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
                 label="HIN Number (Optional)"
                 className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
                 placeholder={"HIN Number"}
+                value={isEditMode ? "hin_number" : values?.hin_number}
+                onChange={(e) =>
+                  isEditMode
+                    ? handleInputChange(
+                        e,
+                        null,
+                        null,
+                        "advert",
+                        isEditMode,
+                        setFieldValue
+                      )
+                    : handleInputChange(
+                        e,
+                        null,
+                        null,
+                        null,
+                        isEditMode,
+                        setFieldValue
+                      )
+                }
               />
             </div>
             <div className="flex sm:flex-row flex-col  gap-4">
@@ -408,6 +507,26 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
                 label="Registration (Optional)"
                 className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
                 placeholder={"Registration "}
+                value={isEditMode ? "registation" : values?.registration}
+                onChange={(e) =>
+                  isEditMode
+                    ? handleInputChange(
+                        e,
+                        null,
+                        null,
+                        "advert",
+                        isEditMode,
+                        setFieldValue
+                      )
+                    : handleInputChange(
+                        e,
+                        null,
+                        null,
+                        null,
+                        isEditMode,
+                        setFieldValue
+                      )
+                }
               />
               <FormField
                 FieldType="text"
@@ -416,6 +535,26 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
                 label="Registry Number (Optional)"
                 className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
                 placeholder={"Registry Number"}
+                value={isEditMode ? "registry_number" : values?.registry_number}
+                onChange={(e) =>
+                  isEditMode
+                    ? handleInputChange(
+                        e,
+                        null,
+                        null,
+                        "advert",
+                        isEditMode,
+                        setFieldValue
+                      )
+                    : handleInputChange(
+                        e,
+                        null,
+                        null,
+                        null,
+                        isEditMode,
+                        setFieldValue
+                      )
+                }
               />
             </div>
           </>
@@ -606,11 +745,51 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
               label="Port/Marina"
               className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
               placeholder={"Port/Marina"}
+              value={isEditMode ? title : values?.port}
+              onChange={(e) =>
+                isEditMode
+                  ? handleInputChange(
+                      e,
+                      null,
+                      null,
+                      "advert",
+                      isEditMode,
+                      setFieldValue
+                    )
+                  : handleInputChange(
+                      e,
+                      null,
+                      null,
+                      null,
+                      isEditMode,
+                      setFieldValue
+                    )
+              }
             />
             <CategorySelectDropdown
               label="Boat Status"
-              name="status"
+              name="boat_status"
               options={status}
+              value={isEditMode ? title : values?.boat_status}
+              onChange={(e) =>
+                isEditMode
+                  ? handleInputChange(
+                      e,
+                      null,
+                      null,
+                      "advert",
+                      isEditMode,
+                      setFieldValue
+                    )
+                  : handleInputChange(
+                      e,
+                      null,
+                      null,
+                      null,
+                      isEditMode,
+                      setFieldValue
+                    )
+              }
             />
           </div>
         ) : (
@@ -661,6 +840,26 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
                 label="Length (LOA)"
                 className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
                 placeholder={`Overall Length (FT)`}
+                value={isEditMode ? "length" : values?.length}
+                onChange={(e) =>
+                  isEditMode
+                    ? handleInputChange(
+                        e,
+                        null,
+                        null,
+                        "advert",
+                        isEditMode,
+                        setFieldValue
+                      )
+                    : handleInputChange(
+                        e,
+                        null,
+                        null,
+                        null,
+                        isEditMode,
+                        setFieldValue
+                      )
+                }
               />
               <FormField
                 FieldType="text"
@@ -669,6 +868,26 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
                 label="Width (Beam)"
                 className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
                 placeholder={`Overall Width (FT)`}
+                value={isEditMode ? "width" : values?.width}
+                onChange={(e) =>
+                  isEditMode
+                    ? handleInputChange(
+                        e,
+                        null,
+                        null,
+                        "advert",
+                        isEditMode,
+                        setFieldValue
+                      )
+                    : handleInputChange(
+                        e,
+                        null,
+                        null,
+                        null,
+                        isEditMode,
+                        setFieldValue
+                      )
+                }
               />
             </div>
             <div className="flex sm:flex-row flex-col  gap-4">
@@ -679,6 +898,26 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
                 label="Height (Air Draft)"
                 className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
                 placeholder={"Water level to Highest Point (FT)"}
+                value={isEditMode ? "height" : values?.height}
+                onChange={(e) =>
+                  isEditMode
+                    ? handleInputChange(
+                        e,
+                        null,
+                        null,
+                        "advert",
+                        isEditMode,
+                        setFieldValue
+                      )
+                    : handleInputChange(
+                        e,
+                        null,
+                        null,
+                        null,
+                        isEditMode,
+                        setFieldValue
+                      )
+                }
               />
               <FormField
                 FieldType="text"
@@ -687,6 +926,26 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
                 label="Depth (Draft)"
                 className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
                 placeholder={"Water level to Bottom (FT)"}
+                value={isEditMode ? "depth" : values?.depth}
+                onChange={(e) =>
+                  isEditMode
+                    ? handleInputChange(
+                        e,
+                        null,
+                        null,
+                        "advert",
+                        isEditMode,
+                        setFieldValue
+                      )
+                    : handleInputChange(
+                        e,
+                        null,
+                        null,
+                        null,
+                        isEditMode,
+                        setFieldValue
+                      )
+                }
               />
             </div>
             <div className="flex sm:flex-row flex-col  gap-4">
@@ -698,15 +957,55 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
                 className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
                 useLabelAsPlaceHolder={false}
                 placeholder={"Weight Loaded (Kg)"}
+                value={isEditMode ? "displacement" : values?.displacement}
+                onChange={(e) =>
+                  isEditMode
+                    ? handleInputChange(
+                        e,
+                        null,
+                        null,
+                        "advert",
+                        isEditMode,
+                        setFieldValue
+                      )
+                    : handleInputChange(
+                        e,
+                        null,
+                        null,
+                        null,
+                        isEditMode,
+                        setFieldValue
+                      )
+                }
               />
               <FormField
                 FieldType="text"
                 inputField={true}
-                name="deadrise"
+                name="dead_rise"
                 label="Deadrise (At Transom) (Optional)"
                 className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
                 useLabelAsPlaceHolder={false}
                 placeholder={"Hull Angle vs Waterline (DEG)"}
+                value={isEditMode ? "dead_rise" : values?.dead_rise}
+                onChange={(e) =>
+                  isEditMode
+                    ? handleInputChange(
+                        e,
+                        null,
+                        null,
+                        "advert",
+                        isEditMode,
+                        setFieldValue
+                      )
+                    : handleInputChange(
+                        e,
+                        null,
+                        null,
+                        null,
+                        isEditMode,
+                        setFieldValue
+                      )
+                }
               />
             </div>
             <div>
@@ -718,6 +1017,26 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
                 className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
                 useLabelAsPlaceHolder={false}
                 placeholder={"Weight Empty (KG)"}
+                value={isEditMode ? "dry_weight" : values?.dry_weight}
+                onChange={(e) =>
+                  isEditMode
+                    ? handleInputChange(
+                        e,
+                        null,
+                        null,
+                        "advert",
+                        isEditMode,
+                        setFieldValue
+                      )
+                    : handleInputChange(
+                        e,
+                        null,
+                        null,
+                        null,
+                        isEditMode,
+                        setFieldValue
+                      )
+                }
               />
             </div>
           </div>
@@ -742,6 +1061,26 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
                 label="Crusing Speed (Optional)"
                 className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
                 placeholder={`Knots Per Hour (KPH)`}
+                value={isEditMode ? "crusing_speed" : values?.crusing_speed}
+                onChange={(e) =>
+                  isEditMode
+                    ? handleInputChange(
+                        e,
+                        null,
+                        null,
+                        "advert",
+                        isEditMode,
+                        setFieldValue
+                      )
+                    : handleInputChange(
+                        e,
+                        null,
+                        null,
+                        null,
+                        isEditMode,
+                        setFieldValue
+                      )
+                }
               />
               <FormField
                 FieldType="text"
@@ -750,6 +1089,26 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
                 label="Maximum Speed (Optional)"
                 className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
                 placeholder={`Knots Per Hour (KPH)`}
+                value={isEditMode ? "maximum_speed" : values?.maximum_speed}
+                onChange={(e) =>
+                  isEditMode
+                    ? handleInputChange(
+                        e,
+                        null,
+                        null,
+                        "advert",
+                        isEditMode,
+                        setFieldValue
+                      )
+                    : handleInputChange(
+                        e,
+                        null,
+                        null,
+                        null,
+                        isEditMode,
+                        setFieldValue
+                      )
+                }
               />
             </div>
             <div className="flex sm:flex-row flex-col  gap-4">
@@ -760,6 +1119,26 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
                 label="Economy (Optional)"
                 className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
                 placeholder={"Gallons Used On Average (LPH)"}
+                value={isEditMode ? "economy" : values?.economy}
+                onChange={(e) =>
+                  isEditMode
+                    ? handleInputChange(
+                        e,
+                        null,
+                        null,
+                        "advert",
+                        isEditMode,
+                        setFieldValue
+                      )
+                    : handleInputChange(
+                        e,
+                        null,
+                        null,
+                        null,
+                        isEditMode,
+                        setFieldValue
+                      )
+                }
               />
             </div>
           </div>

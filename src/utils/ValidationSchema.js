@@ -123,19 +123,19 @@ export const buildAdBigBoatsValidationSchema = Yup.object().shape({
   ),
   bow: Yup.object().shape({
     make: Yup.string().required("Make is required"),
-    modal: Yup.string().required("Model is required"),
+    model: Yup.string().required("Model is required"),
     year: Yup.string().required("Year is required"),
     power: Yup.string().required("Power is required"),
   }),
   stern: Yup.object().shape({
     make: Yup.string().required("Make is required"),
-    modal: Yup.string().required("Model is required"),
+    model: Yup.string().required("Model is required"),
     year: Yup.string().required("Year is required"),
     power: Yup.string().required("Power is required"),
   }),
   generator: Yup.object().shape({
     make: Yup.string().required("Make is required"),
-    modal: Yup.string().required("Model is required"),
+    model: Yup.string().required("Model is required"),
     year: Yup.string().required("Year is required"),
     power: Yup.string().required("Power is required"),
     consumption: Yup.string().required("Consumption is required"),
