@@ -212,6 +212,8 @@ const BuildAd = () => {
     "accessories",
   ];
 
+  console.log(selectedCategory);
+
   const prevStep = () => setStep(step - 1);
   // const nextStep = () => setStep(step + 1);
   const [isPaymentOptionOpen, setIsPaymentOptionOpen] = useState(false);
@@ -222,11 +224,11 @@ const BuildAd = () => {
       const fieldsToValidate = Object.keys(validationSchema.fields).filter(
         (field) => {
           if (step === 1) {
-            return selectedCategory?.name == "Boat Home"
+            return bigBoats.includes(selectedCategory?.name)
               ? bigBoatValidationArrayStep1.includes(field)
               : smallBoatsValidationArrayStep1.includes(field);
           } else if (step === 2) {
-            return selectedCategory?.name == "Boat Home"
+            return bigBoats.includes(selectedCategory?.name)
               ? bigBoatValidationArrayStep2.includes(field)
               : smallBoatsValidationArrayStep2.includes(field);
           } else if (step === 3) {

@@ -224,7 +224,14 @@ const Step1 = ({ showSpotlightSelection, spotlightFor, isEditMode }) => {
       const lengthOfContinentArray =
         advert[`${spotlightFor}_spotlights_continents`]?.length;
 
-      const totalSpotlights = lengthOfContinentArray + lengthOfCountryArray;
+      setTotalCount(
+        lengthOfCountryArray * 6.99 + lengthOfContinentArray * 89.99
+      );
+    } else {
+      let lengthOfCountryArray =
+        values[`${spotlightFor}_spotlights_countries`]?.length;
+      let lengthOfContinentArray =
+        values[`${spotlightFor}_spotlights_continents`]?.length;
       setTotalCount(
         lengthOfCountryArray * 6.99 + lengthOfContinentArray * 89.99
       );

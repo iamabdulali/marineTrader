@@ -216,7 +216,7 @@ const ItemFeaturesStep3 = ({ isEditMode }) => {
                                       />
                                     ) : (
                                       <CategorySelectDropdown
-                                        valueAsString={true}
+                                        valueAsString={false}
                                         addCustomOption={true}
                                         label="Make"
                                         name={`engines.${index}.make`}
@@ -281,6 +281,7 @@ const ItemFeaturesStep3 = ({ isEditMode }) => {
                                       />
                                     ) : (
                                       <CategorySelectDropdown
+                                        valueAsString={false}
                                         label="Model"
                                         name={`engines.${index}.model`}
                                         options={modals}

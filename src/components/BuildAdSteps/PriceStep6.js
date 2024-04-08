@@ -124,8 +124,11 @@ const PriceStep6 = ({ isEditMode }) => {
                       setFieldValue
                     );
                 setPriceInfoType("poa");
+                setFieldValue("price", "100");
+                setFieldValue("currency", "1");
               }}
             />
+            {console.log(values)}
             <label htmlFor="poa" className="radio-label">
               POA (Price on Application)
             </label>

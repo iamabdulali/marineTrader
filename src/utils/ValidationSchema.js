@@ -73,7 +73,7 @@ export const categoryDropdownValidationSchema = Yup.object().shape({
 
 export const buildAdSmallBoatsValidationSchema = Yup.object().shape({
   title: Yup.string().required("Title is required"),
-  sub_title: Yup.string().required("Subtitle is required"),
+  // sub_title: Yup.string().required("Subtitle is required"),
   make: Yup.string().required("Make is required"),
   model: Yup.string().required("Model is required"),
   condition: Yup.string().required("Condition is required"),
