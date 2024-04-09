@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import BuyerLayout from "../../components/BuyerLayout/BuyerLayout";
 import ListingItem from "../../components/ListingItem/ListingItem";
 import SearchFilter from "../../components/ListingItem/SearchFilter";
@@ -13,8 +13,10 @@ import {
   handleSortByDate,
   handleSortByPrice,
 } from "../../utils/SortingFunctions";
+import { AuthContext } from "../../Context/AuthContext";
 
 const ListPage = () => {
+  const { selectedCategory } = useContext(AuthContext);
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const category = queryParams.get("category");
@@ -53,16 +55,20 @@ const ListPage = () => {
     searchedListing();
   }, []);
 
+  const [categoryName, setCategoryName] = useState("");
+
   return (
     <BuyerLayout showCategoryList={true}>
       <div className="2xl:px-24 sm:px-10 px-4">
         <SearchFilter
+          setCategoryName={setCategoryName}
           setSearchedListings={setSearchedListings}
           setLoading={setLoading}
         />
         <div className="flex items-center justify-between mb-8">
-          <p className="md:text-2xl text-xl text-[#11133D] font-semibold">
-            Jet Ski For Sale
+          <p className="md:text-2xl text-xl text-[#11133D] font-semibold capitalize">
+            {/* {selectedCategory?.name || "All"} For Sale */}
+            {`${categoryName || "All"} For Sale`}
           </p>
 
           <div className="relative inline-block mr-7">

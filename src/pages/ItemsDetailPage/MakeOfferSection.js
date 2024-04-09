@@ -129,6 +129,8 @@ const MakeOfferSection = ({ advert }) => {
     return city;
   }
 
+  console.log(created_at);
+
   useEffect(() => {
     getCitiesByStates(region);
     getCity(city);

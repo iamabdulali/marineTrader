@@ -9,7 +9,7 @@ import { SERVER_BASE_URL } from "../..";
 import axios from "axios";
 import { Oval } from "react-loader-spinner";
 
-const SearchFilter = ({ setSearchedListings, setLoading }) => {
+const SearchFilter = ({ setSearchedListings, setLoading, setCategoryName }) => {
   const [width] = useWindowSize();
   const [showFilterMenu, setShowFilterMenu] = useState(width > 900);
   const [spinner, setSpinner] = useState(false);
@@ -36,6 +36,7 @@ const SearchFilter = ({ setSearchedListings, setLoading }) => {
         filterParams[key] = values[key];
       }
     });
+    setCategoryName(selectedCategory?.name);
     const queryString = new URLSearchParams(filterParams).toString();
     let newString = queryString + "&category=" + (selectedCategory?.id || "");
     const searchUrl = `${SERVER_BASE_URL}?${queryString}${newString}`;

@@ -9,7 +9,6 @@ import {
   hullMaterialArray,
   hullShapes,
   keelTypeArray,
-  passengers,
   serviceHistory,
   status,
   trailers,
@@ -122,40 +121,36 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
             : handleInputChange(e, null, null, null, isEditMode, setFieldValue)
         }
       />
-
-      {/* <UpdateSubtitleNotice values={values} setFieldValue={setFieldValue} /> */}
-      {console.log(values?.advert_package)}
+      <FormField
+        FieldType="text"
+        inputField={true}
+        readOnly={values?.advert_package < "2"}
+        name="sub_title"
+        label="Subtitle"
+        value={isEditMode ? sub_title : values?.sub_title}
+        onChange={(e) =>
+          isEditMode
+            ? handleInputChange(
+                e,
+                null,
+                null,
+                "advert",
+                isEditMode,
+                setFieldValue
+              )
+            : handleInputChange(e, null, null, null, isEditMode, setFieldValue)
+        }
+        className={`border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full ${
+          values?.advert_package < "2"
+            ? "pointer-events-none bg-gray-200"
+            : "pointer-events-auto"
+        }`}
+        placeholder={"Sub Title"}
+      />
       {values?.advert_package < "2" ? (
         <UpdateSubtitleNotice values={values} setFieldValue={setFieldValue} />
       ) : (
-        <FormField
-          FieldType="text"
-          inputField={true}
-          name="sub_title"
-          label="Subtitle"
-          value={isEditMode ? sub_title : values?.sub_title}
-          onChange={(e) =>
-            isEditMode
-              ? handleInputChange(
-                  e,
-                  null,
-                  null,
-                  "advert",
-                  isEditMode,
-                  setFieldValue
-                )
-              : handleInputChange(
-                  e,
-                  null,
-                  null,
-                  null,
-                  isEditMode,
-                  setFieldValue
-                )
-          }
-          className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
-          placeholder={"Sub Title"}
-        />
+        ""
       )}
 
       <ContentToggle
@@ -623,16 +618,16 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
         ) : (
           <div className="flex sm:flex-row flex-col  gap-4">
             <CategorySelectDropdown
-              label="Passenger"
-              name="passenger"
-              options={passengers}
-              value={isEditMode ? passenger : values?.passenger}
+              label="Type"
+              name="type"
+              options={types}
+              value={isEditMode ? type?.id : values?.type?.id}
               onChange={(e) =>
                 isEditMode
                   ? handleInputChange(
                       e,
-                      null,
-                      null,
+                      "type",
+                      types,
                       "advert",
                       isEditMode,
                       setFieldValue
@@ -737,46 +732,73 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
           </div>
         )}
         {bigBoats.includes(selectedCategory?.name) ? (
-          <div className="flex sm:flex-row flex-col  gap-4">
-            <FormField
-              FieldType="text"
-              inputField={true}
-              name="port"
-              label="Port/Marina"
-              className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
-              placeholder={"Port/Marina"}
-              value={isEditMode ? title : values?.port}
-              onChange={(e) =>
-                isEditMode
-                  ? handleInputChange(
-                      e,
-                      null,
-                      null,
-                      "advert",
-                      isEditMode,
-                      setFieldValue
-                    )
-                  : handleInputChange(
-                      e,
-                      null,
-                      null,
-                      null,
-                      isEditMode,
-                      setFieldValue
-                    )
-              }
-            />
+          <>
+            <div className="flex sm:flex-row flex-col  gap-4">
+              <FormField
+                FieldType="text"
+                inputField={true}
+                name="port"
+                label="Port/Marina"
+                className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
+                placeholder={"Port/Marina"}
+                value={isEditMode ? title : values?.port}
+                onChange={(e) =>
+                  isEditMode
+                    ? handleInputChange(
+                        e,
+                        null,
+                        null,
+                        "advert",
+                        isEditMode,
+                        setFieldValue
+                      )
+                    : handleInputChange(
+                        e,
+                        null,
+                        null,
+                        null,
+                        isEditMode,
+                        setFieldValue
+                      )
+                }
+              />
+              <CategorySelectDropdown
+                label="Boat Status"
+                name="boat_status"
+                options={status}
+                value={isEditMode ? title : values?.boat_status}
+                onChange={(e) =>
+                  isEditMode
+                    ? handleInputChange(
+                        e,
+                        null,
+                        null,
+                        "advert",
+                        isEditMode,
+                        setFieldValue
+                      )
+                    : handleInputChange(
+                        e,
+                        null,
+                        null,
+                        null,
+                        isEditMode,
+                        setFieldValue
+                      )
+                }
+              />
+            </div>
             <CategorySelectDropdown
-              label="Boat Status"
-              name="boat_status"
-              options={status}
-              value={isEditMode ? title : values?.boat_status}
+              label="Type"
+              name="type"
+              options={types}
+              value={isEditMode ? type?.id : values?.type?.id}
               onChange={(e) =>
                 isEditMode
                   ? handleInputChange(
                       e,
-                      null,
-                      null,
+                      "type",
+                      types,
                       "advert",
                       isEditMode,
                       setFieldValue
@@ -791,37 +813,10 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
                     )
               }
             />
-          </div>
+          </>
         ) : (
           ""
         )}
-        <div>
-          <CategorySelectDropdown
-            label="Type"
-            name="type"
-            options={types}
-            value={isEditMode ? type?.id : values?.type?.id}
-            onChange={(e) =>
-              isEditMode
-                ? handleInputChange(
-                    e,
-                    "type",
-                    types,
-                    "advert",
-                    isEditMode,
-                    setFieldValue
-                  )
-                : handleInputChange(
-                    e,
-                    null,
-                    null,
-                    null,
-                    isEditMode,
-                    setFieldValue
-                  )
-            }
-          />
-        </div>
       </div>
       {bigBoats.includes(selectedCategory?.name) ? (
         <>

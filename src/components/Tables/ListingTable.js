@@ -85,6 +85,8 @@ const ListingTable = ({
     return filteredPackages[0]?.name;
   }
 
+  const [sortType, setSortType] = useState("Sort By");
+
   return (
     <>
       <div
@@ -129,7 +131,7 @@ const ListingTable = ({
                       className="border-2 hover:bg-[#8891B2] hover:text-white hover:border-[#8891B2] text-sm border-[#C8C8C8] rounded-lg flex items-center gap-4 md:py-3 px-3 py-2 text-[#8891B2]"
                       name="sortLists"
                     >
-                      Sort By
+                      {sortType}
                       <FaChevronDown size={12} />
                     </button>
                   </>
@@ -140,6 +142,7 @@ const ListingTable = ({
                     handleSortByPrice={handleSortByPrice}
                     items={sellingData}
                     setItems={setItemsData}
+                    setSortType={setSortType}
                   />
                 }
               />
@@ -344,7 +347,7 @@ const ListingTable = ({
                               className={`text-[#2AD18A] border-2 border-[#2AD18A] hover:bg-[#2AD18A] hover:text-white px-3 py-3 min-w-24 text-sm rounded-md block text-center`}
                               disabled
                             >
-                              Maxed
+                              Featured
                             </button>
                           )}
                         </div>
@@ -493,7 +496,7 @@ const ListingTable = ({
                               className={`text-[#2AD18A] border-2 border-[#2AD18A] hover:bg-[#2AD18A] hover:text-white px-3 py-3 w-full text-sm rounded-md block text-center`}
                               disabled
                             >
-                              Maxed
+                              Featured
                             </button>
                           )}
                           <CustomDropdownMenu

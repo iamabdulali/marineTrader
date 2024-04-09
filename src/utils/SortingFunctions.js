@@ -6,7 +6,7 @@ export const handleSortByPrice = (ascending, items, setData) => {
   setData(sortedAdverts);
 };
 
-export const handleSortByDate = (ascending, items, setData) => {
+export const handleSortByDate = (ascending, items, setData, e) => {
   const sortedAdverts = [...items];
   sortedAdverts.sort((a, b) => {
     return ascending

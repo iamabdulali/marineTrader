@@ -7,16 +7,13 @@ import { sellingHeader } from "../../utils/DummyData";
 import Layout from "../../components/Layout/Layout";
 import CategoryList from "../../components/categoryList/CategoryList";
 import AdSubscription from "../AdSubscription/AdSubscription";
-import VideoBtn from "../../components/VideoTutorial/VideoBtn";
-import Modal from "../../components/Modal";
-import {
-  closeModal,
-  openModal,
-} from "../../utils/ModalOpeningClosingFunctions";
-import VideoModal from "../../components/VideoTutorial/VideoModal";
 import { getAdvert } from "../../utils/fetch/fetchData";
 import LoadingWrapper from "../../utils/LoadingWrapper";
 import { AuthContext } from "../../Context/AuthContext";
+import {
+  handleSortByDate,
+  handleSortByPrice,
+} from "../../utils/SortingFunctions";
 
 export default function Selling() {
   const [loading, setLoading] = useState(true);
@@ -40,26 +37,6 @@ export default function Selling() {
       return prevAds;
     });
   };
-
-  const handleSortByPrice = (ascending) => {
-    const sortedAdverts = [...adverts];
-    sortedAdverts.sort((a, b) => {
-      return ascending ? a?.price - b?.price : b?.price - a?.price;
-    });
-    setAdverts(sortedAdverts);
-  };
-
-  const handleSortByDate = (ascending) => {
-    const sortedAdverts = [...adverts];
-    sortedAdverts.sort((a, b) => {
-      return ascending
-        ? new Date(a?.created_at) - new Date(b?.created_at)
-        : new Date(b?.created_at) - new Date(a?.created_at);
-    });
-    setAdverts(sortedAdverts);
-  };
-
-  console.log(adverts);
 
   return (
     <>

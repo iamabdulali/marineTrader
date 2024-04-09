@@ -1,5 +1,5 @@
 // SliderComponent.js
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -24,10 +24,11 @@ import {
   FaTools,
   FaTrademark,
 } from "react-icons/fa";
-import { featuredImage, featuredRevert, logo } from "../../assets";
-import SelectDropdown from "../SelectDropdown";
+import { featuredRevert, logo } from "../../assets";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../Context/AuthContext";
+import { GetCountries } from "react-country-state-city/dist/cjs";
+import axios from "axios";
 
 const ListingItem = ({ itemData }) => {
   const sliderSettings = {
@@ -59,7 +60,70 @@ const ListingItem = ({ itemData }) => {
   const { currencyRates, user } = useContext(AuthContext);
 
   const { currency } = Object(user);
-  const { phone_no, email } = Object(listItemUser);
+  const { phone_no, email, country, city, region, user_name } =
+    Object(listItemUser);
+
+  const [countries, setCountries] = useState([]);
+  const [states, setStates] = useState([]);
+  const [cities, setCities] = useState([]);
+  const [AllStates, setAllStates] = useState([]);
+  const [cityByStates, setCitiesByStates] = useState([]);
+
+  const getOptions = async (url, setData) => {
+    try {
+      const { data } = await axios.get(url);
+      setData(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    GetCountries().then((result) => {
+      setCountries(result);
+    });
+    getOptions(
+      "https://venkatmcajj.github.io/react-country-state-city/data/statesminified.json",
+      setStates
+    );
+
+    getOptions(
+      "https://venkatmcajj.github.io/react-country-state-city/data/citiesminified.json",
+      setCities
+    );
+  }, []);
+
+  function getCountry(countryName) {
+    const country = countries.find((country) => country?.id == countryName);
+    return country;
+  }
+
+  useEffect(() => {
+    setAllStates((prevStates) => {
+      const newStates = cities?.reduce((acc, city) => {
+        return acc.concat(Object(city)?.states);
+      }, []);
+
+      return [...prevStates, ...newStates];
+    });
+  }, [cities]);
+
+  function getCitiesByStates(stateID) {
+    const selectedCities = AllStates?.find((state) => state?.id == stateID);
+    setCitiesByStates(selectedCities?.cities);
+  }
+
+  function getCity(ID) {
+    const city = cityByStates?.find((city) => city?.id == ID);
+    return city;
+  }
+
+  useEffect(() => {
+    getCitiesByStates(region);
+    getCity(city);
+  }, [states, countries, AllStates]);
+
+  console.log(listItemUser);
 
   // console.log(currencyRates[currency?.currency_code]);
   return (
@@ -211,12 +275,13 @@ const ListingItem = ({ itemData }) => {
                 className="border-[1px] w-20 object-cover bg-white rounded-lg"
               />
               <div className="w-full">
-                <p className="text-[#11133D] font-semibold">Marine Trader</p>
+                <p className="text-[#11133D] font-semibold">{user_name}</p>
                 <p className="text-[#8891B2] font-medium mt-1 mb-2 text-sm">
                   Trade Seller
                 </p>
                 <p className="flex text-sm font-semibold items-center gap-3 text-[#11133D]">
-                  <FaMapMarkedAlt color="#8891B2" size={28} /> United Kingdom
+                  <FaMapMarkedAlt color="#8891B2" size={28} />{" "}
+                  {getCity(city)?.name} , {getCountry(country)?.name}
                 </p>
               </div>
             </div>

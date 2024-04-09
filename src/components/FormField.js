@@ -32,6 +32,7 @@ export const FormField = ({
           onClick={onClick}
           placeholder={useLabelAsPlaceHolder ? label : placeholder}
           className={className}
+          readOnly={readOnly}
         ></Field>
         <ErrorMessage component="span" name={name} className="text-[red]" />
       </div>

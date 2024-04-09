@@ -26,11 +26,23 @@ const HeroSection = () => {
   };
 
   const categoryBackgrounds = {
-    "Jet Skis": boatBg,
-    "Boat Home":
+    jetski:
+      "https://images.unsplash.com/photo-1648484983838-b47185140bee?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    commercial:
+      "https://plus.unsplash.com/premium_photo-1663050763676-82ff02c5e02c?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "boat-home":
       "https://www.marinetrader.com/wp-content/uploads/2020/12/jet-ski-cat-banner.jpg",
+    "small-craft":
+      "https://images.unsplash.com/photo-1658878529562-00ec6a436ee5?q=80&w=1800&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    fishing:
+      "https://images.unsplash.com/photo-1583249598754-b7a2f59651fb?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "non-motor":
+      "https://images.unsplash.com/photo-1444487233259-dae9d907a740?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    rib: "https://images.unsplash.com/photo-1613993854053-151c103d3fb6?q=80&w=2038&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     // Add more categories and their background images as needed
   };
+
+  console.log(selectedCategory?.name);
 
   // Default background image
   let backgroundImg = boatBg;
@@ -38,6 +50,7 @@ const HeroSection = () => {
   // Set background image based on selected category
   if (selectedCategory && categoryBackgrounds[selectedCategory?.name]) {
     backgroundImg = categoryBackgrounds[selectedCategory?.name];
+    console.log(backgroundImg);
   }
 
   return (

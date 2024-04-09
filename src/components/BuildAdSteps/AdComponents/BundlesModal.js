@@ -52,9 +52,9 @@ const BundlesModal = ({ onClick, setSelectedBundle, bundleType }) => {
     <form>
       <div className="bg-gradient-to-t w-full py-4 rounded-tr-lg rounded-tl-lg from-[#0d1a8b] to-[#3241cb]">
         <p className="text-white text-xl font-semibold text-center mb-1">
-          BUNDLES : STANDARD Advert
+          BUNDLES : {bundleType} Advert
         </p>
-        <p className="text-[#A2A9EB] text-sm text-center">
+        <p className="text-[#A2A9EB] text-sm text-center font-semibold">
           Current price per advert: £ 0.99
         </p>
       </div>

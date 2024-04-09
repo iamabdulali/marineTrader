@@ -7,7 +7,9 @@ import { Field, useFormikContext } from "formik";
 import LoadingWrapper from "../../../utils/LoadingWrapper";
 
 const Step1 = ({ showSpotlightSelection, spotlightFor, isEditMode }) => {
-  const { bundleName } = useContext(AuthContext);
+  const { user, currencyRates } = useContext(AuthContext);
+
+  const { currency } = Object(user);
 
   const [selectedCountries, setSelectedCountries] = useState([]);
   const [selectedContinents, setSelectedContinents] = useState([]);
@@ -27,8 +29,6 @@ const Step1 = ({ showSpotlightSelection, spotlightFor, isEditMode }) => {
     return maxId + 1;
   }
 
-  console.log(values);
-
   const handleInputChange = (e) => {
     const { name, value, checked } = e.target;
     console.log(name);
@@ -42,7 +42,7 @@ const Step1 = ({ showSpotlightSelection, spotlightFor, isEditMode }) => {
 
     if (isCountrySpotlight || isContinentSpotlight) {
       const spotlightPrice = Number(
-        selectedType[value - 1]?.spotlight_price.match(/\d+\.\d+/)[0]
+        selectedType[value]?.spotlight_price.match(/\d+\.\d+/)[0]
       );
 
       console.log(spotlightPrice);
@@ -138,7 +138,12 @@ const Step1 = ({ showSpotlightSelection, spotlightFor, isEditMode }) => {
       <div className="sm:px-8 px-5">
         <div className="text-[#0D1A8B] smallLg:text-xl text-base font-bold flex justify-between ">
           <p>Your SpotLight Selections</p>
-          <p className="uppercase">Total: £{totalCount.toFixed(2)}</p>
+          <p className="uppercase">
+            Total:{" "}
+            {`${currency?.symbol}${Number(
+              totalCount * currencyRates[currency?.currency_code]
+            ).toFixed(2)}`}
+          </p>
         </div>
         <table className="w-full sm:text-base text-sm text-left bg-[#f9f9f9] border-collapse border border-[#D8D8D8] mt-4">
           <thead>
@@ -152,8 +157,6 @@ const Step1 = ({ showSpotlightSelection, spotlightFor, isEditMode }) => {
             {isEditMode
               ? advert[`${spotlightFor}_spotlights_${tableFor}`]?.map(
                   (spotlight) => {
-                    console.log(`${tableFor}_id`);
-                    console.log(spotlight[`${tableFor}_id`]);
                     return (
                       <tr
                         key={ArrayFor[spotlight[`${tableFor}_id`] - 1]?.name}
@@ -196,7 +199,10 @@ const Step1 = ({ showSpotlightSelection, spotlightFor, isEditMode }) => {
                           {ArrayFor[country - 1]?.name}
                         </td>
                         <td className="py-2 px-4 font-semibold">
-                          £{ArrayFor[country - 1]?.spotlight_price}
+                          {`${currency?.symbol}${Number(
+                            ArrayFor[country - 1]?.spotlight_price *
+                              currencyRates[currency?.currency_code]
+                          ).toFixed(2)}`}
                         </td>
                         <td className="py-2 px-4 font-semibold">
                           <button
@@ -256,8 +262,10 @@ const Step1 = ({ showSpotlightSelection, spotlightFor, isEditMode }) => {
               <div className="text-[#0D1A8B] smallLg:text-xl text-base font-bold flex justify-between sm:px-8 px-5">
                 <p className="pr-3">Select Countries From The List:</p>
                 <p className="uppercase">
-                  <span className="sm:inline-block hidden">Total:</span> £
-                  {totalCount.toFixed(2)}
+                  <span className="sm:inline-block hidden">Total:</span>
+                  {`${currency?.symbol}${Number(
+                    totalCount * currencyRates[currency?.currency_code]
+                  ).toFixed(2)}`}
                 </p>
               </div>
               <div className="sm:px-8 px-5">
@@ -279,7 +287,12 @@ const Step1 = ({ showSpotlightSelection, spotlightFor, isEditMode }) => {
                           })}
                           onChange={(e) => handleInputChange(e)}
                         />
-                        {name} (+ {spotlight_price})
+                        {name} (+{" "}
+                        {`${currency?.symbol}${Number(
+                          spotlight_price *
+                            currencyRates[currency?.currency_code]
+                        ).toFixed(2)}`}
+                        )
                       </label>
                     </div>
                   ))}
@@ -306,7 +319,12 @@ const Step1 = ({ showSpotlightSelection, spotlightFor, isEditMode }) => {
                             ].some((item) => item.continent_id == id),
                           })}
                         />
-                        {name} (+ £{spotlight_price})
+                        {name} (+{" "}
+                        {`${currency?.symbol}${Number(
+                          spotlight_price *
+                            currencyRates[currency?.currency_code]
+                        ).toFixed(2)}`}
+                        )
                       </label>
                     </div>
                   ))}
