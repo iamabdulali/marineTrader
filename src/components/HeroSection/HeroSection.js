@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { boatBg } from "../../assets";
 import CategoryDropdown from "../CategoryDropdown/CategoryDropdown";
 import { AuthContext } from "../../Context/AuthContext";
@@ -19,7 +19,6 @@ const HeroSection = () => {
     if (values.year) queryParams.append("year", values.year);
 
     const queryString = queryParams.toString();
-    console.log(queryString);
 
     // Navigate to list page with the constructed query string
     Navigate(`/list${queryString ? `?${queryString}` : ""}`);
@@ -39,19 +38,17 @@ const HeroSection = () => {
     "non-motor":
       "https://images.unsplash.com/photo-1444487233259-dae9d907a740?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     rib: "https://images.unsplash.com/photo-1613993854053-151c103d3fb6?q=80&w=2038&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    // Add more categories and their background images as needed
   };
 
-  console.log(selectedCategory?.name);
-
-  // Default background image
   let backgroundImg = boatBg;
 
-  // Set background image based on selected category
   if (selectedCategory && categoryBackgrounds[selectedCategory?.name]) {
     backgroundImg = categoryBackgrounds[selectedCategory?.name];
-    console.log(backgroundImg);
   }
+
+  useEffect(() => {
+    backgroundImg = categoryBackgrounds[selectedCategory?.name];
+  }, []);
 
   return (
     <div className="relative hero-section-div bg-cover w-full lg:bg-top">

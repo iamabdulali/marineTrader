@@ -99,7 +99,7 @@ const MachinaryForm = ({ formFor, isEditMode }) => {
         ) : (
           <CategorySelectDropdown
             addCustomOption={true}
-            valueAsString={false}
+            valueAsString={true}
             label="Make"
             name={`${formFor}.make`}
             options={makes}
@@ -160,7 +160,7 @@ const MachinaryForm = ({ formFor, isEditMode }) => {
         ) : (
           <CategorySelectDropdown
             addCustomOption={true}
-            valueAsString={false}
+            valueAsString={true}
             label="Model"
             name={`${formFor}.model`}
             options={modals}

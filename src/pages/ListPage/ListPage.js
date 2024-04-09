@@ -56,6 +56,7 @@ const ListPage = () => {
   }, []);
 
   const [categoryName, setCategoryName] = useState("");
+  const [sortType, setSortType] = useState("Sort By");
 
   return (
     <BuyerLayout showCategoryList={true}>
@@ -79,7 +80,8 @@ const ListPage = () => {
                     className="border-2 hover:bg-[#8891B2] hover:text-white hover:border-[#8891B2] text-sm border-[#C8C8C8] rounded-lg flex items-center gap-4 md:py-3 px-3 py-2 text-[#8891B2]"
                     name="sortLists"
                   >
-                    Sort By
+                    {sortType}
+
                     <FaChevronDown size={12} />
                   </button>
                 </>
@@ -90,6 +92,7 @@ const ListPage = () => {
                   handleSortByPrice={handleSortByPrice}
                   items={searchedListings}
                   setItems={setSearchedListings}
+                  setSortType={setSortType}
                 />
               }
             />
