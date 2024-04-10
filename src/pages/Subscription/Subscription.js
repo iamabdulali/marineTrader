@@ -7,33 +7,33 @@ import CurrentSubscription from "../../components/Subscriptions/CurrentSubscript
 import { DealerPlus, ServicePlus } from "../../utils/DummyData";
 import SubscriptionStep2 from "./SubscriptionStep2";
 import { FaArrowLeft } from "react-icons/fa";
-import VideoModal from "../../components/VideoTutorial/VideoModal";
 import {
-  closeModal,
-  openModal,
-} from "../../utils/ModalOpeningClosingFunctions";
-import Modal from "../../components/Modal";
-import VideoBtn from "../../components/VideoTutorial/VideoBtn";
-import { fetchOptions } from "../../utils/fetch/fetchData";
+  checkCategorySubscription,
+  fetchOptions,
+} from "../../utils/fetch/fetchData";
 import { AuthContext } from "../../Context/AuthContext";
 import { categoriesList } from "../..";
 import LoadingWrapper from "../../utils/LoadingWrapper";
 
 const Subscription = () => {
-  const [hasSubscription, setHasSubscription] = useState(true);
-  let [isVideoOpen, setIsVideoOpen] = useState(false);
-  const [subscription, setSubscriptions] = useState([]);
+  const [showAllActiveSubscriptions, setShowAllActiveSubscription] =
+    useState(true);
   const [loading, setLoading] = useState(true);
   const { categories } = useContext(AuthContext);
   const navigate = useNavigate();
+  const [subscriptions, setSubscriptions] = useState([]);
+  const [hasActiveSubscription, setHasActiveSubscription] = useState(false);
+  const [hasActiveSubscriptionData, setHasActiveSubscriptionData] = useState(
+    []
+  );
 
   const { selectedCategory, user } = useContext(AuthContext);
 
   const { seller_type } = Object(user);
 
-  useEffect(() => {
-    fetchOptions("subscriptions", setSubscriptions, setLoading);
-  }, []);
+  // useEffect(() => {
+  //   fetchOptions("subscriptions", setSubscriptions, setLoading);
+  // }, []);
 
   const isPrivateSeller = seller_type == "private seller";
 
@@ -58,16 +58,38 @@ const Subscription = () => {
     return acc;
   }, {});
 
+  const categoryToCheck = selectedCategory?.id;
+
+  useEffect(() => {
+    fetchOptions("subscriptions", setSubscriptions, setLoading);
+    // fetchOptions(
+    //   `subscription-plans?category=${selectedCategory?.id || "1"}`,
+    //   setSubscriptionsPlans,
+    //   setLoading
+    // );
+  }, [selectedCategory]);
+
+  useEffect(() => {
+    checkCategorySubscription(
+      subscriptions,
+      categoryToCheck,
+      setHasActiveSubscription,
+      setHasActiveSubscriptionData
+    );
+  }, [selectedCategory, subscriptions]);
+
+  console.log(selectedCategory);
+
   return (
     <Layout>
       <div className="flex items-center justify-between">
         <Heading content="Subscriptions" />
-        {hasSubscription ? (
+        {showAllActiveSubscriptions ? (
           ""
         ) : (
           <Link
             onClick={() => {
-              setHasSubscription(true);
+              setShowAllActiveSubscription(true);
             }}
             className=" text-[#0D1A8B] flex items-center gap-2 font-medium underline"
           >
@@ -76,7 +98,7 @@ const Subscription = () => {
           </Link>
         )}
       </div>
-      {hasSubscription ? (
+      {showAllActiveSubscriptions ? (
         <p className="font-semibold text-sm text-[#11133D] my-3">
           Select a category to see their plans
         </p>
@@ -96,13 +118,13 @@ const Subscription = () => {
             activeCategory="border-b-4 border-[#0D1A8B] py-3"
             unActiveCategory="py-3"
             onCategoryChange={() => {
-              setHasSubscription(false);
+              setShowAllActiveSubscription(false);
             }}
             onCategoryClick={() => {}}
             categories={categories}
           />
         </div>
-        {subscription.length == 0 && hasSubscription ? (
+        {subscriptions.length == 0 && showAllActiveSubscriptions ? (
           <p className=" font-medium mt-6">
             You don't have any subscriptions at the moment
           </p>
@@ -110,9 +132,9 @@ const Subscription = () => {
           ""
         )}
         <>
-          {hasSubscription ? (
+          {showAllActiveSubscriptions ? (
             <div>
-              {subscription.map(
+              {subscriptions.map(
                 (
                   { subscription_plan, end_date, id, subscription_plan_id },
                   index
@@ -132,7 +154,7 @@ const Subscription = () => {
                         expiry_date={end_date}
                         id={id}
                         subscription_plan_id={subscription_plan_id}
-                        setHasSubscription={setHasSubscription}
+                        setHasSubscription={setShowAllActiveSubscription}
                       />
                     </div>
                   );

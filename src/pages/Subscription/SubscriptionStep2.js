@@ -58,8 +58,6 @@ const SubscriptionStep2 = () => {
     );
   }, [selectedCategory, subscriptions]);
 
-  console.log({ subscriptionsPlan, hasActiveSubscriptionData });
-
   const featuresArray = [DealerPlus, ServicePlus];
 
   return (

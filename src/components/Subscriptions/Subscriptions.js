@@ -1,8 +1,9 @@
-import React, { useEffect } from "react";
-import { FaCheck, FaCheckCircle, FaInfo } from "react-icons/fa";
+import React from "react";
+import { FaCheck, FaInfo } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { selected, star } from "../../assets";
 import { Tooltip } from "react-tooltip";
+import selected from "../../assets/selected.png";
+import star from "../../assets/star.png";
 
 const Subscriptions = ({
   featuresArray,
@@ -14,6 +15,23 @@ const Subscriptions = ({
   id,
   selectedSubscription,
 }) => {
+  // Check if the user is subscribed to Broker plus within the same category
+  const isSubscribedToBrokerPlus =
+    selectedSubscription?.subscription_plan?.name === "Broker plus";
+
+  // Disable Service plus if subscribed to Broker plus
+  const isServicePlusDisabled =
+    packageName === "Service plus" && isSubscribedToBrokerPlus;
+
+  // Disable Standard Trader if subscribed to Broker plus
+  const isStandardTraderDisabled =
+    packageName === "Standard Trader" && isSubscribedToBrokerPlus;
+
+  // Check if the current package is selected or subscribed to
+  const isSelectedOrSubscribed =
+    packageName === selectedSubscription?.subscription_plan?.name;
+
+  // Map features to text descriptions
   const mapFeaturesToText = (features) => {
     const featureText = {
       customer_reviews:
@@ -46,30 +64,26 @@ const Subscriptions = ({
     // Filter out null values (for features that should not be displayed)
     return Object.values(featureText).filter((text) => text !== null);
   };
-  const { subscription_plan_id, subscription_plan } =
-    Object(selectedSubscription);
-  const { name } = Object(subscription_plan);
 
   return (
     <div
       key={id}
       className={`${
-        packageName == name
+        isSelectedOrSubscribed
           ? "bg-white"
-          : name == undefined
-          ? "bg-white"
-          : "opacity-80"
-      }  
-       shadow-[7px] lg:w-6/12 w-full border-t-4 relative py-6 sm:px-5 px-3 ${borderColor}`}
+          : isServicePlusDisabled || isStandardTraderDisabled
+          ? "opacity-80"
+          : "bg-white"
+      } shadow-[7px] lg:w-6/12 w-full border-t-4 relative py-6 sm:px-5 px-3 ${borderColor}`}
     >
-      <p className="text-[#11133D] font-bold text-3xl ">
+      <p className="text-[#11133D] font-bold text-3xl">
         {packagePrice}
-        <span className="text-[#8891B2] font-medium text-sm ml-2 ">
+        <span className="text-[#8891B2] font-medium text-sm ml-2">
           {subHeading}
         </span>
       </p>
       <p
-        className={`${textColor} relative capitalize w-fit font-semibold text-2xl mt-3 `}
+        className={`${textColor} relative capitalize w-fit font-semibold text-2xl mt-3`}
       >
         {packageName}
         <span
@@ -80,7 +94,7 @@ const Subscriptions = ({
           }
           className="bg-black absolute -right-8 cursor-pointer top-0 rounded-full p-[0.3rem]"
         >
-          <FaInfo className=" text-white " size={12} />
+          <FaInfo className="text-white" size={12} />
         </span>
       </p>
 
@@ -94,12 +108,13 @@ const Subscriptions = ({
         place="bottom"
         content="Recommended for Service Providers"
       />
-      {packageName == "Dealer Plus" ? (
+
+      {packageName === "Dealer Plus" ? (
         <span className="text-[#8891B2] font-medium text-sm my-2 block">
           Includes 180 Ads/year
         </span>
-      ) : packageName == "Broker plus" ? (
-        <span className="text-[#8891B2]  pointer-events-none font-medium text-sm my-2 block">
+      ) : packageName === "Broker plus" ? (
+        <span className="text-[#8891B2] pointer-events-none font-medium text-sm my-2 block">
           Includes 300 Ads/year
         </span>
       ) : (
@@ -122,49 +137,50 @@ const Subscriptions = ({
           <p className="mt-2 font-semibold sm:text-base text-sm">£11.99</p>
         </div>
       </div>
+
       <div className="mt-8 min-h-80">
-        {mapFeaturesToText(featuresArray).map((featureText, index) => {
-          return (
-            <div className="flex items-baseline font-medium gap-4">
-              <p
-                className={`bg-[#e1f4ec] mt-5 rounded-full h-6 w-6 flex items-center justify-center`}
-              >
-                <FaCheck color="#36B37E" size={10} />
-              </p>
-              <div className="flex items-end gap-3">
-                {featureText}{" "}
-                {featureText.endsWith("Ads/Month") ? (
-                  <img className="w-6" src={star} alt="star" />
-                ) : (
-                  ""
-                )}
-              </div>
+        {mapFeaturesToText(featuresArray).map((featureText, index) => (
+          <div className="flex items-baseline font-medium gap-4" key={index}>
+            <p className="bg-[#e1f4ec] mt-5 rounded-full h-6 w-6 flex items-center justify-center">
+              <FaCheck color="#36B37E" size={10} />
+            </p>
+            <div className="flex items-end gap-3">
+              {featureText}
+              {featureText.endsWith("Ads/Month") && (
+                <img className="w-6" src={star} alt="star" />
+              )}
             </div>
-          );
-        })}
+          </div>
+        ))}
       </div>
-      {/* subscription_plan_id == id */}
-      {packageName == name ? (
+
+      {/* Disable Service plus if subscribed to Broker plus */}
+      {isServicePlusDisabled ? (
+        <button
+          disabled
+          className="block mt-6 text-center w-11/12 mx-auto border-[3px] border-gray-400 rounded-lg p-2 text-gray-400 font-semibold cursor-not-allowed"
+        >
+          Service Plus Subscription Disabled
+        </button>
+      ) : packageName === selectedSubscription?.subscription_plan?.name ? (
+        // Render subscription info for the selected subscription
         <>
           <img
             src={selected}
             className="sm:w-40 w-20 -top-4 -right-1 absolute z-10"
           />
           <button className="block mt-6 text-center w-11/12 mx-auto border-[3px] border-[#0D1A8B] rounded-lg p-2 text-[#0D1A8B] font-semibold hover:bg-[#0D1A8B] hover:text-white">
-            You're Currently Subscribed To This
+            Renew
           </button>
         </>
-      ) : name == undefined ? (
+      ) : (
+        // Render subscription options
         <Link
           to={`/payment/subscription/${id}`}
           className="block mt-6 text-center w-11/12 mx-auto border-[3px] border-[#0D1A8B] rounded-lg p-2 text-[#0D1A8B] font-semibold hover:bg-[#0D1A8B] hover:text-white"
         >
           Select
         </Link>
-      ) : (
-        <button className="block mt-6 text-center w-11/12 mx-auto border-[3px] border-[#0D1A8B] rounded-lg p-2 text-[#0D1A8B] font-semibold hover:bg-[#0D1A8B] hover:text-white">
-          Already Subscribed To Higher Package
-        </button>
       )}
     </div>
   );
