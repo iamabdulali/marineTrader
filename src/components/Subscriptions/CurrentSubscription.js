@@ -19,7 +19,8 @@ const CurrentSubscription = ({
       ? "border-[#36B37E] text-[#36B37E] "
       : "border-[#FFB800] text-[#FFB800]";
 
-  const { dispatch } = useContext(AuthContext);
+  const { dispatch, selectedCategory } = useContext(AuthContext);
+  console.log(selectedCategory?.name);
 
   return (
     <div
@@ -42,7 +43,7 @@ const CurrentSubscription = ({
                 type: "SELECTED_CATEGORY",
                 payload: { id: categoryId, name: categoriesList[categoryId] },
               });
-              // document.querySelector(`.category-${categoryId}`).click();
+              // document.querySelector(`.${selectedCategory?.name}`).click();
             }}
             className={`border-[3px] sm:w-auto ${
               packageName == "Broker plus"

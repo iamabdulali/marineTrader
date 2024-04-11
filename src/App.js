@@ -87,13 +87,16 @@ function App() {
       dispatch({ type: type, payload: data.data });
     }
 
+    console.log();
+
     fetchOptions("categories", "CATEGORIES");
-    fetchOptions("make", "MAKES");
-    // fetchOptions("models", "MODALS");
-    fetchOptions("conditions", "CONDITIONS");
-    fetchOptions("types", "TYPES");
-    fetchOptions("currencies", "CURRENCY");
-    fetchOptions("taxes", "TAXES");
+    if (!window.location.href.includes("/subscription")) {
+      fetchOptions("make", "MAKES");
+      fetchOptions("conditions", "CONDITIONS");
+      fetchOptions("types", "TYPES");
+      fetchOptions("currencies", "CURRENCY");
+      fetchOptions("taxes", "TAXES");
+    }
   }, [selectedCategory]);
 
   async function requestPermission() {

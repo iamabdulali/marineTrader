@@ -27,13 +27,9 @@ const Subscription = () => {
     []
   );
 
-  const { selectedCategory, user } = useContext(AuthContext);
+  const { selectedCategory, user, dispatch } = useContext(AuthContext);
 
   const { seller_type } = Object(user);
-
-  // useEffect(() => {
-  //   fetchOptions("subscriptions", setSubscriptions, setLoading);
-  // }, []);
 
   const isPrivateSeller = seller_type == "private seller";
 
@@ -62,11 +58,6 @@ const Subscription = () => {
 
   useEffect(() => {
     fetchOptions("subscriptions", setSubscriptions, setLoading);
-    // fetchOptions(
-    //   `subscription-plans?category=${selectedCategory?.id || "1"}`,
-    //   setSubscriptionsPlans,
-    //   setLoading
-    // );
   }, [selectedCategory]);
 
   useEffect(() => {
@@ -78,7 +69,12 @@ const Subscription = () => {
     );
   }, [selectedCategory, subscriptions]);
 
-  console.log(selectedCategory);
+  useEffect(() => {
+    dispatch({
+      type: "SELECTED_CATEGORY",
+      payload: null,
+    });
+  }, []);
 
   return (
     <Layout>
@@ -90,6 +86,10 @@ const Subscription = () => {
           <Link
             onClick={() => {
               setShowAllActiveSubscription(true);
+              dispatch({
+                type: "SELECTED_CATEGORY",
+                payload: null,
+              });
             }}
             className=" text-[#0D1A8B] flex items-center gap-2 font-medium underline"
           >
@@ -115,7 +115,11 @@ const Subscription = () => {
             initialCategory={-1}
             className="flex smallLg:flex-nowrap smallLg:justify-between flex-wrap lg:w-full min-h-[88px] mt-5 justify-start smallLg:gap-0  gap-4 px-4 bg-white border-2 rounded-lg border-[#D9DFF5]
                smallLg:w-auto"
-            activeCategory="border-b-4 border-[#0D1A8B] py-3"
+            activeCategory={`${
+              showAllActiveSubscriptions
+                ? "py-3"
+                : "border-b-4 border-[#0D1A8B] py-3"
+            } `}
             unActiveCategory="py-3"
             onCategoryChange={() => {
               setShowAllActiveSubscription(false);

@@ -20,7 +20,7 @@ export default function Selling() {
   const [hasListing, setHasListing] = useState(true);
   let [isVideoOpen, setIsVideoOpen] = useState(false);
   const [adverts, setAdverts] = useState([]);
-  const { categories } = useContext(AuthContext);
+  const { categories, dispatch } = useContext(AuthContext);
 
   useEffect(() => {
     getAdvert(setAdverts, setLoading);
@@ -37,6 +37,13 @@ export default function Selling() {
       return prevAds;
     });
   };
+
+  useEffect(() => {
+    dispatch({
+      type: "SELECTED_CATEGORY",
+      payload: null,
+    });
+  }, []);
 
   return (
     <>
@@ -55,6 +62,10 @@ export default function Selling() {
               <Link
                 onClick={() => {
                   setHasListing(true);
+                  dispatch({
+                    type: "SELECTED_CATEGORY",
+                    payload: null,
+                  });
                 }}
                 className=" text-[#0D1A8B] flex items-center gap-2 font-medium underline"
               >
