@@ -46,10 +46,19 @@ const PaymentSummary = ({
     filteredPackages[0] || {}
   );
 
+  const currentPackage = packages
+    ? packages.filter(
+        (ad) => ad?.specificity_order == Number(advert_package_id)
+      )
+    : [];
+
+  let { name: currentPackageName, amount: currentPackageAmount } = Object(
+    currentPackage[0] || {}
+  );
+
   if (hasBundle) {
     packageAmount = 0;
   }
-  console.log({ isBundleSelected });
 
   const filteredBundles = bundles
     ? bundles.filter((bundle) => bundle?.id == isBundleSelected)
@@ -63,13 +72,17 @@ const PaymentSummary = ({
 
   const [totalAmount, setTotalAmount] = useState(0);
 
-  const subtotal =
+  let subtotal =
     (Number(amount) || 0) +
     (Number(bundleAmount) || 0) +
     (Number(packageAmount) || 0) +
     (Number(spotlights) || 0);
 
-  const tax = subtotal * 0.2;
+  if (isAdvertUpgrade) {
+    subtotal = subtotal - currentPackageAmount;
+  }
+
+  let tax = subtotal * 0.2;
 
   useEffect(() => {
     setTotalAmount(subtotal + tax);
@@ -151,18 +164,44 @@ const PaymentSummary = ({
               advert_package_id === "4") ? (
               <>
                 <p className="text-[#0D1A8B] font-semibold mt-2">Ad</p>
-                <div className=" flex items-center justify-between mt-2">
-                  <p className="text-[#696E9D]">{packageName}:</p>
-                  <p className="text-[#11133D] font-semibold">
-                    {`${currency?.symbol}${Number(
-                      packageAmount * currencyRates[currency?.currency_code]
-                    ).toFixed(2)}`}
-                  </p>
-                </div>
+                {isAdvertUpgrade && hasBundle == 0 ? (
+                  <>
+                    <div className=" flex items-center justify-between mt-2">
+                      <p className="text-[#696E9D]">
+                        Current Package: {currentPackageName}
+                      </p>
+                      <p className="text-[#11133D] font-semibold">
+                        {`${currency?.symbol}${Number(
+                          currentPackageAmount *
+                            currencyRates[currency?.currency_code]
+                        ).toFixed(2)}`}
+                      </p>
+                    </div>
+                    <div className=" flex items-center justify-between mt-2">
+                      <p className="text-[#696E9D]">
+                        Upgrading To: {packageName}
+                      </p>
+                      <p className="text-[#11133D] font-semibold">
+                        {`${currency?.symbol}${Number(
+                          packageAmount * currencyRates[currency?.currency_code]
+                        ).toFixed(2)}`}
+                      </p>
+                    </div>
+                  </>
+                ) : (
+                  <div className=" flex items-center justify-between mt-2">
+                    <p className="text-[#696E9D]">{packageName}:</p>
+                    <p className="text-[#11133D] font-semibold">
+                      {`${currency?.symbol}${Number(
+                        packageAmount * currencyRates[currency?.currency_code]
+                      ).toFixed(2)}`}
+                    </p>
+                  </div>
+                )}
               </>
             ) : hasSubscription > 0 &&
-              hasBundle === 0 &&
-              (advert_package_id === "4" || advert_package_id === "6") ? (
+              hasBundle == 0 &&
+              advert_package_id === "3" ? (
               <>
                 <p className="text-[#0D1A8B] font-semibold mt-2">Ad</p>
                 <div className=" flex items-center justify-between mt-2">

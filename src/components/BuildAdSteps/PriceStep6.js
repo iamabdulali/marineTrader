@@ -4,7 +4,6 @@ import { Field, useFormikContext } from "formik";
 import { CategorySelectDropdown } from "../CategorySelectDropdown";
 import { warningIcon } from "../../assets";
 import BundlesModal from "./AdComponents/BundlesModal";
-import { Link } from "react-router-dom";
 import SpotlightModal from "./SpotlightModal";
 import Modal from "../Modal";
 import {
@@ -14,12 +13,13 @@ import {
 import AvailableUpgrades from "./AdComponents/AvailableUpgrades";
 import { FormField } from "../FormField";
 import { AuthContext } from "../../Context/AuthContext";
-import { toast } from "react-toastify";
 import { handlePackageUpgrade } from "../../utils/handlePackageUpgrade";
 import { handleInputChange } from "../../utils/handleInputChange";
 
 const PriceStep6 = ({ isEditMode }) => {
-  const [priceInfoType, setPriceInfoType] = useState("enterInfo");
+  const { values, setFieldValue } = useFormikContext();
+
+  const [priceInfoType, setPriceInfoType] = useState(values?.price_type);
   let [isBundleOpen, setIsBundleOpen] = useState(false);
   let [isSpotlightOpen, setIsSpotlightOpen] = useState(false);
 
@@ -35,18 +35,11 @@ const PriceStep6 = ({ isEditMode }) => {
     setSpotlightType("category");
   };
 
-  const { values, setFieldValue } = useFormikContext();
-
   const { currency, taxes, user } = useContext(AuthContext);
 
   const { seller_type } = Object(user);
 
   const isPrivateSeller = seller_type == "private seller";
-
-  // const handleInputChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setFieldValue(name, value);
-  // };
 
   const { advert } = Object(values);
   const { price_type, currency: advert_currency, price } = Object(advert);
