@@ -69,6 +69,8 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
     spotlight_status,
   } = Object(advert);
 
+  let packageType;
+
   console.log(advertPackages[advert_package_id]);
 
   useEffect(() => {
@@ -76,12 +78,14 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
     getPackages(setPackages, seller_type, setLoading);
   }, [user]);
 
+  if (advertPackages[advert_package_id] == "Standard") {
+    packageType = "Premium";
+  } else {
+    packageType = advertPackages[advert_package_id];
+  }
+
   useEffect(() => {
-    fetchOptions(
-      `bundles?type=${advertPackages[advert_package_id]}`,
-      setBundles,
-      setLoading
-    );
+    fetchOptions(`bundles?type=${packageType}`, setBundles, setLoading);
   }, [advert]);
 
   useEffect(() => {

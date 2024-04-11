@@ -64,8 +64,6 @@ const PaymentSummary = ({
     ? bundles.filter((bundle) => bundle?.id == isBundleSelected)
     : [];
 
-  console.log({ bundles });
-
   const { name: bundleName, amount: bundleAmount } = Object(
     filteredBundles[0] || {}
   );
@@ -78,15 +76,22 @@ const PaymentSummary = ({
     (Number(packageAmount) || 0) +
     (Number(spotlights) || 0);
 
-  if (isAdvertUpgrade) {
+  if (isAdvertUpgrade && subtotal != 0 && hasBundle == 0) {
     subtotal = subtotal - currentPackageAmount;
   }
+
+  // if (isBundleSelected) {
+  //   subtotal =
+  //     subtotal - (Number(packageAmount) + Number(currentPackageAmount));
+  // }
 
   let tax = subtotal * 0.2;
 
   useEffect(() => {
     setTotalAmount(subtotal + tax);
   }, [subtotal]);
+
+  console.log(hasBundle);
 
   const handleCoupenDiscount = async () => {
     try {
@@ -158,14 +163,17 @@ const PaymentSummary = ({
 
         {isSubscriptionPage !== "subscription" ? (
           <>
-            {(hasBundle === 0 && hasSubscription === 0) ||
-            (hasBundle > 0 &&
-              hasSubscription === 0 &&
-              advert_package_id === "4") ? (
+            {/* {(hasBundle == 0 && hasSubscription == 0) ||
+            (hasBundle > 0 && hasSubscription == 0) ? (
               <>
-                <p className="text-[#0D1A8B] font-semibold mt-2">Ad</p>
-                {isAdvertUpgrade && hasBundle == 0 ? (
+                {isBundleSelected && advert_package_id != "1" ? (
+                  <p className="text-[#11133D] font-semibold ">
+                    Your Ad payment will be deducted from your
+                    bundle/subscription
+                  </p>
+                ) : isAdvertUpgrade && hasBundle == 0 ? (
                   <>
+                    <p className="text-[#0D1A8B] font-semibold mt-2">Ad</p>
                     <div className=" flex items-center justify-between mt-2">
                       <p className="text-[#696E9D]">
                         Current Package: {currentPackageName}
@@ -199,9 +207,7 @@ const PaymentSummary = ({
                   </div>
                 )}
               </>
-            ) : hasSubscription > 0 &&
-              hasBundle == 0 &&
-              advert_package_id === "3" ? (
+            ) : hasSubscription > 0 && hasBundle == 0 ? (
               <>
                 <p className="text-[#0D1A8B] font-semibold mt-2">Ad</p>
                 <div className=" flex items-center justify-between mt-2">
@@ -215,6 +221,23 @@ const PaymentSummary = ({
               </>
             ) : (
               ""
+            )} */}
+
+            {hasBundle == 0 && hasSubscription == 0 ? (
+              <>
+                <div className=" flex items-center justify-between mt-2">
+                  <p className="text-[#696E9D]">{packageName}:</p>
+                  <p className="text-[#11133D] font-semibold">
+                    {`${currency?.symbol}${Number(
+                      packageAmount * currencyRates[currency?.currency_code]
+                    ).toFixed(2)}`}
+                  </p>
+                </div>
+              </>
+            ) : (
+              <p className="text-[#11133D] font-semibold ">
+                Your Ad payment will be deducted from your bundle/subscription
+              </p>
             )}
 
             {spotlights ? (
