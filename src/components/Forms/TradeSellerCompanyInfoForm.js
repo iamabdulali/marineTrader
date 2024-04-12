@@ -112,7 +112,6 @@ export default function TradeSellerCompanyInfoForm() {
         </div>
 
         <CountryRegionDropdown />
-        <PlaceApi />
 
         <div className="flex gap-4 sm:flex-row flex-col">
           <div className="w-full relative">

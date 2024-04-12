@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { GetCity, GetCountries, GetState } from "react-country-state-city";
 import "react-country-state-city/dist/react-country-state-city.css";
 import { FaChevronDown } from "react-icons/fa";
+import PlaceApi from "./Forms/PlaceApi";
 
 const CountryRegionDropdown = () => {
   const [countries, setCountries] = useState([]);
@@ -147,7 +148,7 @@ const CountryRegionDropdown = () => {
       </div>
       <div className="flex gap-4 sm:flex-row flex-col">
         <div className="w-full">
-          <div className="flex items-center relative">
+          {/* <div className="flex items-center relative">
             {customCity ? (
               <button
                 onClick={() => setCustomCity(false)}
@@ -189,8 +190,10 @@ const CountryRegionDropdown = () => {
                 })}
               </Field>
             )}
-          </div>
-          <ErrorMessage name="city" component="span" className="text-red-500" />
+          </div> */}
+          <PlaceApi />
+
+          {/* <ErrorMessage name="city" component="span" className="text-red-500" /> */}
         </div>
         <div className="w-full">
           <Field

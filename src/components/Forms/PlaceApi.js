@@ -5,18 +5,28 @@ const GooglePlaces = () => {
   const [input, setInput] = useState("");
   const [places, setPlaces] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
+  let debounceTimer;
 
   useEffect(() => {
     const fetchPlaces = async () => {
       const response = await axios.get(
-        `https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${input}&types=geocode&key=AIzaSyDpZkgmNpUUE_AfU7-3WM-ExBSH7yb39AI`
+        `https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${input}&key=AIzaSyDpZkgmNpUUE_AfU7-3WM-ExBSH7yb39AI`
       );
       setPlaces(response.data.predictions);
-      setIsOpen(true); // Open the menu whenever there are places to display
     };
 
-    fetchPlaces();
-  }, [input]);
+    clearTimeout(debounceTimer);
+    if (input !== "") {
+      debounceTimer = setTimeout(() => {
+        fetchPlaces();
+        setIsOpen(true);
+      }, 1000);
+    } else {
+      setIsOpen(false); // Close the menu if input is empty
+    }
+
+    return () => clearTimeout(debounceTimer);
+  }, [input, isOpen]);
 
   const handleChange = (event) => {
     setInput(event.target.value);
