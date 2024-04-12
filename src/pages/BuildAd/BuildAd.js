@@ -197,7 +197,6 @@ const BuildAd = () => {
     "condition",
     "color",
     "service_history",
-    "passenger",
     "length",
     "hours",
     "trailers",

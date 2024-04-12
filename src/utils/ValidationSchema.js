@@ -80,7 +80,6 @@ export const buildAdSmallBoatsValidationSchema = Yup.object().shape({
   year: Yup.string().required("Year is required"),
   color: Yup.string().required("Color is required"),
   service_history: Yup.string().required("Service History is required"),
-  passenger: Yup.string().required("Passenger is required"),
   length: Yup.string().required("Length is required"),
   hours: Yup.string().required("Hours is required"),
   trailers: Yup.string().required("Trailers is required"),

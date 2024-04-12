@@ -14,6 +14,7 @@ import {
 } from "react-country-state-city";
 import "react-country-state-city/dist/react-country-state-city.css";
 import CountryRegionDropdown from "../CountryRegionDropdown";
+import PlaceApi from "../Forms/PlaceApi.js";
 
 export default function TradeSellerCompanyInfoForm() {
   const [showPassword1, setShowPassword1] = useState(false);
@@ -111,6 +112,7 @@ export default function TradeSellerCompanyInfoForm() {
         </div>
 
         <CountryRegionDropdown />
+        <PlaceApi />
 
         <div className="flex gap-4 sm:flex-row flex-col">
           <div className="w-full relative">
