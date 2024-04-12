@@ -48,13 +48,18 @@ const SpotLight = () => {
 
   return (
     <div className="mt-24 relative min-h-[40vh]">
-      <HomeHeading
-        heading="In The Spotlight"
-        buttonText="Back To Home Spotlights"
-        to="/"
-        className="2xl:px-24 sm:px-10 px-6"
-        onClick={() => setSpotlightType("home")}
-      />
+      {spotlightType == "category" ? (
+        <HomeHeading
+          heading="In The Spotlight"
+          buttonText="Back To Home Spotlights"
+          to="/"
+          className="2xl:px-24 sm:px-10 px-6"
+          onClick={() => setSpotlightType("home")}
+        />
+      ) : (
+        ""
+      )}
+
       <LoadingWrapper
         loading={loading}
         className="-top-1/2 xl:-translate-x-0 -translate-x-1/2"
