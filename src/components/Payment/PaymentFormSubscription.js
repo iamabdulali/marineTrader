@@ -31,7 +31,6 @@ import { AuthContext } from "../../Context/AuthContext";
 
 const PaymentFormSubscription = () => {
   let [isBundleOpen, setIsBundleOpen] = useState(false);
-  const [advert, setAdvert] = useState([]);
   const [bundles, setBundles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [spinner, setSpinner] = useState(false);
@@ -43,6 +42,8 @@ const PaymentFormSubscription = () => {
   const [hasActiveSubscriptionData, setHasActiveSubscriptionData] = useState(
     []
   );
+  const [categorySubscription, setCategorySubscription] = useState(0);
+
   const [selectedBundle, setSelectedBundle] = useState(null);
   const stripe = useStripe();
   const elements = useElements();
@@ -65,7 +66,11 @@ const PaymentFormSubscription = () => {
       navigate("/subscriptions");
     }
     fetchOptions("subscriptions", setSubscriptions);
-    fetchOptions("bundles", setBundles);
+    fetchOptions(
+      `subscription/advert/remains/${categoryToCheck}`,
+      setCategorySubscription,
+      setLoading
+    );
   }, []);
 
   useEffect(() => {
@@ -85,6 +90,10 @@ const PaymentFormSubscription = () => {
       setHasActiveSubscriptionData
     );
   }, [subscription]);
+
+  useEffect(() => {
+    fetchOptions(`bundle/advert/remains?type=premium`, setBundles, setLoading);
+  }, []);
 
   const generatePaymentMethod = async () => {
     if (!stripe || !elements) {
@@ -219,7 +228,6 @@ const PaymentFormSubscription = () => {
               <div className="flex smallLg:flex-row flex-col gap-7">
                 <div className="smallLg:w-1/2 w-full">
                   <PaymentSummary
-                    advert={advert}
                     subscription={subscriptionsPlans}
                     id={id}
                     isSubscriptionPage={isSubscriptionPage}
@@ -238,12 +246,14 @@ const PaymentFormSubscription = () => {
                   )}
                 </div>
                 <StripePaymentForm
+                  hasSubscription={categorySubscription}
                   handlePaymentSubmit={
                     hasActiveSubscription
                       ? updateSubscription
                       : handlePaymentSubmit
                   }
                   spinner={spinner}
+                  hasBundle={bundles}
                 />
               </div>
             </Layout>

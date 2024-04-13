@@ -15,25 +15,17 @@ const StripePaymentForm = ({
   handlePaymentSubmit,
   spinner,
   id,
-  bundleType,
+  hasSubscription,
+  hasBundle,
 }) => {
   const [postalCode, setPostalCode] = useState("");
   const [country, setCountry] = useState("");
   const [isFormValid, setIsFormValid] = useState(false);
   const elements = useElements();
-  const [hasSubscription, setHasSubscription] = useState(0);
-  const [hasBundle, setHasBundle] = useState(0);
   const { user } = useContext(AuthContext);
   const { seller_type } = Object(user);
 
   const isPrivateSeller = seller_type == "private seller";
-
-  useEffect(() => {
-    fetchOptions(`bundle/advert/remains?type=${bundleType}`, setHasBundle);
-    fetchOptions(`subscription/advert/remains/${id}`, setHasSubscription);
-  }, [id, hasBundle]);
-
-  console.log(hasBundle);
 
   useEffect(() => {
     const checkValidity = () => {
@@ -61,6 +53,8 @@ const StripePaymentForm = ({
     // Enable or disable the Pay button based on form validity
     const isValid = checkValidity();
     setIsFormValid(isValid);
+
+    console.log(hasSubscription, hasBundle);
   }, [elements, postalCode, country]);
 
   return (
@@ -178,7 +172,7 @@ const StripePaymentForm = ({
           )}
         </button>
       </form>
-      {!isPrivateSeller && (hasSubscription != 0 || hasBundle != 0) ? (
+      {(!isPrivateSeller && hasSubscription != 0) || hasBundle != 0 ? (
         <div className="bg-[#1C5DBF] text-white p-6 mt-8 shadow-[7px]">
           <p className="sm:text-2xl text-base font-semibold">
             <img

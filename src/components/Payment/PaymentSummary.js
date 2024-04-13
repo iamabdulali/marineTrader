@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../Context/AuthContext";
 import axios from "axios";
-import { SERVER_BASE_URL } from "../..";
+import { SERVER_BASE_URL, advertPackages } from "../..";
 import { toast } from "react-toastify";
+import { fetchOptions } from "../../utils/fetch/fetchData";
 
 const PaymentSummary = ({
   advert,
@@ -16,12 +17,23 @@ const PaymentSummary = ({
   hasSubscription,
   hasBundle,
   isAdvertUpgrade,
+  categoryCountrySpotlights,
+  categoryContinentSpotlights,
+  homeCountrySpotlights,
+  homeContinentSpotlights,
 }) => {
   const { user, currencyRates } = useContext(AuthContext);
+  const [hasFeaturedBundle, setHasFeaturedBundle] = useState(0);
+  const [hasPremiumBundle, setHasPremiumBundle] = useState(0);
   const { currency } = Object(user);
   const [coupenCode, setCoupenCode] = useState("");
   const [couponApplied, setCouponApplied] = useState(false);
   const { advert_package_id } = Object(advert);
+
+  useEffect(() => {
+    fetchOptions(`bundle/advert/remains?type=featured`, setHasFeaturedBundle);
+    fetchOptions(`bundle/advert/remains?type=premium`, setHasPremiumBundle);
+  }, []);
 
   const filteredSubscriptions = subscription
     ? subscription.filter((sub) => sub?.id == id)
@@ -56,9 +68,9 @@ const PaymentSummary = ({
     currentPackage[0] || {}
   );
 
-  if (hasBundle) {
-    packageAmount = 0;
-  }
+  // if (hasBundle != 0) {
+  //   packageAmount = 0;
+  // }
 
   const filteredBundles = bundles
     ? bundles.filter((bundle) => bundle?.id == isBundleSelected)
@@ -68,7 +80,29 @@ const PaymentSummary = ({
     filteredBundles[0] || {}
   );
 
+  console.log({ hasSubscription }, { hasPremiumBundle });
+
   const [totalAmount, setTotalAmount] = useState(0);
+
+  // if (
+  //   (isAdvertUpgrade &&
+  //     hasSubscription != 0 &&
+  //     advertPackages[advert_package_id] == "Premium") ||
+  //   hasBundle != 0
+  // ) {
+  //   packageAmount = 0;
+  // }
+
+  if (isAdvertUpgrade) {
+    if (advertPackages[advert_package_id] == "Premium") {
+      // if (hasSubscription != 0) packageAmount = 0;
+    } else if (advertPackages[advert_package_id] == "Standard") {
+      if (hasSubscription != 0) packageAmount = 0;
+    }
+  }
+
+  // advertPackages[Number(advert_package_id) + upgradedPackage] ==
+  //   "Premium") ||
 
   let subtotal =
     (Number(amount) || 0) +
@@ -76,22 +110,19 @@ const PaymentSummary = ({
     (Number(packageAmount) || 0) +
     (Number(spotlights) || 0);
 
-  if (isAdvertUpgrade && subtotal != 0 && hasBundle == 0) {
+  if (isAdvertUpgrade && subtotal != 0 && hasBundle == 0 && !isBundleSelected) {
     subtotal = subtotal - currentPackageAmount;
   }
 
-  // if (isBundleSelected) {
-  //   subtotal =
-  //     subtotal - (Number(packageAmount) + Number(currentPackageAmount));
-  // }
+  if (isBundleSelected) {
+    subtotal = subtotal - Number(packageAmount);
+  }
 
   let tax = subtotal * 0.2;
 
   useEffect(() => {
     setTotalAmount(subtotal + tax);
   }, [subtotal]);
-
-  console.log(hasBundle);
 
   const handleCoupenDiscount = async () => {
     try {
@@ -118,6 +149,26 @@ const PaymentSummary = ({
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const renderItems = (items, heading) => {
+    if (items?.length === 0 || !spotlights) return null;
+
+    return (
+      <div>
+        <p className="text-[#0D1A8B] font-semibold mt-2">{heading}</p>
+        {items?.map((item, index) => (
+          <div key={index} className="flex items-center justify-between mt-2">
+            <p className="text-[#696E9D]">{item?.country_id}:</p>
+            <p className="text-[#11133D] font-semibold">{`${
+              currency?.symbol
+            }${Number(6.99 * currencyRates[currency?.currency_code]).toFixed(
+              2
+            )}`}</p>
+          </div>
+        ))}
+      </div>
+    );
   };
 
   return (
@@ -163,92 +214,114 @@ const PaymentSummary = ({
 
         {isSubscriptionPage !== "subscription" ? (
           <>
-            {/* {(hasBundle == 0 && hasSubscription == 0) ||
-            (hasBundle > 0 && hasSubscription == 0) ? (
+            {hasBundle == 0 && hasSubscription == 0 && !isAdvertUpgrade ? (
               <>
-                {isBundleSelected && advert_package_id != "1" ? (
-                  <p className="text-[#11133D] font-semibold ">
-                    Your Ad payment will be deducted from your
-                    bundle/subscription
+                <div className=" flex items-center justify-between mt-2">
+                  <p className="text-[#696E9D]">{packageName}:</p>
+                  <p className="text-[#11133D] font-semibold">
+                    {`${currency?.symbol}${Number(
+                      packageAmount * currencyRates[currency?.currency_code]
+                    ).toFixed(2)}`}
                   </p>
-                ) : isAdvertUpgrade && hasBundle == 0 ? (
-                  <>
-                    <p className="text-[#0D1A8B] font-semibold mt-2">Ad</p>
-                    <div className=" flex items-center justify-between mt-2">
-                      <p className="text-[#696E9D]">
-                        Current Package: {currentPackageName}
-                      </p>
-                      <p className="text-[#11133D] font-semibold">
-                        {`${currency?.symbol}${Number(
-                          currentPackageAmount *
-                            currencyRates[currency?.currency_code]
-                        ).toFixed(2)}`}
-                      </p>
-                    </div>
-                    <div className=" flex items-center justify-between mt-2">
-                      <p className="text-[#696E9D]">
-                        Upgrading To: {packageName}
-                      </p>
-                      <p className="text-[#11133D] font-semibold">
-                        {`${currency?.symbol}${Number(
-                          packageAmount * currencyRates[currency?.currency_code]
-                        ).toFixed(2)}`}
-                      </p>
-                    </div>
-                  </>
-                ) : (
-                  <div className=" flex items-center justify-between mt-2">
-                    <p className="text-[#696E9D]">{packageName}:</p>
+                </div>
+              </>
+            ) : hasBundle == 0 && hasSubscription == 0 && isAdvertUpgrade ? (
+              <>
+                <div className=" flex items-center justify-between mt-2">
+                  <p className="text-[#696E9D]">
+                    Current Package: {currentPackageName}
+                  </p>
+                  <p className="text-[#11133D] font-semibold">
+                    {`${currency?.symbol}${Number(
+                      currentPackageAmount *
+                        currencyRates[currency?.currency_code]
+                    ).toFixed(2)}`}
+                  </p>
+                </div>
+                <div className=" flex items-center justify-between mt-2">
+                  <p className="text-[#696E9D]">Upgrading To: {packageName}</p>
+                  <p className="text-[#11133D] font-semibold">
+                    {`${currency?.symbol}${Number(
+                      packageAmount * currencyRates[currency?.currency_code]
+                    ).toFixed(2)}`}
+                  </p>
+                </div>
+              </>
+            ) : isAdvertUpgrade ? (
+              <>
+                <div className=" flex items-center justify-between mt-2">
+                  <p className="text-[#696E9D]">
+                    Current Package: {currentPackageName}
+                  </p>
+                  {advertPackages[advert_package_id] == "Standard" ? (
+                    <p className="text-[#11133D] font-semibold">
+                      {`${currency?.symbol}${Number(
+                        currentPackageAmount *
+                          currencyRates[currency?.currency_code]
+                      ).toFixed(2)}`}
+                    </p>
+                  ) : (
+                    <p className="text-[#11133D] font-semibold">
+                      Bundle/Subscription
+                    </p>
+                  )}
+                </div>
+                <div className=" flex items-center justify-between mt-2">
+                  <p className="text-[#696E9D]">Upgrading To: {packageName}</p>
+                  {hasFeaturedBundle == 0 &&
+                  advertPackages[advert_package_id] == "Premium" ? (
                     <p className="text-[#11133D] font-semibold">
                       {`${currency?.symbol}${Number(
                         packageAmount * currencyRates[currency?.currency_code]
                       ).toFixed(2)}`}
                     </p>
-                  </div>
-                )}
-              </>
-            ) : hasSubscription > 0 && hasBundle == 0 ? (
-              <>
-                <p className="text-[#0D1A8B] font-semibold mt-2">Ad</p>
-                <div className=" flex items-center justify-between mt-2">
-                  <p className="text-[#696E9D]">{packageName}:</p>
-                  <p className="text-[#11133D] font-semibold">
-                    {`${currency?.symbol}${Number(
-                      packageAmount * currencyRates[currency?.currency_code]
-                    ).toFixed(2)}`}
-                  </p>
+                  ) : (
+                    <p className="text-[#11133D] font-semibold">
+                      Bundle/Subscription
+                    </p>
+                  )}
                 </div>
               </>
             ) : (
-              ""
-            )} */}
+              <>
+                <div className=" flex items-center justify-between mt-2">
+                  <p className="text-[#696E9D]">{packageName}:</p>
+                  <p className="text-[#11133D] font-semibold">
+                    {advertPackages[advert_package_id] == "Premium"
+                      ? "Bundle/Subscription"
+                      : `${currency?.symbol}${Number(
+                          packageAmount * currencyRates[currency?.currency_code]
+                        ).toFixed(2)}`}
+                  </p>
+                </div>
+              </>
+            )}
 
-            {hasBundle == 0 && hasSubscription == 0 ? (
-              <>
-                <div className=" flex items-center justify-between mt-2">
-                  <p className="text-[#696E9D]">{packageName}:</p>
-                  <p className="text-[#11133D] font-semibold">
-                    {`${currency?.symbol}${Number(
-                      packageAmount * currencyRates[currency?.currency_code]
-                    ).toFixed(2)}`}
-                  </p>
-                </div>
-              </>
-            ) : (
-              <p className="text-[#11133D] font-semibold ">
-                Your Ad payment will be deducted from your bundle/subscription
-              </p>
+            {renderItems(homeCountrySpotlights, "Home Country Spotlights")}
+            {renderItems(homeContinentSpotlights, "Home Continent Spotlights")}
+            {renderItems(
+              categoryCountrySpotlights,
+              "Category Country Spotlights"
+            )}
+            {renderItems(
+              categoryContinentSpotlights,
+              "Category Continent Spotlights"
             )}
 
             {spotlights ? (
-              <div className=" flex items-center justify-between mt-2">
-                <p className="text-[#696E9D]">Spotlights:</p>
-                <p className="text-[#11133D] font-semibold">
-                  {`${currency?.symbol}${Number(
-                    spotlights * currencyRates[currency?.currency_code]
-                  ).toFixed(2)}`}
+              <>
+                <p className="text-[#0D1A8B] font-semibold mt-2">
+                  Total Spotlight Amount
                 </p>
-              </div>
+                <div className=" flex items-center justify-between mt-2">
+                  <p className="text-[#696E9D]">Spotlights:</p>
+                  <p className="text-[#11133D] font-semibold">
+                    {`${currency?.symbol}${Number(
+                      spotlights * currencyRates[currency?.currency_code]
+                    ).toFixed(2)}`}
+                  </p>
+                </div>
+              </>
             ) : (
               ""
             )}
@@ -273,6 +346,7 @@ const PaymentSummary = ({
         ) : (
           ""
         )}
+        {console.log(totalAmount)}
 
         <div className="mt-6 relative">
           <input

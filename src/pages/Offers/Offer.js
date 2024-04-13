@@ -31,7 +31,7 @@ export default function Offer() {
           ) : (
             <ListingTable
               tableFor="Offers"
-              hasSort={true}
+              hasSort={false}
               hasPadding={true}
               tableHeader={offersHeader}
               OffersData={offers}

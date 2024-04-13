@@ -45,9 +45,8 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
   const [showStatus, setShowStatus] = useState(false);
   const stripe = useStripe();
   const elements = useElements();
-  const navigate = useNavigate();
 
-  const { user, selectedCategory } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
   const { currency_id: user_currency_id, seller_type } = Object(user);
   const isPrivateSeller = seller_type == "private seller";
@@ -111,6 +110,8 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
     });
   };
 
+  console.log(hasBundle);
+
   let spotlights = 0;
 
   if (
@@ -124,8 +125,8 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
   } else {
     spotlights =
       category_spotlights_countries?.length * 6.99 +
-      category_spotlights_continents?.length * 6.99 +
-      home_spotlights_countries?.length * 89.99 +
+      category_spotlights_continents?.length * 89.99 +
+      home_spotlights_countries?.length * 6.99 +
       home_spotlights_continents?.length * 89.99;
   }
 
@@ -226,7 +227,10 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
         <PaymentStatus successStatus={success} paymentType="list" />
       ) : (
         <>
-          <LoadingWrapper loading={loading}>
+          <LoadingWrapper
+            loading={loading}
+            className="top-0 xl:-translate-x-0 -translate-x-1/2"
+          >
             <Layout>
               <Heading content="Payment Details" />
               <div className="flex smallLg:flex-row flex-col gap-7">
@@ -240,6 +244,10 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
                     hasBundle={hasBundle}
                     hasSubscription={categorySubscription}
                     isAdvertUpgrade={isAdvertUpgrade}
+                    categoryCountrySpotlights={category_spotlights_countries}
+                    categoryContinentSpotlights={category_spotlights_continents}
+                    homeCountrySpotlights={home_spotlights_countries}
+                    homeContinentSpotlights={home_spotlights_continents}
                   />
                   {!isPrivateSeller && hasBrokerOrDealerSubscription() ? (
                     <AvailableUpgrades
@@ -253,6 +261,8 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
                   )}
                 </div>
                 <StripePaymentForm
+                  hasBundle={hasBundle}
+                  hasSubscription={categorySubscription}
                   id={category_id}
                   handlePaymentSubmit={
                     // isBundlePayment ? handleBundlePayment : handleAdPayment
