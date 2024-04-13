@@ -95,7 +95,7 @@ const PaymentSummary = ({
 
   if (isAdvertUpgrade) {
     if (advertPackages[advert_package_id] == "Premium") {
-      // if (hasSubscription != 0) packageAmount = 0;
+      if (hasSubscription != 0) packageAmount = 0;
     } else if (advertPackages[advert_package_id] == "Standard") {
       if (hasSubscription != 0) packageAmount = 0;
     }
