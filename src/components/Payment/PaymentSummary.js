@@ -68,10 +68,6 @@ const PaymentSummary = ({
     currentPackage[0] || {}
   );
 
-  // if (hasBundle != 0) {
-  //   packageAmount = 0;
-  // }
-
   const filteredBundles = bundles
     ? bundles.filter((bundle) => bundle?.id == isBundleSelected)
     : [];
@@ -80,18 +76,7 @@ const PaymentSummary = ({
     filteredBundles[0] || {}
   );
 
-  console.log({ hasSubscription }, { hasPremiumBundle });
-
   const [totalAmount, setTotalAmount] = useState(0);
-
-  // if (
-  //   (isAdvertUpgrade &&
-  //     hasSubscription != 0 &&
-  //     advertPackages[advert_package_id] == "Premium") ||
-  //   hasBundle != 0
-  // ) {
-  //   packageAmount = 0;
-  // }
 
   if (isAdvertUpgrade) {
     if (advertPackages[advert_package_id] == "Premium") {
@@ -100,9 +85,6 @@ const PaymentSummary = ({
       if (hasSubscription != 0) packageAmount = 0;
     }
   }
-
-  // advertPackages[Number(advert_package_id) + upgradedPackage] ==
-  //   "Premium") ||
 
   let subtotal =
     (Number(amount) || 0) +
@@ -346,7 +328,6 @@ const PaymentSummary = ({
         ) : (
           ""
         )}
-        {console.log(totalAmount)}
 
         <div className="mt-6 relative">
           <input

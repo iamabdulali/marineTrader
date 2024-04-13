@@ -26,7 +26,6 @@ import { toast } from "react-toastify";
 import PaymentStatus from "../../pages/Payment/PaymentStatus";
 import StripePaymentForm from "./StripePaymentForm";
 import LoadingWrapper from "../../utils/LoadingWrapper";
-import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Context/AuthContext";
 
 const PaymentFormAd = ({ setFieldValue, values }) => {
@@ -70,8 +69,6 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
 
   let packageType;
 
-  console.log(advertPackages[advert_package_id]);
-
   useEffect(() => {
     getOneAdvert(setAdvert, id, "advert", setLoading);
     getPackages(setPackages, seller_type, setLoading);
@@ -109,8 +106,6 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
       );
     });
   };
-
-  console.log(hasBundle);
 
   let spotlights = 0;
 

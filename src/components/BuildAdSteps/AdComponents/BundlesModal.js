@@ -15,7 +15,6 @@ const BundlesModal = ({ onClick, setSelectedBundle, bundleType }) => {
   const [bundles, setBundles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [spinner, setSpinner] = useState(false);
-  console.log(bundleType);
 
   if (bundleType == "Standard") {
     bundleType = "Premium";
