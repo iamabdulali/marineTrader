@@ -203,6 +203,7 @@ export default function TradeSellerServiceHoursForm() {
             label="Company Logo"
             accept="image/jpeg, image/png"
             fieldName="company_logo"
+            furtherStyles="top-3"
           />
           <p className="mt-2 font-medium">Upload an image of 156x156</p>
         </div>
@@ -213,6 +214,7 @@ export default function TradeSellerServiceHoursForm() {
             label="Company Photos"
             accept="image/jpeg, image/png"
             fieldName="main_picture"
+            furtherStyles="top-3"
           />
           <p className="mt-2 font-medium">Upload an image of 156x156</p>
         </div>

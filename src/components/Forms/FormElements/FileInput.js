@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { ErrorMessage, useField } from "formik";
 import { FaPlus, FaTimes } from "react-icons/fa";
 
-const FileInput = ({ fieldName, form, label, ...props }) => {
+const FileInput = ({ fieldName, form, label, furtherStyles, ...props }) => {
   const [, , helpers] = useField(fieldName);
   const [imagePreview, setImagePreview] = useState(null);
 
@@ -54,7 +54,7 @@ const FileInput = ({ fieldName, form, label, ...props }) => {
         />
 
         {imagePreview && (
-          <div className="absolute top-3 w-fit">
+          <div className={`absolute  ${furtherStyles} w-fit`}>
             <img
               src={imagePreview}
               alt="Preview"

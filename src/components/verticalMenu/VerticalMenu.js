@@ -120,7 +120,7 @@ const VerticalMenu = ({ menuState, setMenuState }) => {
 
             <li className="mb-4">
               <NavLink
-                to="/contact-mt"
+                to="/contact"
                 className="flex items-center py-4 px-4 text-[#8891B2] rounded-xl hover:bg-gray-200"
               >
                 <FaEnvelope className="mr-3" size={18} />

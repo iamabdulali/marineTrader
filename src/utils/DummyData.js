@@ -728,3 +728,42 @@ export const propeller = [
     name: "Folding",
   },
 ];
+
+export const inquiryTypes = [
+  {
+    id: 1,
+    name: "Advert Listing",
+  },
+  {
+    id: 2,
+    name: "Forum",
+  },
+  {
+    id: 3,
+    name: "Business Plus+",
+  },
+  {
+    id: 4,
+    name: "News and Events",
+  },
+  {
+    id: 5,
+    name: "Payments",
+  },
+  {
+    id: 6,
+    name: "Account",
+  },
+  {
+    id: 7,
+    name: "Report Fraud",
+  },
+  {
+    id: 8,
+    name: "Registration",
+  },
+  {
+    id: 9,
+    name: "Login",
+  },
+];

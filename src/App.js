@@ -37,6 +37,7 @@ import ResetPassword from "./pages/resetPassword/ResetPassword";
 import { messaging } from "./utils/firebaseSetup";
 import { getToken, onMessage } from "firebase/messaging";
 import Message from "./components/Message";
+import ContactUs from "./pages/ContactPage/ContactUs";
 
 function App() {
   const {
@@ -286,6 +287,14 @@ function App() {
           element={
             <ProtectedRoute>
               <PaymentStatus successStatus={true} />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/contact"
+          element={
+            <ProtectedRoute>
+              <ContactUs />
             </ProtectedRoute>
           }
         />
