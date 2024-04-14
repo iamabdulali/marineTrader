@@ -251,6 +251,7 @@ const PrivateSellerSignUpForm = ({ setFieldValue, values }) => {
           label="Cover Photo"
           accept="image/jpeg, image/png"
           fieldName="image_field"
+          furtherStyles="top-3"
         />
         <p className="mt-2 font-medium">Upload an image of 156x156</p>
       </div>

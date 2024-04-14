@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Field, useFormikContext } from "formik";
 
 const GooglePlaces = () => {
+  const { values, setFieldValue } = useFormikContext();
   const [input, setInput] = useState("");
   const [places, setPlaces] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
@@ -30,17 +32,20 @@ const GooglePlaces = () => {
 
   const handleChange = (event) => {
     setInput(event.target.value);
+    setFieldValue(`city`, event.target.value);
   };
 
   const handleItemClick = (placeName) => {
     setInput(placeName);
     setIsOpen(false); // Close the menu when an item is clicked
+    setFieldValue(`city`, placeName);
   };
 
   return (
     <div className="relative">
-      <input
+      <Field
         type="text"
+        name="city"
         value={input}
         onChange={handleChange}
         placeholder="City/Town"
