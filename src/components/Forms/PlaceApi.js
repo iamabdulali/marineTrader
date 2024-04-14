@@ -21,14 +21,14 @@ const GooglePlaces = () => {
     if (input !== "") {
       debounceTimer = setTimeout(() => {
         fetchPlaces();
-        setIsOpen(true);
       }, 1000);
+      setIsOpen(true);
     } else {
       setIsOpen(false); // Close the menu if input is empty
     }
 
     return () => clearTimeout(debounceTimer);
-  }, [input, isOpen]);
+  }, [input]);
 
   const handleChange = (event) => {
     setInput(event.target.value);
