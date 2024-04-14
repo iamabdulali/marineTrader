@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Field, useFormikContext } from "formik";
+import { ErrorMessage, Field, useFormikContext } from "formik";
 
 const GooglePlaces = () => {
   const { values, setFieldValue } = useFormikContext();
@@ -50,6 +50,11 @@ const GooglePlaces = () => {
         onChange={handleChange}
         placeholder="City/Town"
         className="border-[#CECED7] border-2 rounded-md p-3 w-full"
+      />
+      <ErrorMessage
+        name="city"
+        component="p"
+        className="text-red-500 mt-1 ml-2"
       />
       {isOpen && (
         <ul className="absolute z-10 bg-white shadow-md rounded-md w-full">
