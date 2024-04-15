@@ -2,7 +2,12 @@ import React, { useContext, useEffect, useState } from "react";
 import BuildLayout from "./BuildLayout";
 import { Field, FieldArray, useFormikContext } from "formik";
 import { CategorySelectDropdown } from "../CategorySelectDropdown";
-import { engineCount, propeller, yearsArray } from "../../utils/DummyData";
+import {
+  engineCount,
+  engine_count,
+  propeller,
+  yearsArray,
+} from "../../utils/DummyData";
 import { AuthContext } from "../../Context/AuthContext";
 import { FormField } from "../FormField";
 import CustomDropdownMenu from "../CustomDropdownMenu";
@@ -41,13 +46,37 @@ const ItemFeaturesStep3 = ({ isEditMode }) => {
     setIsCustomMakeSelected(selectedValue === "custom");
   };
 
+  const { advert } = Object(values);
+  let {
+    modifications,
+    features,
+    conveniences,
+    accessories,
+    category,
+    engines,
+    selected_engine,
+    engine_count,
+    fuel_tanks,
+    fuel_tanks_capacity,
+    water_tanks,
+    water_tanks_capacity,
+    holding_tanks,
+    holding_tanks_capacity,
+    powers,
+  } = Object(advert);
+
+  const digits = isEditMode ? Array?.from(engine_count || [])?.map(Number) : [];
+
+  const totalNumber = digits?.reduce((acc, digit) => acc + digit, 0);
+
   const fetchModalsByMake = async () => {
-    console.log(values);
     try {
       const { data } = await axios.get(
         `${SERVER_BASE_URL}/models?make=${
-          values?.engines[values?.selectedEngine]?.make
-        }&category_id=${selectedCategory?.id}`
+          isEditMode
+            ? engines[selected_engine]?.make
+            : values?.engines[values?.selected_engine]?.make
+        }&category_id=${isEditMode ? category?.id : selectedCategory?.id}`
       );
       setModals(data.data);
     } catch (error) {
@@ -55,9 +84,12 @@ const ItemFeaturesStep3 = ({ isEditMode }) => {
     }
   };
   let engineMakeValue;
-  const selectedEngine = values?.selectedEngine || 0;
-  if (values?.engines != undefined) {
-    engineMakeValue = values?.engines[selectedEngine]?.make;
+  const selectedEngine = values?.selected_engine || 0;
+  const condition = isEditMode ? engines : values?.engines;
+  if (condition != undefined) {
+    engineMakeValue = isEditMode
+      ? engines[selected_engine]?.make
+      : values?.engines[selectedEngine]?.make;
   }
 
   useEffect(() => {
@@ -86,13 +118,65 @@ const ItemFeaturesStep3 = ({ isEditMode }) => {
     selectedCategory,
   } = useContext(AuthContext);
 
-  const { advert } = Object(values);
-  const { modifications, features, conveniences, accessories } = Object(advert);
+  console.log(advert);
+
+  const valueToCheck = isEditMode ? selected_engine : values.selected_engine;
+
+  const categoryToCheck = isEditMode
+    ? category?.slug
+    : selectedCategory?.name?.toLowerCase().replace(/\s+/g, "-");
+
+  useEffect(() => {
+    console.log(selectedCategory?.id);
+    if (isEditMode && selectedCategory?.id == undefined) {
+      console.log("RAN");
+      dispatch({
+        type: "SELECTED_CATEGORY",
+        payload: { name: category?.name, id: category?.id },
+      });
+      // Remove selectedCategory.id from dependency array to stop the effect
+      return;
+    }
+  }, [advert, isEditMode, category, selectedCategory?.id]);
+
+  let powersArray = powers?.map((item) => item.name);
+
+  function generateUniqueId(maxId) {
+    return maxId + 1;
+  }
+
+  const handleCheckboxChange = (e) => {
+    const { name, value, checked } = e.target;
+    const valueToModify = [...powers]; // Make a copy of the powers array
+
+    if (checked) {
+      // Add the new power item
+      valueToModify.push({
+        id: generateUniqueId(
+          valueToModify.reduce((max, item) => Math.max(max, item.id), 0)
+        ),
+        name: value,
+        advert_id: advert?.id,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      });
+    } else {
+      // Remove the power item
+      const indexToRemove = valueToModify.findIndex(
+        (item) => item.name === value
+      );
+      if (indexToRemove !== -1) {
+        valueToModify.splice(indexToRemove, 1);
+      }
+    }
+
+    setFieldValue(`advert.${name}`, valueToModify);
+  };
 
   return (
     <>
       <BuildLayout heading="Items Features">
-        {bigBoats.includes(selectedCategory?.name) ? (
+        {bigBoats.includes(categoryToCheck) ? (
           <>
             <ContentToggle
               setShowContent={setShowEngine}
@@ -104,13 +188,23 @@ const ItemFeaturesStep3 = ({ isEditMode }) => {
               <div className="mb-4">
                 <CategorySelectDropdown
                   label="Engine"
-                  name="engineCount"
+                  name="engine_count"
                   options={engineCount}
-                  value={isEditMode ? values?.engineCount : values?.engineCount}
+                  value={
+                    isEditMode
+                      ? `${
+                          Number.isNaN(totalNumber)
+                            ? "Sail Driven"
+                            : totalNumber
+                        }`
+                      : values?.engine_count
+                  }
                   onChange={(e) => {
                     isEditMode
                       ? handleInputChange(
                           e,
+                          // "engine_count",
+                          // engineCount,
                           null,
                           null,
                           "advert",
@@ -132,205 +226,154 @@ const ItemFeaturesStep3 = ({ isEditMode }) => {
                 {({ push, remove, form: { errors, touched } }) => {
                   return (
                     <>
-                      <div className="flex gap-4 sm:flex-nowrap flex-wrap">
-                        {Array.from({ length: values.engineCount }).map(
-                          (_, index) => (
-                            <button
-                              key={index}
-                              type="button"
-                              onClick={() => {
-                                values.selectedEngine = index;
-                                setShowBorders(true);
-                                setRefresh((prev) => !prev);
-                              }}
-                              className={`text-sm ${
-                                values.selectedEngine === index
-                                  ? "bg-[#0D1A8B] text-white rounded-md"
-                                  : "bg-white text-[#8891B2] border-2 border-[#e0deee] rounded-md"
-                              } px-3 py-2 rounded-md"
+                      <div className="flex gap-4 sm:flex-nowrap flex-wrap mb-4">
+                        {Array.from({
+                          length: isEditMode
+                            ? totalNumber
+                            : values.engine_count,
+                        }).map((_, index) => (
+                          <button
+                            key={index}
+                            type="button"
+                            onClick={() => {
+                              isEditMode
+                                ? setFieldValue("advert.selected_engine", index)
+                                : (values.selected_engine = index);
+                              setShowBorders(true);
+                              setRefresh((prev) => !prev);
+                              // console.log(index);
+                            }}
+                            className={`text-sm ${
+                              valueToCheck == index
+                                ? "bg-[#0D1A8B] text-white rounded-md"
+                                : "bg-white text-[#8891B2] border-2 border-[#e0deee] rounded-md"
+                            } px-3 py-2 rounded-md"
             }`}
-                            >
-                              Engine {index + 1}
-                            </button>
-                          )
-                        )}
+                          >
+                            Engine {index + 1}
+                          </button>
+                        ))}
                       </div>
                       <div
                         className={` rounded-md ${
                           showBorder ? "p-4 mt-4 border border-gray-200" : ""
                         } `}
                       >
-                        {Array.from({ length: values.engineCount }).map(
-                          (_, index) => (
-                            <div key={index}>
-                              <div className="flex sm:flex-row flex-col gap-4 relative">
-                                {isCustomModelSelected ||
-                                isCustomMakeSelected ? (
-                                  <button
-                                    onClick={() => {
-                                      setIsCustomModelSelected(false);
-                                      setIsCustomMakeSelected(false);
-                                    }}
-                                    type="button"
-                                    className="absolute underline right-0 text-sm font-medium cursor-pointer text-[#11133D]"
-                                  >
-                                    Go Back
-                                  </button>
-                                ) : (
-                                  ""
-                                )}
-                                {values.selectedEngine == index && (
-                                  <>
-                                    {isCustomMakeSelected ? (
-                                      <FormField
-                                        FieldType="text"
-                                        inputField={true}
-                                        name={`engines.${index}.make`}
-                                        label="Make"
-                                        className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
-                                        placeholder={"Make"}
-                                        value={
-                                          values?.engines[selectedEngine]?.make
-                                        }
-                                        // value={modelValue}
-                                        onChange={(e) => {
-                                          isEditMode
-                                            ? handleInputChange(
-                                                e,
-                                                null,
-                                                null,
-                                                "advert",
-                                                isEditMode,
-                                                setFieldValue
-                                              )
-                                            : handleInputChange(
-                                                e,
-                                                null,
-                                                null,
-                                                null,
-                                                isEditMode,
-                                                setFieldValue
-                                              );
-                                          setModelValue(e.target.value);
-                                        }}
-                                      />
-                                    ) : (
-                                      <CategorySelectDropdown
-                                        valueAsString={true}
-                                        addCustomOption={true}
-                                        label="Make"
-                                        name={`engines.${index}.make`}
-                                        options={makes}
-                                        value={
-                                          values?.engines[selectedEngine]?.make
-                                        }
-                                        onChange={(e) => {
-                                          isEditMode
-                                            ? handleInputChange(
-                                                e,
-                                                "make",
-                                                makes,
-                                                "advert",
-                                                isEditMode,
-                                                setFieldValue
-                                              )
-                                            : handleInputChange(
-                                                e,
-                                                null,
-                                                null,
-                                                null,
-                                                isEditMode,
-                                                setFieldValue
-                                              );
-                                          handleMakeChange(e);
-                                        }}
-                                      />
-                                    )}
+                        {Array.from({
+                          length: isEditMode
+                            ? totalNumber
+                            : values.engine_count,
+                        }).map((_, index) => (
+                          <div key={index}>
+                            <div className="flex sm:flex-row flex-col gap-4 relative">
+                              {isCustomModelSelected || isCustomMakeSelected ? (
+                                <button
+                                  onClick={() => {
+                                    setIsCustomModelSelected(false);
+                                    setIsCustomMakeSelected(false);
+                                  }}
+                                  type="button"
+                                  className="absolute underline right-0 text-sm font-medium cursor-pointer text-[#11133D]"
+                                >
+                                  Go Back
+                                </button>
+                              ) : (
+                                ""
+                              )}
+                              {valueToCheck == index && (
+                                <>
+                                  {isCustomMakeSelected ? (
+                                    <FormField
+                                      FieldType="text"
+                                      inputField={true}
+                                      name={`engines.${index}.make`}
+                                      label="Make"
+                                      className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
+                                      placeholder={"Make"}
+                                      value={
+                                        isEditMode
+                                          ? engines[selected_engine]?.make
+                                          : values?.engines[selected_engine]
+                                              ?.make
+                                      }
+                                      // value={modelValue}
+                                      onChange={(e) => {
+                                        isEditMode
+                                          ? handleInputChange(
+                                              e,
+                                              null,
+                                              null,
+                                              "advert",
+                                              isEditMode,
+                                              setFieldValue
+                                            )
+                                          : handleInputChange(
+                                              e,
+                                              null,
+                                              null,
+                                              null,
+                                              isEditMode,
+                                              setFieldValue
+                                            );
+                                        setModelValue(e.target.value);
+                                      }}
+                                    />
+                                  ) : (
+                                    <CategorySelectDropdown
+                                      valueAsString={true}
+                                      addCustomOption={true}
+                                      label="Make"
+                                      name={`engines.${index}.make`}
+                                      options={makes}
+                                      value={
+                                        isEditMode
+                                          ? engines[selected_engine]?.make
+                                          : values?.engines[selected_engine]
+                                              ?.make
+                                      }
+                                      onChange={(e) => {
+                                        isEditMode
+                                          ? handleInputChange(
+                                              e,
+                                              "make",
+                                              makes,
+                                              "advert",
+                                              isEditMode,
+                                              setFieldValue
+                                            )
+                                          : handleInputChange(
+                                              e,
+                                              null,
+                                              null,
+                                              null,
+                                              isEditMode,
+                                              setFieldValue
+                                            );
+                                        handleMakeChange(e);
+                                      }}
+                                    />
+                                  )}
 
-                                    {isCustomModelSelected ? (
-                                      <FormField
-                                        FieldType="text"
-                                        inputField={true}
-                                        name={`engines.${index}.model`}
-                                        label="Model"
-                                        className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
-                                        placeholder={"Model"}
-                                        value={
-                                          values?.engines[selectedEngine]?.model
-                                        }
-                                        onChange={(e) => {
-                                          isEditMode
-                                            ? handleInputChange(
-                                                e,
-                                                null,
-                                                null,
-                                                "advert",
-                                                isEditMode,
-                                                setFieldValue
-                                              )
-                                            : handleInputChange(
-                                                e,
-                                                null,
-                                                null,
-                                                null,
-                                                isEditMode,
-                                                setFieldValue
-                                              );
-                                          setModelValue(e.target.value);
-                                        }}
-                                      />
-                                    ) : (
-                                      <CategorySelectDropdown
-                                        valueAsString={true}
-                                        label="Model"
-                                        name={`engines.${index}.model`}
-                                        options={modals}
-                                        addCustomOption={true}
-                                        value={
-                                          values?.engines[selectedEngine]?.model
-                                        }
-                                        onChange={(e) => {
-                                          isEditMode
-                                            ? handleInputChange(
-                                                e,
-                                                "model",
-                                                modals,
-                                                "advert",
-                                                isEditMode,
-                                                setFieldValue
-                                              )
-                                            : handleInputChange(
-                                                e,
-                                                null,
-                                                null,
-                                                null,
-                                                isEditMode,
-                                                setFieldValue
-                                              );
-                                          handleModelChange(e);
-                                        }}
-                                      />
-                                    )}
-                                  </>
-                                )}
-                              </div>
-                              <div className="flex sm:flex-row flex-col gap-4">
-                                {values.selectedEngine === index && (
-                                  <>
-                                    <CategorySelectDropdown
-                                      label="Condition"
-                                      name={`engines.${index}.condition`}
-                                      options={conditions}
+                                  {isCustomModelSelected ? (
+                                    <FormField
+                                      FieldType="text"
+                                      inputField={true}
+                                      name={`engines.${index}.model`}
+                                      label="Model"
+                                      className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
+                                      placeholder={"Model"}
                                       value={
-                                        values?.engines[selectedEngine]
-                                          ?.condition
+                                        isEditMode
+                                          ? engines[selected_engine]?.model
+                                          : values?.engines[selected_engine]
+                                              ?.model
                                       }
                                       onChange={(e) => {
                                         isEditMode
                                           ? handleInputChange(
                                               e,
-                                              "condition",
-                                              conditions,
+                                              null,
+                                              null,
                                               "advert",
                                               isEditMode,
                                               setFieldValue
@@ -343,21 +386,28 @@ const ItemFeaturesStep3 = ({ isEditMode }) => {
                                               isEditMode,
                                               setFieldValue
                                             );
+                                        setModelValue(e.target.value);
                                       }}
                                     />
+                                  ) : (
                                     <CategorySelectDropdown
-                                      label="Type"
-                                      name={`engines.${index}.type`}
-                                      options={types}
+                                      valueAsString={true}
+                                      label="Model"
+                                      name={`engines.${index}.model`}
+                                      options={modals}
+                                      addCustomOption={true}
                                       value={
-                                        values?.engines[selectedEngine]?.type
+                                        isEditMode
+                                          ? engines[selected_engine]?.model
+                                          : values?.engines[selected_engine]
+                                              ?.model
                                       }
                                       onChange={(e) => {
                                         isEditMode
                                           ? handleInputChange(
                                               e,
-                                              "type",
-                                              types,
+                                              "model",
+                                              modals,
                                               "advert",
                                               isEditMode,
                                               setFieldValue
@@ -370,241 +420,326 @@ const ItemFeaturesStep3 = ({ isEditMode }) => {
                                               isEditMode,
                                               setFieldValue
                                             );
+                                        handleModelChange(e);
                                       }}
                                     />
-                                  </>
-                                )}
-                              </div>
-                              <div className="flex sm:flex-row flex-col gap-4">
-                                {values.selectedEngine === index && (
-                                  <>
-                                    <FormField
-                                      FieldType="number"
-                                      inputField={true}
-                                      name={`engines.${index}.hours`}
-                                      label="Hours (Optional)"
-                                      className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
-                                      placeholder={"Hours (HRS)"}
-                                      value={
-                                        values?.engines[selectedEngine]?.hours
-                                      }
-                                      onChange={(e) =>
-                                        isEditMode
-                                          ? handleInputChange(
-                                              e,
-                                              null,
-                                              null,
-                                              "advert",
-                                              isEditMode,
-                                              setFieldValue
-                                            )
-                                          : handleInputChange(
-                                              e,
-                                              null,
-                                              null,
-                                              null,
-                                              isEditMode,
-                                              setFieldValue
-                                            )
-                                      }
-                                    />
-                                    <CategorySelectDropdown
-                                      label="Year"
-                                      name={`engines.${index}.year`}
-                                      options={yearsArray}
-                                      value={
-                                        values?.engines[selectedEngine]?.year
-                                      }
-                                      onChange={(e) =>
-                                        isEditMode
-                                          ? handleInputChange(
-                                              e,
-                                              "advert",
-                                              isEditMode,
-                                              setFieldValue
-                                            )
-                                          : handleInputChange(
-                                              e,
-                                              null,
-                                              null,
-                                              null,
-                                              isEditMode,
-                                              setFieldValue
-                                            )
-                                      }
-                                    />
-                                  </>
-                                )}
-                              </div>
-                              <div className="flex sm:flex-row flex-col gap-4">
-                                {values.selectedEngine === index && (
-                                  <>
-                                    <FormField
-                                      FieldType="text"
-                                      inputField={true}
-                                      name={`engines.${index}.capacity`}
-                                      label="Capacity (Optional)"
-                                      className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
-                                      placeholder={"Capacity"}
-                                      value={
-                                        values?.engines[selectedEngine]
-                                          ?.capacity
-                                      }
-                                      onChange={(e) =>
-                                        isEditMode
-                                          ? handleInputChange(
-                                              e,
-                                              null,
-                                              null,
-                                              "advert",
-                                              isEditMode,
-                                              setFieldValue
-                                            )
-                                          : handleInputChange(
-                                              e,
-                                              null,
-                                              null,
-                                              null,
-                                              isEditMode,
-                                              setFieldValue
-                                            )
-                                      }
-                                    />
-                                    <FormField
-                                      FieldType="text"
-                                      inputField={true}
-                                      name={`engines.${index}.power`}
-                                      label="Power (Optional)"
-                                      className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
-                                      placeholder={"Power"}
-                                      value={
-                                        values?.engines[selectedEngine]?.power
-                                      }
-                                      onChange={(e) =>
-                                        isEditMode
-                                          ? handleInputChange(
-                                              e,
-                                              null,
-                                              null,
-                                              "advert",
-                                              isEditMode,
-                                              setFieldValue
-                                            )
-                                          : handleInputChange(
-                                              e,
-                                              null,
-                                              null,
-                                              null,
-                                              isEditMode,
-                                              setFieldValue
-                                            )
-                                      }
-                                    />
-                                  </>
-                                )}
-                              </div>
-                              <div className="flex sm:flex-row flex-col gap-4">
-                                {values.selectedEngine === index && (
-                                  <>
-                                    <FormField
-                                      FieldType="text"
-                                      inputField={true}
-                                      name={`engines.${index}.fuel`}
-                                      label="Fuel (Optional)"
-                                      className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
-                                      placeholder={"Fuel"}
-                                      value={
-                                        values?.engines[selectedEngine]?.fuel
-                                      }
-                                      onChange={(e) =>
-                                        isEditMode
-                                          ? handleInputChange(
-                                              e,
-                                              null,
-                                              null,
-                                              "advert",
-                                              isEditMode,
-                                              setFieldValue
-                                            )
-                                          : handleInputChange(
-                                              e,
-                                              null,
-                                              null,
-                                              null,
-                                              isEditMode,
-                                              setFieldValue
-                                            )
-                                      }
-                                    />
-                                    <FormField
-                                      FieldType="text"
-                                      inputField={true}
-                                      name={`engines.${index}.service_history`}
-                                      label="Service History (Optional)"
-                                      className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
-                                      placeholder={"Service History"}
-                                      value={
-                                        values?.engines[selectedEngine]
-                                          ?.service_history
-                                      }
-                                      onChange={(e) =>
-                                        isEditMode
-                                          ? handleInputChange(
-                                              e,
-                                              null,
-                                              null,
-                                              "advert",
-                                              isEditMode,
-                                              setFieldValue
-                                            )
-                                          : handleInputChange(
-                                              e,
-                                              null,
-                                              null,
-                                              null,
-                                              isEditMode,
-                                              setFieldValue
-                                            )
-                                      }
-                                    />
-                                  </>
-                                )}
-                              </div>
-                              <div className="flex sm:flex-row flex-col gap-4">
-                                {values.selectedEngine === index && (
-                                  <>
-                                    <CategorySelectDropdown
-                                      label="Propeller"
-                                      name={`engines.${index}.propeller`}
-                                      options={propeller}
-                                      value={
-                                        values?.engines[selectedEngine]
-                                          ?.propeller
-                                      }
-                                      onChange={(e) =>
-                                        isEditMode
-                                          ? handleInputChange(
-                                              e,
-                                              "advert",
-                                              isEditMode,
-                                              setFieldValue
-                                            )
-                                          : handleInputChange(
-                                              e,
-                                              null,
-                                              null,
-                                              null,
-                                              isEditMode,
-                                              setFieldValue
-                                            )
-                                      }
-                                    />
-                                  </>
-                                )}
-                              </div>
+                                  )}
+                                </>
+                              )}
                             </div>
-                          )
-                        )}
+                            <div className="flex sm:flex-row flex-col gap-4">
+                              {valueToCheck == index && (
+                                <>
+                                  <CategorySelectDropdown
+                                    label="Condition"
+                                    name={`engines.${index}.condition`}
+                                    options={conditions}
+                                    value={
+                                      isEditMode
+                                        ? engines[selected_engine]?.condition
+                                        : values?.engines[selected_engine]
+                                            ?.condition
+                                    }
+                                    onChange={(e) => {
+                                      isEditMode
+                                        ? handleInputChange(
+                                            e,
+                                            "condition",
+                                            conditions,
+                                            "advert",
+                                            isEditMode,
+                                            setFieldValue
+                                          )
+                                        : handleInputChange(
+                                            e,
+                                            null,
+                                            null,
+                                            null,
+                                            isEditMode,
+                                            setFieldValue
+                                          );
+                                    }}
+                                  />
+                                  <CategorySelectDropdown
+                                    label="Type"
+                                    name={`engines.${index}.type`}
+                                    options={types}
+                                    value={
+                                      isEditMode
+                                        ? engines[selected_engine]?.type
+                                        : values?.engines[selected_engine]?.type
+                                    }
+                                    onChange={(e) => {
+                                      isEditMode
+                                        ? handleInputChange(
+                                            e,
+                                            "type",
+                                            types,
+                                            "advert",
+                                            isEditMode,
+                                            setFieldValue
+                                          )
+                                        : handleInputChange(
+                                            e,
+                                            null,
+                                            null,
+                                            null,
+                                            isEditMode,
+                                            setFieldValue
+                                          );
+                                    }}
+                                  />
+                                </>
+                              )}
+                            </div>
+                            <div className="flex sm:flex-row flex-col gap-4">
+                              {valueToCheck == index && (
+                                <>
+                                  <FormField
+                                    FieldType="number"
+                                    inputField={true}
+                                    name={`engines.${index}.hours`}
+                                    label="Hours (Optional)"
+                                    className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
+                                    placeholder={"Hours (HRS)"}
+                                    value={
+                                      isEditMode
+                                        ? engines[selected_engine]?.hours
+                                        : values?.engines[selected_engine]
+                                            ?.hours
+                                    }
+                                    onChange={(e) =>
+                                      isEditMode
+                                        ? handleInputChange(
+                                            e,
+                                            null,
+                                            null,
+                                            "advert",
+                                            isEditMode,
+                                            setFieldValue
+                                          )
+                                        : handleInputChange(
+                                            e,
+                                            null,
+                                            null,
+                                            null,
+                                            isEditMode,
+                                            setFieldValue
+                                          )
+                                    }
+                                  />
+                                  <CategorySelectDropdown
+                                    label="Year"
+                                    name={`engines.${index}.year`}
+                                    options={yearsArray}
+                                    value={
+                                      isEditMode
+                                        ? engines[selected_engine]?.year
+                                        : values?.engines[selected_engine]?.year
+                                    }
+                                    onChange={(e) =>
+                                      isEditMode
+                                        ? handleInputChange(
+                                            e,
+                                            "year",
+                                            yearsArray,
+                                            "advert",
+                                            isEditMode,
+                                            setFieldValue
+                                          )
+                                        : handleInputChange(
+                                            e,
+                                            null,
+                                            null,
+                                            null,
+                                            isEditMode,
+                                            setFieldValue
+                                          )
+                                    }
+                                  />
+                                </>
+                              )}
+                            </div>
+                            <div className="flex sm:flex-row flex-col gap-4">
+                              {valueToCheck == index && (
+                                <>
+                                  <FormField
+                                    FieldType="text"
+                                    inputField={true}
+                                    name={`engines.${index}.capacity`}
+                                    label="Capacity (Optional)"
+                                    className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
+                                    placeholder={"Capacity"}
+                                    value={
+                                      isEditMode
+                                        ? engines[selected_engine]?.capacity
+                                        : values?.engines[selected_engine]
+                                            ?.capacity
+                                    }
+                                    onChange={(e) =>
+                                      isEditMode
+                                        ? handleInputChange(
+                                            e,
+                                            null,
+                                            null,
+                                            "advert",
+                                            isEditMode,
+                                            setFieldValue
+                                          )
+                                        : handleInputChange(
+                                            e,
+                                            null,
+                                            null,
+                                            null,
+                                            isEditMode,
+                                            setFieldValue
+                                          )
+                                    }
+                                  />
+                                  <FormField
+                                    FieldType="text"
+                                    inputField={true}
+                                    name={`engines.${index}.power`}
+                                    label="Power (Optional)"
+                                    className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
+                                    placeholder={"Power"}
+                                    value={
+                                      isEditMode
+                                        ? engines[selected_engine]?.power
+                                        : values?.engines[selected_engine]
+                                            ?.power
+                                    }
+                                    onChange={(e) =>
+                                      isEditMode
+                                        ? handleInputChange(
+                                            e,
+                                            null,
+                                            null,
+                                            "advert",
+                                            isEditMode,
+                                            setFieldValue
+                                          )
+                                        : handleInputChange(
+                                            e,
+                                            null,
+                                            null,
+                                            null,
+                                            isEditMode,
+                                            setFieldValue
+                                          )
+                                    }
+                                  />
+                                </>
+                              )}
+                            </div>
+                            <div className="flex sm:flex-row flex-col gap-4">
+                              {valueToCheck === index && (
+                                <>
+                                  <FormField
+                                    FieldType="text"
+                                    inputField={true}
+                                    name={`engines.${index}.fuel`}
+                                    label="Fuel (Optional)"
+                                    className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
+                                    placeholder={"Fuel"}
+                                    value={
+                                      isEditMode
+                                        ? engines[selected_engine]?.fuel
+                                        : values?.engines[selected_engine]?.fuel
+                                    }
+                                    onChange={(e) =>
+                                      isEditMode
+                                        ? handleInputChange(
+                                            e,
+                                            null,
+                                            null,
+                                            "advert",
+                                            isEditMode,
+                                            setFieldValue
+                                          )
+                                        : handleInputChange(
+                                            e,
+                                            null,
+                                            null,
+                                            null,
+                                            isEditMode,
+                                            setFieldValue
+                                          )
+                                    }
+                                  />
+                                  <FormField
+                                    FieldType="text"
+                                    inputField={true}
+                                    name={`engines.${index}.service_history`}
+                                    label="Service History (Optional)"
+                                    className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
+                                    placeholder={"Service History"}
+                                    value={
+                                      isEditMode
+                                        ? engines[selected_engine]
+                                            ?.service_history
+                                        : values?.engines[selected_engine]
+                                            ?.service_history
+                                    }
+                                    onChange={(e) =>
+                                      isEditMode
+                                        ? handleInputChange(
+                                            e,
+                                            null,
+                                            null,
+                                            "advert",
+                                            isEditMode,
+                                            setFieldValue
+                                          )
+                                        : handleInputChange(
+                                            e,
+                                            null,
+                                            null,
+                                            null,
+                                            isEditMode,
+                                            setFieldValue
+                                          )
+                                    }
+                                  />
+                                </>
+                              )}
+                            </div>
+                            <div className="flex sm:flex-row flex-col gap-4">
+                              {values.selected_engine === index && (
+                                <>
+                                  <CategorySelectDropdown
+                                    label="Propeller"
+                                    name={`engines.${index}.propeller`}
+                                    options={propeller}
+                                    value={
+                                      isEditMode
+                                        ? engines[selected_engine]?.propeller
+                                        : values?.engines[selected_engine]
+                                            ?.propeller
+                                    }
+                                    onChange={(e) =>
+                                      isEditMode
+                                        ? handleInputChange(
+                                            e,
+                                            "advert",
+                                            isEditMode,
+                                            setFieldValue
+                                          )
+                                        : handleInputChange(
+                                            e,
+                                            null,
+                                            null,
+                                            null,
+                                            isEditMode,
+                                            setFieldValue
+                                          )
+                                    }
+                                  />
+                                </>
+                              )}
+                            </div>
+                          </div>
+                        ))}
                       </div>
                     </>
                   );
@@ -658,6 +793,26 @@ const ItemFeaturesStep3 = ({ isEditMode }) => {
                   label="No Of Tanks"
                   className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
                   placeholder={"No Of Tanks"}
+                  value={isEditMode ? water_tanks : values?.water_tanks}
+                  onChange={(e) =>
+                    isEditMode
+                      ? handleInputChange(
+                          e,
+                          null,
+                          null,
+                          "advert",
+                          isEditMode,
+                          setFieldValue
+                        )
+                      : handleInputChange(
+                          e,
+                          null,
+                          null,
+                          null,
+                          isEditMode,
+                          setFieldValue
+                        )
+                  }
                 />
                 <FormField
                   inputField={true}
@@ -665,6 +820,30 @@ const ItemFeaturesStep3 = ({ isEditMode }) => {
                   name="water_tanks_capacity"
                   className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
                   placeholder={"Total Capacity (LTRS)"}
+                  value={
+                    isEditMode
+                      ? water_tanks_capacity
+                      : values?.water_tanks_capacity
+                  }
+                  onChange={(e) =>
+                    isEditMode
+                      ? handleInputChange(
+                          e,
+                          null,
+                          null,
+                          "advert",
+                          isEditMode,
+                          setFieldValue
+                        )
+                      : handleInputChange(
+                          e,
+                          null,
+                          null,
+                          null,
+                          isEditMode,
+                          setFieldValue
+                        )
+                  }
                 />
               </div>
               <p className="block text-[#11133D] text-sm font-medium mb-4">
@@ -679,6 +858,26 @@ const ItemFeaturesStep3 = ({ isEditMode }) => {
                   label="No Of Tanks"
                   className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
                   placeholder={"No Of Tanks"}
+                  value={isEditMode ? fuel_tanks : values?.fuel_tanks}
+                  onChange={(e) =>
+                    isEditMode
+                      ? handleInputChange(
+                          e,
+                          null,
+                          null,
+                          "advert",
+                          isEditMode,
+                          setFieldValue
+                        )
+                      : handleInputChange(
+                          e,
+                          null,
+                          null,
+                          null,
+                          isEditMode,
+                          setFieldValue
+                        )
+                  }
                 />
                 <FormField
                   inputField={true}
@@ -686,6 +885,30 @@ const ItemFeaturesStep3 = ({ isEditMode }) => {
                   name="fuel_tanks_capacity"
                   className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
                   placeholder={"Total Capacity (LTRS)"}
+                  value={
+                    isEditMode
+                      ? fuel_tanks_capacity
+                      : values?.fuel_tanks_capacity
+                  }
+                  onChange={(e) =>
+                    isEditMode
+                      ? handleInputChange(
+                          e,
+                          null,
+                          null,
+                          "advert",
+                          isEditMode,
+                          setFieldValue
+                        )
+                      : handleInputChange(
+                          e,
+                          null,
+                          null,
+                          null,
+                          isEditMode,
+                          setFieldValue
+                        )
+                  }
                 />
               </div>
               <p className="block text-[#11133D] text-sm font-medium mb-4">
@@ -700,6 +923,26 @@ const ItemFeaturesStep3 = ({ isEditMode }) => {
                   label="No Of Tanks"
                   className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
                   placeholder={"No Of Tanks"}
+                  value={isEditMode ? holding_tanks : values?.holding_tanks}
+                  onChange={(e) =>
+                    isEditMode
+                      ? handleInputChange(
+                          e,
+                          null,
+                          null,
+                          "advert",
+                          isEditMode,
+                          setFieldValue
+                        )
+                      : handleInputChange(
+                          e,
+                          null,
+                          null,
+                          null,
+                          isEditMode,
+                          setFieldValue
+                        )
+                  }
                 />
                 <FormField
                   inputField={true}
@@ -707,6 +950,30 @@ const ItemFeaturesStep3 = ({ isEditMode }) => {
                   name="holding_tanks_capacity"
                   className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
                   placeholder={"Total Capacity (LTRS)"}
+                  value={
+                    isEditMode
+                      ? holding_tanks_capacity
+                      : values?.holding_tanks_capacity
+                  }
+                  onChange={(e) =>
+                    isEditMode
+                      ? handleInputChange(
+                          e,
+                          null,
+                          null,
+                          "advert",
+                          isEditMode,
+                          setFieldValue
+                        )
+                      : handleInputChange(
+                          e,
+                          null,
+                          null,
+                          null,
+                          isEditMode,
+                          setFieldValue
+                        )
+                  }
                 />
               </div>
             </div>
@@ -731,9 +998,16 @@ const ItemFeaturesStep3 = ({ isEditMode }) => {
                       >
                         <Field
                           type="checkbox"
-                          value={`${checkbox}`}
+                          value={checkbox}
                           name="powers"
                           className="min-w-[20px] min-h-[20px] text-blue-600 bg-gray-100 border-gray-300 rounded mr-3"
+                          // onChange={handleCheckboxChange}
+                          {...(isEditMode && {
+                            checked: powers?.some(
+                              (item) => item.name === checkbox
+                            ),
+                            onChange: (e) => handleCheckboxChange(e),
+                          })}
                         />
                         {checkbox}
                       </label>

@@ -4,17 +4,20 @@ export const handleInputChange = (
   dropdownOptions,
   changeFor,
   isEditMode,
-  setFieldValue
+  setFieldValue,
+  useName
 ) => {
   const { name, value } = e.target;
-  console.log(name);
   if (isEditMode) {
     if (name == dropdownName) {
-      const selectedCurrency = dropdownOptions.find(
-        (c) => c.id === parseInt(value)
+      const selectedCurrency = dropdownOptions.find((c) =>
+        useName ? c.name == value : c.id == parseInt(value)
       );
       if (selectedCurrency) {
-        setFieldValue(`${changeFor}.${dropdownName}`, selectedCurrency?.id);
+        setFieldValue(
+          `${changeFor}.${dropdownName}`,
+          useName ? selectedCurrency?.name : selectedCurrency?.id
+        );
       } else {
         console.error(`Selected ${dropdownName} not found`);
       }
@@ -24,5 +27,4 @@ export const handleInputChange = (
   } else {
     setFieldValue(`${name}`, value);
   }
-  console.log(value, name);
 };

@@ -35,6 +35,8 @@ const CompanyInfo = ({ editable, isPrivateSeller }) => {
     } else {
       setFieldValue(`user.${name}`, value);
     }
+
+    console.log(values);
   };
 
   const getOptions = async (url, setData) => {

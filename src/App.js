@@ -80,6 +80,8 @@ function App() {
     fetchOptions("countries", "SPOTLIGHT_COUNTRIES");
   }, []);
 
+  const paths = ["/subscriptions", "/contact"];
+
   useEffect(() => {
     async function fetchOptions(url, type) {
       const { data } = await axios.get(
@@ -88,10 +90,8 @@ function App() {
       dispatch({ type: type, payload: data.data });
     }
 
-    console.log();
-
     fetchOptions("categories", "CATEGORIES");
-    if (!window.location.href.includes("/subscription")) {
+    if (!paths.includes(window.location.pathname)) {
       fetchOptions("make", "MAKES");
       fetchOptions("conditions", "CONDITIONS");
       fetchOptions("types", "TYPES");

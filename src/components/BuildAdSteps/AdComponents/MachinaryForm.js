@@ -31,10 +31,15 @@ const MachinaryForm = ({ formFor, isEditMode }) => {
     setIsCustomMakeSelected(selectedValue === "custom");
   };
 
+  const { advert } = Object(values);
+  let { category, bow, stern, generator } = Object(advert);
+
   const fetchModalsByMake = async (makeValue) => {
     try {
       const { data } = await axios.get(
-        `${SERVER_BASE_URL}/models?make=${makeValue}&category_id=${selectedCategory?.id}`
+        `${SERVER_BASE_URL}/models?make=${makeValue}&category_id=${
+          isEditMode ? category?.id : selectedCategory?.id
+        }`
       );
       setModals(data.data);
     } catch (error) {
@@ -43,11 +48,12 @@ const MachinaryForm = ({ formFor, isEditMode }) => {
   };
 
   useEffect(() => {
-    let makeValue = values?.[formFor]?.make;
+    let makeValue = isEditMode
+      ? advert?.[formFor]?.make
+      : values?.[formFor]?.make;
+    console.log(makeValue);
     fetchModalsByMake(makeValue);
-  }, [values?.[formFor]?.make, formFor]);
-
-  console.log(values?.[formFor]?.model);
+  }, [values?.[formFor]?.make, formFor, makeValue]);
 
   return (
     <>
@@ -74,7 +80,7 @@ const MachinaryForm = ({ formFor, isEditMode }) => {
             label="Make"
             className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
             placeholder={"Make"}
-            value={values?.[formFor]?.make}
+            value={isEditMode ? [formFor]?.make : values?.[formFor]?.make}
             onChange={(e) => {
               isEditMode
                 ? handleInputChange(
@@ -103,7 +109,7 @@ const MachinaryForm = ({ formFor, isEditMode }) => {
             label="Make"
             name={`${formFor}.make`}
             options={makes}
-            value={values?.[formFor]?.make}
+            value={isEditMode ? [formFor]?.make : values?.[formFor]?.make}
             onChange={(e) => {
               isEditMode
                 ? handleInputChange(
@@ -135,7 +141,7 @@ const MachinaryForm = ({ formFor, isEditMode }) => {
             label="Model"
             className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
             placeholder={"Model"}
-            value={values?.[formFor]?.model}
+            value={isEditMode ? [formFor]?.model : values?.[formFor]?.model}
             onChange={(e) => {
               isEditMode
                 ? handleInputChange(
@@ -164,7 +170,7 @@ const MachinaryForm = ({ formFor, isEditMode }) => {
             label="Model"
             name={`${formFor}.model`}
             options={modals}
-            value={values?.[formFor]?.model}
+            value={isEditMode ? [formFor]?.model : values?.[formFor]?.model}
             onChange={(e) => {
               isEditMode
                 ? handleInputChange(
@@ -196,7 +202,7 @@ const MachinaryForm = ({ formFor, isEditMode }) => {
           label="Power"
           className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
           placeholder={"Power (HP)"}
-          value={isEditMode ? "length" : values?.[formFor]?.power}
+          value={isEditMode ? [formFor]?.power : values?.[formFor]?.power}
           onChange={(e) =>
             isEditMode
               ? handleInputChange(
@@ -221,10 +227,17 @@ const MachinaryForm = ({ formFor, isEditMode }) => {
           label="Year"
           name={`${formFor}.year`}
           options={yearsArray}
-          value={isEditMode ? "year" : values?.[formFor]?.year}
+          value={isEditMode ? [formFor]?.year : values?.[formFor]?.year}
           onChange={(e) =>
             isEditMode
-              ? handleInputChange(e, "advert", isEditMode, setFieldValue)
+              ? handleInputChange(
+                  e,
+                  "year",
+                  yearsArray,
+                  "advert",
+                  isEditMode,
+                  setFieldValue
+                )
               : handleInputChange(
                   e,
                   null,
@@ -245,7 +258,11 @@ const MachinaryForm = ({ formFor, isEditMode }) => {
             label="Consumption"
             className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
             placeholder={"Consumption (LPH)"}
-            value={isEditMode ? "consumption" : values?.[formFor]?.consumption}
+            value={
+              isEditMode
+                ? [formFor]?.consumption
+                : values?.[formFor]?.consumption
+            }
             onChange={(e) =>
               isEditMode
                 ? handleInputChange(
@@ -273,7 +290,7 @@ const MachinaryForm = ({ formFor, isEditMode }) => {
             label="Hours"
             className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
             placeholder={"Hours (HRS)"}
-            value={isEditMode ? "hours" : values?.[formFor]?.hours}
+            value={isEditMode ? [formFor]?.hours : values?.[formFor]?.hours}
             onChange={(e) =>
               isEditMode
                 ? handleInputChange(
@@ -305,7 +322,9 @@ const MachinaryForm = ({ formFor, isEditMode }) => {
           className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
           placeholder={"Service History"}
           value={
-            isEditMode ? "service_history" : values?.[formFor]?.service_history
+            isEditMode
+              ? [formFor]?.service_history
+              : values?.[formFor]?.service_history
           }
           onChange={(e) =>
             isEditMode

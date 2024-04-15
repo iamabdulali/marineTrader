@@ -9,20 +9,43 @@ import { inquiryTypes } from "../../utils/DummyData";
 
 import CompanyInformation from "./CompanyInformation";
 import LoadingWrapper from "../../utils/LoadingWrapper";
+import axios from "axios";
+import { SERVER_BASE_URL } from "../..";
+import { toast } from "react-toastify";
 
 const ContactUs = () => {
+  const { selectedCategory, categories } = useContext(AuthContext);
   const [spinner, setSpinner] = useState(false);
   const [loading, setLoading] = useState(true);
   const initialValues = {
     user_name: "",
     user_email: "",
+    category: "",
     category_selection: "",
-    inquiry_type: "",
+    description: "",
+    attachment: "",
+    type: "",
   };
-  const { categories } = useContext(AuthContext);
 
   const onSubmit = async (values) => {
+    setSpinner(true);
     console.log(values);
+    try {
+      const { data } = await axios.post(
+        `${SERVER_BASE_URL}/contact-support`,
+        values,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      toast.success(data.message);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setSpinner(false);
+    }
   };
 
   useEffect(() => {
@@ -93,7 +116,9 @@ const ContactUs = () => {
               "
                       activeCategory="border-b-4 border-[#0D1A8B] py-3"
                       unActiveCategory="py-3"
-                      onCategoryChange={(category) => {}}
+                      onCategoryChange={(category) => {
+                        setFieldValue("category", selectedCategory?.id);
+                      }}
                       onCategoryClick={() => {}}
                       categories={categories}
                     />
@@ -117,13 +142,13 @@ const ContactUs = () => {
                             <input
                               type="radio"
                               id={id}
-                              name="inquiry_type"
-                              // value={`${name}`}
-                              // onChange={(e) => {
-                              //   setFieldValue("inquiry_type", e.target.value);
-                              //   console.log(values.inquiry_type);
-                              // }}
-                              // checked={values?.inquiry_type === name}
+                              name="type"
+                              value={`${name}`}
+                              onChange={(e) => {
+                                setFieldValue("type", e.target.value);
+                                console.log(values.type);
+                              }}
+                              checked={values?.type === name}
                             />
                             <label htmlFor={id} className="radio-label mr-5">
                               {name}
@@ -147,7 +172,7 @@ const ContactUs = () => {
                     <Field
                       as="textarea"
                       resize="vertical"
-                      name="information"
+                      name="description"
                       className="border-2 min-h-28 rounded-md px-3 py-3 w-full text-sm"
                       placeholder="Write Here..."
                     />

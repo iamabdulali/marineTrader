@@ -149,6 +149,8 @@ export const buildAdBigBoatsValidationSchema = Yup.object().shape({
     .positive("Price must be greater than 0"),
 });
 
+export const emptySchema = Yup.object({});
+
 export const privateSellerValidationSchema = Yup.object({
   name: Yup.string().required("Please enter your Full Name"),
   user_name: Yup.string().required("Please enter your User Name"),

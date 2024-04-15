@@ -510,16 +510,16 @@ export const links = [
     colorChange: false,
     onClick: false,
   },
-  // {
-  //   href: "/selling/buildAd/advert",
-  //   label: (
-  //     <>
-  //       <FaPencilAlt /> Edit
-  //     </>
-  //   ),
-  //   colorChange: false,
-  //   onClick: false,
-  // },
+  {
+    href: "/selling/buildAd/advert",
+    label: (
+      <>
+        <FaPencilAlt /> Edit
+      </>
+    ),
+    colorChange: false,
+    onClick: false,
+  },
   {
     href: "/selling/buildAd",
     label: (
@@ -681,7 +681,7 @@ export const engineCount = [
     name: "No Engine",
   },
   {
-    id: "sailDriven",
+    id: "Sail Driven",
     name: "Sail Driven",
   },
   {

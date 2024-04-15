@@ -10,6 +10,7 @@ import GalleryStep5 from "../../components/BuildAdSteps/GalleryStep5";
 import {
   buildAdBigBoatsValidationSchema,
   buildAdSmallBoatsValidationSchema,
+  emptySchema,
 } from "../../utils/ValidationSchema";
 import { AuthContext } from "../../Context/AuthContext";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -28,7 +29,7 @@ import { fetchOptions, getOneAdvert } from "../../utils/fetch/fetchData";
 import LoadingWrapper from "../../utils/LoadingWrapper";
 
 const BuildAd = () => {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(2);
   const [submit, setSubmit] = useState(false);
   const [spinner, setSpinner] = useState(false);
   const NavigateTo = useNavigate();
@@ -41,7 +42,6 @@ const BuildAd = () => {
   const { selectedPackage, selectedCategory, dispatch } =
     useContext(AuthContext);
 
-  console.log(selectedPackage);
   const pathArray = window.location.pathname.split("/");
   const id = pathArray[4];
 
@@ -135,7 +135,7 @@ const BuildAd = () => {
     displacement: "",
     dead_rise: "",
     dry_weight: "",
-    crusing_speed: "",
+    cruising_speed: "",
     maximum_speed: "",
     economy: "",
     water_tanks: "",
@@ -161,8 +161,8 @@ const BuildAd = () => {
     home_spotlights_continents: [],
     advert_status: "",
     stripe_token: "",
-    engineCount: 0,
-    selectedEngine: -1,
+    engine_count: 0,
+    selected_engine: -1,
     engines: [],
     bow: {},
     stern: {},
@@ -210,14 +210,12 @@ const BuildAd = () => {
     "accessories",
   ];
 
-  console.log(selectedCategory);
-
   const prevStep = () => setStep(step - 1);
-  // const nextStep = () => setStep(step + 1);
+  const nextStep = () => setStep(step + 1);
   const [isPaymentOptionOpen, setIsPaymentOptionOpen] = useState(false);
   let [isVideoOpen, setIsVideoOpen] = useState(false);
 
-  const nextStep = (values, { setTouched, setErrors }) => {
+  const nextStepValidation = (values, { setTouched, setErrors }) => {
     try {
       const fieldsToValidate = Object.keys(validationSchema.fields).filter(
         (field) => {
@@ -343,7 +341,7 @@ const BuildAd = () => {
               : initialValuesJetSki
             : editValues
         }
-        validationSchema={validationSchema}
+        validationSchema={EditMode ? emptySchema : validationSchema}
         onSubmit={handleSubmit}
       >
         {({ isValid, values, setErrors, setTouched, setFieldValue }) => (
@@ -386,7 +384,12 @@ const BuildAd = () => {
                     <button
                       type="button"
                       onClick={() =>
-                        nextStep(values, { setTouched, setErrors })
+                        EditMode
+                          ? nextStep()
+                          : nextStepValidation(values, {
+                              setTouched,
+                              setErrors,
+                            })
                       }
                       className={`bg-[#0D1A8B] hover:bg-[#0a1dbd] text-white p-3 rounded-md sm:w-28 w-full`}
                     >

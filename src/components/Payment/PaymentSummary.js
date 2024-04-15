@@ -69,7 +69,7 @@ const PaymentSummary = ({
   );
 
   const filteredBundles = bundles
-    ? bundles.filter((bundle) => bundle?.id == isBundleSelected)
+    ? bundles?.filter((bundle) => bundle?.id == isBundleSelected)
     : [];
 
   const { name: bundleName, amount: bundleAmount } = Object(

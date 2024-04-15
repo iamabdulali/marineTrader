@@ -26,7 +26,7 @@ import { handleInputChange } from "../../utils/handleInputChange";
 import axios from "axios";
 
 const ItemDescriptionStep2 = ({ isEditMode }) => {
-  const { selectedPackage, selectedCategory, conditions, makes, types } =
+  const { selectedCategory, conditions, makes, types, dispatch } =
     useContext(AuthContext);
   const [showDetails, setShowDetails] = useState(true);
   const [showDimensions, setShowDimensions] = useState(true);
@@ -35,6 +35,8 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
   const { values, setFieldValue } = useFormikContext();
 
   const { advert } = Object(values);
+
+  console.log(selectedCategory);
 
   const {
     title,
@@ -46,10 +48,30 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
     color,
     service_history,
     hours,
-    passenger,
     year,
     length,
     trailers: trailersField,
+    advert_package_id,
+    category,
+    hull_material,
+    hull_shape,
+    keel_type,
+    capacity,
+    vessel_name,
+    hin_number,
+    registration,
+    registry_number,
+    port,
+    boat_status,
+    width,
+    height,
+    dead_rise,
+    depth,
+    displacement,
+    economy,
+    dry_weight,
+    maximum_speed,
+    cruising_speed,
   } = Object(advert);
 
   const [modals, setModals] = useState([]);
@@ -70,18 +92,20 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
     setIsCustomMakeSelected(selectedValue === "custom");
   };
 
-  useEffect(() => {
-    if (isEditMode) {
-      if (!Number(model?.name)) {
-        setIsCustomModelSelected(true);
-      }
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (isEditMode) {
+  //     if (!Number(model?.name)) {
+  //       setIsCustomModelSelected(true);
+  //     }
+  //   }
+  // }, []);
 
   const fetchModalsByMake = async () => {
     try {
       const { data } = await axios.get(
-        `${SERVER_BASE_URL}/models?make=${values.make}&category_id=${selectedCategory?.id}`
+        `${SERVER_BASE_URL}/models?make=${
+          isEditMode ? make?.name || make : values.make
+        }&category_id=${isEditMode ? category?.id : selectedCategory?.id}`
       );
       setModals(data.data);
     } catch (error) {
@@ -90,14 +114,30 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
   };
 
   useEffect(() => {
+    console.log(selectedCategory?.id);
+    if (isEditMode) {
+      if (selectedCategory?.id == undefined) {
+        dispatch({
+          type: "SELECTED_CATEGORY",
+          payload: { name: category?.name, id: category?.id },
+        });
+      }
+    }
+  }, [advert, isEditMode, selectedCategory, category]);
+
+  useEffect(() => {
     fetchModalsByMake();
-  }, [values?.make]);
+  }, [values?.make, make]);
+
+  console.log(advert);
 
   return (
     <BuildLayout
       heading="Item Description"
       otherContent={`Current Package: ${
-        advertPackages[values?.advert_package]
+        isEditMode
+          ? advertPackages[advert_package_id]
+          : advertPackages[values?.advert_package]
       }`}
     >
       <FormField
@@ -212,11 +252,11 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
           ) : (
             <CategorySelectDropdown
               valueAsString={true}
-              value={isEditMode ? make?.id : values?.make}
               label="Make"
               name="make"
               addCustomOption={true}
               options={makes}
+              value={isEditMode ? make?.name || make : values?.make}
               onChange={(e) => {
                 isEditMode
                   ? handleInputChange(
@@ -225,7 +265,8 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
                       makes,
                       "advert",
                       isEditMode,
-                      setFieldValue
+                      setFieldValue,
+                      true
                     )
                   : handleInputChange(
                       e,
@@ -258,7 +299,8 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
                       null,
                       "advert",
                       isEditMode,
-                      setFieldValue
+                      setFieldValue,
+                      true
                     )
                   : handleInputChange(
                       e,
@@ -278,7 +320,7 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
               addCustomOption={true}
               name="model"
               options={modals}
-              value={isEditMode ? model?.id : values?.model}
+              value={isEditMode ? model?.name : values?.model}
               onChange={(e) => {
                 isEditMode
                   ? handleInputChange(
@@ -287,7 +329,8 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
                       modals,
                       "advert",
                       isEditMode,
-                      setFieldValue
+                      setFieldValue,
+                      true
                     )
                   : handleInputChange(
                       e,
@@ -311,7 +354,14 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
             value={isEditMode ? year : values?.year}
             onChange={(e) =>
               isEditMode
-                ? handleInputChange(e, "advert", isEditMode, setFieldValue)
+                ? handleInputChange(
+                    e,
+                    "year",
+                    yearsArray,
+                    "advert",
+                    isEditMode,
+                    setFieldValue
+                  )
                 : handleInputChange(
                     e,
                     null,
@@ -348,17 +398,27 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
             }
           />
         </div>
-        {bigBoats.includes(selectedCategory?.name) ? (
+        {bigBoats.includes(
+          selectedCategory?.name?.toLowerCase().replace(/\s+/g, "-")
+        ) ? (
           <>
             <div className="flex sm:flex-row flex-col  gap-4">
               <CategorySelectDropdown
                 label="Hull Shape"
                 name="hull_shape"
                 options={hullShapes}
-                value={isEditMode ? "hull_shape" : values?.hull_shape}
+                value={isEditMode ? hull_shape?.name : values?.hull_shape}
                 onChange={(e) =>
                   isEditMode
-                    ? handleInputChange(e, "advert", isEditMode, setFieldValue)
+                    ? handleInputChange(
+                        e,
+                        "hull_shape",
+                        hullShapes,
+                        "advert",
+                        isEditMode,
+                        setFieldValue,
+                        true
+                      )
                     : handleInputChange(
                         e,
                         null,
@@ -373,10 +433,18 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
                 label="Hull Material"
                 name="hull_material"
                 options={hullMaterialArray}
-                value={isEditMode ? "hull_material" : values?.hull_material}
+                value={isEditMode ? hull_material?.name : values?.hull_material}
                 onChange={(e) =>
                   isEditMode
-                    ? handleInputChange(e, "advert", isEditMode, setFieldValue)
+                    ? handleInputChange(
+                        e,
+                        "hull_material",
+                        hullMaterialArray,
+                        "advert",
+                        isEditMode,
+                        setFieldValue,
+                        true
+                      )
                     : handleInputChange(
                         e,
                         null,
@@ -393,10 +461,18 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
                 label="Keel Type"
                 name="keel_type"
                 options={keelTypeArray}
-                value={isEditMode ? "keel_type" : values?.keel_type}
+                value={isEditMode ? keel_type?.name : values?.keel_type}
                 onChange={(e) =>
                   isEditMode
-                    ? handleInputChange(e, "advert", isEditMode, setFieldValue)
+                    ? handleInputChange(
+                        e,
+                        "keel_type",
+                        keelTypeArray,
+                        "advert",
+                        isEditMode,
+                        setFieldValue,
+                        true
+                      )
                     : handleInputChange(
                         e,
                         null,
@@ -414,7 +490,7 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
                 label="Capacity (Optional)"
                 className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
                 placeholder={"Capacity"}
-                value={isEditMode ? "capacity" : values?.capacity}
+                value={isEditMode ? capacity : values?.capacity}
                 onChange={(e) =>
                   isEditMode
                     ? handleInputChange(
@@ -444,7 +520,7 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
                 label="Vessel Name (Optional)"
                 className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
                 placeholder={"Vessel Name"}
-                value={isEditMode ? "vessel_name" : values?.vessel_name}
+                value={isEditMode ? vessel_name : values?.vessel_name}
                 onChange={(e) =>
                   isEditMode
                     ? handleInputChange(
@@ -472,7 +548,7 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
                 label="HIN Number (Optional)"
                 className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
                 placeholder={"HIN Number"}
-                value={isEditMode ? "hin_number" : values?.hin_number}
+                value={isEditMode ? hin_number : values?.hin_number}
                 onChange={(e) =>
                   isEditMode
                     ? handleInputChange(
@@ -502,7 +578,7 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
                 label="Registration (Optional)"
                 className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
                 placeholder={"Registration "}
-                value={isEditMode ? "registation" : values?.registration}
+                value={isEditMode ? registration : values?.registration}
                 onChange={(e) =>
                   isEditMode
                     ? handleInputChange(
@@ -530,7 +606,7 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
                 label="Registry Number (Optional)"
                 className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
                 placeholder={"Registry Number"}
-                value={isEditMode ? "registry_number" : values?.registry_number}
+                value={isEditMode ? registry_number : values?.registry_number}
                 onChange={(e) =>
                   isEditMode
                     ? handleInputChange(
@@ -557,7 +633,9 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
           ""
         )}
 
-        {bigBoats.includes(selectedCategory?.name) ? (
+        {bigBoats.includes(
+          selectedCategory?.name?.toLowerCase().replace(/\s+/g, "-")
+        ) ? (
           ""
         ) : (
           <div className="flex sm:flex-row flex-col gap-4">
@@ -613,7 +691,9 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
             />
           </div>
         )}
-        {bigBoats.includes(selectedCategory?.name) ? (
+        {bigBoats.includes(
+          selectedCategory?.name?.toLowerCase().replace(/\s+/g, "-")
+        ) ? (
           ""
         ) : (
           <div className="flex sm:flex-row flex-col  gap-4">
@@ -672,7 +752,9 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
             />
           </div>
         )}
-        {bigBoats.includes(selectedCategory?.name) ? (
+        {bigBoats.includes(
+          selectedCategory?.name?.toLowerCase().replace(/\s+/g, "-")
+        ) ? (
           ""
         ) : (
           <div className="flex sm:flex-row flex-col  gap-4">
@@ -731,7 +813,9 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
             />
           </div>
         )}
-        {bigBoats.includes(selectedCategory?.name) ? (
+        {bigBoats.includes(
+          selectedCategory?.name?.toLowerCase().replace(/\s+/g, "-")
+        ) ? (
           <>
             <div className="flex sm:flex-row flex-col  gap-4">
               <FormField
@@ -741,7 +825,7 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
                 label="Port/Marina"
                 className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
                 placeholder={"Port/Marina"}
-                value={isEditMode ? title : values?.port}
+                value={isEditMode ? port : values?.port}
                 onChange={(e) =>
                   isEditMode
                     ? handleInputChange(
@@ -766,13 +850,13 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
                 label="Boat Status"
                 name="boat_status"
                 options={status}
-                value={isEditMode ? title : values?.boat_status}
+                value={isEditMode ? boat_status : values?.boat_status}
                 onChange={(e) =>
                   isEditMode
                     ? handleInputChange(
                         e,
-                        null,
-                        null,
+                        "boat_status",
+                        status,
                         "advert",
                         isEditMode,
                         setFieldValue
@@ -818,7 +902,9 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
           ""
         )}
       </div>
-      {bigBoats.includes(selectedCategory?.name) ? (
+      {bigBoats.includes(
+        selectedCategory?.name?.toLowerCase().replace(/\s+/g, "-")
+      ) ? (
         <>
           <ContentToggle
             title={`${selectedCategory?.name} Dimensions`}
@@ -835,7 +921,7 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
                 label="Length (LOA)"
                 className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
                 placeholder={`Overall Length (FT)`}
-                value={isEditMode ? "length" : values?.length}
+                value={isEditMode ? length : values?.length}
                 onChange={(e) =>
                   isEditMode
                     ? handleInputChange(
@@ -863,7 +949,7 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
                 label="Width (Beam)"
                 className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
                 placeholder={`Overall Width (FT)`}
-                value={isEditMode ? "width" : values?.width}
+                value={isEditMode ? width : values?.width}
                 onChange={(e) =>
                   isEditMode
                     ? handleInputChange(
@@ -893,7 +979,7 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
                 label="Height (Air Draft)"
                 className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
                 placeholder={"Water level to Highest Point (FT)"}
-                value={isEditMode ? "height" : values?.height}
+                value={isEditMode ? height : values?.height}
                 onChange={(e) =>
                   isEditMode
                     ? handleInputChange(
@@ -921,7 +1007,7 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
                 label="Depth (Draft)"
                 className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
                 placeholder={"Water level to Bottom (FT)"}
-                value={isEditMode ? "depth" : values?.depth}
+                value={isEditMode ? depth : values?.depth}
                 onChange={(e) =>
                   isEditMode
                     ? handleInputChange(
@@ -952,7 +1038,7 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
                 className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
                 useLabelAsPlaceHolder={false}
                 placeholder={"Weight Loaded (Kg)"}
-                value={isEditMode ? "displacement" : values?.displacement}
+                value={isEditMode ? displacement : values?.displacement}
                 onChange={(e) =>
                   isEditMode
                     ? handleInputChange(
@@ -981,7 +1067,7 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
                 className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
                 useLabelAsPlaceHolder={false}
                 placeholder={"Hull Angle vs Waterline (DEG)"}
-                value={isEditMode ? "dead_rise" : values?.dead_rise}
+                value={isEditMode ? dead_rise : values?.dead_rise}
                 onChange={(e) =>
                   isEditMode
                     ? handleInputChange(
@@ -1012,7 +1098,7 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
                 className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
                 useLabelAsPlaceHolder={false}
                 placeholder={"Weight Empty (KG)"}
-                value={isEditMode ? "dry_weight" : values?.dry_weight}
+                value={isEditMode ? dry_weight : values?.dry_weight}
                 onChange={(e) =>
                   isEditMode
                     ? handleInputChange(
@@ -1039,7 +1125,9 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
       ) : (
         ""
       )}
-      {bigBoats.includes(selectedCategory?.name) ? (
+      {bigBoats.includes(
+        selectedCategory?.name?.toLowerCase().replace(/\s+/g, "-")
+      ) ? (
         <>
           <ContentToggle
             title={`${selectedCategory?.name} Performance`}
@@ -1052,11 +1140,11 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
               <FormField
                 FieldType="text"
                 inputField={true}
-                name="crusing_speed"
+                name="cruising_speed"
                 label="Crusing Speed (Optional)"
                 className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
                 placeholder={`Knots Per Hour (KPH)`}
-                value={isEditMode ? "crusing_speed" : values?.crusing_speed}
+                value={isEditMode ? cruising_speed : values?.cruising_speed}
                 onChange={(e) =>
                   isEditMode
                     ? handleInputChange(
@@ -1084,7 +1172,7 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
                 label="Maximum Speed (Optional)"
                 className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
                 placeholder={`Knots Per Hour (KPH)`}
-                value={isEditMode ? "maximum_speed" : values?.maximum_speed}
+                value={isEditMode ? maximum_speed : values?.maximum_speed}
                 onChange={(e) =>
                   isEditMode
                     ? handleInputChange(
@@ -1114,7 +1202,7 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
                 label="Economy (Optional)"
                 className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
                 placeholder={"Gallons Used On Average (LPH)"}
-                value={isEditMode ? "economy" : values?.economy}
+                value={isEditMode ? economy : values?.economy}
                 onChange={(e) =>
                   isEditMode
                     ? handleInputChange(

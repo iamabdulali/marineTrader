@@ -31,6 +31,7 @@ import { AuthContext } from "../../Context/AuthContext";
 
 const PaymentFormSubscription = () => {
   let [isBundleOpen, setIsBundleOpen] = useState(false);
+  const [hasBundle, setHasBundle] = useState(0);
   const [bundles, setBundles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [spinner, setSpinner] = useState(false);
@@ -92,7 +93,7 @@ const PaymentFormSubscription = () => {
   }, [subscription]);
 
   useEffect(() => {
-    fetchOptions(`bundle/advert/remains?type=premium`, setBundles, setLoading);
+    fetchOptions(`bundle?type=premium`, setBundles, setLoading);
   }, []);
 
   const generatePaymentMethod = async () => {
