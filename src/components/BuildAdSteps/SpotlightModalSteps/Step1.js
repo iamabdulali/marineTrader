@@ -110,7 +110,9 @@ const Step1 = ({ showSpotlightSelection, spotlightFor, isEditMode }) => {
 
       if (isEditMode) {
         const updatedFeatures = valueToModify.filter(
-          (item) => item[`${tableFor}_id`] != country
+          (item) =>
+            item[`${tableFor == "countries" ? "country" : "continent"}_id`] !=
+            country
         );
         setFieldValue(
           `advert.${spotlightFor}_spotlights_${tableFor}`,
@@ -159,17 +161,44 @@ const Step1 = ({ showSpotlightSelection, spotlightFor, isEditMode }) => {
                   (spotlight) => {
                     return (
                       <tr
-                        key={ArrayFor[spotlight[`${tableFor}_id`] - 1]?.name}
+                        key={
+                          ArrayFor[
+                            spotlight[
+                              `${
+                                tableFor == "countries"
+                                  ? "country"
+                                  : "continent"
+                              }_id`
+                            ] - 1
+                          ]?.name
+                        }
                         className=" text-[#11133D]"
                       >
                         <td className="py-2 px-4 font-semibold">
-                          {ArrayFor[spotlight[`${tableFor}_id`] - 1]?.name}
+                          {
+                            ArrayFor[
+                              spotlight[
+                                `${
+                                  tableFor == "countries"
+                                    ? "country"
+                                    : "continent"
+                                }_id`
+                              ] - 1
+                            ]?.name
+                          }
                         </td>
                         <td className="py-2 px-4 font-semibold">
                           £
                           {
-                            ArrayFor[spotlight[`${tableFor}_id`] - 1]
-                              ?.spotlight_price
+                            ArrayFor[
+                              spotlight[
+                                `${
+                                  tableFor == "countries"
+                                    ? "country"
+                                    : "continent"
+                                }_id`
+                              ] - 1
+                            ]?.spotlight_price
                           }
                         </td>
                         <td className="py-2 px-4 font-semibold">
@@ -177,7 +206,15 @@ const Step1 = ({ showSpotlightSelection, spotlightFor, isEditMode }) => {
                             className=" text-[#FC4040] flex items-center gap-3 px-3 py-1 rounded"
                             onClick={() =>
                               handleRemove(
-                                ArrayFor[spotlight[`${tableFor}_id`] - 1]?.id
+                                ArrayFor[
+                                  spotlight[
+                                    `${
+                                      tableFor == "countries"
+                                        ? "country"
+                                        : "continent"
+                                    }_id`
+                                  ] - 1
+                                ]?.id
                               )
                             }
                           >

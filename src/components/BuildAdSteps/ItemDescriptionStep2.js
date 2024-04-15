@@ -346,6 +346,8 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
           )}
         </div>
 
+        {console.log(model)}
+
         <div className="flex sm:flex-row flex-col  gap-4">
           <CategorySelectDropdown
             label="Year"

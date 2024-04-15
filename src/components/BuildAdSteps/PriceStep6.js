@@ -19,7 +19,18 @@ import { handleInputChange } from "../../utils/handleInputChange";
 const PriceStep6 = ({ isEditMode }) => {
   const { values, setFieldValue } = useFormikContext();
 
-  const [priceInfoType, setPriceInfoType] = useState(values?.price_type);
+  const { currency, taxes, user } = useContext(AuthContext);
+
+  const { seller_type } = Object(user);
+
+  const isPrivateSeller = seller_type == "private seller";
+
+  const { advert } = Object(values);
+  const { price_type, currency: advert_currency, price } = Object(advert);
+
+  const [priceInfoType, setPriceInfoType] = useState(
+    isEditMode ? price_type : values?.price_type
+  );
   let [isBundleOpen, setIsBundleOpen] = useState(false);
   let [isSpotlightOpen, setIsSpotlightOpen] = useState(false);
 
@@ -34,15 +45,6 @@ const PriceStep6 = ({ isEditMode }) => {
   const handleCategorySpotlightClick = () => {
     setSpotlightType("category");
   };
-
-  const { currency, taxes, user } = useContext(AuthContext);
-
-  const { seller_type } = Object(user);
-
-  const isPrivateSeller = seller_type == "private seller";
-
-  const { advert } = Object(values);
-  const { price_type, currency: advert_currency, price } = Object(advert);
 
   return (
     <BuildLayout heading="Set Price">
