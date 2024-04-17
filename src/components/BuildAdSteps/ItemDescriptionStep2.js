@@ -126,7 +126,11 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
   };
 
   useEffect(() => {
-    if (selectedCategory && make) {
+    if (isEditMode) {
+      if (selectedCategory && make) {
+        fetchModalsByMake();
+      }
+    } else {
       fetchModalsByMake();
     }
   }, [selectedCategory, make]);

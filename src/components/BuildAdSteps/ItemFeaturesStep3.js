@@ -108,6 +108,8 @@ const ItemFeaturesStep3 = ({ isEditMode }) => {
   //   fetchModalsByMake();
   // }, [engineMakeValue]);
 
+  console.log(advert);
+
   useEffect(() => {
     if (selectedCategory && engineMakeValue) {
       fetchModalsByMake();

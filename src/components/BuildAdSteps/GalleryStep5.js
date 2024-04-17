@@ -3,10 +3,10 @@ import BuildLayout from "./BuildLayout";
 import { Field } from "formik";
 import ImageAndVideoHandler from "./ImageAndVideoHandler";
 import { AuthContext } from "../../Context/AuthContext";
+import VideoHandler from "./VideoHandler";
 
 const GalleryStep5 = ({ isEditMode }) => {
   const { selectedPackage } = useContext(AuthContext);
-
   return (
     <>
       {" "}
@@ -26,7 +26,8 @@ const GalleryStep5 = ({ isEditMode }) => {
           <Field
             uploadingText="Video"
             name="video"
-            component={ImageAndVideoHandler}
+            isEditMode={isEditMode}
+            component={VideoHandler}
             accept="video/*" // You can customize the accepted file types
             allowMultiple={false} // Set to true if you want to allow multiple files
             maxFiles={1} // Set the maximum number of files
