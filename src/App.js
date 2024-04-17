@@ -84,20 +84,42 @@ function App() {
 
   useEffect(() => {
     async function fetchOptions(url, type) {
-      const { data } = await axios.get(
-        `${SERVER_BASE_URL}/${url}?category_id=${selectedCategory?.id}`
-      );
-      dispatch({ type: type, payload: data.data });
+      try {
+        const { data } = await axios.get(
+          `${SERVER_BASE_URL}/${url}?category_id=${selectedCategory?.id}`
+        );
+        dispatch({ type: type, payload: data.data });
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
     }
-
     fetchOptions("categories", "CATEGORIES");
-    if (!paths.includes(window.location.pathname)) {
-      fetchOptions("make", "MAKES");
-      fetchOptions("conditions", "CONDITIONS");
-      fetchOptions("types", "TYPES");
-      fetchOptions("currencies", "CURRENCY");
-      fetchOptions("taxes", "TAXES");
-    }
+    fetchOptions("make", "MAKES");
+
+    const fetchData = async () => {
+      try {
+        // Check if the current path is not exactly "/selling" and does not match any path from the 'paths' array
+        if (
+          window.location.pathname !== "/selling" &&
+          !paths.includes(window.location.pathname)
+        ) {
+          await Promise.all([
+            fetchOptions("conditions", "CONDITIONS"),
+            fetchOptions("types", "TYPES"),
+            fetchOptions("currencies", "CURRENCY"),
+            fetchOptions("taxes", "TAXES"),
+          ]);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+
+    return () => {
+      // Cleanup function (if needed)
+    };
   }, [selectedCategory]);
 
   async function requestPermission() {

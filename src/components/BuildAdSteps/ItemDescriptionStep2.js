@@ -36,8 +36,6 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
 
   const { advert } = Object(values);
 
-  console.log(selectedCategory);
-
   const {
     title,
     sub_title,
@@ -100,6 +98,20 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
   //   }
   // }, []);
 
+  useEffect(() => {
+    if (isEditMode) {
+      // if (selectedCategory?.id == undefined) {
+      console.log("HELLO");
+      dispatch({
+        type: "SELECTED_CATEGORY",
+        payload: { name: category?.name, id: category?.id },
+      });
+    }
+    // }
+  }, [advert]);
+
+  // advert, isEditMode
+
   const fetchModalsByMake = async () => {
     try {
       const { data } = await axios.get(
@@ -114,22 +126,15 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
   };
 
   useEffect(() => {
-    console.log(selectedCategory?.id);
-    if (isEditMode) {
-      if (selectedCategory?.id == undefined) {
-        dispatch({
-          type: "SELECTED_CATEGORY",
-          payload: { name: category?.name, id: category?.id },
-        });
-      }
+    if (selectedCategory && make) {
+      fetchModalsByMake();
     }
-  }, [advert, isEditMode, selectedCategory, category]);
+  }, [selectedCategory, make]);
 
-  useEffect(() => {
-    fetchModalsByMake();
-  }, [values?.make, make]);
+  // console.log(advert);
+  // values?.make, make, model
 
-  console.log(advert);
+  console.log(selectedCategory);
 
   return (
     <BuildLayout
@@ -345,8 +350,6 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
             />
           )}
         </div>
-
-        {console.log(model)}
 
         <div className="flex sm:flex-row flex-col  gap-4">
           <CategorySelectDropdown

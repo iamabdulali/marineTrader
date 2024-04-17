@@ -8,10 +8,10 @@ import axios from "axios";
 import { SERVER_BASE_URL } from "../../..";
 import { useFormikContext } from "formik";
 
-const MachinaryForm = ({ formFor, isEditMode }) => {
+const MachinaryForm = ({ formFor, isEditMode, makes }) => {
   const { values, setFieldValue } = useFormikContext();
 
-  const { makes, selectedCategory } = useContext(AuthContext);
+  const { selectedCategory } = useContext(AuthContext);
   const [modals, setModals] = useState([]);
 
   const [modelValue, setModelValue] = useState("");
@@ -32,7 +32,7 @@ const MachinaryForm = ({ formFor, isEditMode }) => {
   };
 
   const { advert } = Object(values);
-  let { category, bow, stern, generator } = Object(advert);
+  let { category } = Object(advert);
 
   const fetchModalsByMake = async (makeValue) => {
     try {
@@ -51,9 +51,11 @@ const MachinaryForm = ({ formFor, isEditMode }) => {
     let makeValue = isEditMode
       ? advert?.[formFor]?.make
       : values?.[formFor]?.make;
-    console.log(makeValue);
     fetchModalsByMake(makeValue);
-  }, [values?.[formFor]?.make, formFor, makeValue]);
+    if (selectedCategory && makeValue) {
+      fetchModalsByMake(makeValue);
+    }
+  }, [selectedCategory, makeValue]);
 
   return (
     <>
@@ -80,7 +82,9 @@ const MachinaryForm = ({ formFor, isEditMode }) => {
             label="Make"
             className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
             placeholder={"Make"}
-            value={isEditMode ? [formFor]?.make : values?.[formFor]?.make}
+            value={
+              isEditMode ? advert?.[formFor]?.make : values?.[formFor]?.make
+            }
             onChange={(e) => {
               isEditMode
                 ? handleInputChange(
@@ -109,7 +113,9 @@ const MachinaryForm = ({ formFor, isEditMode }) => {
             label="Make"
             name={`${formFor}.make`}
             options={makes}
-            value={isEditMode ? [formFor]?.make : values?.[formFor]?.make}
+            value={
+              isEditMode ? advert?.[formFor]?.make : values?.[formFor]?.make
+            }
             onChange={(e) => {
               isEditMode
                 ? handleInputChange(

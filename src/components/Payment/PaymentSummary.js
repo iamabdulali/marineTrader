@@ -139,14 +139,14 @@ const PaymentSummary = ({
     return (
       <div>
         <p className="text-[#0D1A8B] font-semibold mt-2">{heading}</p>
-        {items?.map((item, index) => (
-          <div key={index} className="flex items-center justify-between mt-2">
-            <p className="text-[#696E9D]">{item?.country_id}:</p>
+        {items?.map(({ country, id }) => (
+          <div key={id} className="flex items-center justify-between mt-2">
+            <p className="text-[#696E9D]">{country?.name}:</p>
             <p className="text-[#11133D] font-semibold">{`${
               currency?.symbol
-            }${Number(6.99 * currencyRates[currency?.currency_code]).toFixed(
-              2
-            )}`}</p>
+            }${Number(
+              country?.spotlight_price * currencyRates[currency?.currency_code]
+            ).toFixed(2)}`}</p>
           </div>
         ))}
       </div>

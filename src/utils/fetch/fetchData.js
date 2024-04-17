@@ -16,7 +16,7 @@ export const getAdvert = async (setData, setLoading) => {
     if (setLoading) {
       setLoading(false);
     } else {
-      console.error("setLoading function is not defined.");
+      return;
     }
   }
 };
@@ -35,7 +35,7 @@ export const getOneAdvert = async (setData, id, url, setLoading) => {
     if (setLoading) {
       setLoading(false);
     } else {
-      console.error("setLoading function is not defined.");
+      return;
     }
   }
 };
@@ -54,7 +54,7 @@ export const fetchOptions = async (url, setData, setLoading) => {
     if (setLoading) {
       setLoading(false);
     } else {
-      console.error("setLoading function is not defined.");
+      return;
     }
   }
 };
@@ -74,7 +74,7 @@ export const fetchOffers = async (setData, setLoading) => {
     if (setLoading) {
       setLoading(false);
     } else {
-      console.error("setLoading function is not defined.");
+      return;
     }
   }
 };
@@ -114,7 +114,7 @@ export const getPackages = async (setPackages, seller_type, setLoading) => {
     if (setLoading) {
       setLoading(false);
     } else {
-      console.error("setLoading function is not defined.");
+      return;
     }
   }
 };

@@ -10,12 +10,35 @@ const ImageAndVideoHandler = ({
   allowMultiple,
   maxFiles,
   uploadingText,
+  isEditMode,
   ...props
 }) => {
   const [, , helpers] = useField(field.name);
   const [previews, setPreviews] = React.useState([]);
   const [fileType, setFileType] = React.useState("");
   const { values } = useFormikContext();
+
+  const { advert } = Object(values);
+  // These are the images coming from the backend, I only want to use these when isEditMode is true
+  const { images } = Object(advert);
+
+  React.useEffect(() => {
+    if (isEditMode && images && images.length > 0) {
+      const existingPreviews = images.map((image) => {
+        // Check if the image is from a URL or a File
+        if (typeof image.image == "string") {
+          return image.image; // Image is from URL, return as it is
+        } else {
+          // Image is a File, create Blob object first
+          const blob = new Blob([image], { type: image.type });
+          return URL.createObjectURL(blob); // Create object URL from Blob
+        }
+      });
+      setPreviews(existingPreviews);
+    }
+  }, [isEditMode, images]);
+
+  console.log(advert);
 
   const handleChange = (event) => {
     const { setFieldValue } = form;
@@ -29,48 +52,67 @@ const ImageAndVideoHandler = ({
 
     if (files.length > 0) {
       const newPreviews = [];
-      let videoFile = null;
 
-      // Separate videos from images
+      // Separate images from other files
       Array.from(files).forEach((file) => {
         if (file.type.startsWith("image/")) {
+          // For images, create a preview URL
           newPreviews.push(URL.createObjectURL(file));
-        } else if (!videoFile && file.type.startsWith("video/")) {
-          videoFile = file;
+        } else if (file.type.startsWith("video/")) {
+          // For videos, directly set the video file
+          setPreviews([URL.createObjectURL(file)]);
+          setFieldValue(field.name, file);
         }
       });
 
-      if (videoFile) {
-        // If a video is selected, set the video file separately
-        setFileType(videoFile.type);
-        setPreviews([URL.createObjectURL(videoFile)]);
-        setFieldValue(field.name, videoFile);
-      } else {
-        // If no video is selected, append images to previews array
+      // If there are new image previews, add them to the existing previews
+      if (newPreviews.length > 0) {
         setPreviews([...previews, ...newPreviews]);
 
-        // Accumulate selected image files in an array
+        // Accumulate selected files in an array
         const accumulatedFiles = [...(form.values[field.name] || []), ...files];
-        setFieldValue(field.name, accumulatedFiles);
+
+        // Set field value based on edit mode
+        if (isEditMode) {
+          // If in edit mode, add new files to the existing ones
+          const existingImages = Object(advert).images || [];
+          const newImages = [...existingImages, ...accumulatedFiles];
+          setFieldValue("advert.images", newImages);
+        } else {
+          // If not in edit mode, set field value normally
+          setFieldValue(field.name, accumulatedFiles);
+        }
       }
     }
-    console.log(values.images, values.video);
   };
+
   const handleDelete = (index) => {
+    // Update previews
     const updatedPreviews = [...previews];
     updatedPreviews.splice(index, 1);
     setPreviews(updatedPreviews);
 
-    const files = form.values[field.name];
-    const newFiles = Array.from(files);
-    newFiles.splice(index, 1);
-    form.setFieldValue(field.name, newFiles);
+    // Update form values based on edit mode
+    if (isEditMode) {
+      // If in edit mode, update the images array in the form values
+      const existingImages = Object(advert).images || [];
+      const remainingImages = existingImages.filter(
+        (image, idx) => idx !== index
+      );
+      form.setFieldValue("advert.images", remainingImages);
+    } else {
+      // If not in edit mode, update the form field normally
+      const files = form.values[field.name] || [];
+      const newFiles = files.filter((file, idx) => idx !== index);
+      form.setFieldValue(field.name, newFiles);
+    }
   };
 
   return (
     <>
       <div className="w-full relative">
         <p className="text-[#11133D] font-semibold mb-3">{label}</p>
+        {/* Display existing images when in edit mode */}
 
         {previews.length > 0 ? (
           <div className="flex smallLg:flex-nowrap flex-wrap justify-start gap-7">

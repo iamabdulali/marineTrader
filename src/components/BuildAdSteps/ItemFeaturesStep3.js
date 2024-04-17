@@ -46,6 +46,18 @@ const ItemFeaturesStep3 = ({ isEditMode }) => {
     setIsCustomMakeSelected(selectedValue === "custom");
   };
 
+  const {
+    makes,
+    types,
+    conditions,
+    dispatch,
+    modificationCheckboxes,
+    convenienceCheckboxes,
+    featuresCheckboxes,
+    accessoriesCheckboxes,
+    selectedCategory,
+  } = useContext(AuthContext);
+
   const { advert } = Object(values);
   let {
     modifications,
@@ -92,9 +104,15 @@ const ItemFeaturesStep3 = ({ isEditMode }) => {
       : values?.engines[selectedEngine]?.make;
   }
 
+  // useEffect(() => {
+  //   fetchModalsByMake();
+  // }, [engineMakeValue]);
+
   useEffect(() => {
-    fetchModalsByMake();
-  }, [engineMakeValue]);
+    if (selectedCategory && engineMakeValue) {
+      fetchModalsByMake();
+    }
+  }, [selectedCategory, engineMakeValue]);
 
   const handleTabClick = (tab) => {
     setSelectedTab(tab);
@@ -106,20 +124,6 @@ const ItemFeaturesStep3 = ({ isEditMode }) => {
     { id: "generator", label: "Generator" },
   ];
 
-  const {
-    makes,
-    types,
-    conditions,
-    dispatch,
-    modificationCheckboxes,
-    convenienceCheckboxes,
-    featuresCheckboxes,
-    accessoriesCheckboxes,
-    selectedCategory,
-  } = useContext(AuthContext);
-
-  console.log(advert);
-
   const valueToCheck = isEditMode ? selected_engine : values.selected_engine;
 
   const categoryToCheck = isEditMode
@@ -127,9 +131,7 @@ const ItemFeaturesStep3 = ({ isEditMode }) => {
     : selectedCategory?.name?.toLowerCase().replace(/\s+/g, "-");
 
   useEffect(() => {
-    console.log(selectedCategory?.id);
     if (isEditMode && selectedCategory?.id == undefined) {
-      console.log("RAN");
       dispatch({
         type: "SELECTED_CATEGORY",
         payload: { name: category?.name, id: category?.id },
@@ -241,7 +243,6 @@ const ItemFeaturesStep3 = ({ isEditMode }) => {
                                 : (values.selected_engine = index);
                               setShowBorders(true);
                               setRefresh((prev) => !prev);
-                              // console.log(index);
                             }}
                             className={`text-sm ${
                               valueToCheck == index
@@ -764,13 +765,25 @@ const ItemFeaturesStep3 = ({ isEditMode }) => {
 
               <div className="py-6">
                 {selectedTab === "bow" && (
-                  <MachinaryForm isEditMode={isEditMode} formFor="bow" />
+                  <MachinaryForm
+                    isEditMode={isEditMode}
+                    formFor="bow"
+                    makes={makes}
+                  />
                 )}
                 {selectedTab === "stern" && (
-                  <MachinaryForm isEditMode={isEditMode} formFor="stern" />
+                  <MachinaryForm
+                    isEditMode={isEditMode}
+                    formFor="stern"
+                    makes={makes}
+                  />
                 )}
                 {selectedTab === "generator" && (
-                  <MachinaryForm isEditMode={isEditMode} formFor="generator" />
+                  <MachinaryForm
+                    isEditMode={isEditMode}
+                    formFor="generator"
+                    makes={makes}
+                  />
                 )}
               </div>
             </div>
