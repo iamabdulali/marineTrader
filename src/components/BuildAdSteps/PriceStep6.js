@@ -181,7 +181,14 @@ const PriceStep6 = ({ isEditMode }) => {
               className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
               onChange={(e) =>
                 isEditMode
-                  ? handleInputChange(e, "advert", isEditMode, setFieldValue)
+                  ? handleInputChange(
+                      e,
+                      null,
+                      null,
+                      "advert",
+                      isEditMode,
+                      setFieldValue
+                    )
                   : handleInputChange(
                       e,
                       null,
@@ -216,32 +223,6 @@ const PriceStep6 = ({ isEditMode }) => {
           </div>
         )}
 
-        {/* {!isPrivateSeller ? (
-          <div className="flex gap-5 smallLg:flex-nowrap flex-wrap text-sm font-medium">
-            {[
-              "Finance Available",
-              "Warranty",
-              "Water Test Available",
-              "Part Exchange Available",
-            ].map((facility, index) => {
-              return (
-                <div key={index}>
-                  <label className="flex text-[#11133D]">
-                    <Field
-                      className="min-w-[20px] min-h-[20px] text-blue-600 bg-gray-100 border-gray-300 rounded mr-3"
-                      type="checkbox"
-                      name={`facilities`}
-                      value={`${facility}`}
-                    />
-                    {facility}
-                  </label>
-                </div>
-              );
-            })}
-          </div>
-        ) : (
-          ""
-        )} */}
         {!isPrivateSeller ? (
           <div className="flex gap-5 smallLg:flex-nowrap flex-wrap text-sm font-medium">
             {[
