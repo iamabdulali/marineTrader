@@ -19,6 +19,13 @@ import { handleInputChange } from "../../utils/handleInputChange";
 const PriceStep6 = ({ isEditMode }) => {
   const { values, setFieldValue } = useFormikContext();
 
+  const [facilities, setFacilities] = useState({
+    finance_available: false,
+    warranty: false,
+    water_test_facility: false,
+    part_exchange_available: false,
+  });
+
   const { currency, taxes, user } = useContext(AuthContext);
 
   const { seller_type } = Object(user);
@@ -47,6 +54,13 @@ const PriceStep6 = ({ isEditMode }) => {
   };
 
   console.log(values);
+
+  const handleCheckboxChange = (facility) => {
+    setFacilities((prevFacilities) => ({
+      ...prevFacilities,
+      [facility]: !prevFacilities[facility],
+    }));
+  };
 
   return (
     <BuildLayout heading="Set Price">
@@ -202,7 +216,7 @@ const PriceStep6 = ({ isEditMode }) => {
           </div>
         )}
 
-        {!isPrivateSeller ? (
+        {/* {!isPrivateSeller ? (
           <div className="flex gap-5 smallLg:flex-nowrap flex-wrap text-sm font-medium">
             {[
               "Finance Available",
@@ -224,6 +238,37 @@ const PriceStep6 = ({ isEditMode }) => {
                 </div>
               );
             })}
+          </div>
+        ) : (
+          ""
+        )} */}
+        {!isPrivateSeller ? (
+          <div className="flex gap-5 smallLg:flex-nowrap flex-wrap text-sm font-medium">
+            {[
+              { name: "Finance Available", key: "finance_available" },
+              { name: "Warranty", key: "warranty" },
+              { name: "Water Test Available", key: "water_test_facility" },
+              {
+                name: "Part Exchange Available",
+                key: "part_exchange_available",
+              },
+            ].map((facility, index) => (
+              <div key={index}>
+                <label className="flex text-[#11133D]">
+                  <Field
+                    className={`min-w-[20px] min-h-[20px] text-blue-600 bg-gray-100 border-gray-300 rounded mr-3`}
+                    type="checkbox"
+                    name={facility.key}
+                    checked={values[facility.key] === "yes"}
+                    onChange={(e) => {
+                      const value = e.target.checked ? "yes" : "no";
+                      setFieldValue(facility.key, value);
+                    }}
+                  />
+                  {facility.name}
+                </label>
+              </div>
+            ))}
           </div>
         ) : (
           ""

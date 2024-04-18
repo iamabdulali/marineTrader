@@ -26,8 +26,11 @@ import { handleInputChange } from "../../utils/handleInputChange";
 import axios from "axios";
 
 const ItemDescriptionStep2 = ({ isEditMode }) => {
-  const { selectedCategory, conditions, makes, types, dispatch } =
+  const { selectedCategory, conditions, makes, types, dispatch, refresh } =
     useContext(AuthContext);
+
+  console.log({ conditions }, { types });
+
   const [showDetails, setShowDetails] = useState(true);
   const [showDimensions, setShowDimensions] = useState(true);
   const [showPerformance, setShowPerformance] = useState(true);
@@ -109,6 +112,10 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
       }
     }
   }, [advert]);
+
+  useEffect(() => {
+    dispatch({ type: "REFRESH_STATE", payload: !refresh });
+  }, []);
 
   // advert, isEditMode
 

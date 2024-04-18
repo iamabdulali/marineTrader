@@ -33,7 +33,24 @@ const MakeOfferSection = ({ advert }) => {
   const [AllStates, setAllStates] = useState([]);
   const [cityByStates, setCitiesByStates] = useState([]);
 
-  const { currency_id, advert_package_id, user, id } = Object(advert);
+  const {
+    currency_id,
+    advert_package_id,
+    user,
+    id,
+    finance_available,
+    warranty,
+    water_test_facility,
+    part_exchange_available,
+  } = Object(advert);
+
+  console.log({
+    finance_available,
+    warranty,
+    part_exchange_available,
+    water_test_facility,
+  });
+
   const {
     image_field,
     created_at,
@@ -97,11 +114,6 @@ const MakeOfferSection = ({ advert }) => {
       "https://venkatmcajj.github.io/react-country-state-city/data/statesminified.json",
       setStates
     );
-
-    getOptions(
-      "https://venkatmcajj.github.io/react-country-state-city/data/citiesminified.json",
-      setCities
-    );
   }, []);
 
   function getCountry(countryName) {
@@ -124,18 +136,6 @@ const MakeOfferSection = ({ advert }) => {
     setCitiesByStates(selectedCities?.cities);
   }
 
-  function getCity(ID) {
-    const city = cityByStates?.find((city) => city?.id == ID);
-    return city;
-  }
-
-  console.log(created_at);
-
-  useEffect(() => {
-    getCitiesByStates(region);
-    getCity(city);
-  }, [states, countries, AllStates]);
-
   return (
     <div className="xl:w-4/12 w-full">
       <div className="rounded-lg border-2">
@@ -147,20 +147,39 @@ const MakeOfferSection = ({ advert }) => {
             {user?.seller_type}
           </p>
           <div className="flex items-center sm:gap-5 gap-4">
-            <FaHandHoldingUsd data-tooltip-id={"my-tooltip-5"} size={24} />
-            <CiDeliveryTruck
-              data-tooltip-id={"my-tooltip-6"}
-              size={30}
-              fill="#696E9D"
-            />
-            <BiDroplet data-tooltip-id={"my-tooltip-7"} size={20} />
-            <FaTools data-tooltip-id={"my-tooltip-8"} size={20} />
+            {/* finance_available */}
+            {finance_available == "yes" ? (
+              <FaHandHoldingUsd data-tooltip-id={"my-tooltip-5"} size={24} />
+            ) : (
+              ""
+            )}
+
+            {warranty == "yes" ? (
+              <CiDeliveryTruck
+                data-tooltip-id={"my-tooltip-6"}
+                size={30}
+                fill="#696E9D"
+              />
+            ) : (
+              ""
+            )}
+            {water_test_facility == "yes" ? (
+              <BiDroplet data-tooltip-id={"my-tooltip-7"} size={20} />
+            ) : (
+              ""
+            )}
+            {part_exchange_available == "yes" ? (
+              <FaTools data-tooltip-id={"my-tooltip-8"} size={20} />
+            ) : (
+              ""
+            )}
           </div>
         </div>
         <Tooltip id="my-tooltip-5" place="bottom" content="Pay Now" />
         <Tooltip id="my-tooltip-6" place="bottom" content="Delivery" />
         <Tooltip id="my-tooltip-7" place="bottom" content="Droplet" />
         <Tooltip id="my-tooltip-8" place="bottom" content="Tools" />
+
         <div className="flex gap-4 items-center sm:px-7 py-6 px-4">
           <img
             src={image_field || main_picture || userProfile}
@@ -172,7 +191,7 @@ const MakeOfferSection = ({ advert }) => {
               Member Since {convertTimestampToMonthYear(created_at)}
             </p>
             <p className="text-[#11133D] font-semibold text-sm">
-              {getCity(city)?.name} , {getCountry(country)?.name}
+              {getCountry(country)?.name}
             </p>
           </div>
         </div>

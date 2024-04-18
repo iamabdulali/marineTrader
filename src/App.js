@@ -104,8 +104,8 @@ function App() {
           !paths.includes(window.location.pathname)
         ) {
           await Promise.all([
-            fetchOptions("conditions", "CONDITIONS"),
             fetchOptions("types", "TYPES"),
+            fetchOptions("conditions", "CONDITIONS"),
             fetchOptions("currencies", "CURRENCY"),
             fetchOptions("taxes", "TAXES"),
           ]);
@@ -120,7 +120,7 @@ function App() {
     return () => {
       // Cleanup function (if needed)
     };
-  }, [selectedCategory]);
+  }, [selectedCategory, refresh]);
 
   async function requestPermission() {
     //requesting permission using Notification API

@@ -106,6 +106,10 @@ const BuildAd = () => {
     category_spotlights_continents: [],
     home_spotlights_countries: [],
     home_spotlights_continents: [],
+    finance_available: "no",
+    warranty: "no",
+    water_test_facility: "no",
+    part_exchange_available: "no",
     stripe_token: "",
   };
   const initialValuesBoatHome = {
@@ -167,6 +171,10 @@ const BuildAd = () => {
     bow: {},
     stern: {},
     generator: {},
+    finance_available: "no",
+    warranty: "no",
+    water_test_facility: "no",
+    part_exchange_available: "no",
   };
   const editValues = {
     advert,
@@ -279,15 +287,19 @@ const BuildAd = () => {
 
     if (EditMode) {
       const { advert } = Object(values);
-      const { category, condition, type, currency } = Object(advert);
+      const { category, condition, type, currency, make, model } =
+        Object(advert);
       const updatedValues = {
         ...advert,
         _method: "put",
+        make: make?.name || make,
+        model: model?.name || model,
         category: category?.id || category,
         condition: condition?.id || condition,
         type: type?.id || type,
         currency: currency?.id || currency,
       };
+
       try {
         console.log(updatedValues);
 
@@ -311,23 +323,23 @@ const BuildAd = () => {
         setSpinner(false);
       }
     } else {
-      // try {
-      //   const { data } = await axios.post(`${SERVER_BASE_URL}/advert`, values, {
-      //     headers: {
-      //       "Content-Type": "multipart/form-data",
-      //       Authorization: `Bearer ${localStorage.getItem("token")}`,
-      //     },
-      //   });
-      //   toast.success("Almost There!");
-      //   setAdvertID(data.data?.id);
-      //   openModal(setIsPaymentOptionOpen);
-      //   setSpinner(false);
-      // } catch (error) {
-      //   console.error("An unexpected error occurred:", error);
-      //   const { errors } = error.response.data;
-      //   displayErrorMessages(errors);
-      //   setSpinner(false);
-      // }
+      try {
+        const { data } = await axios.post(`${SERVER_BASE_URL}/advert`, values, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+        toast.success("Almost There!");
+        setAdvertID(data.data?.id);
+        openModal(setIsPaymentOptionOpen);
+        setSpinner(false);
+      } catch (error) {
+        console.error("An unexpected error occurred:", error);
+        const { errors } = error.response.data;
+        displayErrorMessages(errors);
+        setSpinner(false);
+      }
     }
   };
 

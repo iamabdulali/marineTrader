@@ -37,10 +37,10 @@ const CountryRegionDropdown = () => {
       setStates
     );
 
-    getOptions(
-      "https://venkatmcajj.github.io/react-country-state-city/data/citiesminified.json",
-      setCities
-    );
+    // getOptions(
+    //   "https://venkatmcajj.github.io/react-country-state-city/data/citiesminified.json",
+    //   setCities
+    // );
   }, []);
 
   function getStatesByCountry(countryId) {
@@ -58,20 +58,20 @@ const CountryRegionDropdown = () => {
     return state;
   }
 
-  useEffect(() => {
-    setAllStates((prevStates) => {
-      const newStates = cities.reduce((acc, city) => {
-        return acc.concat(Object(city).states);
-      }, []);
+  // useEffect(() => {
+  //   setAllStates((prevStates) => {
+  //     const newStates = cities.reduce((acc, city) => {
+  //       return acc.concat(Object(city).states);
+  //     }, []);
 
-      return [...prevStates, ...newStates];
-    });
-  }, [cities]);
+  //     return [...prevStates, ...newStates];
+  //   });
+  // }, [cities]);
 
-  function getCitiesByStates(stateID) {
-    const selectedCities = AllStates.find((state) => state.id == stateID);
-    setCitiesByStates(selectedCities.cities);
-  }
+  // function getCitiesByStates(stateID) {
+  //   const selectedCities = AllStates.find((state) => state.id == stateID);
+  //   setCitiesByStates(selectedCities.cities);
+  // }
 
   console.log(values);
 
@@ -92,7 +92,7 @@ const CountryRegionDropdown = () => {
               onChange={(e) => {
                 getStatesByCountry(e.target.value);
                 setFieldValue("country", getCountry(e.target.value).id);
-                setFieldValue("city", "");
+                // setFieldValue("city", "");
                 setFieldValue("region", "");
               }}
             >
@@ -124,9 +124,7 @@ const CountryRegionDropdown = () => {
               className="border-[#CECED7] border-2 rounded-md p-3 w-full appearance-none sm:appearance-auto bg-white"
               as="select"
               onChange={(e) => {
-                getCitiesByStates(e.target.value);
                 setFieldValue("region", getState(e.target.value).id);
-                setFieldValue("city", "");
               }}
             >
               <option>Select a Region</option>
