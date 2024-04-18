@@ -46,6 +46,8 @@ const PriceStep6 = ({ isEditMode }) => {
     setSpotlightType("category");
   };
 
+  console.log(values);
+
   return (
     <BuildLayout heading="Set Price">
       <div>
@@ -123,7 +125,6 @@ const PriceStep6 = ({ isEditMode }) => {
                 setFieldValue("currency", "1");
               }}
             />
-            {console.log(values)}
             <label htmlFor="poa" className="radio-label">
               POA (Price on Application)
             </label>

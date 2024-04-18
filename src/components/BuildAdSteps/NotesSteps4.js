@@ -8,7 +8,6 @@ const NotesSteps4 = ({ isEditMode }) => {
   const { values, setFieldValue } = useFormikContext();
   const { advert } = Object(values);
 
-  console.log(values);
   return (
     <>
       <BuildLayout heading="Notes">

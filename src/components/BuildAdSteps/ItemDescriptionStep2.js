@@ -100,14 +100,14 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
 
   useEffect(() => {
     if (isEditMode) {
-      // if (selectedCategory?.id == undefined) {
-      console.log("HELLO");
-      dispatch({
-        type: "SELECTED_CATEGORY",
-        payload: { name: category?.name, id: category?.id },
-      });
+      if (selectedCategory?.id == undefined) {
+        console.log("HELLO");
+        dispatch({
+          type: "SELECTED_CATEGORY",
+          payload: { name: category?.name, id: category?.id },
+        });
+      }
     }
-    // }
   }, [advert]);
 
   // advert, isEditMode
@@ -128,10 +128,13 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
   useEffect(() => {
     if (isEditMode) {
       if (selectedCategory && make) {
+        console.log("ehllo");
         fetchModalsByMake();
       }
     } else {
-      fetchModalsByMake();
+      if (selectedCategory) {
+        fetchModalsByMake();
+      }
     }
   }, [selectedCategory, make]);
 

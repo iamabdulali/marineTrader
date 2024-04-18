@@ -18,15 +18,12 @@ const VideoHandler = ({
   const { advert } = Object(values);
   const [videoPreviews, setVideoPreviews] = React.useState([]);
 
-  console.log(values);
-
   useEffect(() => {
     // Fetch video from the backend if in edit mode
     if (isEditMode) {
       const { advert } = Object(values);
       const { video } = advert;
       if (video) {
-        console.log(video);
         setVideoPreviews([URL.createObjectURL(video[0])]);
       } else if (video && typeof video === "string") {
         // Assuming video is already a URL

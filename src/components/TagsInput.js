@@ -20,8 +20,6 @@ export const TagsInput = ({ field, form, isEditMode }) => {
     form.setFieldValue(field.name, inputValue);
   };
 
-  console.log(advert);
-
   function generateUniqueId(maxId) {
     return maxId + 1;
   }

@@ -216,6 +216,7 @@ export default function TradeSellerServiceHoursForm() {
             fieldName="main_picture"
             furtherStyles="top-3"
           />
+          {console.log(values)}
           <p className="mt-2 font-medium">Upload an image of 156x156</p>
         </div>
       </div>

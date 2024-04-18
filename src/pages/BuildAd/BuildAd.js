@@ -29,7 +29,7 @@ import { fetchOptions, getOneAdvert } from "../../utils/fetch/fetchData";
 import LoadingWrapper from "../../utils/LoadingWrapper";
 
 const BuildAd = () => {
-  const [step, setStep] = useState(4);
+  const [step, setStep] = useState(1);
   const [submit, setSubmit] = useState(false);
   const [spinner, setSpinner] = useState(false);
   const NavigateTo = useNavigate();
@@ -277,22 +277,57 @@ const BuildAd = () => {
   const handleSubmit = async (values, { setFieldValue }) => {
     setSpinner(true);
 
-    try {
-      const { data } = await axios.post(`${SERVER_BASE_URL}/advert`, values, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
-      toast.success("Almost There!");
-      setAdvertID(data.data?.id);
-      openModal(setIsPaymentOptionOpen);
-      setSpinner(false);
-    } catch (error) {
-      console.error("An unexpected error occurred:", error);
-      const { errors } = error.response.data;
-      displayErrorMessages(errors);
-      setSpinner(false);
+    if (EditMode) {
+      const { advert } = Object(values);
+      const { category, condition, type, currency } = Object(advert);
+      const updatedValues = {
+        ...advert,
+        _method: "put",
+        category: category?.id || category,
+        condition: condition?.id || condition,
+        type: type?.id || type,
+        currency: currency?.id || currency,
+      };
+      try {
+        console.log(updatedValues);
+
+        const { data } = await axios.post(
+          `${SERVER_BASE_URL}/advert/${id}`,
+          updatedValues,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+
+        toast.success("Advert Updated");
+        setSpinner(false);
+      } catch (error) {
+        console.error("An unexpected error occurred:", error);
+        const { errors } = error.response.data;
+        displayErrorMessages(errors);
+        setSpinner(false);
+      }
+    } else {
+      // try {
+      //   const { data } = await axios.post(`${SERVER_BASE_URL}/advert`, values, {
+      //     headers: {
+      //       "Content-Type": "multipart/form-data",
+      //       Authorization: `Bearer ${localStorage.getItem("token")}`,
+      //     },
+      //   });
+      //   toast.success("Almost There!");
+      //   setAdvertID(data.data?.id);
+      //   openModal(setIsPaymentOptionOpen);
+      //   setSpinner(false);
+      // } catch (error) {
+      //   console.error("An unexpected error occurred:", error);
+      //   const { errors } = error.response.data;
+      //   displayErrorMessages(errors);
+      //   setSpinner(false);
+      // }
     }
   };
 

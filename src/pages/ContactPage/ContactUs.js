@@ -36,6 +36,7 @@ const ContactUs = () => {
         values,
         {
           headers: {
+            "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
@@ -70,14 +71,14 @@ const ContactUs = () => {
         </div>
         <div className="flex lg:flex-row flex-col items-baseline gap-6">
           <div className="bg-white sm:p-5 py-7 px-3 lg:w-7/12 w-full rounded-lg shadow-[7px] ">
-            <p className="font-medium text-sm">Seller Type</p>
+            {/* <p className="font-medium text-sm">Seller Type</p>
             <div className="flex items-center justify-between mt-4 border-2 rounded-md p-3 text-sm font-medium">
               <button className="bg-[#0D1A8B] hover:bg-[#0a1dbd] text-white py-4 rounded-sm block w-full">
                 Private
               </button>
               <button className="block w-full">Seller</button>
               <button className="block w-full">Not a Member</button>
-            </div>
+            </div> */}
             <Formik initialValues={initialValues} onSubmit={onSubmit}>
               {({ isValid, values, setErrors, setTouched, setFieldValue }) => (
                 <Form className="mt-4 ">
