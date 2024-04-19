@@ -93,7 +93,7 @@ const PaymentFormSubscription = () => {
   }, [subscription]);
 
   useEffect(() => {
-    fetchOptions(`bundle?type=premium`, setBundles, setLoading);
+    fetchOptions(`bundles?type=premium`, setBundles, setLoading);
   }, []);
 
   const generatePaymentMethod = async () => {
@@ -254,7 +254,7 @@ const PaymentFormSubscription = () => {
                       : handlePaymentSubmit
                   }
                   spinner={spinner}
-                  hasBundle={bundles}
+                  hasBundle={hasBundle}
                 />
               </div>
             </Layout>

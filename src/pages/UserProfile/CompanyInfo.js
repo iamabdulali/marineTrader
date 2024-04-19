@@ -57,10 +57,10 @@ const CompanyInfo = ({ editable, isPrivateSeller }) => {
       setStates
     );
 
-    getOptions(
-      "https://venkatmcajj.github.io/react-country-state-city/data/citiesminified.json",
-      setCities
-    );
+    // getOptions(
+    //   "https://venkatmcajj.github.io/react-country-state-city/data/citiesminified.json",
+    //   setCities
+    // );
   }, []);
 
   function getCountry(countryName) {
@@ -78,30 +78,30 @@ const CompanyInfo = ({ editable, isPrivateSeller }) => {
     setStatesByCountries(statesByCountries?.states);
   }
 
-  useEffect(() => {
-    setAllStates((prevStates) => {
-      const newStates = cities?.reduce((acc, city) => {
-        return acc.concat(Object(city)?.states);
-      }, []);
+  // useEffect(() => {
+  //   setAllStates((prevStates) => {
+  //     const newStates = cities?.reduce((acc, city) => {
+  //       return acc.concat(Object(city)?.states);
+  //     }, []);
 
-      return [...prevStates, ...newStates];
-    });
-  }, [cities]);
+  //     return [...prevStates, ...newStates];
+  //   });
+  // }, [cities]);
 
-  function getCitiesByStates(stateID) {
-    const selectedCities = AllStates?.find((state) => state?.id == stateID);
-    setCitiesByStates(selectedCities?.cities);
-  }
+  // function getCitiesByStates(stateID) {
+  //   const selectedCities = AllStates?.find((state) => state?.id == stateID);
+  //   setCitiesByStates(selectedCities?.cities);
+  // }
 
-  function getCity(ID) {
-    const city = cityByStates?.find((city) => city?.id == ID);
-    return city;
-  }
+  // function getCity(ID) {
+  //   const city = cityByStates?.find((city) => city?.id == ID);
+  //   return city;
+  // }
 
   useEffect(() => {
     getStatesByCountry(values.user.country);
-    getCitiesByStates(values.user.region);
-    getCity(values.user.city);
+    // getCitiesByStates(values.user.region);
+    // getCity(values.user.city);
   }, [editable, states, countries, AllStates]);
 
   return (
@@ -201,7 +201,7 @@ const CompanyInfo = ({ editable, isPrivateSeller }) => {
           <Field
             onChange={(e) => {
               handleInputChange(e);
-              getCitiesByStates(e.target.value);
+              // getCitiesByStates(e.target.value);
             }}
             value={getState(values.user.region)?.id}
             disabled={!editable}
@@ -223,7 +223,7 @@ const CompanyInfo = ({ editable, isPrivateSeller }) => {
         </div>
       </div>
       <div className="flex sm:gap-6 items-center sm:flex-row flex-col">
-        {/* <FormField
+        <FormField
           label="Town/City"
           FieldType="text"
           inputField={false}
@@ -231,8 +231,8 @@ const CompanyInfo = ({ editable, isPrivateSeller }) => {
           name="city"
           onChange={(e) => handleInputChange(e)}
           readOnly={!editable}
-        /> */}
-        <div className="w-full mb-4">
+        />
+        {/* <div className="w-full mb-4">
           <label
             className="block text-[#8891B2] text-sm font-medium"
             htmlFor={"country"}
@@ -260,7 +260,7 @@ const CompanyInfo = ({ editable, isPrivateSeller }) => {
               );
             })}
           </Field>
-        </div>
+        </div> */}
         <FormField
           label="Postal Code"
           FieldType="text"

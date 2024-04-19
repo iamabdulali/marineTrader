@@ -287,8 +287,31 @@ const BuildAd = () => {
 
     if (EditMode) {
       const { advert } = Object(values);
-      const { category, condition, type, currency, make, model } =
-        Object(advert);
+      const {
+        category,
+        condition,
+        type,
+        currency,
+        make,
+        model,
+        tags,
+        accessories,
+        conveniences,
+        features,
+        modifications,
+        powers,
+      } = Object(advert);
+      const tagNames = tags.map((tag) => tag.name);
+      const accessoriesArray = accessories.map((accessory) => accessory.name);
+      const modificationsArray = modifications.map(
+        (modification) => modification.name
+      );
+      const featuresArray = features.map((feature) => feature.name);
+      const conveniencesArray = conveniences.map(
+        (convenience) => convenience.name
+      );
+      const powersArray = powers.map((power) => power.name);
+
       const updatedValues = {
         ...advert,
         _method: "put",
@@ -298,6 +321,12 @@ const BuildAd = () => {
         condition: condition?.id || condition,
         type: type?.id || type,
         currency: currency?.id || currency,
+        tags: tagNames,
+        accessories: accessoriesArray,
+        modifications: modificationsArray,
+        features: featuresArray,
+        conveniences: conveniencesArray,
+        powers: powersArray,
       };
 
       try {
@@ -476,6 +505,7 @@ const BuildAd = () => {
                 width="md:w-1/2 xl:w-1/3 w-full"
               >
                 <PaymentOptionModal
+                  advert={advert}
                   id={advertID}
                   onClose={() => closeModal(setIsPaymentOptionOpen)}
                   hasSubscription={hasSubscription}

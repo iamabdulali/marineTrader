@@ -439,7 +439,7 @@ const ItemFeaturesStep3 = ({ isEditMode }) => {
                                     options={conditions}
                                     value={
                                       isEditMode
-                                        ? engines[selected_engine]?.condition
+                                        ? engines[selected_engine]?.condition_id
                                         : values?.engines[selected_engine]
                                             ?.condition
                                     }
@@ -469,7 +469,7 @@ const ItemFeaturesStep3 = ({ isEditMode }) => {
                                     options={types}
                                     value={
                                       isEditMode
-                                        ? engines[selected_engine]?.type
+                                        ? engines[selected_engine]?.type_id
                                         : values?.engines[selected_engine]?.type
                                     }
                                     onChange={(e) => {

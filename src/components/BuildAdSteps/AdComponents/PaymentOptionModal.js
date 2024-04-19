@@ -1,9 +1,18 @@
 import { Field } from "formik";
-import React from "react";
+import React, { useContext } from "react";
 import { FaTimes } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../../Context/AuthContext";
 
-const PaymentOptionModal = ({ onClose, id, hasSubscription, hasSpotlight }) => {
+const PaymentOptionModal = ({
+  onClose,
+  id,
+  hasSubscription,
+  hasSpotlight,
+  advert,
+}) => {
+  const { advert_package_id } = Object(advert);
+  console.log(advert_package_id);
   return (
     <div className="bg-white rounded-lg border-t-8 border-[#0D1A8B] py-3 px-6">
       <div className={`flex items-center justify-between mt-3`}>
@@ -41,7 +50,22 @@ const PaymentOptionModal = ({ onClose, id, hasSubscription, hasSpotlight }) => {
             Inclusive Monthly Allowance
           </label>
         </div> */}
-        {hasSubscription && !hasSpotlight ? (
+        {advert_package_id == "1" ? (
+          <div className="radio mt-3">
+            <Field
+              name="paymentMethod"
+              id="checkout"
+              type="radio"
+              value="checkout"
+            />
+            <label
+              htmlFor="checkout"
+              className="radio-label mr-5 font-medium text-[#11133D]"
+            >
+              Checkout
+            </label>
+          </div>
+        ) : hasSubscription && !hasSpotlight ? (
           <div className="radio mt-3">
             <label
               htmlFor="allowance"

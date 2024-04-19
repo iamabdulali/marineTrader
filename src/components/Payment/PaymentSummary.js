@@ -92,12 +92,19 @@ const PaymentSummary = ({
     (Number(packageAmount) || 0) +
     (Number(spotlights) || 0);
 
-  if (isAdvertUpgrade && subtotal != 0 && hasBundle == 0 && !isBundleSelected) {
-    subtotal = subtotal - currentPackageAmount;
-  }
+  if (!isSubscriptionPage) {
+    if (
+      isAdvertUpgrade &&
+      subtotal != 0 &&
+      hasBundle == 0 &&
+      !isBundleSelected
+    ) {
+      subtotal = subtotal - currentPackageAmount;
+    }
 
-  if (isBundleSelected) {
-    subtotal = subtotal - Number(packageAmount);
+    if (isBundleSelected) {
+      subtotal = subtotal - Number(packageAmount);
+    }
   }
 
   let tax = subtotal * 0.2;
@@ -139,13 +146,13 @@ const PaymentSummary = ({
     return (
       <div>
         <p className="text-[#0D1A8B] font-semibold mt-2">{heading}</p>
-        {items?.map(({ country, id }) => (
+        {items?.map(({ name, spotlight_price, country, id }) => (
           <div key={id} className="flex items-center justify-between mt-2">
-            <p className="text-[#696E9D]">{country?.name}:</p>
+            <p className="text-[#696E9D]">{name}:</p>
             <p className="text-[#11133D] font-semibold">{`${
               currency?.symbol
             }${Number(
-              country?.spotlight_price * currencyRates[currency?.currency_code]
+              spotlight_price * currencyRates[currency?.currency_code]
             ).toFixed(2)}`}</p>
           </div>
         ))}

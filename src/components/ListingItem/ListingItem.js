@@ -63,65 +63,65 @@ const ListingItem = ({ itemData }) => {
   const { phone_no, email, country, city, region, user_name } =
     Object(listItemUser);
 
-  const [countries, setCountries] = useState([]);
-  const [states, setStates] = useState([]);
-  const [cities, setCities] = useState([]);
-  const [AllStates, setAllStates] = useState([]);
-  const [cityByStates, setCitiesByStates] = useState([]);
+  // const [countries, setCountries] = useState([]);
+  // const [states, setStates] = useState([]);
+  // const [cities, setCities] = useState([]);
+  // const [AllStates, setAllStates] = useState([]);
+  // const [cityByStates, setCitiesByStates] = useState([]);
 
-  const getOptions = async (url, setData) => {
-    try {
-      const { data } = await axios.get(url);
-      setData(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const getOptions = async (url, setData) => {
+  //   try {
+  //     const { data } = await axios.get(url);
+  //     setData(data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
-  useEffect(() => {
-    GetCountries().then((result) => {
-      setCountries(result);
-    });
-    getOptions(
-      "https://venkatmcajj.github.io/react-country-state-city/data/statesminified.json",
-      setStates
-    );
+  // useEffect(() => {
+  //   GetCountries().then((result) => {
+  //     setCountries(result);
+  //   });
+  //   getOptions(
+  //     "https://venkatmcajj.github.io/react-country-state-city/data/statesminified.json",
+  //     setStates
+  //   );
 
-    getOptions(
-      "https://venkatmcajj.github.io/react-country-state-city/data/citiesminified.json",
-      setCities
-    );
-  }, []);
+  //   getOptions(
+  //     "https://venkatmcajj.github.io/react-country-state-city/data/citiesminified.json",
+  //     setCities
+  //   );
+  // }, []);
 
-  function getCountry(countryName) {
-    const country = countries.find((country) => country?.id == countryName);
-    return country;
-  }
+  // function getCountry(countryName) {
+  //   const country = countries.find((country) => country?.id == countryName);
+  //   return country;
+  // }
 
-  useEffect(() => {
-    setAllStates((prevStates) => {
-      const newStates = cities?.reduce((acc, city) => {
-        return acc.concat(Object(city)?.states);
-      }, []);
+  // useEffect(() => {
+  //   setAllStates((prevStates) => {
+  //     const newStates = cities?.reduce((acc, city) => {
+  //       return acc.concat(Object(city)?.states);
+  //     }, []);
 
-      return [...prevStates, ...newStates];
-    });
-  }, [cities]);
+  //     return [...prevStates, ...newStates];
+  //   });
+  // }, [cities]);
 
-  function getCitiesByStates(stateID) {
-    const selectedCities = AllStates?.find((state) => state?.id == stateID);
-    setCitiesByStates(selectedCities?.cities);
-  }
+  // function getCitiesByStates(stateID) {
+  //   const selectedCities = AllStates?.find((state) => state?.id == stateID);
+  //   setCitiesByStates(selectedCities?.cities);
+  // }
 
-  function getCity(ID) {
-    const city = cityByStates?.find((city) => city?.id == ID);
-    return city;
-  }
+  // function getCity(ID) {
+  //   const city = cityByStates?.find((city) => city?.id == ID);
+  //   return city;
+  // }
 
-  useEffect(() => {
-    getCitiesByStates(region);
-    getCity(city);
-  }, [states, countries, AllStates]);
+  // useEffect(() => {
+  //   getCitiesByStates(region);
+  //   getCity(city);
+  // }, [states, countries, AllStates]);
 
   console.log(listItemUser);
 
@@ -169,9 +169,9 @@ const ListingItem = ({ itemData }) => {
                 <h2 className="md:text-xl text-base text-[#11133D] font-semibold">
                   {title}
                 </h2>
-                <p className="bg-white md:flex hidden shadow-2xl  items-center justify-center custom-shadow rounded-full w-7 h-7">
+                {/* <p className="bg-white md:flex hidden shadow-2xl  items-center justify-center custom-shadow rounded-full w-7 h-7">
                   <FaHeart color="#8891B2" />
-                </p>
+                </p> */}
               </div>
               <div>
                 {price_type == "poa" ? (
@@ -281,7 +281,8 @@ const ListingItem = ({ itemData }) => {
                 </p>
                 <p className="flex text-sm font-semibold items-center gap-3 text-[#11133D]">
                   <FaMapMarkedAlt color="#8891B2" size={28} />{" "}
-                  {getCity(city)?.name} , {getCountry(country)?.name}
+                  {/* {getCity(city)?.name} , {getCountry(country)?.name} */}
+                  {city}
                 </p>
               </div>
             </div>

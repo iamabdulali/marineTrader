@@ -169,9 +169,12 @@ const Subscriptions = ({
             src={selected}
             className="sm:w-40 w-20 -top-4 -right-1 absolute z-10"
           />
-          <button className="block mt-6 text-center w-11/12 mx-auto border-[3px] border-[#0D1A8B] rounded-lg p-2 text-[#0D1A8B] font-semibold hover:bg-[#0D1A8B] hover:text-white">
+          <Link
+            to={`/payment/subscription/${id}`}
+            className="block mt-6 text-center w-11/12 mx-auto border-[3px] border-[#0D1A8B] rounded-lg p-2 text-[#0D1A8B] font-semibold hover:bg-[#0D1A8B] hover:text-white"
+          >
             Renew
-          </button>
+          </Link>
         </>
       ) : (
         // Render subscription options

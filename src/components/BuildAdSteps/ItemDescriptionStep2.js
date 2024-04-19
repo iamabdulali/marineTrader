@@ -135,15 +135,14 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
   useEffect(() => {
     if (isEditMode) {
       if (selectedCategory && make) {
-        console.log("ehllo");
         fetchModalsByMake();
       }
     } else {
-      if (selectedCategory) {
+      if (selectedCategory && values?.make) {
         fetchModalsByMake();
       }
     }
-  }, [selectedCategory, make]);
+  }, [selectedCategory, make, values?.make]);
 
   // console.log(advert);
   // values?.make, make, model
@@ -426,7 +425,7 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
                 label="Hull Shape"
                 name="hull_shape"
                 options={hullShapes}
-                value={isEditMode ? hull_shape?.name : values?.hull_shape}
+                value={isEditMode ? hull_shape : values?.hull_shape}
                 onChange={(e) =>
                   isEditMode
                     ? handleInputChange(
@@ -452,7 +451,7 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
                 label="Hull Material"
                 name="hull_material"
                 options={hullMaterialArray}
-                value={isEditMode ? hull_material?.name : values?.hull_material}
+                value={isEditMode ? hull_material : values?.hull_material}
                 onChange={(e) =>
                   isEditMode
                     ? handleInputChange(
@@ -480,7 +479,7 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
                 label="Keel Type"
                 name="keel_type"
                 options={keelTypeArray}
-                value={isEditMode ? keel_type?.name : values?.keel_type}
+                value={isEditMode ? keel_type : values?.keel_type}
                 onChange={(e) =>
                   isEditMode
                     ? handleInputChange(
