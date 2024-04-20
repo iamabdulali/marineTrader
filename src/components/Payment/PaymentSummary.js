@@ -220,6 +220,8 @@ const PaymentSummary = ({
                   <p className="text-[#696E9D]">
                     Current Package: {currentPackageName}
                   </p>
+                  {console.log("THIS")}
+                  {console.log(hasSubscription)}
                   <p className="text-[#11133D] font-semibold">
                     {`${currency?.symbol}${Number(
                       currentPackageAmount *
@@ -242,6 +244,8 @@ const PaymentSummary = ({
                   <p className="text-[#696E9D]">
                     Current Package: {currentPackageName}
                   </p>
+                  {console.log(advertPackages[advert_package_id])}
+
                   {advertPackages[advert_package_id] == "Standard" ? (
                     <p className="text-[#11133D] font-semibold">
                       {`${currency?.symbol}${Number(

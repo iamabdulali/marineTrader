@@ -167,7 +167,7 @@ const PaymentFormSubscription = () => {
     } catch (error) {
       console.log(error);
       setSpinner(false);
-      const { errors } = error.response.data;
+      const { errors } = error?.response?.data;
       displayErrorMessages(errors);
     }
   };
@@ -212,7 +212,7 @@ const PaymentFormSubscription = () => {
     } catch (error) {
       console.log(error);
       setSpinner(false);
-      const { errors } = error.response.data;
+      const { errors } = error?.response?.data;
       displayErrorMessages(errors);
     }
   };

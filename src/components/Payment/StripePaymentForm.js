@@ -57,6 +57,14 @@ const StripePaymentForm = ({
     console.log(hasSubscription, hasBundle);
   }, [elements, postalCode, country]);
 
+  const [hasFeaturedBundle, setHasFeaturedBundle] = useState(0);
+  const [hasPremiumBundle, setHasPremiumBundle] = useState(0);
+
+  useEffect(() => {
+    fetchOptions(`bundle/advert/remains?type=featured`, setHasFeaturedBundle);
+    fetchOptions(`bundle/advert/remains?type=premium`, setHasPremiumBundle);
+  }, []);
+
   return (
     <div className="smallLg:w-1/2 w-full">
       <form
@@ -172,7 +180,9 @@ const StripePaymentForm = ({
           )}
         </button>
       </form>
-      {(!isPrivateSeller && hasSubscription != 0) || hasBundle != 0 ? (
+      {(!isPrivateSeller && hasSubscription != 0) ||
+      hasPremiumBundle != 0 ||
+      hasFeaturedBundle != 0 ? (
         <div className="bg-[#1C5DBF] text-white p-6 mt-8 shadow-[7px]">
           <p className="sm:text-2xl text-base font-semibold">
             <img
@@ -192,10 +202,22 @@ const StripePaymentForm = ({
           ) : (
             ""
           )}
-          {hasBundle != 0 ? (
+          {hasPremiumBundle != 0 ? (
             <div className="flex items-center sm:text-base text-sm justify-between mt-3">
-              <p>Bundle Balance</p>
-              <p className="font-medium sm:text-lg text-base">{hasBundle}</p>
+              <p>Premium Bundle Balance</p>
+              <p className="font-medium sm:text-lg text-base">
+                {hasPremiumBundle}
+              </p>
+            </div>
+          ) : (
+            ""
+          )}
+          {hasFeaturedBundle != 0 ? (
+            <div className="flex items-center sm:text-base text-sm justify-between mt-3">
+              <p>Featured Bundle Balance</p>
+              <p className="font-medium sm:text-lg text-base">
+                {hasFeaturedBundle}
+              </p>
             </div>
           ) : (
             ""

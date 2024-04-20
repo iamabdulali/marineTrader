@@ -80,6 +80,8 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
     packageType = advertPackages[advert_package_id];
   }
 
+  console.log(advertPackages[advert_package_id]);
+
   useEffect(() => {
     fetchOptions(`bundles?type=${packageType}`, setBundles, setLoading);
   }, [advert]);
@@ -244,7 +246,9 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
                     homeCountrySpotlights={home_spotlights_countries}
                     homeContinentSpotlights={home_spotlights_continents}
                   />
-                  {!isPrivateSeller && hasBrokerOrDealerSubscription() ? (
+                  {!isPrivateSeller &&
+                  hasBrokerOrDealerSubscription() &&
+                  advertPackages[advert_package_id] != "Standard" ? (
                     <AvailableUpgrades
                       className="bg-[#1CBF73] flex flex-col gap-5 mt-8 p-5 rounded-lg w-full"
                       openModal={() => openModal(setIsSpotlightOpen)}
