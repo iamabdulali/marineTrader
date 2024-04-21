@@ -344,6 +344,9 @@ const BuildAd = () => {
         );
 
         toast.success("Advert Updated");
+        setTimeout(() => {
+          NavigateTo("/selling");
+        }, 1000);
         setSpinner(false);
       } catch (error) {
         console.error("An unexpected error occurred:", error);

@@ -62,7 +62,10 @@ const SubscriptionStep2 = () => {
 
   return (
     <>
-      <LoadingWrapper className="top-44" loading={loading}>
+      <LoadingWrapper
+        className="top-44 xl:-translate-x-0 -translate-x-1/2"
+        loading={loading}
+      >
         <Heading content="Select Subscription Plan" className="mt-8" />
         <div className="lg:flex hidden gap-5 mt-10 pb-20">
           {subscriptionsPlan?.map(({ name, amount, id, ...props }, index) => {
