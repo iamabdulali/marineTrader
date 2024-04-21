@@ -59,7 +59,7 @@ const CurrentSubscription = ({
               setHasSubscription(false);
               dispatch({
                 type: "SELECTED_CATEGORY",
-                payload: { id: categoryId, name: categoriesList[categoryId] },
+                payload: { id: null, name: categoriesList[categoryId] },
               });
               // document.querySelector(`.category-${categoryId}`).click();
             }}
