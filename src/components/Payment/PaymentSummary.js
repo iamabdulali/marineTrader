@@ -225,12 +225,13 @@ const PaymentSummary = ({
                   </p>
                 </div>
                 <div className=" flex items-center justify-between mt-2">
-                  <p className="text-[#696E9D]">
+                  <p className="text-[#696E9D] line-through">
                     Current Package: {currentPackageName}
                   </p>
                   {console.log("THIS")}
                   {console.log(hasSubscription)}
                   <p className="text-[#11133D] font-semibold">
+                    -{" "}
                     {`${currency?.symbol}${Number(
                       currentPackageAmount *
                         currencyRates[currency?.currency_code]
@@ -261,7 +262,8 @@ const PaymentSummary = ({
                   </p>
 
                   {advertPackages[advert_package_id] == "Standard" ? (
-                    <p className="text-[#11133D] font-semibold line-through">
+                    <p className="text-[#11133D] font-semibold ">
+                      -{" "}
                       {`${currency?.symbol}${Number(
                         currentPackageAmount *
                           currencyRates[currency?.currency_code]
