@@ -123,8 +123,6 @@ const ListingItem = ({ itemData }) => {
   //   getCity(city);
   // }, [states, countries, AllStates]);
 
-  console.log(listItemUser);
-
   // console.log(currencyRates[currency?.currency_code]);
   return (
     <>

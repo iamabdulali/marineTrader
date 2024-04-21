@@ -217,6 +217,14 @@ const PaymentSummary = ({
             ) : hasBundle == 0 && hasSubscription == 0 && isAdvertUpgrade ? (
               <>
                 <div className=" flex items-center justify-between mt-2">
+                  <p className="text-[#696E9D]">Upgrading To: {packageName}</p>
+                  <p className="text-[#11133D] font-semibold">
+                    {`${currency?.symbol}${Number(
+                      packageAmount * currencyRates[currency?.currency_code]
+                    ).toFixed(2)}`}
+                  </p>
+                </div>
+                <div className=" flex items-center justify-between mt-2">
                   <p className="text-[#696E9D]">
                     Current Package: {currentPackageName}
                   </p>
@@ -229,28 +237,16 @@ const PaymentSummary = ({
                     ).toFixed(2)}`}
                   </p>
                 </div>
-                <div className=" flex items-center justify-between mt-2">
-                  <p className="text-[#696E9D]">Upgrading To: {packageName}</p>
-                  <p className="text-[#11133D] font-semibold">
-                    {`${currency?.symbol}${Number(
-                      packageAmount * currencyRates[currency?.currency_code]
-                    ).toFixed(2)}`}
-                  </p>
-                </div>
               </>
             ) : isAdvertUpgrade ? (
               <>
                 <div className=" flex items-center justify-between mt-2">
-                  <p className="text-[#696E9D]">
-                    Current Package: {currentPackageName}
-                  </p>
-                  {console.log(advertPackages[advert_package_id])}
-
-                  {advertPackages[advert_package_id] == "Standard" ? (
+                  <p className="text-[#696E9D]">Upgrading To: {packageName}</p>
+                  {hasFeaturedBundle == 0 &&
+                  advertPackages[advert_package_id] == "Premium" ? (
                     <p className="text-[#11133D] font-semibold">
                       {`${currency?.symbol}${Number(
-                        currentPackageAmount *
-                          currencyRates[currency?.currency_code]
+                        packageAmount * currencyRates[currency?.currency_code]
                       ).toFixed(2)}`}
                     </p>
                   ) : (
@@ -260,12 +256,15 @@ const PaymentSummary = ({
                   )}
                 </div>
                 <div className=" flex items-center justify-between mt-2">
-                  <p className="text-[#696E9D]">Upgrading To: {packageName}</p>
-                  {hasFeaturedBundle == 0 &&
-                  advertPackages[advert_package_id] == "Premium" ? (
-                    <p className="text-[#11133D] font-semibold">
+                  <p className="text-[#696E9D] line-through">
+                    Current Package: {currentPackageName}
+                  </p>
+
+                  {advertPackages[advert_package_id] == "Standard" ? (
+                    <p className="text-[#11133D] font-semibold line-through">
                       {`${currency?.symbol}${Number(
-                        packageAmount * currencyRates[currency?.currency_code]
+                        currentPackageAmount *
+                          currencyRates[currency?.currency_code]
                       ).toFixed(2)}`}
                     </p>
                   ) : (

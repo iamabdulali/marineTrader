@@ -92,7 +92,7 @@ const PaymentOptionModal = ({
           </div>
         )}
       </div>
-      {hasSubscription && !hasSpotlight ? (
+      {hasSubscription && !hasSpotlight && advert_package_id != "1" ? (
         <Link
           to="/dashboard"
           className="py-3 w-full text-center block mt-7 mb-4 text-white hover:bg-[#0a1dbd] bg-[#0D1A8B] rounded-md"
@@ -104,7 +104,7 @@ const PaymentOptionModal = ({
           to={`/payment/advert/${id}`}
           className="py-3 w-full text-center block mt-7 mb-4 text-white hover:bg-[#0a1dbd] bg-[#0D1A8B] rounded-md"
         >
-          Submit
+          Pay Now
         </Link>
       )}
     </div>

@@ -14,6 +14,7 @@ import FeedbackModal from "../Feedback/FeedbackModal.js";
 import CustomDropdownMenu from "../CustomDropdownMenu.js";
 import CountriesDropdown from "./CountriesDropdown.js";
 import { useLocation } from "react-router-dom";
+import GoogleTranslate from "./GoogleTranslate.js";
 
 const Header = ({ menuState, setMenuState }) => {
   const { country } = useContext(AuthContext);
@@ -158,6 +159,8 @@ const Header = ({ menuState, setMenuState }) => {
           ) : (
             ""
           )}
+
+          <GoogleTranslate />
 
           {/* Bell and Notification Icons */}
           {isLogged ? (
