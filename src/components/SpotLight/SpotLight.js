@@ -130,11 +130,11 @@ const SpotLight = () => {
                 )
               )}
             </div>
-            <div className="text-center">
+            {/* <div className="text-center">
               <button className="text-[#8891B2] hover:bg-[#78809e] hover:text-white hover:border-white border-2 border-[#8891B2] py-3 px-5 rounded-lg mt-16">
                 Show More
               </button>
-            </div>
+            </div> */}
           </>
         )}
       </LoadingWrapper>

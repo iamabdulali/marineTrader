@@ -138,12 +138,12 @@ const Header = ({ menuState, setMenuState }) => {
         >
           {/* Language Dropdown */}
           {IsHomePage() ? (
-            <div className="relative inline-block mr-7">
+            <div className="relative inline-block sm:mr-7 mr-4">
               <CustomDropdownMenu
                 buttonToOpenMenu={
                   <>
                     <img
-                      className="w-10 h-10 object-contain block"
+                      className="sm:w-10 sm:h-10 w-8 h-8 object-contain block"
                       src={`https://purecatamphetamine.github.io/country-flag-icons/3x2/${
                         countryCode || "GB"
                       }.svg`}

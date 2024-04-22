@@ -183,3 +183,9 @@ code {
     transform: translateX(0) !important;
   }
 }
+
+@media (max-width: 700px) {
+  .category-icon svg {
+    width: 70px;
+  }
+}
