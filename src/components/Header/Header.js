@@ -50,7 +50,7 @@ const Header = ({ menuState, setMenuState }) => {
 
   const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
 
-  const paths = ["/", "/:id"];
+  const paths = ["/"];
 
   const IsHomePage = () => {
     const location = useLocation();

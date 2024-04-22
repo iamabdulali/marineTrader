@@ -27,16 +27,36 @@ const VerticalMenu = ({ menuState, setMenuState }) => {
     setMenuState(!menuState);
   };
 
-  const paths = ["/", "/list", "/itemDetails"];
+  const paths = [
+    "/",
+    "/:id/list",
+    "/list",
+    "/:id/itemDetails",
+    "/itemDetails",
+    "/:id",
+  ];
 
   const IsHomePage = () => {
     const location = useLocation();
 
-    // Check if the current location pathname is "/" or starts with "/itemDetails/"
-    return (
-      paths.includes(location.pathname) ||
-      location.pathname.startsWith("/itemDetails/")
-    );
+    // Check if the current location pathname is in the static paths
+    if (paths.includes(location.pathname)) {
+      return true;
+    }
+
+    // Check if the current location pathname starts with "/itemDetails/"
+    if (location.pathname.startsWith("/itemDetails/")) {
+      return true;
+    }
+
+    // Check if the current path matches any of the paths in the array
+    return paths.some((path) => {
+      // Use a regular expression to match dynamic routes like "/:id"
+      const regex = new RegExp("^" + path.replace(/:[^\s/]+/g, "[^/]+") + "$");
+      return regex.test(location.pathname);
+    });
+
+    return false;
   };
 
   const { phone_no, email, seller_type } = Object(user);
