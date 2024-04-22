@@ -162,11 +162,22 @@ function App() {
       {/* <Header/> */}
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/:id" element={<Home />} />
         <Route path="/slider" element={<SwiperSlider />} />
         <Route path="/list" element={<ListPage />} />
+        <Route path="/:id/list" element={<ListPage />} />
         <Route path="/itemDetails/:id" element={<ItemDetailPage />} />
+        <Route path="/itemDetails/:id/:id" element={<ItemDetailPage />} />
         <Route
           path="/userProfile"
+          element={
+            <ProtectedRoute>
+              <UserInfo />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/:id/userProfile"
           element={
             <ProtectedRoute>
               <UserInfo />

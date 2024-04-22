@@ -132,7 +132,9 @@ const Header = ({ menuState, setMenuState }) => {
         )}
 
         <div
-          className={`flex ${isLogged ? "items-baseline" : "items-center"} `}
+          className={`flex ${
+            isLogged ? "items-baseline" : "items-center"
+          } relative`}
         >
           {/* Language Dropdown */}
           {IsHomePage() ? (
@@ -160,7 +162,7 @@ const Header = ({ menuState, setMenuState }) => {
             ""
           )}
 
-          <GoogleTranslate />
+          {/* <GoogleTranslate /> */}
 
           {/* Bell and Notification Icons */}
           {isLogged ? (
