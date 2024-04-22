@@ -100,7 +100,7 @@ const ListPage = () => {
         </div>
 
         <div className="min-h-[50vh]">
-          <LoadingWrapper loading={loading} className="top-1/3">
+          <LoadingWrapper loading={loading} className="top-1/4">
             {searchedListings.length == 0 ? (
               <div>No Listing Found</div>
             ) : (
