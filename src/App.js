@@ -208,6 +208,14 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/:id/dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
 
         <Route
           path="/selling"
