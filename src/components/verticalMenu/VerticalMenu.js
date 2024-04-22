@@ -18,6 +18,7 @@ import {
   closeModal,
   openModal,
 } from "../../utils/ModalOpeningClosingFunctions";
+import { faL } from "@fortawesome/free-solid-svg-icons";
 
 const VerticalMenu = ({ menuState, setMenuState }) => {
   const [isSignOutModalOpen, setIsSignOutModalOpen] = useState(false);
@@ -33,7 +34,6 @@ const VerticalMenu = ({ menuState, setMenuState }) => {
     "/list",
     "/:id/itemDetails",
     "/itemDetails",
-    "/:id/",
     "/:id",
   ];
 
@@ -51,13 +51,15 @@ const VerticalMenu = ({ menuState, setMenuState }) => {
     }
 
     // Check if the current path matches any of the paths in the array
-    return paths.some((path) => {
+    const isDynamicPath = paths.some((path) => {
       // Use a regular expression to match dynamic routes like "/:id"
-      const regex = new RegExp("^" + path.replace(/:[^\s/]+/g, "[^/]+") + "$");
+      const regex = new RegExp(
+        "^" + path.replace(/:[^\s/]+/g, "(\\d{1,2}|[a-zA-Z]{2})") + "$"
+      );
       return regex.test(location.pathname);
     });
 
-    return false;
+    return isDynamicPath;
   };
 
   const { phone_no, email, seller_type } = Object(user);
