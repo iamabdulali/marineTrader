@@ -118,7 +118,7 @@ const UserInfo = () => {
       setSpinner(false);
     }
   };
-  console.log(editing);
+  console.log(user);
   return (
     <Layout>
       <LoadingWrapper

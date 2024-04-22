@@ -49,41 +49,41 @@
       "default_language": "en",
       "native_language_names": true,
       "detect_browser_language": true,
-      "url_structure": "sub_directory",
+      // "url_structure": "sub_directory",
       "wrapper_selector": ".gtranslate_wrapper",
       "switcher_open_direction": "top"
     }
   </script>
   <script src="https://cdn.gtranslate.net/widgets/latest/dwf.js" defer></script>
+  <!-- 
+    <script>
+      setTimeout(() => {
+        const elements = document.querySelectorAll('[data-gt-lang]');
+        const valuesArray = [];
 
-  <!-- <script>
-    setTimeout(() => {
-      const elements = document.querySelectorAll('[data-gt-lang]');
-      const valuesArray = [];
+        elements.forEach(element => {
+          valuesArray.push(element.dataset.gtLang);
+        });
 
-      elements.forEach(element => {
-        valuesArray.push(element.dataset.gtLang);
-      });
+        const options = document.querySelectorAll(".gt_option a")
+        options.forEach(option => {
+          option.addEventListener('click', (e) => {
+            const lang = e.target.dataset.gtLang;
 
-      const options = document.querySelectorAll(".gt_option a")
-      options.forEach(option => {
-        option.addEventListener('click', (e) => {
-          const lang = e.target.dataset.gtLang;
+            const currentURL = window.location.href;
 
-          const currentURL = window.location.href;
+            const hostname = window.location.host;
 
-          const hostname = window.location.host;
+            const newPath = `${hostname}/${lang}`;
 
-          const newPath = `${hostname}/${lang}`;
-
-          const newURL = currentURL.replace(hostname, newPath);
+            const newURL = currentURL.replace(hostname, newPath);
 
 
-          // window.location.href = newURL;
+            window.location.href = newURL;
+          })
         })
-      })
-    }, 2000);
-  </script> -->
+      }, 2000);
+    </script> -->
 </body>
 
 </html>

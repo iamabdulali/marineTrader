@@ -33,7 +33,7 @@ const Header = ({ menuState, setMenuState }) => {
     }
   }, [country]);
 
-  const { user_name, seller_type, image_field, main_picture } = Object(user);
+  const { user_name, seller_type, image_field, company_logo } = Object(user);
 
   const toggleLanguageDropdown = () => {
     setLanguageDropdownOpen(!languageDropdownOpen);
@@ -210,9 +210,9 @@ const Header = ({ menuState, setMenuState }) => {
                 className="flex items-center space-x-2 focus:outline-none"
               >
                 <div className="flex items-center justify-start gap-3 text-left">
-                  {image_field || main_picture ? (
+                  {image_field || company_logo ? (
                     <img
-                      src={image_field || main_picture}
+                      src={image_field || company_logo}
                       className="w-10 h-10  rounded-full object-cover object-top"
                     />
                   ) : (
