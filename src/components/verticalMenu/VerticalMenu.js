@@ -33,6 +33,7 @@ const VerticalMenu = ({ menuState, setMenuState }) => {
     "/list",
     "/:id/itemDetails",
     "/itemDetails",
+    "/:id/",
     "/:id",
   ];
 
