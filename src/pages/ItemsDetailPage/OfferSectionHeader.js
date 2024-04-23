@@ -1,16 +1,28 @@
 import React from "react";
 import { FaEnvelope, FaFlag, FaPhone } from "react-icons/fa";
+import { GiBoatFishing, GiSail, GiSailboat } from "react-icons/gi";
+import { noTrailer } from "../../assets";
 
 const OfferSectionHeader = ({ advert }) => {
   return (
     <div className="flex items-center justify-between sm:py-6 sm:px-7 py-4 px-0 sm:border-b-2">
-      <div>
+      <div className="relative">
         <p className="text-[#11133D] font-semibold sm:text-4xl text-2xl">
           {advert?.currency?.symbol}
           {advert?.price}
         </p>
         <p className="text-[#696E9D] text-sm mt-2">(Tax not paid)</p>
+        <p className="absolute top-0 -right-12">
+          {advert?.trailers == "yes" ? (
+            <GiSailboat color="#1CBF73" size={35} />
+          ) : advert?.trailers == "no" ? (
+            <img src={noTrailer} className="w-10" />
+          ) : (
+            <GiSailboat color="#FFB800" size={35} />
+          )}
+        </p>
       </div>
+
       <div className={`flex justify-end items-center gap-3`}>
         <a
           href={`mailto:${advert?.user?.email}`}

@@ -58,6 +58,7 @@ import deleteIcon from "./delete-icon.png";
 import speakerIcon from "./speaker.png";
 import bars from "./bars.png";
 import selected from "./selected.png";
+import noTrailer from "./others-grey-flip.png";
 
 export {
   selected,
@@ -120,4 +121,5 @@ export {
   deleteIcon,
   speakerIcon,
   bars,
+  noTrailer,
 };
