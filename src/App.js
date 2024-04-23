@@ -166,8 +166,8 @@ function App() {
         <Route path="/slider" element={<SwiperSlider />} />
         <Route path="/list" element={<ListPage />} />
         <Route path="/:id/list" element={<ListPage />} />
-        <Route path="/itemDetails/:id" element={<ItemDetailPage />} />
-        <Route path="/itemDetails/:id/:id" element={<ItemDetailPage />} />
+        <Route path="/listings/:id" element={<ItemDetailPage />} />
+        <Route path="/listings/:id" element={<ItemDetailPage />} />
         <Route
           path="/userProfile"
           element={

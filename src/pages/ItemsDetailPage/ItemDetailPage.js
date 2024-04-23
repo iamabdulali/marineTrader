@@ -43,14 +43,16 @@ const ItemDetailPage = () => {
   const [similarListings, setSimilarListings] = useState([]);
 
   const pathArray = window.location.pathname.split("/");
-  const id = pathArray[2];
+  console.log(pathArray);
+  const idString = pathArray[2]; // This will give you 'Yamaha-128'
+  const id = idString.split("-")[1];
 
   useEffect(() => {
     getOneAdvert(setAdvert, id, "advert-details", setLoading);
     setLoading(true);
   }, [refresh]);
 
-  const { category, condition, price_type } = Object(advert);
+  const { category, condition, price_type, make } = Object(advert);
 
   if (!advert) {
     navigate("/list");
@@ -205,6 +207,7 @@ const ItemDetailPage = () => {
                     advert_package_id,
                   }) => (
                     <SpotLightListings
+                      make={make}
                       key={id}
                       id={id}
                       title={title}

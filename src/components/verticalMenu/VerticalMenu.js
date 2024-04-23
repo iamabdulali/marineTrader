@@ -46,7 +46,7 @@ const VerticalMenu = ({ menuState, setMenuState }) => {
     }
 
     // Check if the current location pathname starts with "/itemDetails/"
-    if (location.pathname.startsWith("/itemDetails/")) {
+    if (location.pathname.startsWith("/listings/")) {
       return true;
     }
 

@@ -172,7 +172,7 @@ const ListingItem = ({ itemData }) => {
     <>
       <Link
         key={id}
-        to={`/itemDetails/${id}`}
+        to={`/listings/${make?.name}-${id}`}
         className={`${
           advert_package_id == "3"
             ? "bg-[#FEF9EE] border-4  border-[#FFB800]"

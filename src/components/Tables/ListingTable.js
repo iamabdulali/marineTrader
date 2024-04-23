@@ -229,6 +229,7 @@ const ListingTable = ({
                     view,
                     spotlight_status,
                     advert_package_id,
+                    make,
                     price_type,
                   }) => (
                     <tr
@@ -237,7 +238,7 @@ const ListingTable = ({
                     >
                       <td className="py-4 px-4 whitespace-nowrap">
                         <div className="flex items-center gap-2">
-                          <Link to={`/itemDetails/${id}`}>
+                          <Link to={`/listings/${make?.name}-${id}`}>
                             <img
                               src={images[0]?.image}
                               alt="Item"
@@ -388,12 +389,13 @@ const ListingTable = ({
                     expire_date,
                     advert_status,
                     view,
+                    make,
                   }) => (
                     <div
                       key={id}
                       className="bg-white sm:text-base text-sm block rounded-lg sm:flex gap-4 w-full p-4"
                     >
-                      <Link to={`/itemDetails/${id}`}>
+                      <Link to={`/listings/${make?.name}-${id}`}>
                         <img
                           src={images[0]?.image}
                           alt="Item"
