@@ -56,6 +56,7 @@ const UserInfo = () => {
 
     // Iterate over all fields in values.user object
     for (const fieldName in values.user) {
+      console.log(fieldName);
       // Check if the field exists in the user object and if its value has changed
       if (
         values.user.hasOwnProperty(fieldName) &&
@@ -135,7 +136,7 @@ const UserInfo = () => {
           </p>
         </div>
         <Formik onSubmit={onSubmit} initialValues={initialValues}>
-          {({ isValid, values, setErrors, setTouched, setFieldValue }) => (
+          {({ values, setFieldValue }) => (
             <Form>
               <div className="mt-6 flex smallLg:flex-row flex-col rounded-lg bg-white min-h-screen">
                 <ImageSection

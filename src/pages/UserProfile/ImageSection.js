@@ -18,8 +18,7 @@ const ImageSection = ({
       reader.onloadend = () => {
         if (type === "cover") {
           setCoverPhotoSrc(reader.result);
-          setFieldValue(" user.main_picture", file);
-          console.log(reader);
+          setFieldValue("user.main_picture", file);
         } else if (type === "profile") {
           setProfilePhotoSrc(reader.result);
           setFieldValue(
@@ -32,12 +31,7 @@ const ImageSection = ({
     }
   };
 
-  console.log({
-    coverPhotoSrc,
-    main_picture,
-    profilePhotoSrc,
-    company_logo,
-  });
+  console.log({ main_picture, company_logo });
 
   return (
     <div className="smallLg:w-4/12  w-full bg-[#EDF1FE] smallLg:rounded-tl-lg smallLg:rounded-bl-lg smallLg:mb-0 mb-4">
@@ -60,7 +54,7 @@ const ImageSection = ({
             type="file"
             id="coverPhotoInput"
             accept="image/*"
-            name="company_logo"
+            name="main_picture"
             onChange={(e) => handleFileUpload("cover", e, setFieldValue)}
             className="hidden"
           />
@@ -87,7 +81,7 @@ const ImageSection = ({
           type="file"
           id="profilePhotoInput"
           accept="image/*"
-          name={`${isPrivateSeller ? "image_field" : "main_picture"}`}
+          name={`${isPrivateSeller ? "image_field" : "company_logo"}`}
           onChange={(e) => handleFileUpload("profile", e, setFieldValue)}
           className="hidden"
         />
