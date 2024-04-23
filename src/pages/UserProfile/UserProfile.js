@@ -118,7 +118,6 @@ const UserInfo = () => {
       setSpinner(false);
     }
   };
-  console.log(user);
   return (
     <Layout>
       <LoadingWrapper

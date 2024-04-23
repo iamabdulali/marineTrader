@@ -1,5 +1,5 @@
 // SliderComponent.js
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -23,6 +23,7 @@ import { AuthContext } from "../../Context/AuthContext";
 import { GetCountries } from "react-country-state-city/dist/cjs";
 import { BiDroplet } from "react-icons/bi";
 import { CiDeliveryTruck } from "react-icons/ci";
+import axios from "axios";
 
 const ListingItem = ({ itemData }) => {
   const sliderSettings = {
@@ -58,43 +59,43 @@ const ListingItem = ({ itemData }) => {
   const { currencyRates, user } = useContext(AuthContext);
 
   const { currency } = Object(user);
-  const { phone_no, email, country, city, region, user_name, seller_type } =
-    Object(listItemUser);
+  const {
+    phone_no,
+    email,
+    country,
+    company_logo,
+    image_field,
+    city,
+    region,
+    user_name,
+    seller_type,
+  } = Object(listItemUser);
 
-  // const [countries, setCountries] = useState([]);
+  const [countries, setCountries] = useState([]);
   // const [states, setStates] = useState([]);
   // const [cities, setCities] = useState([]);
   // const [AllStates, setAllStates] = useState([]);
   // const [cityByStates, setCitiesByStates] = useState([]);
 
-  // const getOptions = async (url, setData) => {
-  //   try {
-  //     const { data } = await axios.get(url);
-  //     setData(data);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  useEffect(() => {
+    GetCountries().then((result) => {
+      setCountries(result);
+    });
+    // getOptions(
+    //   "https://venkatmcajj.github.io/react-country-state-city/data/statesminified.json",
+    //   setStates
+    // );
 
-  // useEffect(() => {
-  //   GetCountries().then((result) => {
-  //     setCountries(result);
-  //   });
-  //   getOptions(
-  //     "https://venkatmcajj.github.io/react-country-state-city/data/statesminified.json",
-  //     setStates
-  //   );
+    // getOptions(
+    //   "https://venkatmcajj.github.io/react-country-state-city/data/citiesminified.json",
+    //   setCities
+    // );
+  }, []);
 
-  //   getOptions(
-  //     "https://venkatmcajj.github.io/react-country-state-city/data/citiesminified.json",
-  //     setCities
-  //   );
-  // }, []);
-
-  // function getCountry(countryName) {
-  //   const country = countries.find((country) => country?.id == countryName);
-  //   return country;
-  // }
+  function getCountry(countryName) {
+    const country = countries.find((country) => country?.id == countryName);
+    return country;
+  }
 
   // useEffect(() => {
   //   setAllStates((prevStates) => {
@@ -318,7 +319,7 @@ const ListingItem = ({ itemData }) => {
           ) : (
             <div className="flex gap-8 w-full">
               <img
-                src={logo}
+                src={company_logo || image_field || logo}
                 className="border-[1px] w-20 object-cover bg-white rounded-lg"
               />
               <div className="w-full">
@@ -327,9 +328,9 @@ const ListingItem = ({ itemData }) => {
                   {seller_type}
                 </p>
                 <p className="flex text-sm font-semibold items-center gap-3 text-[#11133D]">
-                  <FaMapMarkedAlt color="#8891B2" size={28} />{" "}
-                  {/* {getCity(city)?.name} , {getCountry(country)?.name} */}
-                  {city}
+                  <FaMapMarkedAlt color="#8891B2" size={28} /> {city}
+                  {city == undefined || null ? "" : ","}{" "}
+                  {getCountry(country)?.name}
                 </p>
               </div>
             </div>

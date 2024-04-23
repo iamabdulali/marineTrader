@@ -18,12 +18,12 @@ const ImageSection = ({
       reader.onloadend = () => {
         if (type === "cover") {
           setCoverPhotoSrc(reader.result);
-          setFieldValue("user.company_logo", file);
+          setFieldValue(" user.main_picture", file);
           console.log(reader);
         } else if (type === "profile") {
           setProfilePhotoSrc(reader.result);
           setFieldValue(
-            `${isPrivateSeller ? "user.image_field" : "user.main_picture"}`,
+            `${isPrivateSeller ? "user.image_field" : "user.company_logo"}`,
             file
           );
         }
@@ -31,6 +31,13 @@ const ImageSection = ({
       reader.readAsDataURL(file);
     }
   };
+
+  console.log({
+    coverPhotoSrc,
+    main_picture,
+    profilePhotoSrc,
+    company_logo,
+  });
 
   return (
     <div className="smallLg:w-4/12  w-full bg-[#EDF1FE] smallLg:rounded-tl-lg smallLg:rounded-bl-lg smallLg:mb-0 mb-4">

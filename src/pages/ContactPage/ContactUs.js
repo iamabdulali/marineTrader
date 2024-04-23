@@ -53,6 +53,9 @@ const ContactUs = () => {
     categories?.length != 0 ? setLoading(false) : setLoading(true);
   }, [categories]);
 
+  const { user } = useContext(AuthContext);
+  const { seller_type, email, phone_no, city, country } = Object(user);
+
   return (
     <LoadingWrapper
       loading={loading}
@@ -211,7 +214,16 @@ const ContactUs = () => {
               )}
             </Formik>
           </div>
-          <CompanyInformation />
+          {seller_type == "private seller" ? (
+            ""
+          ) : (
+            <CompanyInformation
+              email={email}
+              phone_no={phone_no}
+              city={city}
+              country={country}
+            />
+          )}
         </div>
       </Layout>
     </LoadingWrapper>
