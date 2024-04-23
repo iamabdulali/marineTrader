@@ -9,6 +9,7 @@ const MakeOfferForm = ({
   handleFormSubmit,
   validationSchema,
   spinner,
+  onClick,
 }) => {
   return (
     <>

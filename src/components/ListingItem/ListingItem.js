@@ -10,6 +10,7 @@ import {
   FaChevronLeft,
   FaChevronRight,
   FaCog,
+  FaDollarSign,
   FaEnvelope,
   FaHandHoldingUsd,
   FaMapMarkedAlt,
@@ -24,6 +25,15 @@ import { GetCountries } from "react-country-state-city/dist/cjs";
 import { BiDroplet } from "react-icons/bi";
 import { CiDeliveryTruck } from "react-icons/ci";
 import axios from "axios";
+import Modal from "../Modal";
+import MakeOfferForm from "../ItemDetailsPage/MakeOfferForm";
+import { SERVER_BASE_URL } from "../..";
+import { toast } from "react-toastify";
+import { makeOfferValidationSchema } from "../../utils/ValidationSchema";
+import {
+  closeModal,
+  openModal,
+} from "../../utils/ModalOpeningClosingFunctions";
 
 const ListingItem = ({ itemData }) => {
   const sliderSettings = {
@@ -57,6 +67,8 @@ const ListingItem = ({ itemData }) => {
   } = Object(itemData);
 
   const { currencyRates, user } = useContext(AuthContext);
+  const [spinner, setSpinner] = useState(false);
+  const [isOfferModalOpen, setIsOfferModalOpen] = useState(false);
 
   const { currency } = Object(user);
   const {
@@ -69,6 +81,7 @@ const ListingItem = ({ itemData }) => {
     region,
     user_name,
     seller_type,
+    currency_id,
   } = Object(listItemUser);
 
   const [countries, setCountries] = useState([]);
@@ -123,6 +136,38 @@ const ListingItem = ({ itemData }) => {
   // }, [states, countries, AllStates]);
 
   // console.log(currencyRates[currency?.currency_code]);
+
+  const initialValues = {
+    name: "",
+    email: "",
+    phone: "",
+    offer: "",
+    currency: currency_id,
+    advert: id,
+  };
+
+  const handleFormSubmit = async (values) => {
+    // Your logic for handling form submission
+    console.log("Form submitted with values:", values);
+    setSpinner(true);
+
+    try {
+      const { data } = await axios.post(`${SERVER_BASE_URL}/offer`, values, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      console.log(data);
+      toast.success(data.message);
+      setSpinner(false);
+    } catch (error) {
+      toast.error(error.response.data.message);
+      console.log(error);
+      setSpinner(false);
+    }
+  };
+
   return (
     <>
       <Link
@@ -256,7 +301,6 @@ const ListingItem = ({ itemData }) => {
                 </span>
               ))}
             </div>
-            {console.log(warranty, water_test_facility, finance_available)}
             <div className="flex items-center justify-end sm:gap-5 gap-4">
               {/* finance_available */}
               {finance_available == "yes" ? (
@@ -351,6 +395,29 @@ const ListingItem = ({ itemData }) => {
               <FaEnvelope size={24} color="#fff" />
             </a>
             <Tooltip id="my-tooltip-20" place="bottom" content={email} />
+            {price_type == "enterInfo" ? (
+              <>
+                {" "}
+                <a
+                  data-tooltip-id="my-tooltip-23"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    openModal(setIsOfferModalOpen);
+                  }}
+                  className="bg-[#0D1A8B] hover:bg-[#0a1dbd] w-12 h-12 rounded-xl flex items-center justify-center"
+                >
+                  <FaDollarSign size={24} color="#fff" />
+                </a>
+                <Tooltip
+                  id="my-tooltip-23"
+                  place="bottom"
+                  content="Make Offer"
+                />
+              </>
+            ) : (
+              ""
+            )}
+
             <a
               data-tooltip-id="my-tooltip-21"
               onClick={(e) => {
@@ -365,6 +432,21 @@ const ListingItem = ({ itemData }) => {
           </div>
         </div>
       </Link>
+      <Modal
+        isOpen={isOfferModalOpen}
+        onClose={() => closeModal(setIsOfferModalOpen)}
+        opacity="bg-opacity-40"
+        padding="p-6"
+        width="md:w-9/12 w-full"
+      >
+        <MakeOfferForm
+          initialValues={initialValues}
+          handleFormSubmit={handleFormSubmit}
+          validationSchema={makeOfferValidationSchema}
+          spinner={spinner}
+          onClick={() => closeModal(setIsOfferModalOpen)}
+        />{" "}
+      </Modal>
     </>
   );
 };
