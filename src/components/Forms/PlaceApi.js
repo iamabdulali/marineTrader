@@ -3,7 +3,7 @@ import {
   APILoader,
   PlacePicker,
 } from "@googlemaps/extended-component-library/react";
-import { Field, useFormikContext } from "formik";
+import { ErrorMessage, Field, useFormikContext } from "formik";
 
 const handlePlaceChange = (e, setFieldValue) => {
   e.srcElement.autocomplete.promise
@@ -34,13 +34,16 @@ const PlaceApi = () => {
 
     const handleInputBlur = () => {
       if (placeInput.value.trim() === "") {
-        console.log("EMPTY");
         setFieldValue("city", "");
       }
     };
 
     removePlaceBtn?.addEventListener("click", () => {
       setFieldValue("city", "");
+    });
+
+    placeInput?.addEventListener("change", (e) => {
+      setFieldValue("city", e.target.value);
     });
 
     if (placeInput) {
@@ -66,6 +69,7 @@ const PlaceApi = () => {
         id="place-input"
       />
       <Field className="hidden" name="city" type="text" value={place} />
+      <ErrorMessage className="text-red-500" name="city" component="span" />
     </>
   );
 };

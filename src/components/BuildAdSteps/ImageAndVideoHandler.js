@@ -124,7 +124,11 @@ const ImageAndVideoHandler = ({
 
         {/* Render image and video previews */}
         {/* {imagePreviews.concat(videoPreviews).length > 0 ? ( */}
-        <div className="flex smallLg:flex-nowrap flex-wrap justify-start gap-7">
+        <div
+          className={`${
+            maxFiles == 5 ? "smallLg:flex-nowrap" : ""
+          } flex  flex-wrap justify-start gap-7`}
+        >
           {imagePreviews.map((preview, index) => {
             return (
               <div

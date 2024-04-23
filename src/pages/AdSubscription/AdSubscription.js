@@ -39,6 +39,8 @@ export default function AdSubscription() {
     return orderA - orderB;
   });
 
+  console.log(sortedPackages);
+
   const tabs = sortedPackages.map((item) => ({
     id: item.name,
     label: item.name,
@@ -47,8 +49,6 @@ export default function AdSubscription() {
   const handleTabClick = (tab) => {
     setSelectedTab(tab);
   };
-
-  console.log(tabs);
 
   useEffect(() => {
     fetchOptions(

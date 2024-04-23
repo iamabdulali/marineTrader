@@ -58,6 +58,8 @@ const ListPage = () => {
   const [categoryName, setCategoryName] = useState("");
   const [sortType, setSortType] = useState("Sort By");
 
+  console.log(searchedListings);
+
   return (
     <BuyerLayout showCategoryList={true}>
       <div className="2xl:px-24 sm:px-10 px-4">

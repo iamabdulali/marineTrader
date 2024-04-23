@@ -83,7 +83,7 @@ const CategoryDropdown = ({ onSubmit, category }) => {
                 </Field>
               </div>
               <CategorySelectDropdown
-                valueAsString={true}
+                // valueAsString={true}
                 value={values?.make}
                 label="Make"
                 name="make"
@@ -100,7 +100,7 @@ const CategoryDropdown = ({ onSubmit, category }) => {
                 label="Model"
                 name="model"
                 options={modals}
-                valueAsString={true}
+                // valueAsString={true}
                 value={values?.model}
                 onChange={(e) => {
                   setFieldValue("model", e.target.value);

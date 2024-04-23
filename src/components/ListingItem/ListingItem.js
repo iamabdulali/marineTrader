@@ -1,5 +1,5 @@
 // SliderComponent.js
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -11,24 +11,18 @@ import {
   FaChevronRight,
   FaCog,
   FaEnvelope,
-  FaHeart,
-  FaLocationArrow,
-  FaMap,
-  FaMapMarked,
+  FaHandHoldingUsd,
   FaMapMarkedAlt,
-  FaMarkdown,
   FaPhone,
-  FaSearchLocation,
   FaShip,
-  FaSms,
   FaTools,
-  FaTrademark,
 } from "react-icons/fa";
 import { featuredRevert, logo } from "../../assets";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../Context/AuthContext";
 import { GetCountries } from "react-country-state-city/dist/cjs";
-import axios from "axios";
+import { BiDroplet } from "react-icons/bi";
+import { CiDeliveryTruck } from "react-icons/ci";
 
 const ListingItem = ({ itemData }) => {
   const sliderSettings = {
@@ -55,12 +49,16 @@ const ListingItem = ({ itemData }) => {
     images,
     price_type,
     advert_package_id,
+    warranty,
+    water_test_facility,
+    part_exchange_available,
+    finance_available,
   } = Object(itemData);
 
   const { currencyRates, user } = useContext(AuthContext);
 
   const { currency } = Object(user);
-  const { phone_no, email, country, city, region, user_name } =
+  const { phone_no, email, country, city, region, user_name, seller_type } =
     Object(listItemUser);
 
   // const [countries, setCountries] = useState([]);
@@ -257,8 +255,57 @@ const ListingItem = ({ itemData }) => {
                 </span>
               ))}
             </div>
+            {console.log(warranty, water_test_facility, finance_available)}
+            <div className="flex items-center justify-end sm:gap-5 gap-4">
+              {/* finance_available */}
+              {finance_available == "yes" ? (
+                <FaHandHoldingUsd
+                  data-tooltip-id={"my-tooltip-9"}
+                  size={24}
+                  fill="#696E9D"
+                />
+              ) : (
+                ""
+              )}
+
+              {warranty == "yes" ? (
+                <CiDeliveryTruck
+                  data-tooltip-id={"my-tooltip-10"}
+                  size={30}
+                  fill="#696E9D"
+                />
+              ) : (
+                ""
+              )}
+              {water_test_facility == "yes" ? (
+                <BiDroplet
+                  data-tooltip-id={"my-tooltip-11"}
+                  size={20}
+                  fill="#696E9D"
+                />
+              ) : (
+                ""
+              )}
+              {part_exchange_available == "yes" ? (
+                <FaTools
+                  data-tooltip-id={"my-tooltip-12"}
+                  size={20}
+                  fill="#696E9D"
+                />
+              ) : (
+                ""
+              )}
+            </div>
           </div>
         </div>
+        <Tooltip id="my-tooltip-9" place="bottom" content="Finance" />
+        <Tooltip id="my-tooltip-10" place="bottom" content="Warrenty" />
+        <Tooltip
+          id="my-tooltip-11"
+          place="bottom"
+          content="Water Test Facility"
+        />
+        <Tooltip id="my-tooltip-12" place="bottom" content="Part Exchange" />
         <div
           className={`flex  sm:items-center mt-8 sm:flex-row flex-col ${
             advert_package_id == "3"
@@ -266,7 +313,9 @@ const ListingItem = ({ itemData }) => {
               : "justify-end"
           }`}
         >
-          {advert_package_id == "3" ? (
+          {advert_package_id == "1" ? (
+            ""
+          ) : (
             <div className="flex gap-8 w-full">
               <img
                 src={logo}
@@ -274,8 +323,8 @@ const ListingItem = ({ itemData }) => {
               />
               <div className="w-full">
                 <p className="text-[#11133D] font-semibold">{user_name}</p>
-                <p className="text-[#8891B2] font-medium mt-1 mb-2 text-sm">
-                  Trade Seller
+                <p className="text-[#8891B2] capitalize font-medium mt-1 mb-2 text-sm">
+                  {seller_type}
                 </p>
                 <p className="flex text-sm font-semibold items-center gap-3 text-[#11133D]">
                   <FaMapMarkedAlt color="#8891B2" size={28} />{" "}
@@ -284,8 +333,6 @@ const ListingItem = ({ itemData }) => {
                 </p>
               </div>
             </div>
-          ) : (
-            ""
           )}
           <div
             className={`flex justify-end items-center gap-3 sm:mt-0 mt-5 ${
@@ -293,7 +340,7 @@ const ListingItem = ({ itemData }) => {
             }`}
           >
             <a
-              data-tooltip-id="my-tooltip-8"
+              data-tooltip-id="my-tooltip-20"
               onClick={(e) => {
                 e.preventDefault();
                 window.location.href = `mailto:${email}`;
@@ -302,9 +349,9 @@ const ListingItem = ({ itemData }) => {
             >
               <FaEnvelope size={24} color="#fff" />
             </a>
-            <Tooltip id="my-tooltip-8" place="bottom" content={email} />
+            <Tooltip id="my-tooltip-20" place="bottom" content={email} />
             <a
-              data-tooltip-id="my-tooltip-9"
+              data-tooltip-id="my-tooltip-21"
               onClick={(e) => {
                 e.preventDefault();
                 window.location.href = `tel:${phone_no}`;
@@ -313,7 +360,7 @@ const ListingItem = ({ itemData }) => {
             >
               <FaPhone size={24} color="#fff" />
             </a>
-            <Tooltip id="my-tooltip-9" place="bottom" content={phone_no} />
+            <Tooltip id="my-tooltip-21" place="bottom" content={phone_no} />
           </div>
         </div>
       </Link>

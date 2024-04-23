@@ -175,10 +175,14 @@ const MakeOfferSection = ({ advert }) => {
             )}
           </div>
         </div>
-        <Tooltip id="my-tooltip-5" place="bottom" content="Pay Now" />
-        <Tooltip id="my-tooltip-6" place="bottom" content="Delivery" />
-        <Tooltip id="my-tooltip-7" place="bottom" content="Droplet" />
-        <Tooltip id="my-tooltip-8" place="bottom" content="Tools" />
+        <Tooltip id="my-tooltip-5" place="bottom" content="Finance" />
+        <Tooltip id="my-tooltip-6" place="bottom" content="Warrenty" />
+        <Tooltip
+          id="my-tooltip-7"
+          place="bottom"
+          content="Water Test Facility"
+        />
+        <Tooltip id="my-tooltip-8" place="bottom" content="Part Exchange" />
 
         <div className="flex gap-4 items-center sm:px-7 py-6 px-4">
           <img

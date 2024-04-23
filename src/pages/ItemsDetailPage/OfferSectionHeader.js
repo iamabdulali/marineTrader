@@ -18,9 +18,9 @@ const OfferSectionHeader = ({ advert }) => {
         >
           <FaEnvelope size={20} color="#0D1A8B" />
         </a>
-        <p className="bg-[#fff] w-12 h-12 border-2 cursor-pointer rounded-full flex items-center justify-center">
+        {/* <p className="bg-[#fff] w-12 h-12 border-2 cursor-pointer rounded-full flex items-center justify-center">
           <FaFlag size={20} color="#0D1A8B" />
-        </p>
+        </p> */}
         <a
           href={`tel:${advert?.user?.phone_no}`}
           className="bg-[#fff] w-12 h-12 border-2 cursor-pointer rounded-full flex items-center justify-center"

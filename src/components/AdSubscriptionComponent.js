@@ -153,8 +153,6 @@ const AdSubscriptionComponent = ({
           </div>
         )}
 
-        {console.log(hasPremiumBundle)}
-
         {variantStyles.bundleAllowance && bundleToUse != "" ? (
           <div className="text-sm text-[#11133D] font-medium">
             <p className="mt-2 mb-3">

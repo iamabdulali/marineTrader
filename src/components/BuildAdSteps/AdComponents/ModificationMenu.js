@@ -16,17 +16,19 @@ const ModificationMenu = ({
   const [editedCheckboxIndex, setEditedCheckboxIndex] = useState(null);
 
   useEffect(() => {
-    setNewCheckboxText(`${menuLabel} ${MenuFor.length + 1}`);
+    // setNewCheckboxText(`${menuLabel} ${MenuFor.length + 1}`);
+    setNewCheckboxText(``);
   }, [MenuFor]);
 
   const handleAddCheckbox = () => {
-    if (newCheckboxText.trim() !== "") {
-      dispatch({
-        type: actionType,
-        payload: [...MenuFor, newCheckboxText],
-      });
-      setNewCheckboxText(`${menuLabel} ${MenuFor.length + 2}`);
-    }
+    // if (newCheckboxText.trim() !== "") {
+    dispatch({
+      type: actionType,
+      payload: [...MenuFor, newCheckboxText],
+    });
+    // setNewCheckboxText(`${menuLabel} ${MenuFor.length + 2}`);
+    setNewCheckboxText(``);
+    // }
   };
 
   const handleCheckboxTextChange = (index, newText) => {
@@ -99,6 +101,7 @@ const ModificationMenu = ({
           {editedCheckboxIndex === index ? (
             <input
               type="text"
+              placeholder="Write Here..."
               className="text-sm w-full text-[#11133D] font-medium ml-3"
               value={checkbox}
               onChange={(e) => handleCheckboxTextChange(index, e.target.value)}
@@ -107,10 +110,10 @@ const ModificationMenu = ({
             />
           ) : (
             <div
-              className="text-sm text-[#11133D] font-medium ml-3"
+              className="text-sm text-[#11133D] min-h-5 w-full border-b-2 font-medium ml-3"
               onClick={() => startEditingCheckboxText(index)}
             >
-              {checkbox}
+              {checkbox == "" ? "Write Here..." : checkbox}
             </div>
           )}
         </div>
@@ -118,7 +121,10 @@ const ModificationMenu = ({
 
       <p
         className="cursor-pointer w-fit text-sm text-[#0D1A8B] font-medium underline flex items-center gap-3"
-        onClick={handleAddCheckbox}
+        onClick={() => {
+          handleAddCheckbox();
+          startEditingCheckboxText(MenuFor.length);
+        }}
       >
         <FaPlus /> Add New
       </p>

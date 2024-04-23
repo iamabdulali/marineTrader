@@ -1,12 +1,23 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import BuildLayout from "./BuildLayout";
 import { Field } from "formik";
 import ImageAndVideoHandler from "./ImageAndVideoHandler";
 import { AuthContext } from "../../Context/AuthContext";
 import VideoHandler from "./VideoHandler";
+import { getPackages } from "../../utils/fetch/fetchData";
 
 const GalleryStep5 = ({ isEditMode }) => {
-  const { selectedPackage } = useContext(AuthContext);
+  const { selectedPackage, user } = useContext(AuthContext);
+  const { seller_type } = Object(user);
+  const [packages, setPackages] = useState([]);
+
+  useEffect(() => {
+    getPackages(setPackages, seller_type);
+  }, []);
+
+  const totalPhotos = packages[selectedPackage - 1]?.max_photo;
+
+  console.log(totalPhotos);
   return (
     <>
       {" "}
@@ -18,7 +29,7 @@ const GalleryStep5 = ({ isEditMode }) => {
           component={ImageAndVideoHandler}
           accept="image/jpeg, image/png" // You can customize the accepted file types
           allowMultiple={true} // Set to true if you want to allow multiple files
-          maxFiles={5} // Set the maximum number of files
+          maxFiles={totalPhotos} // Set the maximum number of files
         />
       </BuildLayout>
       {selectedPackage != "Standard" ? (
