@@ -437,7 +437,7 @@ const ListingItem = ({ itemData }) => {
                 <p className="text-[#8891B2] sm:text-sm capitalize text-[12px] font-medium mb-1 text-sm">
                   {seller_type}
                 </p>
-                <p className="flex text-sm font-semibold sm:text-sm text-[12px] items-center gap-3 text-[#11133D]">
+                <p className="flex font-semibold sm:text-sm text-[12px] items-center gap-3 text-[#11133D]">
                   <FaMapMarkedAlt
                     color="#8891B2"
                     className="sm:w-7 sm:h-7 w-5 h-5"
