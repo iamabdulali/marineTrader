@@ -434,7 +434,7 @@ const ListingItem = ({ itemData }) => {
                 <p className="text-[#11133D] font-semibold sm:text-sm text-[13px]">
                   {user_name}
                 </p>
-                <p className="text-[#8891B2] sm:text-sm capitalize text-[12px] font-medium mb-1 text-sm">
+                <p className="text-[#8891B2] sm:text-sm capitalize text-[12px] font-medium mb-1">
                   {seller_type}
                 </p>
                 <p className="flex font-semibold sm:text-sm text-[12px] items-center gap-3 text-[#11133D]">
@@ -449,8 +449,9 @@ const ListingItem = ({ itemData }) => {
               </div>
             </div>
           )}
+
           <div
-            className={`flex justify-end items-center gap-3 sm:mt-0 mt-1 ${
+            className={`flex justify-end items-center gap-3 sm:mt-0 mt-3 ${
               advert_package_id == "2" ? "" : "w-full"
             }`}
           >
