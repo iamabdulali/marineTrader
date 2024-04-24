@@ -186,7 +186,7 @@ const ListingItem = ({ itemData }) => {
                 return (
                   <img
                     key={id}
-                    className="rounded-lg min-h-48 max-h-48 object-cover"
+                    className="rounded-lg min-h-32 max-h-32 object-cover"
                     src={image}
                   />
                 );
