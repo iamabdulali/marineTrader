@@ -1,9 +1,17 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 
 const Heading = ({ content, fontSize, className }) => {
+  const headingRef = useRef(null);
+
+  useEffect(() => {
+    if (headingRef.current) {
+      headingRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, []);
   return (
     <h2
-      className={`text-[#0D1A8B] font-semibold ${
+      ref={headingRef}
+      className={`text-[#0D1A8B] font-semibold build-step-heading ${
         fontSize ? "text-base" : "text-xl"
       } flex items-center gap-2 ${className}`}
     >
