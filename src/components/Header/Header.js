@@ -60,7 +60,7 @@ const Header = ({ menuState, setMenuState }) => {
   return (
     <>
       <div
-        className={`bg-white  py-7 flex gap-6 items-center ${
+        className={`bg-white sm:py-7 py-4 flex gap-6 items-center ${
           isLogged
             ? "justify-between sm:px-10 px-6"
             : "justify-between border-b-2 2xl:px-24 sm:px-10 px-6"

@@ -30,7 +30,7 @@ const BuyerLayout = ({ children, showCategoryList }) => {
       />
       <LoadingWrapper loading={loading} className="top-0  -translate-x-1/2">
         {showCategoryList ? (
-          <div className="category-menu overflow-x-auto">
+          <div className="category-menu overflow-x-auto sm:block hidden">
             <CategoryList
               className="flex flex-nowrap justify-between lg:w-full min-h-[88px]  smallLg:gap-0 gap-4 bg-white
                2xl:px-24 sm:px-10 px-2 mt-3 sm:mb-6 smallLg:w-auto w-[900px]"

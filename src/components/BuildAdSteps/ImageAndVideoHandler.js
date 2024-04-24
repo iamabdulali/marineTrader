@@ -133,12 +133,12 @@ const ImageAndVideoHandler = ({
             return (
               <div
                 key={`image-${index}`}
-                className="relative smallLg:w-1/5 sm:w-1/3 w-full min-h-[154px] max-h-[154px] mt-5"
+                className="relative smallLg:w-1/5 sm:w-1/3 w-full min-h-[154px] sm:*:max-h-[154px] mt-5"
               >
                 <img
                   src={preview}
                   alt={`Image ${index + 1}`}
-                  className="object-cover rounded-lg w-full min-h-[154px] max-h-[154px]"
+                  className="object-cover rounded-lg w-full min-h-[154px] sm:max-h-[154px]"
                 />
 
                 {/* {isEditMode && ( */}
@@ -156,7 +156,7 @@ const ImageAndVideoHandler = ({
         </div>
         {/* ) : ( */}
         <>
-          <div className="border-2 relative rounded mt-5 border-[#0D1A8B] border-dashed flex items-center justify-center smallLg:w-1/5 sm:w-1/3 w-full min-h-[154px] max-h-[154px]">
+          <div className="border-2 relative rounded mt-5 border-[#0D1A8B] border-dashed flex items-center justify-center smallLg:w-1/5 sm:w-1/3 w-full min-h-[154px] sm:max-h-[154px]">
             <FaPlus size={60} color="#0D1A8B" />
             <input
               style={{ opacity: "0", inset: "0", position: "absolute" }}

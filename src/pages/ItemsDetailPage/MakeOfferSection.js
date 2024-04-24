@@ -142,7 +142,32 @@ const MakeOfferSection = ({ advert }) => {
         <div className="hidden sm:block">
           <OfferSectionHeader advert={advert} />
         </div>
-        <div className="flex items-center justify-between py-6 sm:px-7 px-4 text-[#696E9D]  border-b-2">
+
+        <Tooltip id="my-tooltip-5" place="bottom" content="Finance" />
+        <Tooltip id="my-tooltip-6" place="bottom" content="Warrenty" />
+        <Tooltip
+          id="my-tooltip-7"
+          place="bottom"
+          content="Water Test Facility"
+        />
+        <Tooltip id="my-tooltip-8" place="bottom" content="Part Exchange" />
+
+        <div className="flex gap-4 items-center sm:px-7 py-6 px-4">
+          <img
+            src={image_field || main_picture || userProfile}
+            className="rounded-full w-20 h-20 object-cover"
+          />
+          <div>
+            <p className="text-[#11133D] font-semibold">{user_name}</p>
+            <p className="text-sm text-[#696E9D]">
+              Member Since {convertTimestampToMonthYear(created_at)}
+            </p>
+            <p className="text-[#11133D] font-semibold text-sm">
+              {getCountry(country)?.name}
+            </p>
+          </div>
+        </div>
+        <div className="flex items-center justify-between pb-6 sm:px-7 px-4 text-[#696E9D] ">
           <p className="text-[#11133D] font-medium sm:text-base text-sm capitalize">
             {user?.seller_type}
           </p>
@@ -173,30 +198,6 @@ const MakeOfferSection = ({ advert }) => {
             ) : (
               ""
             )}
-          </div>
-        </div>
-        <Tooltip id="my-tooltip-5" place="bottom" content="Finance" />
-        <Tooltip id="my-tooltip-6" place="bottom" content="Warrenty" />
-        <Tooltip
-          id="my-tooltip-7"
-          place="bottom"
-          content="Water Test Facility"
-        />
-        <Tooltip id="my-tooltip-8" place="bottom" content="Part Exchange" />
-
-        <div className="flex gap-4 items-center sm:px-7 py-6 px-4">
-          <img
-            src={image_field || main_picture || userProfile}
-            className="rounded-full w-20 h-20 object-cover"
-          />
-          <div>
-            <p className="text-[#11133D] font-semibold">{user_name}</p>
-            <p className="text-sm text-[#696E9D]">
-              Member Since {convertTimestampToMonthYear(created_at)}
-            </p>
-            <p className="text-[#11133D] font-semibold text-sm">
-              {getCountry(country)?.name}
-            </p>
           </div>
         </div>
         <p className="sm:px-7 px-4 py-6 bg-[#B6BDD7] bg-opacity-20 text-[#11133D] font-semibold text-xl ">

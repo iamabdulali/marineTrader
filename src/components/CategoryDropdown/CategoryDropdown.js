@@ -63,7 +63,7 @@ const CategoryDropdown = ({ onSubmit, category }) => {
       {({ isValid, values, setErrors, setTouched, setFieldValue }) => (
         <Form className="bg-white shadow-md rounded-lg sm:px-8 px-4 w-full py-8 mb-4">
           <div className="mb-4">
-            <div className="flex lg:flex-row flex-col lg:gap-4 gap-0">
+            <div className="flex lg:flex-row gap-4 ">
               <div className="w-full text-sm">
                 <label
                   className="block text-[#11133D] text-sm font-medium mb-2"
@@ -95,7 +95,7 @@ const CategoryDropdown = ({ onSubmit, category }) => {
               />
             </div>
 
-            <div className="flex lg:flex-row flex-col lg:gap-4 gap-0">
+            <div className="flex lg:flex-row gap-4 ">
               <CategorySelectDropdown
                 label="Model"
                 name="model"
@@ -106,7 +106,7 @@ const CategoryDropdown = ({ onSubmit, category }) => {
                   setFieldValue("model", e.target.value);
                 }}
               />
-              <CategorySelectDropdown
+              {/* <CategorySelectDropdown
                 label="Type"
                 name="type"
                 options={types}
@@ -114,9 +114,18 @@ const CategoryDropdown = ({ onSubmit, category }) => {
                 onChange={(e) => {
                   setFieldValue("type", e.target.value);
                 }}
+              /> */}
+              <CategorySelectDropdown
+                label="Max Price"
+                name="max_price"
+                options={types}
+                value={values?.type}
+                onChange={(e) => {
+                  setFieldValue("type", e.target.value);
+                }}
               />
             </div>
-            <div className="flex lg:flex-row flex-col lg:gap-4 gap-0">
+            {/* <div className="flex lg:flex-row gap-4 ">
               <CategorySelectDropdown
                 label="Condition"
                 name="condition"
@@ -135,7 +144,7 @@ const CategoryDropdown = ({ onSubmit, category }) => {
                   setFieldValue("year", e.target.value);
                 }}
               />
-            </div>
+            </div> */}
           </div>
 
           <button

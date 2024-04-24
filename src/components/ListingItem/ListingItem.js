@@ -177,7 +177,7 @@ const ListingItem = ({ itemData }) => {
           advert_package_id == "3"
             ? "bg-[#FEF9EE] border-4  border-[#FFB800]"
             : "bg-[#F9FBFE]"
-        } rounded-lg sm:px-5 sm:py-5 p-4 block mt-11`}
+        } rounded-lg sm:px-5 sm:py-5 p-4 block mt-11 border-4 border-[#11133D]`}
       >
         <div className={`flex md:flex-row flex-col gap-5 `}>
           <div className="lg:w-2/12 md:w-4/12 w-full relative">
@@ -186,7 +186,7 @@ const ListingItem = ({ itemData }) => {
                 return (
                   <img
                     key={id}
-                    className="rounded-lg min-h-56 max-h-56 object-cover"
+                    className="rounded-lg min-h-48 max-h-48 object-cover"
                     src={image}
                   />
                 );
@@ -243,7 +243,11 @@ const ListingItem = ({ itemData }) => {
             {/* List of Features */}
             <div className="flex mt-6 gap-5 w-full lg:flex-nowrap flex-wrap">
               <div className="flex gap-3">
-                <FaTools size={20} color="#8891B2" />
+                <FaTools
+                  size={20}
+                  color="#8891B2"
+                  className="sm:block hidden"
+                />
                 <div>
                   <p className="text-[#11133D] font-medium md:text-base text-sm">
                     Make
@@ -252,7 +256,7 @@ const ListingItem = ({ itemData }) => {
                 </div>
               </div>
               <div className="flex gap-3">
-                <FaShip size={20} color="#8891B2" />
+                <FaShip size={20} color="#8891B2" className="sm:block hidden" />
                 <div>
                   <p className="text-[#11133D] font-medium md:text-base text-sm">
                     Model
@@ -261,7 +265,7 @@ const ListingItem = ({ itemData }) => {
                 </div>
               </div>
               <div className="flex gap-3">
-                <FaCog size={20} color="#8891B2" />
+                <FaCog size={20} color="#8891B2" className="sm:block hidden" />
                 <div>
                   <p className="text-[#11133D] font-medium md:text-base text-sm">
                     Condition
@@ -270,7 +274,11 @@ const ListingItem = ({ itemData }) => {
                 </div>
               </div>
               <div className="flex gap-3">
-                <FaCalendarAlt size={20} color="#8891B2" />
+                <FaCalendarAlt
+                  size={20}
+                  color="#8891B2"
+                  className="sm:block hidden"
+                />
                 <div>
                   <p className="text-[#11133D] font-medium md:text-base text-sm">
                     Year
@@ -279,7 +287,11 @@ const ListingItem = ({ itemData }) => {
                 </div>
               </div>
               <div className="flex gap-3">
-                <FaCalendarAlt size={20} color="#8891B2" />
+                <FaCalendarAlt
+                  size={20}
+                  color="#8891B2"
+                  className="sm:block hidden"
+                />
                 <div>
                   <p className="text-[#11133D] font-medium md:text-base text-sm">
                     Hours
@@ -361,10 +373,10 @@ const ListingItem = ({ itemData }) => {
           {advert_package_id == "1" ? (
             ""
           ) : (
-            <div className="flex gap-8 w-full">
+            <div className="flex sm:flex-row flex-col gap-8 w-full">
               <img
                 src={company_logo || image_field || logo}
-                className="border-[1px] w-20 object-cover bg-white rounded-lg"
+                className="border-[1px] max-w-[100px] max-h-10 w-20 object-cover bg-white rounded-lg"
               />
               <div className="w-full">
                 <p className="text-[#11133D] font-semibold">{user_name}</p>
