@@ -86,11 +86,11 @@ const UserInfo = () => {
       );
     }
 
-    // Check if any updates are needed
-    if (Object.keys(updatedValues).length === 0) {
-      // If no differences, no need to send any updates
-      return;
-    }
+    // // Check if any updates are needed
+    // if (Object.keys(updatedValues).length === 0) {
+    //   // If no differences, no need to send any updates
+    //   return;
+    // }
 
     setSpinner(true);
     try {

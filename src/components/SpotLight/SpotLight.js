@@ -86,8 +86,16 @@ const SpotLight = () => {
                     category_id,
                     images,
                     advert_package_id,
+                    make,
+                    model,
+                    category,
+                    year,
                   }) => (
                     <SpotLightListings
+                      make={make}
+                      model={model}
+                      year={year}
+                      category={category}
                       key={id}
                       id={id}
                       title={title}
@@ -122,8 +130,16 @@ const SpotLight = () => {
                   category_id,
                   images,
                   advert_package_id,
+                  make,
+                  model,
+                  category,
+                  year,
                 }) => (
                   <SpotLightListings
+                    make={make}
+                    model={model}
+                    year={year}
+                    category={category}
                     key={id}
                     id={id}
                     title={title}
