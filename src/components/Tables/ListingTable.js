@@ -53,7 +53,10 @@ const ListingTable = ({
     setIsDeleteModalOpen(isOpen);
   };
 
+  const [disabledBtn, setDisabledBtn] = useState(false);
+
   const handleOfferStatus = async (id, status) => {
+    setDisabledBtn(true);
     try {
       const { data } = await axios.post(
         `${SERVER_BASE_URL}/offer-status/${id}`,
@@ -71,6 +74,8 @@ const ListingTable = ({
     } catch (error) {
       console.log(error);
       toast.success(error.response.data.message);
+    } finally {
+      setDisabledBtn(false);
     }
   };
 
@@ -411,7 +416,7 @@ const ListingTable = ({
                         <img
                           src={images[0]?.image}
                           alt="Item"
-                          className=" smallLg:max-h-[auto] max-h-[250px]  w-full object-cover rounded-lg sm:mr-2 mb-4"
+                          className=" smallLg:max-h-[auto] min-w-[200px] max-h-[250px]  w-full object-cover rounded-lg sm:mr-2 mb-4"
                         />
                       </Link>
                       <div className="sm:w-8/12 w-full">
@@ -590,7 +595,7 @@ const ListingTable = ({
                           <div className="flex gap-3 font-semibold items-center justify-center">
                             {status == "accepted" ? (
                               <button
-                                disabled={status != "pending" ? true : false}
+                                disabled={disabledBtn}
                                 onClick={() => {
                                   handleOfferStatus(id, "accepted");
                                   setDeleteAdvertId(id);
@@ -605,7 +610,7 @@ const ListingTable = ({
 
                             {status == "rejected" ? (
                               <button
-                                disabled={status != "pending" ? true : false}
+                                disabled={disabledBtn}
                                 onClick={() => {
                                   handleOfferStatus(id, "rejected");
                                   setDeleteAdvertId(id);
@@ -680,7 +685,7 @@ const ListingTable = ({
                         <img
                           src={advert?.images[0]?.image}
                           alt="Item"
-                          className="sm:w-4/12 smallLg:max-h-[auto] max-h-[250px] w-full object-cover rounded-lg sm:mr-2 mb-4"
+                          className="sm:w-4/12 smallLg:max-h-[auto]  max-h-[250px] w-full object-cover rounded-lg sm:mr-2 mb-4"
                         />
                         <div className="sm:w-8/12 w-full">
                           <p className="text-[#11133D] font-semibold text-xl mb-2">
@@ -728,7 +733,7 @@ const ListingTable = ({
                           </p>
                           <div className="flex gap-3 font-semibold items-center mt-4">
                             <button
-                              disabled={status != "pending" ? true : false}
+                              disabled={disabledBtn}
                               onClick={() => {
                                 handleOfferStatus(id, "accepted");
                                 setDeleteAdvertId(id);
@@ -738,7 +743,7 @@ const ListingTable = ({
                               <FaCheck size={20} />
                             </button>
                             <button
-                              disabled={status != "pending" ? true : false}
+                              disabled={disabledBtn}
                               onClick={() => {
                                 handleOfferStatus(id, "rejected");
                                 setDeleteAdvertId(id);

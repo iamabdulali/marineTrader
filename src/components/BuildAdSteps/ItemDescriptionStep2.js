@@ -221,7 +221,7 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
       />
       <div className={`${showDetails ? "block" : "hidden"}`}>
         <div className="flex sm:flex-row flex-col gap-4 relative">
-          {isCustomModelSelected && isCustomMakeSelected ? (
+          {isCustomModelSelected || isCustomMakeSelected ? (
             <button
               onClick={() => {
                 setIsCustomModelSelected(false);
