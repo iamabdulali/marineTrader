@@ -16,7 +16,7 @@ import {
 import AvailableUpgrades from "../BuildAdSteps/AdComponents/AvailableUpgrades";
 import BundlesModal from "../BuildAdSteps/AdComponents/BundlesModal";
 import axios from "axios";
-import { SERVER_BASE_URL } from "../..";
+import { SERVER_BASE_URL, categoriesList } from "../..";
 import { toast } from "react-toastify";
 import PaymentStatus from "../../pages/Payment/PaymentStatus";
 import StripePaymentForm from "./StripePaymentForm";
@@ -60,7 +60,7 @@ const PaymentFormSubscription = () => {
 
   const isPrivateSeller = seller_type == "private seller";
 
-  const categoryToCheck = selectedCategory?.id;
+  const categoryToCheck = categoriesList.indexOf(selectedCategory?.name);
 
   useEffect(() => {
     if (!selectedCategory) {
@@ -74,14 +74,19 @@ const PaymentFormSubscription = () => {
     );
   }, []);
 
+  console.log({ selectedCategory });
+
   useEffect(() => {
     fetchOptions(
-      `subscription-plans?category=${selectedCategory?.id}`,
+      `subscription-plans?category=${selectedCategory?.id || categoryToCheck}`,
       setSubscriptionsPlans,
       setLoading
     );
     console.log(subscriptionsPlans);
   }, [selectedCategory]);
+
+  const index = categoriesList.indexOf(selectedCategory?.name);
+  console.log(index);
 
   useEffect(() => {
     checkCategorySubscription(
@@ -91,6 +96,8 @@ const PaymentFormSubscription = () => {
       setHasActiveSubscriptionData
     );
   }, [subscription]);
+
+  console.log(hasActiveSubscriptionData);
 
   useEffect(() => {
     fetchOptions(`bundles?type=premium`, setBundles, setLoading);
@@ -217,6 +224,8 @@ const PaymentFormSubscription = () => {
     }
   };
 
+  console.log({ isSubscriptionPage, id });
+
   return (
     <>
       {showStatus ? (
@@ -234,6 +243,7 @@ const PaymentFormSubscription = () => {
                     isSubscriptionPage={isSubscriptionPage}
                     isBundleSelected={selectedBundle}
                     bundles={bundles}
+                    existingSubscriptionData={hasActiveSubscriptionData}
                   />
                   {!isPrivateSeller ? (
                     <AvailableUpgrades

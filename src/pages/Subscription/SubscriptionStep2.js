@@ -11,6 +11,7 @@ import LoadingWrapper from "../../utils/LoadingWrapper";
 import { AuthContext } from "../../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { categoriesList } from "../..";
 
 const SubscriptionStep2 = () => {
   const [selectedTab, setSelectedTab] = useState("Broker plus");
@@ -38,12 +39,13 @@ const SubscriptionStep2 = () => {
   };
 
   const { selectedCategory } = useContext(AuthContext);
-  const categoryToCheck = selectedCategory?.id;
+  const categoryToCheck =
+    selectedCategory?.id || categoriesList.indexOf(selectedCategory.name);
 
   useEffect(() => {
     fetchOptions("subscriptions", setSubscriptions, setLoading);
     fetchOptions(
-      `subscription-plans?category=${selectedCategory?.id || "1"}`,
+      `subscription-plans?category=${selectedCategory?.id || categoryToCheck}`,
       setSubscriptionsPlans,
       setLoading
     );
@@ -66,7 +68,17 @@ const SubscriptionStep2 = () => {
         className="top-44 xl:-translate-x-0 -translate-x-1/2"
         loading={loading}
       >
-        <Heading content="Select Subscription Plan" className="mt-8" />
+        <Heading
+          content={`Select ${categoriesList[categoryToCheck]} Subscription Plan`}
+          className="mt-8 capitalize sm:hidden block"
+          fontSize={true}
+        />
+        <Heading
+          content={`Select ${categoriesList[categoryToCheck]} Subscription Plan`}
+          className="mt-8 capitalize hidden sm:flex"
+          fontSize={false}
+        />
+        {console.log(subscriptionsPlan)}
         <div className="lg:flex hidden gap-5 mt-10 pb-20">
           {subscriptionsPlan?.map(({ name, amount, id, ...props }, index) => {
             return (

@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../Context/AuthContext";
 import axios from "axios";
-import { SERVER_BASE_URL, advertPackages } from "../..";
+import { SERVER_BASE_URL, advertPackages, categoriesList } from "../..";
 import { toast } from "react-toastify";
 import { fetchOptions } from "../../utils/fetch/fetchData";
 
@@ -21,6 +21,7 @@ const PaymentSummary = ({
   categoryContinentSpotlights,
   homeCountrySpotlights,
   homeContinentSpotlights,
+  existingSubscriptionData,
 }) => {
   const { user, currencyRates } = useContext(AuthContext);
   const [hasFeaturedBundle, setHasFeaturedBundle] = useState(0);
@@ -39,7 +40,18 @@ const PaymentSummary = ({
     ? subscription.filter((sub) => sub?.id == id)
     : [];
 
-  const { name, amount } = Object(filteredSubscriptions[0] || {});
+  const { name, amount, category_id } = Object(filteredSubscriptions[0] || {});
+
+  const { subscription_plan } = Object(existingSubscriptionData);
+  const { amount: existingSubAmount, name: existingSubName } =
+    Object(subscription_plan);
+
+  const isRenew = name == existingSubName;
+  console.log(isRenew);
+
+  const isSubscriptionUpgrade =
+    existingSubscriptionData != (undefined || null) && !isRenew;
+  console.log(isSubscriptionUpgrade);
 
   let upgradedPackage = 0;
 
@@ -105,6 +117,10 @@ const PaymentSummary = ({
     if (isBundleSelected) {
       subtotal = subtotal - Number(packageAmount);
     }
+  } else {
+    if ((existingSubscriptionData != undefined || null) && !isRenew) {
+      subtotal = subtotal - existingSubAmount;
+    }
   }
 
   let tax = subtotal * 0.2;
@@ -168,33 +184,85 @@ const PaymentSummary = ({
           <>
             {" "}
             <div className=" flex items-center justify-between">
-              <p className="text-[#696E9D]">Subscription:</p>
-              <p className="text-[#11133D] font-semibold">{name}</p>
-            </div>
-            <div className=" flex items-center justify-between mt-2">
-              <p className="text-[#696E9D]">Price:</p>
+              <p className="text-[#696E9D]">Category:</p>
               <p className="text-[#11133D] font-semibold">
-                {`${currency?.symbol}${Number(
-                  amount * currencyRates[currency?.currency_code]
-                ).toFixed(2)}`}
+                {categoriesList[category_id]}
               </p>
             </div>
-            {isBundleSelected ? (
+            {isSubscriptionUpgrade ? (
               <>
-                {" "}
-                <p className="text-[#0D1A8B] font-semibold mt-2">Bundle</p>
                 <div className=" flex items-center justify-between mt-2">
-                  <p className="text-[#696E9D]"> {bundleName}:</p>
+                  <p className="text-[#696E9D]">Upgrading To:</p>
                   <p className="text-[#11133D] font-semibold">
-                    {" "}
+                    {name} ({" "}
                     {`${currency?.symbol}${Number(
-                      bundleAmount * currencyRates[currency?.currency_code]
+                      amount * currencyRates[currency?.currency_code]
+                    ).toFixed(2)}`}
+                    )
+                  </p>
+                </div>
+                <div className=" flex items-center justify-between mt-2">
+                  <p className="text-[#696E9D] line-through">
+                    Current Subscription:
+                  </p>
+                  <p className="text-[#11133D] line-through font-semibold">
+                    {existingSubName} ({" "}
+                    {`${currency?.symbol}${Number(
+                      existingSubAmount * currencyRates[currency?.currency_code]
+                    ).toFixed(2)}`}
+                    )
+                  </p>
+                </div>
+                {isBundleSelected ? (
+                  <>
+                    {" "}
+                    <p className="text-[#0D1A8B] font-semibold mt-2">Bundle</p>
+                    <div className=" flex items-center justify-between mt-2">
+                      <p className="text-[#696E9D]"> {bundleName}:</p>
+                      <p className="text-[#11133D] font-semibold">
+                        {" "}
+                        {`${currency?.symbol}${Number(
+                          bundleAmount * currencyRates[currency?.currency_code]
+                        ).toFixed(2)}`}
+                      </p>
+                    </div>
+                  </>
+                ) : (
+                  ""
+                )}
+              </>
+            ) : (
+              <>
+                <div className=" flex items-center justify-between mt-2">
+                  <p className="text-[#696E9D]">Subscription:</p>
+                  <p className="text-[#11133D] font-semibold">{name}</p>
+                </div>
+                <div className=" flex items-center justify-between mt-2">
+                  <p className="text-[#696E9D]">Price:</p>
+                  <p className="text-[#11133D] font-semibold">
+                    {`${currency?.symbol}${Number(
+                      amount * currencyRates[currency?.currency_code]
                     ).toFixed(2)}`}
                   </p>
                 </div>
+                {isBundleSelected ? (
+                  <>
+                    {" "}
+                    <p className="text-[#0D1A8B] font-semibold mt-2">Bundle</p>
+                    <div className=" flex items-center justify-between mt-2">
+                      <p className="text-[#696E9D]"> {bundleName}:</p>
+                      <p className="text-[#11133D] font-semibold">
+                        {" "}
+                        {`${currency?.symbol}${Number(
+                          bundleAmount * currencyRates[currency?.currency_code]
+                        ).toFixed(2)}`}
+                      </p>
+                    </div>
+                  </>
+                ) : (
+                  ""
+                )}
               </>
-            ) : (
-              ""
             )}
           </>
         ) : (
