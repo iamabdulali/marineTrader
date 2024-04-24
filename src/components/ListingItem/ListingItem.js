@@ -438,7 +438,11 @@ const ListingItem = ({ itemData }) => {
                   {seller_type}
                 </p>
                 <p className="flex text-sm font-semibold sm:text-sm text-[12px] items-center gap-3 text-[#11133D]">
-                  <FaMapMarkedAlt color="#8891B2" size={28} /> {city}
+                  <FaMapMarkedAlt
+                    color="#8891B2"
+                    className="sm:w-7 sm:h-7 w-5 h-5"
+                  />{" "}
+                  {city}
                   {city == undefined || null ? "" : ","}{" "}
                   {getCountry(country)?.name}
                 </p>
