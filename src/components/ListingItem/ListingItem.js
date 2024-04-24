@@ -229,7 +229,7 @@ const ListingItem = ({ itemData }) => {
                   </p>
                 )}
 
-                <p className="text-[#8891B2] md:text-base text-sm">
+                <p className="text-[#8891B2] md:text-base sm:text-sm text-[12px]">
                   Tax Not Paid
                 </p>
               </div>
@@ -241,7 +241,7 @@ const ListingItem = ({ itemData }) => {
             </p> */}
 
             {/* List of Features */}
-            <div className="flex mt-6 gap-5 w-full lg:flex-nowrap flex-wrap">
+            <div className="flex sm:mt-6 mt-3 gap-5 w-full lg:flex-nowrap flex-wrap">
               <div className="flex gap-3">
                 <FaTools
                   size={20}
@@ -249,28 +249,34 @@ const ListingItem = ({ itemData }) => {
                   className="sm:block hidden"
                 />
                 <div>
-                  <p className="text-[#11133D] font-medium md:text-base text-sm">
+                  <p className="text-[#11133D] font-medium md:text-base text-[12px]">
                     Make
                   </p>
-                  <p className="text-[#696E9D] text-sm">{make?.name}</p>
+                  <p className="text-[#696E9D] sm:text-sm text-[12px]">
+                    {make?.name}
+                  </p>
                 </div>
               </div>
               <div className="flex gap-3">
                 <FaShip size={20} color="#8891B2" className="sm:block hidden" />
                 <div>
-                  <p className="text-[#11133D] font-medium md:text-base text-sm">
+                  <p className="text-[#11133D] font-medium md:text-base text-[12px]">
                     Model
                   </p>
-                  <p className="text-[#696E9D] text-sm">{model?.name}</p>
+                  <p className="text-[#696E9D] sm:text-sm text-[12px]">
+                    {model?.name}
+                  </p>
                 </div>
               </div>
               <div className="flex gap-3">
                 <FaCog size={20} color="#8891B2" className="sm:block hidden" />
                 <div>
-                  <p className="text-[#11133D] font-medium md:text-base text-sm">
+                  <p className="text-[#11133D] font-medium md:text-base text-[12px]">
                     Condition
                   </p>
-                  <p className="text-[#696E9D] text-sm">{condition?.name}</p>
+                  <p className="text-[#696E9D] sm:text-sm text-[12px]">
+                    {condition?.name}
+                  </p>
                 </div>
               </div>
               <div className="flex gap-3">
@@ -280,10 +286,12 @@ const ListingItem = ({ itemData }) => {
                   className="sm:block hidden"
                 />
                 <div>
-                  <p className="text-[#11133D] font-medium md:text-base text-sm">
+                  <p className="text-[#11133D] font-medium md:text-base text-[12px]">
                     Year
                   </p>
-                  <p className="text-[#696E9D] text-sm">{year}</p>
+                  <p className="text-[#696E9D] sm:text-sm text-[12px]">
+                    {year}
+                  </p>
                 </div>
               </div>
               <div className="flex gap-3">
@@ -293,27 +301,29 @@ const ListingItem = ({ itemData }) => {
                   className="sm:block hidden"
                 />
                 <div>
-                  <p className="text-[#11133D] font-medium md:text-base text-sm">
+                  <p className="text-[#11133D] font-medium md:text-base text-[12px]">
                     Hours
                   </p>
-                  <p className="text-[#696E9D] text-sm">{hours}</p>
+                  <p className="text-[#696E9D] sm:text-sm text-[12px]">
+                    {hours}
+                  </p>
                 </div>
               </div>
               {/* Add more features as needed */}
             </div>
 
             {/* Tags */}
-            <div className="flex lg:flex-nowrap flex-wrap mt-8 gap-4">
+            <div className="flex lg:flex-nowrap flex-wrap sm:mt-8 mt-4 gap-4">
               {tags?.map(({ id, name }) => (
                 <span
                   key={id}
-                  className="bg-[#E0E3FB] text-sm font-semibold text-[#0D1A8B] px-4 py-1 rounded-md"
+                  className="bg-[#E0E3FB] sm:text-sm text-[12px] font-semibold text-[#0D1A8B] px-4 py-1 rounded-md"
                 >
                   {name}
                 </span>
               ))}
             </div>
-            <div className="flex items-center justify-end sm:gap-5 gap-4">
+            <div className="sm:flex hidden items-center justify-end sm:gap-5 gap-4">
               {/* finance_available */}
               {finance_available == "yes" ? (
                 <FaHandHoldingUsd
@@ -364,7 +374,7 @@ const ListingItem = ({ itemData }) => {
         />
         <Tooltip id="my-tooltip-12" place="bottom" content="Part Exchange" />
         <div
-          className={`flex  sm:items-center mt-8 sm:flex-row flex-col ${
+          className={`flex  sm:items-center sm:mt-8 mt-4 sm:flex-row flex-col ${
             advert_package_id == "3"
               ? "border-t-2 pt-6 pb-3 justify-between"
               : "justify-end"
@@ -374,16 +384,60 @@ const ListingItem = ({ itemData }) => {
             ""
           ) : (
             <div className="flex sm:flex-row flex-col gap-8 w-full">
-              <img
-                src={company_logo || image_field || logo}
-                className="border-[1px] max-w-[100px] max-h-10 w-20 object-cover bg-white rounded-lg"
-              />
+              <div className="flex items-center justify-between">
+                <img
+                  src={company_logo || image_field || logo}
+                  className="border-[1px] max-w-[100px] max-h-10 w-20 object-cover bg-white rounded-lg"
+                />
+                <div className="sm:hidden flex items-center justify-end sm:gap-5 gap-4">
+                  {/* finance_available */}
+                  {finance_available == "yes" ? (
+                    <FaHandHoldingUsd
+                      data-tooltip-id={"my-tooltip-9"}
+                      size={24}
+                      fill="#696E9D"
+                    />
+                  ) : (
+                    ""
+                  )}
+
+                  {warranty == "yes" ? (
+                    <CiDeliveryTruck
+                      data-tooltip-id={"my-tooltip-10"}
+                      size={30}
+                      fill="#696E9D"
+                    />
+                  ) : (
+                    ""
+                  )}
+                  {water_test_facility == "yes" ? (
+                    <BiDroplet
+                      data-tooltip-id={"my-tooltip-11"}
+                      size={20}
+                      fill="#696E9D"
+                    />
+                  ) : (
+                    ""
+                  )}
+                  {part_exchange_available == "yes" ? (
+                    <FaTools
+                      data-tooltip-id={"my-tooltip-12"}
+                      size={20}
+                      fill="#696E9D"
+                    />
+                  ) : (
+                    ""
+                  )}
+                </div>
+              </div>
               <div className="w-full">
-                <p className="text-[#11133D] font-semibold">{user_name}</p>
-                <p className="text-[#8891B2] capitalize font-medium mt-1 mb-2 text-sm">
+                <p className="text-[#11133D] font-semibold sm:text-sm text-[13px]">
+                  {user_name}
+                </p>
+                <p className="text-[#8891B2] sm:text-sm capitalize text-[12px] font-medium mb-1 text-sm">
                   {seller_type}
                 </p>
-                <p className="flex text-sm font-semibold items-center gap-3 text-[#11133D]">
+                <p className="flex text-sm font-semibold sm:text-sm text-[12px] items-center gap-3 text-[#11133D]">
                   <FaMapMarkedAlt color="#8891B2" size={28} /> {city}
                   {city == undefined || null ? "" : ","}{" "}
                   {getCountry(country)?.name}
@@ -392,7 +446,7 @@ const ListingItem = ({ itemData }) => {
             </div>
           )}
           <div
-            className={`flex justify-end items-center gap-3 sm:mt-0 mt-5 ${
+            className={`flex justify-end items-center gap-3 sm:mt-0 mt-1 ${
               advert_package_id == "2" ? "" : "w-full"
             }`}
           >
@@ -402,9 +456,9 @@ const ListingItem = ({ itemData }) => {
                 e.preventDefault();
                 window.location.href = `mailto:${email}`;
               }}
-              className="bg-[#0D1A8B] hover:bg-[#0a1dbd] w-12 h-12 rounded-xl flex items-center justify-center"
+              className="bg-[#0D1A8B] hover:bg-[#0a1dbd]  sm:w-12 sm:h-12 h-9 w-9 sm:rounded-xl rounded-md flex items-center justify-center"
             >
-              <FaEnvelope size={24} color="#fff" />
+              <FaEnvelope className="sm:w-6 sm:h-6 h-4 w-4" color="#fff" />
             </a>
             <Tooltip id="my-tooltip-20" place="bottom" content={email} />
             {price_type == "enterInfo" ? (
@@ -416,9 +470,12 @@ const ListingItem = ({ itemData }) => {
                     e.preventDefault();
                     openModal(setIsOfferModalOpen);
                   }}
-                  className="bg-[#0D1A8B] hover:bg-[#0a1dbd] w-12 h-12 rounded-xl flex items-center justify-center"
+                  className="bg-[#0D1A8B] hover:bg-[#0a1dbd]  sm:w-12 sm:h-12 h-9 w-9 sm:rounded-xl rounded-md flex items-center justify-center"
                 >
-                  <FaDollarSign size={24} color="#fff" />
+                  <FaDollarSign
+                    className="sm:w-6 sm:h-6 h-4 w-4"
+                    color="#fff"
+                  />
                 </a>
                 <Tooltip
                   id="my-tooltip-23"
@@ -436,9 +493,9 @@ const ListingItem = ({ itemData }) => {
                 e.preventDefault();
                 window.location.href = `tel:${phone_no}`;
               }}
-              className="bg-[#0D1A8B] hover:bg-[#0a1dbd] w-12 h-12 rounded-xl flex items-center justify-center"
+              className="bg-[#0D1A8B] hover:bg-[#0a1dbd] sm:w-12 sm:h-12 h-9 w-9 sm:rounded-xl rounded-md flex items-center justify-center"
             >
-              <FaPhone size={24} color="#fff" />
+              <FaPhone className="sm:w-6 sm:h-6 h-4 w-4" color="#fff" />
             </a>
             <Tooltip id="my-tooltip-21" place="bottom" content={phone_no} />
           </div>
