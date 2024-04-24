@@ -166,8 +166,12 @@ function App() {
         <Route path="/slider" element={<SwiperSlider />} />
         <Route path="/list" element={<ListPage />} />
         <Route path="/:id/list" element={<ListPage />} />
-        <Route path="/listings/:id" element={<ItemDetailPage />} />
-        <Route path="/listings/:id" element={<ItemDetailPage />} />
+        <Route
+          path="/listings/:category/:title/:id"
+          element={<ItemDetailPage />}
+        />
+
+        {/* <Route path="/listings/:id" element={<ItemDetailPage />} /> */}
         <Route
           path="/userProfile"
           element={

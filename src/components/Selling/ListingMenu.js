@@ -3,7 +3,7 @@ import React, { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
 import { links } from "../../utils/DummyData";
 
-const ListingMenu = ({ openDeleteModal, id }) => {
+const ListingMenu = ({ openDeleteModal, id, make, model, category, year }) => {
   const handleDeleteButtonClick = () => {
     openDeleteModal(true);
   };
@@ -29,7 +29,7 @@ const ListingMenu = ({ openDeleteModal, id }) => {
                       to={
                         label.props.children[1] === " Edit"
                           ? `/selling/buildAd/advert/${id}`
-                          : `/itemDetails/${id}`
+                          : `/listings/${category?.name}/${make?.name}-${model?.name}-${year}/${id}`
                       }
                       className={`flex items-center gap-4  ${
                         colorChange ? "text-[#FC4040]" : "text-[#11133D]"

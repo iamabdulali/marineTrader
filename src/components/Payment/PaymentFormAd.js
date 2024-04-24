@@ -248,7 +248,8 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
                   />
                   {!isPrivateSeller &&
                   hasBrokerOrDealerSubscription() &&
-                  advertPackages[advert_package_id] != "Standard" ? (
+                  advertPackages[advert_package_id] != "Standard" &&
+                  !isAdvertUpgrade ? (
                     <AvailableUpgrades
                       className="bg-[#1CBF73] flex flex-col gap-5 mt-8 p-5 rounded-lg w-full"
                       openModal={() => openModal(setIsSpotlightOpen)}

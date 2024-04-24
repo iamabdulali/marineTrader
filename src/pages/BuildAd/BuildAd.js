@@ -29,7 +29,7 @@ import { fetchOptions, getOneAdvert } from "../../utils/fetch/fetchData";
 import LoadingWrapper from "../../utils/LoadingWrapper";
 
 const BuildAd = () => {
-  const [step, setStep] = useState(5);
+  const [step, setStep] = useState(1);
   const [submit, setSubmit] = useState(false);
   const [spinner, setSpinner] = useState(false);
   const NavigateTo = useNavigate();

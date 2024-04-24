@@ -47,6 +47,7 @@ const ListingItem = ({ itemData }) => {
 
   const {
     id,
+    category,
     title,
     description,
     hours,
@@ -172,7 +173,8 @@ const ListingItem = ({ itemData }) => {
     <>
       <Link
         key={id}
-        to={`/listings/${make?.name}-${id}`}
+        // to={`/listings/${make?.name}-${id}`}
+        to={`/listings/${category?.name}/${make?.name}-${model?.name}-${year}/${id}`}
         className={`${
           advert_package_id == "3"
             ? "bg-[#FEF9EE] border-4  border-[#FFB800]"

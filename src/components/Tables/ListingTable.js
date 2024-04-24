@@ -231,6 +231,8 @@ const ListingTable = ({
                     advert_package_id,
                     make,
                     price_type,
+                    model,
+                    year,
                   }) => (
                     <tr
                       key={id}
@@ -238,7 +240,9 @@ const ListingTable = ({
                     >
                       <td className="py-4 px-4 whitespace-nowrap">
                         <div className="flex items-center gap-2">
-                          <Link to={`/listings/${make?.name}-${id}`}>
+                          <Link
+                            to={`/listings/${category?.name}/${make?.name}-${model?.name}-${year}/${id}`}
+                          >
                             <img
                               src={images[0]?.image}
                               alt="Item"
@@ -367,6 +371,10 @@ const ListingTable = ({
                             <ListingMenu
                               openDeleteModal={handleDeleteModalOpen}
                               id={id}
+                              make={make}
+                              model={model}
+                              year={year}
+                              category={category}
                             />
                           }
                         />
@@ -390,12 +398,16 @@ const ListingTable = ({
                     advert_status,
                     view,
                     make,
+                    model,
+                    year,
                   }) => (
                     <div
                       key={id}
                       className="bg-white sm:text-base text-sm block rounded-lg sm:flex gap-4 w-full p-4"
                     >
-                      <Link to={`/listings/${make?.name}-${id}`}>
+                      <Link
+                        to={`/listings/${category?.name}/${make?.name}-${model?.name}-${year}/${id}`}
+                      >
                         <img
                           src={images[0]?.image}
                           alt="Item"
@@ -514,6 +526,10 @@ const ListingTable = ({
                               <ListingMenu
                                 openDeleteModal={handleDeleteModalOpen}
                                 id={id}
+                                make={make}
+                                model={model}
+                                year={year}
+                                category={category}
                               />
                             }
                           />

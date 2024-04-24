@@ -19,12 +19,15 @@ const SpotLightListings = ({
   advertID,
   make,
   setRefresh,
+  category,
+  model,
+  year,
 }) => {
   const { selectedCategory } = useContext(AuthContext);
 
   return (
     <Link
-      to={`/listings/${make?.name}-${id}`}
+      to={`/listings/${category?.name}/${make?.name}-${model?.name}-${year}/${id}`}
       onClick={() => setRefresh((prev) => !prev)}
     >
       {isNews ? (
