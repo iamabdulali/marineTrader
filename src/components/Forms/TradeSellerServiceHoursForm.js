@@ -173,24 +173,6 @@ export default function TradeSellerServiceHoursForm() {
           Add More Facility
         </button>
       </div>
-
-      {/* <div className="flex items-center  sm:flex-row flex-col gap-5">
-        <input
-          type="text"
-          placeholder="New Facility"
-          name="new-facility"
-          value={newFacility}
-          onChange={handleNewFacilityChange}
-          className="border-[#CECED7] border-2 rounded-md p-3 sm:w-72 w-full sm:mr-0"
-        />
-        <button
-          type="button"
-          className="bg-[#0D1A8B] text-white p-3 rounded-md min-w-20 sm:w-auto w-full"
-          onClick={handleAddFacility}
-        >
-          Add
-        </button>
-      </div> */}
       <h2 className=" text-[#0D1A8B] font-semibold text-xl mt-10 flex items-center gap-2">
         <div className="bg-[#0D1A8B] w-[5px] h-8 rounded-xl"></div>
         Company Info
