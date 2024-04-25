@@ -47,11 +47,9 @@ const PaymentSummary = ({
     Object(subscription_plan);
 
   const isRenew = name == existingSubName;
-  console.log(isRenew);
 
   const isSubscriptionUpgrade =
     existingSubscriptionData != (undefined || null) && !isRenew;
-  console.log(isSubscriptionUpgrade);
 
   let upgradedPackage = 0;
 
@@ -296,8 +294,6 @@ const PaymentSummary = ({
                   <p className="text-[#696E9D] line-through">
                     Current Package: {currentPackageName}
                   </p>
-                  {console.log("THIS")}
-                  {console.log(hasSubscription)}
                   <p className="text-[#11133D] font-semibold">
                     -{" "}
                     {`${currency?.symbol}${Number(

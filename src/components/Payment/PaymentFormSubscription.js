@@ -74,8 +74,6 @@ const PaymentFormSubscription = () => {
     );
   }, []);
 
-  console.log({ selectedCategory });
-
   useEffect(() => {
     fetchOptions(
       `subscription-plans?category=${selectedCategory?.id || categoryToCheck}`,
@@ -86,7 +84,6 @@ const PaymentFormSubscription = () => {
   }, [selectedCategory]);
 
   const index = categoriesList.indexOf(selectedCategory?.name);
-  console.log(index);
 
   useEffect(() => {
     checkCategorySubscription(
@@ -96,8 +93,6 @@ const PaymentFormSubscription = () => {
       setHasActiveSubscriptionData
     );
   }, [subscription]);
-
-  console.log(hasActiveSubscriptionData);
 
   useEffect(() => {
     fetchOptions(`bundles?type=premium`, setBundles, setLoading);
@@ -224,7 +219,11 @@ const PaymentFormSubscription = () => {
     }
   };
 
-  console.log({ isSubscriptionPage, id });
+  const filteredSubscriptions = subscriptionsPlans
+    ? subscriptionsPlans.filter((sub) => sub?.id == id)
+    : [];
+
+  const { name, amount, category_id } = Object(filteredSubscriptions[0] || {});
 
   return (
     <>
@@ -246,7 +245,8 @@ const PaymentFormSubscription = () => {
                     existingSubscriptionData={hasActiveSubscriptionData}
                   />
                   {!isPrivateSeller &&
-                  hasActiveSubscriptionData == undefined ? (
+                  hasActiveSubscriptionData == undefined &&
+                  name == "Broker plus" ? (
                     <AvailableUpgrades
                       className="bg-[#1CBF73] flex flex-col gap-5 mt-8 p-5 rounded-lg w-full"
                       showSpotlight={false}

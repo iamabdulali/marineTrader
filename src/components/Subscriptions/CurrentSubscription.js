@@ -27,7 +27,7 @@ const CurrentSubscription = ({
       className={`bg-white shadow-[7px] px-5 py-4 border-l-4 ${dynamicClasses}`}
     >
       <div className="flex sm:flex-row sm:gap-0 gap-4 flex-col justify-between sm:items-center">
-        <p className="font-semibold text-2xl capitalize">
+        <p className="font-semibold sm:text-2xl text-lg capitalize">
           {/* {isStandard ? "Standard Trader" : "Dealer Plus"} */}
           {packageName}
           <span className="text-[#8891B2] font-medium text-sm ml-1">
@@ -49,7 +49,7 @@ const CurrentSubscription = ({
               packageName == "Broker plus"
                 ? "hover:bg-[#36B37E]"
                 : "hover:bg-[#FFB800]"
-            } ] hover:text-white w-full text-center block rounded-md  py-3 px-10 font-semibold ${dynamicClasses}`}
+            } ] hover:text-white w-full sm:text-base text-sm  text-center block rounded-md  py-3 px-10 font-semibold ${dynamicClasses}`}
           >
             Renew
           </Link>
@@ -67,21 +67,21 @@ const CurrentSubscription = ({
               packageName == "Broker plus"
                 ? "hover:bg-[#36B37E]"
                 : "hover:bg-[#FFB800]"
-            } ] hover:text-white w-full text-center block rounded-md  py-3 px-10 font-semibold ${dynamicClasses}`}
+            } ] hover:text-white w-full sm:text-base text-sm  text-center block rounded-md  py-3 px-10 font-semibold ${dynamicClasses}`}
           >
             Upgrade
           </button>
         )}
       </div>
 
-      <div className="flex justify-end items-center my-3">
+      <div className="flex justify-end items-center my-3 sm:text-base text-sm ">
         <p className="font-medium text-[#11133D]">
           <span className="text-[#8891B2]  ">Expires On: </span>
           {expiry_date}
         </p>
       </div>
-      <p className="font-medium text-[#11133D] mb-5">
-        <span className="text-[#8891B2]  ">Category: </span>
+      <p className="font-medium text-[#11133D] mb-5 sm:text-base text-sm ">
+        <span className="text-[#8891B2]">Category: </span>
         {category}
       </p>
       <div className="mb-8 mt-5 grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 text-[#183B56] gap-y-3">
@@ -89,7 +89,7 @@ const CurrentSubscription = ({
           return (
             <p
               key={id}
-              className="flex gap-4 font-medium mt-5 mr-5 items-baseline"
+              className="flex gap-4 font-medium sm:text-base text-sm  mt-5 mr-5 items-baseline"
             >
               <p
                 className={`${
