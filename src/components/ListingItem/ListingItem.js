@@ -174,12 +174,15 @@ const ListingItem = ({ itemData }) => {
       <Link
         key={id}
         // to={`/listings/${make?.name}-${id}`}
-        to={`/listings/${category?.name}/${make?.name}-${model?.name}-${year}/${id}`}
+        to={`/listings/${category?.name}/${make?.name}-${model?.name.replace(
+          /\s+/g,
+          "-"
+        )}-${year}/${id}`}
         className={`${
           advert_package_id == "3"
             ? "bg-[#FEF9EE] border-4  border-[#FFB800]"
             : "bg-[#F9FBFE]"
-        } rounded-lg sm:px-5 sm:py-5 p-4 block mt-11 border-4 border-[#11133D]`}
+        } rounded-lg sm:px-5 sm:py-5 p-4 block mt-11 `}
       >
         <div className={`flex md:flex-row flex-col gap-5 `}>
           <div className="lg:w-2/12 md:w-4/12 w-full relative">

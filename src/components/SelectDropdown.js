@@ -2,7 +2,15 @@
 import { Field } from "formik";
 import React from "react";
 
-const SelectDropdown = ({ label, id, options, options2, name }) => {
+const SelectDropdown = ({
+  label,
+  id,
+  options,
+  options2,
+  name,
+  value,
+  onChange,
+}) => {
   return (
     <div
       className={`flex flex-col ${
@@ -46,6 +54,8 @@ const SelectDropdown = ({ label, id, options, options2, name }) => {
           id={id}
           className="border-2 text-sm border-[#C8C8C8] rounded-lg px-2 py-3 text-[#8891B2]"
           name={name}
+          value={value}
+          onChange={onChange}
         >
           <option value={""}>Select a {name}</option>
           {options.map((option) => (

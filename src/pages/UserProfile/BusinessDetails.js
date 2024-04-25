@@ -4,6 +4,7 @@ import { FaCheck } from "react-icons/fa";
 import { Field, useFormikContext } from "formik";
 import { timeZoneOptions } from "../../utils/DropdownOptions";
 import { plusSign } from "../../assets";
+import ServiceHours from "../../components/Forms/FormElements/ServiceHours";
 
 const BusinessDetails = ({ editable, user }) => {
   const { values, setFieldValue, setValues } = useFormikContext();
@@ -173,6 +174,7 @@ const BusinessDetails = ({ editable, user }) => {
           }
         })}
       </div>
+      {editable ? <ServiceHours /> : ""}
       <label className="block mt-6 text-[#8891B2] text-sm font-medium">
         Public Holidays
       </label>

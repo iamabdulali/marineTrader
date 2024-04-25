@@ -67,6 +67,8 @@ const ListPage = () => {
           setCategoryName={setCategoryName}
           setSearchedListings={setSearchedListings}
           setLoading={setLoading}
+          make={make}
+          model={model}
         />
         <div className="flex items-center justify-between mb-8">
           <p className="md:text-2xl text-xl text-[#11133D] font-semibold capitalize">

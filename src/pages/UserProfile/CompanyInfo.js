@@ -7,6 +7,7 @@ import { isEditable } from "@testing-library/user-event/dist/utils";
 import { countryOptions, regionOptions } from "../../utils/DropdownOptions";
 import { GetCountries } from "react-country-state-city/dist/cjs";
 import axios from "axios";
+import { FaChevronDown } from "react-icons/fa";
 
 const CompanyInfo = ({ editable, isPrivateSeller }) => {
   const [countries, setCountries] = useState([]);
@@ -103,6 +104,11 @@ const CompanyInfo = ({ editable, isPrivateSeller }) => {
     // getCitiesByStates(values.user.region);
     // getCity(values.user.city);
   }, [editable, states, countries, AllStates]);
+
+  function getPhoneCodeByCountryName(countryName) {
+    const country = countries.find((country) => country.id == countryName);
+    return country ? country?.phone_code : null;
+  }
 
   return (
     <>
@@ -271,7 +277,24 @@ const CompanyInfo = ({ editable, isPrivateSeller }) => {
           readOnly={!editable}
         />
       </div>
-      <div className="flex sm:gap-6 items-center sm:flex-row flex-col">
+      <div className="flex sm:gap-6 items-center sm:flex-row flex-col relative">
+        <div className="absolute left-0 sm:top-auto top-[14%] flex items-center ">
+          <Field
+            value={getPhoneCodeByCountryName(values?.user.country)}
+            as="select"
+            name="countryCode"
+            disabled={true}
+            className="rounded-md py-2 w-full appearance-none text-sm bg-white"
+          >
+            {countries.map(({ phone_code, iso2, id }) => {
+              return (
+                <option key={id} value={phone_code}>
+                  + {phone_code} ({iso2})
+                </option>
+              );
+            })}
+          </Field>
+        </div>
         <FormField
           label="Phone Number"
           FieldType="tel"
@@ -280,6 +303,7 @@ const CompanyInfo = ({ editable, isPrivateSeller }) => {
           name="phone_no"
           onChange={(e) => handleInputChange(e)}
           readOnly={!editable}
+          padding={true}
         />
 
         <div className="w-full mb-4">

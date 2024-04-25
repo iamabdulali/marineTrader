@@ -13,6 +13,7 @@ export const FormField = ({
   useLabelAsPlaceHolder,
   placeholder,
   as,
+  padding,
 }) => (
   <div className="mb-4 w-full text-sm">
     {inputField ? (
@@ -54,7 +55,7 @@ export const FormField = ({
           readOnly={readOnly}
           className={`border-b-2 font-semibold outline-none ${
             readOnly ? "border-[#f1f1f1]" : "border-[#000]"
-          }  py-2 px-0 text-[#11133D] w-full`}
+          }  py-2 ${padding ? "px-24" : "px-0"} text-[#11133D] w-full`}
         />
       </div>
     )}
