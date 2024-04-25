@@ -245,7 +245,8 @@ const PaymentFormSubscription = () => {
                     bundles={bundles}
                     existingSubscriptionData={hasActiveSubscriptionData}
                   />
-                  {!isPrivateSeller ? (
+                  {!isPrivateSeller &&
+                  hasActiveSubscriptionData == undefined ? (
                     <AvailableUpgrades
                       className="bg-[#1CBF73] flex flex-col gap-5 mt-8 p-5 rounded-lg w-full"
                       showSpotlight={false}

@@ -38,6 +38,7 @@ import { messaging } from "./utils/firebaseSetup";
 import { getToken, onMessage } from "firebase/messaging";
 import Message from "./components/Message";
 import ContactUs from "./pages/ContactPage/ContactUs";
+import ErrorBoundary from "./components/ErrorBoundary";
 
 function App() {
   const {
@@ -158,194 +159,196 @@ function App() {
   });
 
   return (
-    <Router>
-      {/* <Header/> */}
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/:id" element={<Home />} />
-        <Route path="/slider" element={<SwiperSlider />} />
-        <Route path="/list" element={<ListPage />} />
-        <Route path="/:id/list" element={<ListPage />} />
-        <Route
-          path="/listings/:category/:title/:id"
-          element={<ItemDetailPage />}
-        />
+    <ErrorBoundary>
+      <Router>
+        {/* <Header/> */}
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/:id" element={<Home />} />
+          <Route path="/slider" element={<SwiperSlider />} />
+          <Route path="/list" element={<ListPage />} />
+          <Route path="/:id/list" element={<ListPage />} />
+          <Route
+            path="/listings/:category/:title/:id"
+            element={<ItemDetailPage />}
+          />
 
-        {/* <Route path="/listings/:id" element={<ItemDetailPage />} /> */}
-        <Route
-          path="/userProfile"
-          element={
-            <ProtectedRoute>
-              <UserInfo />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/:id/userProfile"
-          element={
-            <ProtectedRoute>
-              <UserInfo />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/login"
-          element={
-            <GuestRoute>
-              <Login />
-            </GuestRoute>
-          }
-        />
-        <Route
-          path="/register"
-          element={
-            <GuestRoute>
-              <Registration />
-            </GuestRoute>
-          }
-        />
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/:id/dashboard"
-          element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          }
-        />
+          {/* <Route path="/listings/:id" element={<ItemDetailPage />} /> */}
+          <Route
+            path="/userProfile"
+            element={
+              <ProtectedRoute>
+                <UserInfo />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/:id/userProfile"
+            element={
+              <ProtectedRoute>
+                <UserInfo />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <GuestRoute>
+                <Login />
+              </GuestRoute>
+            }
+          />
+          <Route
+            path="/register"
+            element={
+              <GuestRoute>
+                <Registration />
+              </GuestRoute>
+            }
+          />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/:id/dashboard"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/selling"
-          element={
-            <ProtectedRoute>
-              <Selling />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/offers"
-          element={
-            <ProtectedRoute>
-              <Offer />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/notifications"
-          element={
-            <ProtectedRoute>
-              <Notifications />
-            </ProtectedRoute>
-          }
-        />
-        <Route path="/forget-password" element={<ForgetPassword />} />
-        <Route path="/reset-password" element={<ResetPassword />} />
-        <Route
-          path="/selling/buildAd"
-          element={
-            <ProtectedRoute>
-              <BuildAd />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/selling/buildAd/advert/:id"
-          element={
-            <ProtectedRoute>
-              <BuildAd />
-            </ProtectedRoute>
-          }
-        />
-        <Route path="/directory" element={<Directory />} />
-        <Route
-          path="/subscriptions"
-          element={
-            <ProtectedRoute>
-              <Subscription />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/subscriptions/buySubscription"
-          element={<SubscriptionForm />}
-        />
-        <Route path="/news" element={<News />} />
-        <Route path="/events" element={<Events />} />
+          <Route
+            path="/selling"
+            element={
+              <ProtectedRoute>
+                <Selling />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/offers"
+            element={
+              <ProtectedRoute>
+                <Offer />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/notifications"
+            element={
+              <ProtectedRoute>
+                <Notifications />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="/forget-password" element={<ForgetPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
+          <Route
+            path="/selling/buildAd"
+            element={
+              <ProtectedRoute>
+                <BuildAd />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/selling/buildAd/advert/:id"
+            element={
+              <ProtectedRoute>
+                <BuildAd />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="/directory" element={<Directory />} />
+          <Route
+            path="/subscriptions"
+            element={
+              <ProtectedRoute>
+                <Subscription />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/subscriptions/buySubscription"
+            element={<SubscriptionForm />}
+          />
+          <Route path="/news" element={<News />} />
+          <Route path="/events" element={<Events />} />
 
-        <Route
-          path="/trade-seller"
-          element={
-            <GuestRoute>
-              <TradeSeller />
-            </GuestRoute>
-          }
-        />
-        <Route
-          path="/private-seller"
-          element={
-            <GuestRoute>
-              <PrivateSeller />
-            </GuestRoute>
-          }
-        />
-        <Route
-          path="/payment/advert/:id"
-          element={
-            <ProtectedRoute>
-              <Payment />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/payment/advert-upgrade/:id"
-          element={
-            <ProtectedRoute>
-              <Payment />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/payment/bundle/:id"
-          element={
-            <ProtectedRoute>
-              <Payment />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/payment/subscription/:id"
-          element={
-            <ProtectedRoute>
-              <Payment />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/paymentStatus"
-          element={
-            <ProtectedRoute>
-              <PaymentStatus successStatus={true} />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/contact"
-          element={
-            <ProtectedRoute>
-              <ContactUs />
-            </ProtectedRoute>
-          }
-        />
-      </Routes>
-      <ToastContainer />
-    </Router>
+          <Route
+            path="/trade-seller"
+            element={
+              <GuestRoute>
+                <TradeSeller />
+              </GuestRoute>
+            }
+          />
+          <Route
+            path="/private-seller"
+            element={
+              <GuestRoute>
+                <PrivateSeller />
+              </GuestRoute>
+            }
+          />
+          <Route
+            path="/payment/advert/:id"
+            element={
+              <ProtectedRoute>
+                <Payment />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/payment/advert-upgrade/:id"
+            element={
+              <ProtectedRoute>
+                <Payment />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/payment/bundle/:id"
+            element={
+              <ProtectedRoute>
+                <Payment />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/payment/subscription/:id"
+            element={
+              <ProtectedRoute>
+                <Payment />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/paymentStatus"
+            element={
+              <ProtectedRoute>
+                <PaymentStatus successStatus={true} />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/contact"
+            element={
+              <ProtectedRoute>
+                <ContactUs />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+        <ToastContainer />
+      </Router>
+    </ErrorBoundary>
   );
 }
 

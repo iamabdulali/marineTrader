@@ -59,6 +59,7 @@ import speakerIcon from "./speaker.png";
 import bars from "./bars.png";
 import selected from "./selected.png";
 import noTrailer from "./others-grey-flip.png";
+import appErrorImage from "../assets/banners/error-image.webp";
 
 export {
   selected,
@@ -122,4 +123,5 @@ export {
   speakerIcon,
   bars,
   noTrailer,
+  appErrorImage,
 };

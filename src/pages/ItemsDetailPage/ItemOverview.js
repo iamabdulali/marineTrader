@@ -16,8 +16,6 @@ const ItemOverview = ({ advert }) => {
     tags,
     description,
   } = Object(advert);
-
-  console.log(trailers);
   return (
     <div>
       {/* <p className="text-[#11133D] font-semibold sm:text-2xl text-xl">
@@ -117,7 +115,7 @@ const ItemOverview = ({ advert }) => {
             </p>
           </div>
         </div>
-        {tags?.length != 0 ? (
+        {tags.length != 0 ? (
           <p className="text-[#11133D] font-semibold text-2xl mt-14">Tags</p>
         ) : (
           ""
