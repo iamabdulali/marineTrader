@@ -223,7 +223,7 @@ const PaymentFormSubscription = () => {
     ? subscriptionsPlans.filter((sub) => sub?.id == id)
     : [];
 
-  const { name, amount, category_id } = Object(filteredSubscriptions[0] || {});
+  const { name } = Object(filteredSubscriptions[0] || {});
 
   return (
     <>

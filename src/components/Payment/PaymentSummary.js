@@ -272,7 +272,7 @@ const PaymentSummary = ({
             {hasBundle == 0 && hasSubscription == 0 && !isAdvertUpgrade ? (
               <>
                 <div className=" flex items-center justify-between mt-2">
-                  <p className="text-[#696E9D]">{packageName}:</p>
+                  <p className="text-[#696E9D]">{packageName} Advert:</p>
                   <p className="text-[#11133D] font-semibold">
                     {`${currency?.symbol}${Number(
                       packageAmount * currencyRates[currency?.currency_code]
@@ -283,7 +283,9 @@ const PaymentSummary = ({
             ) : hasBundle == 0 && hasSubscription == 0 && isAdvertUpgrade ? (
               <>
                 <div className=" flex items-center justify-between mt-2">
-                  <p className="text-[#696E9D]">Upgrading To: {packageName}</p>
+                  <p className="text-[#696E9D]">
+                    Upgrading To: {packageName} Advert
+                  </p>
                   <p className="text-[#11133D] font-semibold">
                     {`${currency?.symbol}${Number(
                       packageAmount * currencyRates[currency?.currency_code]
@@ -292,7 +294,7 @@ const PaymentSummary = ({
                 </div>
                 <div className=" flex items-center justify-between mt-2">
                   <p className="text-[#696E9D] line-through">
-                    Current Package: {currentPackageName}
+                    Current Advert: {currentPackageName} Advert
                   </p>
                   <p className="text-[#11133D] font-semibold">
                     -{" "}
@@ -306,7 +308,9 @@ const PaymentSummary = ({
             ) : isAdvertUpgrade ? (
               <>
                 <div className=" flex items-center justify-between mt-2">
-                  <p className="text-[#696E9D]">Upgrading To: {packageName}</p>
+                  <p className="text-[#696E9D]">
+                    Upgrading To: {packageName} Advert
+                  </p>
                   {hasFeaturedBundle == 0 &&
                   advertPackages[advert_package_id] == "Premium" ? (
                     <p className="text-[#11133D] font-semibold">
@@ -322,7 +326,7 @@ const PaymentSummary = ({
                 </div>
                 <div className=" flex items-center justify-between mt-2">
                   <p className="text-[#696E9D] line-through">
-                    Current Package: {currentPackageName}
+                    Current Advert: {currentPackageName} Advert
                   </p>
 
                   {advertPackages[advert_package_id] == "Standard" ? (
@@ -343,7 +347,7 @@ const PaymentSummary = ({
             ) : (
               <>
                 <div className=" flex items-center justify-between mt-2">
-                  <p className="text-[#696E9D]">{packageName}:</p>
+                  <p className="text-[#696E9D]">{packageName} Advert:</p>
                   <p className="text-[#11133D] font-semibold">
                     {advertPackages[advert_package_id] == "Premium"
                       ? "Bundle/Subscription"
