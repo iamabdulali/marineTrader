@@ -131,7 +131,7 @@ const Subscription = () => {
         <div className="category-menu overflow-x-auto ">
           <CategoryList
             className="flex flex-nowrap justify-between lg:w-full min-h-[88px]  smallLg:gap-0 gap-4 bg-white
-              sm:px-4 pl-4 pr-7  mt-3 sm:mb-6 smallLg:w-auto w-[900px]"
+              sm:px-4 pl-4 pr-7  mt-3 sm:mb-6 smallLg:w-auto w-[900px] border-2 rounded-lg border-[#D9DFF5]"
             activeCategory={`${
               showAllActiveSubscriptions
                 ? "py-3"
