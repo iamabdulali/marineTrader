@@ -8,7 +8,18 @@ import { ErrorMessage, Field, useFormikContext } from "formik";
 const handlePlaceChange = (e, setFieldValue) => {
   e.srcElement.autocomplete.promise
     .then((result) => {
-      setFieldValue("city", result.gm_accessors_.place.Fs.formattedPrediction);
+      let formattedPrediction;
+      if (result.gm_accessors_.place.Fs) {
+        formattedPrediction = result.gm_accessors_.place.Fs.formattedPrediction;
+      } else if (result.gm_accessors_.place.Gs) {
+        formattedPrediction = result.gm_accessors_.place.Gs.formattedPrediction;
+      }
+
+      if (formattedPrediction) {
+        setFieldValue("city", formattedPrediction);
+      } else {
+        console.error("No formatted prediction found.");
+      }
     })
     .catch((error) => {
       console.error("Promise Error:", error);
@@ -16,7 +27,8 @@ const handlePlaceChange = (e, setFieldValue) => {
 };
 
 const PlaceApi = () => {
-  const { setFieldValue } = useFormikContext();
+  const { values, setFieldValue } = useFormikContext();
+  console.log(values?.city);
   const [place, setPlace] = useState("");
 
   const handleRequestError = (e) => {
@@ -44,6 +56,7 @@ const PlaceApi = () => {
 
     placeInput?.addEventListener("change", (e) => {
       setFieldValue("city", e.target.value);
+      setPlace(e.target.value);
     });
 
     if (placeInput) {
