@@ -11,6 +11,7 @@ import { getAdvert } from "../../utils/fetch/fetchData";
 import LoadingWrapper from "../../utils/LoadingWrapper";
 import { AuthContext } from "../../Context/AuthContext";
 import {
+  filterSellingByStatus,
   handleSortByDate,
   handleSortByPrice,
 } from "../../utils/SortingFunctions";
@@ -19,15 +20,16 @@ export default function Selling() {
   const [loading, setLoading] = useState(true);
   const [hasListing, setHasListing] = useState(true);
   let [isVideoOpen, setIsVideoOpen] = useState(false);
-  const [adverts, setAdverts] = useState([]);
+  const [originalAdverts, setOriginalAdverts] = useState([]);
+  const [filteredAdverts, setFilteredAdverts] = useState([]);
   const { categories, dispatch } = useContext(AuthContext);
 
   useEffect(() => {
-    getAdvert(setAdverts, setLoading);
+    getAdvert(setOriginalAdverts, setLoading);
   }, []);
 
   const handleDelete = (idToDelete) => {
-    setAdverts((prevAds) => {
+    setOriginalAdverts((prevAds) => {
       const indexToDelete = prevAds.findIndex(
         (advert) => advert.id === idToDelete
       );
@@ -44,6 +46,14 @@ export default function Selling() {
       payload: null,
     });
   }, []);
+
+  useEffect(() => {
+    setFilteredAdverts(originalAdverts); // Initialize filteredAdverts with original data
+  }, [originalAdverts]);
+
+  const handleFilterByStatus = (selectedStatus) => {
+    filterSellingByStatus(selectedStatus, originalAdverts, setFilteredAdverts);
+  };
 
   return (
     <>
@@ -77,20 +87,6 @@ export default function Selling() {
           <p className="font-semibold text-[#11133D] mt-5">
             {hasListing ? "Select a category to start" : ""}
           </p>
-          {/* <div className="category-menu">
-            <CategoryList
-              initialCategory={-1}
-              className="flex smallLg:flex-nowrap smallLg:justify-between flex-wrap lg:w-full min-h-[88px] mt-5 justify-start smallLg:gap-0  gap-4 px-4 bg-white border-2 rounded-lg border-[#D9DFF5]
-               smallLg:w-auto"
-              activeCategory="border-b-4 border-[#0D1A8B] py-3"
-              unActiveCategory="py-3"
-              onCategoryChange={(category) => {
-                setHasListing(false);
-              }}
-              onCategoryClick={() => {}}
-              categories={categories}
-            />
-          </div> */}
           <div className="category-menu overflow-x-auto ">
             <CategoryList
               className="flex flex-nowrap justify-between lg:w-full min-h-[88px]  smallLg:gap-0 gap-4 bg-white
@@ -107,19 +103,21 @@ export default function Selling() {
           </div>
           {hasListing ? (
             <>
-              {adverts.length != 0 ? (
+              {originalAdverts.length !== 0 ? (
                 <div className="pb-56">
                   <ListingTable
                     tableFor="Your Listings"
                     hasSort={true}
                     hasPadding={true}
+                    isStatusSorting={"selling"}
                     sellingListing={true}
                     tableHeader={sellingHeader}
-                    sellingData={adverts}
+                    sellingData={filteredAdverts}
                     onDelete={handleDelete}
                     handleSortByDate={handleSortByDate}
                     handleSortByPrice={handleSortByPrice}
-                    setItemsData={setAdverts}
+                    handleSortByStatus={handleFilterByStatus}
+                    setItemsData={setFilteredAdverts}
                   />
                 </div>
               ) : (
@@ -136,7 +134,6 @@ export default function Selling() {
           )}
         </LoadingWrapper>
       </Layout>
-      {/* <BuildAd /> */}
     </>
   );
 }

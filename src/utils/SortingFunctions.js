@@ -15,3 +15,26 @@ export const handleSortByDate = (ascending, items, setData, e) => {
   });
   setData(sortedAdverts);
 };
+
+export const filterOfferByStatus = (selectedStatus, items, setData) => {
+  if (selectedStatus === "show all") {
+    setData(items); // Set data to the original array when "show all" is selected
+    return;
+  }
+  const filteredAdverts = items.filter((item) => item.status == selectedStatus);
+  console.log(filteredAdverts);
+  setData(filteredAdverts);
+};
+
+export const filterSellingByStatus = (selectedStatus, items, setData) => {
+  if (selectedStatus === "show all") {
+    setData(items); // Set data to the original array when "show all" is selected
+    return;
+  }
+  console.log(selectedStatus);
+  const filteredAdverts = items.filter(
+    (item) => item.advert_status == selectedStatus
+  );
+  console.log(filteredAdverts);
+  setData(filteredAdverts);
+};

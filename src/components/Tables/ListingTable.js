@@ -36,7 +36,9 @@ const ListingTable = ({
   setRefresh,
   handleSortByDate,
   handleSortByPrice,
+  handleSortByStatus,
   setItemsData,
+  isStatusSorting,
 }) => {
   let [isOfferOpen, setIsOfferOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -133,7 +135,7 @@ const ListingTable = ({
                 buttonToOpenMenu={
                   <>
                     <button
-                      className="border-2 hover:bg-[#8891B2] hover:text-white hover:border-[#8891B2] text-sm border-[#C8C8C8] rounded-lg flex items-center gap-4 md:py-3 px-3 py-2 text-[#8891B2]"
+                      className="border-2 hover:bg-[#8891B2] hover:text-white hover:border-[#8891B2] text-sm border-[#C8C8C8] rounded-lg flex items-center gap-4 md:py-3 px-3 py-2 text-[#8891B2] capitalize"
                       name="sortLists"
                     >
                       {sortType}
@@ -143,9 +145,17 @@ const ListingTable = ({
                 }
                 children={
                   <SortingOptionsMenu
+                    isStatusSorting={isStatusSorting}
                     handleSortByDate={handleSortByDate}
                     handleSortByPrice={handleSortByPrice}
-                    items={sellingData}
+                    handleSortByStatus={handleSortByStatus}
+                    items={
+                      isStatusSorting == "offer"
+                        ? OffersData
+                        : isStatusSorting == "selling"
+                        ? sellingData
+                        : sellingData
+                    }
                     setItems={setItemsData}
                     setSortType={setSortType}
                   />
@@ -558,49 +568,251 @@ const ListingTable = ({
                     email,
                     currency,
                     status,
-                  }) =>
-                    status == "pending" ? (
-                      <tr
-                        key={id}
-                        className="bg-white border-b-[20px] shadow-[25px] border-[#f6f6f6] text-sm text-[#696E9D]"
-                      >
-                        <td className="py-4 px-4 whitespace-nowrap">
-                          <div className="flex items-center gap-2">
-                            <img
-                              src={advert?.images[0]?.image}
-                              alt="Item"
-                              className="w-16 h-16 object-cover rounded-lg mr-2"
-                            />
-                            <div>
-                              <p className="text-[#11133D] font-semibold text-base mb-1">
-                                {categoriesList[advert?.category_id]}
-                              </p>
-                              <p>
-                                {currency?.symbol}
-                                {advert?.price}
-                              </p>
-                            </div>
+                  }) => (
+                    // status == "pending" ? (
+                    <tr
+                      key={id}
+                      className="bg-white border-b-[20px] shadow-[25px] border-[#f6f6f6] text-sm text-[#696E9D]"
+                    >
+                      <td className="py-4 px-4 whitespace-nowrap">
+                        <div className="flex items-center gap-2">
+                          <img
+                            src={advert?.images[0]?.image}
+                            alt="Item"
+                            className="w-16 h-16 object-cover rounded-lg mr-2"
+                          />
+                          <div>
+                            <p className="text-[#11133D] font-semibold text-base mb-1">
+                              {categoriesList[advert?.category_id]}
+                            </p>
+                            <p>
+                              {currency?.symbol}
+                              {advert?.price}
+                            </p>
                           </div>
-                        </td>
-                        <td className="py-4 px-4">{name}</td>
-                        <td className="py-4 px-4">{email}</td>
-                        <td className="py-4 px-4">{phone}</td>
-                        <td className="py-4 px-4">
-                          <p className="font-semibold ">
-                            {currency?.symbol}
-                            {offer}
-                          </p>
-                        </td>
-                        <td className="py-4 px-4">
-                          <div className="flex gap-3 font-semibold items-center justify-center">
-                            {status == "accepted" ? (
+                        </div>
+                      </td>
+                      <td className="py-4 px-4">{name}</td>
+                      <td className="py-4 px-4">{email}</td>
+                      <td className="py-4 px-4">{phone}</td>
+                      <td className="py-4 px-4">
+                        <p className="font-semibold ">
+                          {currency?.symbol}
+                          {offer}
+                        </p>
+                      </td>
+                      <td className="py-4 px-4">
+                        <div className="flex gap-3 font-semibold items-center justify-center">
+                          {status == "accepted" ? (
+                            <button
+                              disabled={
+                                status == "accepted"
+                                  ? true
+                                  : status == "rejected"
+                                  ? true
+                                  : disabledBtn
+                              }
+                              onClick={() => {
+                                handleOfferStatus(id, "accepted");
+                                setDeleteAdvertId(id);
+                              }}
+                              className="bg-[#36B37E] flex items-center justify-center w-9 h-9 text-white rounded-full"
+                            >
+                              <FaCheck />
+                            </button>
+                          ) : (
+                            ""
+                          )}
+
+                          {status == "rejected" ? (
+                            <button
+                              disabled={
+                                status == "accepted"
+                                  ? true
+                                  : status == "rejected"
+                                  ? true
+                                  : disabledBtn
+                              }
+                              onClick={() => {
+                                handleOfferStatus(id, "rejected");
+                                setDeleteAdvertId(id);
+                              }}
+                              className="bg-[#FF4A6B] flex items-center justify-center w-9 h-9 text-white rounded-full"
+                            >
+                              <FaTimes />
+                            </button>
+                          ) : (
+                            ""
+                          )}
+                          {status == "pending" ? (
+                            <div className="flex gap-3 font-semibold items-center justify-cente">
                               <button
-                                disabled={disabledBtn}
+                                disabled={status != "pending" ? true : false}
                                 onClick={() => {
                                   handleOfferStatus(id, "accepted");
                                   setDeleteAdvertId(id);
                                 }}
                                 className="bg-[#36B37E] flex items-center justify-center w-9 h-9 text-white rounded-full"
+                              >
+                                <FaCheck />
+                              </button>
+                              <button
+                                disabled={status != "pending" ? true : false}
+                                onClick={() => {
+                                  handleOfferStatus(id, "rejected");
+                                  setDeleteAdvertId(id);
+                                }}
+                                className="bg-[#FF4A6B] flex items-center justify-center w-9 h-9 text-white rounded-full"
+                              >
+                                <FaTimes />
+                              </button>
+                              <button
+                                onClick={() => {
+                                  openModal(setIsOfferOpen);
+                                  setCounterOfferId(id);
+                                }}
+                                className="bg-[#FFB800] flex items-center justify-center w-9 h-9 text-white rounded-full"
+                              >
+                                <FaDollarSign />
+                              </button>
+                            </div>
+                          ) : (
+                            ""
+                          )}
+                        </div>
+                      </td>
+                    </tr>
+                  )
+                  // ) : (
+                  //   ""
+                  // )
+                )}
+              </tbody>
+              <div className="smallLg:hidden grid gap-4">
+                {OffersData.map(
+                  ({
+                    id,
+                    offer,
+                    advert,
+                    name,
+                    phone,
+                    email,
+                    currency,
+                    status,
+                  }) => (
+                    // status == "pending" ? (
+                    <div
+                      key={id}
+                      className="bg-white sm:text-base text-sm block rounded-lg sm:flex gap-4 w-full p-4"
+                    >
+                      <img
+                        src={advert?.images[0]?.image}
+                        alt="Item"
+                        className="sm:w-4/12 smallLg:max-h-[auto]  max-h-[250px] w-full object-cover rounded-lg sm:mr-2 mb-4"
+                      />
+                      <div className="sm:w-8/12 w-full">
+                        <p className="text-[#11133D] font-semibold text-xl mb-2">
+                          {categoriesList[advert?.category_id]}
+                        </p>
+                        <div className="flex justify-between items-center">
+                          <p className="text-[#8891B2] font-medium">
+                            Price:
+                            <span className="text-[#696E9D] font-semibold">
+                              {" "}
+                              {currency?.symbol}
+                              {advert?.price}
+                            </span>
+                          </p>
+                          <p className="text-[#11133D] font-semibold ">
+                            Offer Price:
+                            <span className="text-[#11133D] font-semibold">
+                              {" "}
+                              {currency?.symbol}
+                              {offer}
+                            </span>
+                          </p>
+                        </div>
+                        <p className="text-[#8891B2] font-medium mt-4">
+                          {" "}
+                          Buyer Name:{" "}
+                          <span className="text-[#696E9D] font-semibold">
+                            {name}
+                          </span>
+                        </p>
+                        {/* <td className="py-4 px-4">{packageName}</td> */}
+                        <p className="text-[#8891B2] font-medium mt-4">
+                          Email:{" "}
+                          <span className="text-[#696E9D] font-semibold">
+                            {" "}
+                            {email}
+                          </span>
+                        </p>
+                        <p className="text-[#8891B2] font-medium mt-4">
+                          Telephone:{" "}
+                          <span className="text-[#696E9D] font-semibold">
+                            {" "}
+                            {phone}
+                          </span>
+                        </p>
+                        {/* <div className="flex gap-3 font-semibold items-center mt-4">
+                          <button
+                            disabled={
+                              status == "accepted"
+                                ? true
+                                : status == "rejected"
+                                ? true
+                                : disabledBtn
+                            }
+                            onClick={() => {
+                              handleOfferStatus(id, "accepted");
+                              setDeleteAdvertId(id);
+                            }}
+                            className="bg-[#36B37E] p-3 rounded-md flex items-center justify-center text-white w-full"
+                          >
+                            <FaCheck size={20} />
+                          </button>
+                          <button
+                            disabled={
+                              status == "accepted"
+                                ? true
+                                : status == "rejected"
+                                ? true
+                                : disabledBtn
+                            }
+                            onClick={() => {
+                              handleOfferStatus(id, "rejected");
+                              setDeleteAdvertId(id);
+                            }}
+                            className="bg-[#FF4A6B] p-3 rounded-md flex items-center justify-center text-white w-full"
+                          >
+                            <FaTimes size={20} />
+                          </button>
+                          <button
+                            onClick={() => {
+                              openModal(setIsOfferOpen);
+                              setCounterOfferId(id);
+                            }}
+                            className="bg-[#FFB800] flex p-3 rounded-md items-center justify-center text-white w-full"
+                          >
+                            <FaDollarSign size={20} />
+                          </button>
+                        </div> */}
+                        <div className="flex gap-3 font-semibold items-center mt-4">
+                          <div className="w-full">
+                            {status == "accepted" ? (
+                              <button
+                                disabled={
+                                  status == "accepted"
+                                    ? true
+                                    : status == "rejected"
+                                    ? true
+                                    : disabledBtn
+                                }
+                                onClick={() => {
+                                  handleOfferStatus(id, "accepted");
+                                  setDeleteAdvertId(id);
+                                }}
+                                className="bg-[#36B37E] p-3 rounded-md flex items-center justify-center text-white w-full"
                               >
                                 <FaCheck />
                               </button>
@@ -610,12 +822,18 @@ const ListingTable = ({
 
                             {status == "rejected" ? (
                               <button
-                                disabled={disabledBtn}
+                                disabled={
+                                  status == "accepted"
+                                    ? true
+                                    : status == "rejected"
+                                    ? true
+                                    : disabledBtn
+                                }
                                 onClick={() => {
                                   handleOfferStatus(id, "rejected");
                                   setDeleteAdvertId(id);
                                 }}
-                                className="bg-[#FF4A6B] flex items-center justify-center w-9 h-9 text-white rounded-full"
+                                className="bg-[#FF4A6B] p-3 rounded-md flex items-center justify-center text-white w-full"
                               >
                                 <FaTimes />
                               </button>
@@ -630,7 +848,7 @@ const ListingTable = ({
                                     handleOfferStatus(id, "accepted");
                                     setDeleteAdvertId(id);
                                   }}
-                                  className="bg-[#36B37E] flex items-center justify-center w-9 h-9 text-white rounded-full"
+                                  className="bg-[#36B37E] p-3 rounded-md flex items-center justify-center text-white w-full"
                                 >
                                   <FaCheck />
                                 </button>
@@ -640,7 +858,7 @@ const ListingTable = ({
                                     handleOfferStatus(id, "rejected");
                                     setDeleteAdvertId(id);
                                   }}
-                                  className="bg-[#FF4A6B] flex items-center justify-center w-9 h-9 text-white rounded-full"
+                                  className="bg-[#FF4A6B] p-3 rounded-md flex items-center justify-center text-white w-full"
                                 >
                                   <FaTimes />
                                 </button>
@@ -649,7 +867,7 @@ const ListingTable = ({
                                     openModal(setIsOfferOpen);
                                     setCounterOfferId(id);
                                   }}
-                                  className="bg-[#FFB800] flex items-center justify-center w-9 h-9 text-white rounded-full"
+                                  className="bg-[#FFB800] p-3 rounded-md flex items-center justify-center text-white w-full"
                                 >
                                   <FaDollarSign />
                                 </button>
@@ -658,115 +876,13 @@ const ListingTable = ({
                               ""
                             )}
                           </div>
-                        </td>
-                      </tr>
-                    ) : (
-                      ""
-                    )
-                )}
-              </tbody>
-              <div className="smallLg:hidden grid gap-4">
-                {OffersData.map(
-                  ({
-                    id,
-                    offer,
-                    advert,
-                    name,
-                    phone,
-                    email,
-                    currency,
-                    status,
-                  }) =>
-                    status == "pending" ? (
-                      <div
-                        key={id}
-                        className="bg-white sm:text-base text-sm block rounded-lg sm:flex gap-4 w-full p-4"
-                      >
-                        <img
-                          src={advert?.images[0]?.image}
-                          alt="Item"
-                          className="sm:w-4/12 smallLg:max-h-[auto]  max-h-[250px] w-full object-cover rounded-lg sm:mr-2 mb-4"
-                        />
-                        <div className="sm:w-8/12 w-full">
-                          <p className="text-[#11133D] font-semibold text-xl mb-2">
-                            {categoriesList[advert?.category_id]}
-                          </p>
-                          <div className="flex justify-between items-center">
-                            <p className="text-[#8891B2] font-medium">
-                              Price:
-                              <span className="text-[#696E9D] font-semibold">
-                                {" "}
-                                {currency?.symbol}
-                                {advert?.price}
-                              </span>
-                            </p>
-                            <p className="text-[#11133D] font-semibold ">
-                              Offer Price:
-                              <span className="text-[#11133D] font-semibold">
-                                {" "}
-                                {currency?.symbol}
-                                {offer}
-                              </span>
-                            </p>
-                          </div>
-                          <p className="text-[#8891B2] font-medium mt-4">
-                            {" "}
-                            Buyer Name:{" "}
-                            <span className="text-[#696E9D] font-semibold">
-                              {name}
-                            </span>
-                          </p>
-                          {/* <td className="py-4 px-4">{packageName}</td> */}
-                          <p className="text-[#8891B2] font-medium mt-4">
-                            Email:{" "}
-                            <span className="text-[#696E9D] font-semibold">
-                              {" "}
-                              {email}
-                            </span>
-                          </p>
-                          <p className="text-[#8891B2] font-medium mt-4">
-                            Telephone:{" "}
-                            <span className="text-[#696E9D] font-semibold">
-                              {" "}
-                              {phone}
-                            </span>
-                          </p>
-                          <div className="flex gap-3 font-semibold items-center mt-4">
-                            <button
-                              disabled={disabledBtn}
-                              onClick={() => {
-                                handleOfferStatus(id, "accepted");
-                                setDeleteAdvertId(id);
-                              }}
-                              className="bg-[#36B37E] p-3 rounded-md flex items-center justify-center text-white w-full"
-                            >
-                              <FaCheck size={20} />
-                            </button>
-                            <button
-                              disabled={disabledBtn}
-                              onClick={() => {
-                                handleOfferStatus(id, "rejected");
-                                setDeleteAdvertId(id);
-                              }}
-                              className="bg-[#FF4A6B] p-3 rounded-md flex items-center justify-center text-white w-full"
-                            >
-                              <FaTimes size={20} />
-                            </button>
-                            <button
-                              onClick={() => {
-                                openModal(setIsOfferOpen);
-                                setCounterOfferId(id);
-                              }}
-                              className="bg-[#FFB800] flex p-3 rounded-md items-center justify-center text-white w-full"
-                            >
-                              <FaDollarSign size={20} />
-                            </button>
-                          </div>
                         </div>
                       </div>
-                    ) : (
-                      ""
-                    )
+                    </div>
+                  )
+                  // ) : (
+                  //   ""
+                  // )
                 )}
               </div>
             </>

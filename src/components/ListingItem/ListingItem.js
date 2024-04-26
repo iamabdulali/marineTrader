@@ -41,8 +41,8 @@ const ListingItem = ({ itemData }) => {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-    nextArrow: <FaChevronRight color="#fff" size={30} />,
-    prevArrow: <FaChevronLeft color="#fff" size={60} />,
+    nextArrow: <FaChevronRight color="transparent" size={10} />,
+    prevArrow: <FaChevronLeft color="transparent" size={10} />,
   };
 
   const {
