@@ -110,11 +110,28 @@ const Subscription = () => {
         loading={loading}
         className="top-0 xl:-translate-x-0 -translate-x-1/2"
       >
-        <div className="category-menu">
+        {/* <div className="category-menu">
           <CategoryList
             initialCategory={-1}
             className="flex smallLg:flex-nowrap smallLg:justify-between flex-wrap lg:w-full min-h-[88px] mt-5 justify-start smallLg:gap-0  gap-4 px-4 bg-white border-2 rounded-lg border-[#D9DFF5]
                smallLg:w-auto"
+            activeCategory={`${
+              showAllActiveSubscriptions
+                ? "py-3"
+                : "border-b-4 border-[#0D1A8B] py-3"
+            } `}
+            unActiveCategory="py-3"
+            onCategoryChange={() => {
+              setShowAllActiveSubscription(false);
+            }}
+            onCategoryClick={() => {}}
+            categories={categories}
+          />
+        </div> */}
+        <div className="category-menu overflow-x-auto ">
+          <CategoryList
+            className="flex flex-nowrap justify-between lg:w-full min-h-[88px]  smallLg:gap-0 gap-4 bg-white
+              sm:px-4 pl-4 pr-7  mt-3 sm:mb-6 smallLg:w-auto w-[900px]"
             activeCategory={`${
               showAllActiveSubscriptions
                 ? "py-3"

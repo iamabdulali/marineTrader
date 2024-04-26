@@ -114,18 +114,21 @@ const ContactUs = () => {
                     <p className=" text-sm font-semibold mt-7">
                       Select Category
                     </p>
-                    <CategoryList
-                      initialCategory={-1}
-                      className="lg:grid lg:px-0 px-4 2xl:grid-cols-5 lg:grid-cols-4 flex justify-center flex-wrap  py-2 place-items-center mt-5 gap-x-6 gap-y-4  bg-white border-2 rounded-lg border-[#D9DFF5]
+                    <div className="category-menu overflow-x-auto ">
+                      <CategoryList
+                        initialCategory={-1}
+                        className="lg:grid lg:px-0 sm:px-4 pr-4  2xl:grid-cols-5 lg:grid-cols-4 flex justify-between flex-wrap  sm:py-2 place-items-center mt-5 gap-x-6 gap-y-4 smallLg:w-auto w-[900px]  bg-white border-2 rounded-lg border-[#D9DFF5]
               "
-                      activeCategory="border-b-4 border-[#0D1A8B] py-3"
-                      unActiveCategory="py-3"
-                      onCategoryChange={(category) => {
-                        setFieldValue("category", selectedCategory?.id);
-                      }}
-                      onCategoryClick={() => {}}
-                      categories={categories}
-                    />
+                        activeCategory="border-b-4 border-[#0D1A8B] py-3"
+                        unActiveCategory="py-3"
+                        onCategoryChange={(category) => {
+                          setFieldValue("category", selectedCategory?.id);
+                        }}
+                        onCategoryClick={() => {}}
+                        categories={categories}
+                      />
+                    </div>
+
                     <label className="flex items-center gap-3 mt-4">
                       <Field
                         type="checkbox"

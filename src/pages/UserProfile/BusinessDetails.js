@@ -174,7 +174,7 @@ const BusinessDetails = ({ editable, user }) => {
           }
         })}
       </div>
-      {editable ? <ServiceHours /> : ""}
+      {/* {editable ? <ServiceHours /> : ""} */}
       <label className="block mt-6 text-[#8891B2] text-sm font-medium">
         Public Holidays
       </label>
