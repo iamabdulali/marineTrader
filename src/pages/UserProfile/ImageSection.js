@@ -31,8 +31,6 @@ const ImageSection = ({
     }
   };
 
-  console.log({ main_picture, company_logo });
-
   return (
     <div className="smallLg:w-4/12  w-full bg-[#EDF1FE] smallLg:rounded-tl-lg smallLg:rounded-bl-lg smallLg:mb-0 mb-4">
       {isPrivateSeller ? (

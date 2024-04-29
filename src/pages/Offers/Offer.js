@@ -26,6 +26,8 @@ export default function Offer() {
     filterOfferByStatus(selectedStatus, originalOffers, setFilteredOffers);
   };
 
+  console.log(filteredOffers.length);
+
   return (
     <>
       <Layout>
@@ -36,6 +38,9 @@ export default function Offer() {
           loading={loading}
           className="top-0 xl:-translate-x-0 -translate-x-1/2"
         >
+          {/* {filteredOffers.length == "0" ? (
+            <p>No Offers Found</p>
+          ) : ( */}
           <ListingTable
             tableFor="Offers"
             hasSort={true}
@@ -47,6 +52,7 @@ export default function Offer() {
             handleSortByStatus={handleFilterByStatus} // Use the handleFilterByStatus function
             setItemsData={setFilteredOffers} // Update the filteredOffers state
           />
+          {/* )} */}
         </LoadingWrapper>
       </Layout>
     </>

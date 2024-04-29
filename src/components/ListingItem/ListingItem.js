@@ -111,6 +111,8 @@ const ListingItem = ({ itemData }) => {
     return country;
   }
 
+  console.log(email);
+
   // useEffect(() => {
   //   setAllStates((prevStates) => {
   //     const newStates = cities?.reduce((acc, city) => {
@@ -498,7 +500,7 @@ const ListingItem = ({ itemData }) => {
             )}
 
             <a
-              data-tooltip-id="my-tooltip-21"
+              data-tooltip-id={`phone_no${id}`}
               onClick={(e) => {
                 e.preventDefault();
                 window.location.href = `tel:${phone_no}`;
@@ -507,7 +509,7 @@ const ListingItem = ({ itemData }) => {
             >
               <FaPhone className="sm:w-6 sm:h-6 h-4 w-4" color="#fff" />
             </a>
-            <Tooltip id="my-tooltip-21" place="bottom" content={phone_no} />
+            <Tooltip id={`phone_no${id}`} place="bottom" content={phone_no} />
           </div>
         </div>
       </Link>

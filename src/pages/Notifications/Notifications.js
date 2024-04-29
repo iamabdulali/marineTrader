@@ -36,7 +36,7 @@ export default function Notifications() {
         >
           {notifications.map(({ body, created_at, id }) => {
             return (
-              <Link
+              <div
                 key={id}
                 className="flex border-b-[1px] py-5 items-center gap-4"
               >
@@ -49,7 +49,7 @@ export default function Notifications() {
                   <p className="text-[#11133D] font-medium mb-2">{body}</p>
                   <TimeAgo timestamp={created_at} />
                 </div>
-              </Link>
+              </div>
             );
           })}
         </LoadingWrapper>

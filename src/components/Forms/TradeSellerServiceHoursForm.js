@@ -109,7 +109,12 @@ export default function TradeSellerServiceHoursForm() {
         </p>
         <p className="bg-[#CECED7] w-full h-[2px]"></p>
       </div>
-      <ServiceHours />
+      <ServiceHours
+        working_days={values?.working_days}
+        service_hours={values?.service_hours}
+        values={values}
+        setValues={setValues}
+      />
       <div className="mt-10">
         <p className="text-[#0D1A8B] font-semibold  min-w-28">
           Open Public Holidays:

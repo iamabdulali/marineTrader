@@ -86,6 +86,15 @@ const UserInfo = () => {
       );
     }
 
+    if (
+      updatedValues.hasOwnProperty("service_hours") &&
+      Array.isArray(updatedValues["service_hours"])
+    ) {
+      updatedValues["service_hours"] = JSON.stringify(
+        updatedValues["service_hours"]
+      );
+    }
+
     // // Check if any updates are needed
     // if (Object.keys(updatedValues).length === 0) {
     //   // If no differences, no need to send any updates
