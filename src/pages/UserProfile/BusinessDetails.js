@@ -32,10 +32,8 @@ const BusinessDetails = ({ editable, user }) => {
   };
 
   const handleDayClick = (day) => {
-    const { working_days } = values.user;
-
+    const { working_days, service_hours } = values.user;
     const daysOfWeek = ["Mon", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun"];
-
     const dayIndex = daysOfWeek.findIndex(
       (item) => item.toLowerCase() === day.toLowerCase()
     );
@@ -50,13 +48,32 @@ const BusinessDetails = ({ editable, user }) => {
     );
 
     if (!isDayAlreadySelected) {
-      // Day not found, add it
+      // Day not found, add it to working_days
       const updatedDays = [
         ...working_days,
         {
           id: working_days.length + 1,
           user_id: values.user.id,
           day: day.toLowerCase(),
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+        },
+      ];
+
+      // Prompt the user to input the start and end times for the day
+      // const startTime = prompt(`Enter start time for ${day}: (HH:mm)`);
+      // const endTime = prompt(`Enter end time for ${day}: (HH:mm)`);
+
+      // Add service hours for the selected day
+      const updatedServiceHours = [
+        ...service_hours,
+        {
+          id: service_hours.length + 1,
+          user_id: values.user.id,
+          day: day.toLowerCase(),
+          start_time: null,
+          end_time: null,
+          status: "1",
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString(),
         },
@@ -74,12 +91,22 @@ const BusinessDetails = ({ editable, user }) => {
       });
 
       setFieldValue("user.working_days", updatedDays);
+      // setFieldValue("user.service_hours", updatedServiceHours);
+
+      console.log(values.user.service_hours);
     } else {
-      // Day found, remove it
+      // Day found, remove it from working_days
       const updatedDays = working_days.filter(
         (item) => item.day.toLowerCase() !== day.toLowerCase()
       );
       setFieldValue("user.working_days", updatedDays);
+
+      const updatedServiceHours = service_hours.map((item) =>
+        item.day.toLowerCase() === day.toLowerCase()
+          ? { ...item, start_time: null, end_time: null }
+          : item
+      );
+      setFieldValue("user.service_hours", updatedServiceHours);
     }
   };
 

@@ -102,6 +102,9 @@ const UserInfo = () => {
     // }
 
     setSpinner(true);
+
+    console.log(updatedValues);
+
     try {
       const { data } = await axios.post(
         `${SERVER_BASE_URL}/${
