@@ -18,7 +18,7 @@ const ContactPersonDetails = ({ editable, user }) => {
           inputField={false}
           value={values.user.first_name}
           name="first_name"
-          readOnly={editable}
+          readOnly={!editable}
           onChange={(e) => handleInputChange(e)}
         />
         <FormField
@@ -27,7 +27,7 @@ const ContactPersonDetails = ({ editable, user }) => {
           inputField={false}
           value={values.user.last_name}
           name="last_name"
-          readOnly={editable}
+          readOnly={!editable}
           onChange={(e) => handleInputChange(e)}
         />
       </div>
@@ -37,7 +37,7 @@ const ContactPersonDetails = ({ editable, user }) => {
         inputField={false}
         value={values.user.job_title}
         name="job_title"
-        readOnly={editable}
+        readOnly={!editable}
         onChange={(e) => handleInputChange(e)}
       />
     </>

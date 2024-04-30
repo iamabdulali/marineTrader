@@ -55,12 +55,18 @@ export const TagsInput = ({ field, form, isEditMode }) => {
           });
           dispatch({ type: "ADD_TAG", payload: newTag });
         }
-        // setTimeout(() => {
-        //   e.target.value = "";
-        // }, 10);
+        setTimeout(() => {
+          e.target.value = "";
+        }, 10);
       }
     }
   };
+
+  useEffect(() => {
+    setFieldValue("tags", listingTags);
+  }, []);
+
+  console.log(values);
 
   const handleTagRemoval = (tagToRemove) => {
     if (isEditMode) {

@@ -179,10 +179,13 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
             : handleInputChange(e, null, null, null, isEditMode, setFieldValue)
         }
       />
+      {console.log(advert_package_id)}
       <FormField
         FieldType="text"
         inputField={true}
-        readOnly={values?.advert_package < "2"}
+        readOnly={
+          isEditMode ? advert_package_id < "2" : values?.advert_package < "2"
+        }
         name="sub_title"
         label="Subtitle"
         value={isEditMode ? sub_title : values?.sub_title}
@@ -199,12 +202,23 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
             : handleInputChange(e, null, null, null, isEditMode, setFieldValue)
         }
         className={`border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full ${
-          values?.advert_package < "2"
+          isEditMode
+            ? advert_package_id < "2"
+              ? "pointer-events-none bg-gray-200"
+              : "pointer-events-auto"
+            : values?.advert_package < "2"
             ? "pointer-events-none bg-gray-200"
             : "pointer-events-auto"
         }`}
         placeholder={"Sub Title"}
       />
+      {/* {isEditMode ? (
+        advert_package_id < "2" ? (
+          <UpdateSubtitleNotice values={values} setFieldValue={setFieldValue} />
+        ) : (
+          ""
+        )
+      ) : */}
       {values?.advert_package < "2" ? (
         <UpdateSubtitleNotice values={values} setFieldValue={setFieldValue} />
       ) : (

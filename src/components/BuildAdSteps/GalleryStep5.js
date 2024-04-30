@@ -15,8 +15,8 @@ const GalleryStep5 = ({ isEditMode }) => {
     getPackages(setPackages, seller_type);
   }, []);
 
-  const totalPhotos = packages[selectedPackage - 1]?.max_photo;
-
+  const totalPhotos = packages[selectedPackage]?.max_photo;
+  console.log(packages[selectedPackage]);
   console.log(totalPhotos);
   return (
     <>
@@ -32,7 +32,8 @@ const GalleryStep5 = ({ isEditMode }) => {
           maxFiles={totalPhotos} // Set the maximum number of files
         />
       </BuildLayout>
-      {selectedPackage != "Standard" ? (
+      {console.log(selectedPackage)}
+      {selectedPackage == "2" || selectedPackage == "3" ? (
         <BuildLayout heading="Video">
           <Field
             uploadingText="Video"
