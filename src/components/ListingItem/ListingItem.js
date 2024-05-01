@@ -176,7 +176,7 @@ const ListingItem = ({ itemData }) => {
       <Link
         key={id}
         // to={`/listings/${make?.name}-${id}`}
-        to={`/listings/${category?.name}/${make?.name}-${model?.name.replace(
+        to={`/listings/${category?.slug}/${make?.name}-${model?.name.replace(
           /\s+/g,
           "-"
         )}-${year}/${id}`}

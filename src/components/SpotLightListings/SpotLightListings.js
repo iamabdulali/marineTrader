@@ -27,7 +27,7 @@ const SpotLightListings = ({
 
   return (
     <Link
-      to={`/listings/${category?.name}/${make?.name}-${model?.name}-${year}/${id}`}
+      to={`/listings/${category?.slug}/${make?.name}-${model?.name}-${year}/${id}`}
       onClick={() => setRefresh((prev) => !prev)}
     >
       {isNews ? (

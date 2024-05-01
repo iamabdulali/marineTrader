@@ -424,7 +424,7 @@ const ListingTable = ({
                       className="bg-white sm:text-base text-sm block rounded-lg sm:flex gap-4 w-full p-4"
                     >
                       <Link
-                        to={`/listings/${category?.name}/${make?.name}-${model?.name}-${year}/${id}`}
+                        to={`/listings/${category?.slug}/${make?.name}-${model?.name}-${year}/${id}`}
                       >
                         <img
                           src={images[0]?.image}
