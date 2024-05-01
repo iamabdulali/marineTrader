@@ -463,7 +463,7 @@ const ListingItem = ({ itemData }) => {
             }`}
           >
             <a
-              data-tooltip-id="my-tooltip-20"
+              data-tooltip-id={`email_${id}`}
               onClick={(e) => {
                 e.preventDefault();
                 window.location.href = `mailto:${email}`;
@@ -472,7 +472,7 @@ const ListingItem = ({ itemData }) => {
             >
               <FaEnvelope className="sm:w-6 sm:h-6 h-4 w-4" color="#fff" />
             </a>
-            <Tooltip id="my-tooltip-20" place="bottom" content={email} />
+            <Tooltip id={`email_${id}`} place="bottom" content={email} />
             {price_type == "enterInfo" ? (
               <>
                 {" "}
