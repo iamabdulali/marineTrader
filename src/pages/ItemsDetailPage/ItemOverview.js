@@ -34,7 +34,9 @@ const ItemOverview = ({ advert }) => {
         <div className="mt-3 grid md:grid-cols-2 gap-x-6 gap-y-6">
           <div className="flex justify-between items-center">
             <p className="text-[#8891B2] sm:text-base text-sm">Boat Type</p>
-            <p className="text-[#11133D] font-semibold">{category?.name}</p>
+            <p className="text-[#11133D] font-semibold capitalize sm:text-base text-sm">
+              {category?.slug}
+            </p>
           </div>
           <div className="flex justify-between items-center">
             <p className="text-[#8891B2] sm:text-base text-sm">
