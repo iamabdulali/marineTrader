@@ -394,7 +394,7 @@ const ListingItem = ({ itemData }) => {
               <div className="flex items-center justify-between">
                 <img
                   src={company_logo || image_field || logo}
-                  className="border-[1px] max-w-[100px] max-h-10 w-20 object-cover bg-white rounded-lg"
+                  className="border-[1px] max-w-[100px] max-h-20 w-20 object-cover bg-white rounded-lg"
                 />
                 <div className="sm:hidden flex items-center justify-end sm:gap-5 gap-4">
                   {/* finance_available */}
@@ -468,7 +468,7 @@ const ListingItem = ({ itemData }) => {
                 e.preventDefault();
                 window.location.href = `mailto:${email}`;
               }}
-              className="bg-[#0D1A8B] hover:bg-[#0a1dbd]  sm:w-12 sm:h-12 h-9 w-9 sm:rounded-xl rounded-md flex items-center justify-center"
+              className="bg-[#0D1A8B] hover:bg-[#0a1dbd] sm:w-12 sm:h-12 h-9 w-9 sm:rounded-xl rounded-md flex items-center justify-center"
             >
               <FaEnvelope className="sm:w-6 sm:h-6 h-4 w-4" color="#fff" />
             </a>
