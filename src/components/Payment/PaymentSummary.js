@@ -29,7 +29,7 @@ const PaymentSummary = ({
   const { currency } = Object(user);
   const [coupenCode, setCoupenCode] = useState("");
   const [couponApplied, setCouponApplied] = useState(false);
-  const { advert_package_id } = Object(advert);
+  let { advert_package_id } = Object(advert);
 
   useEffect(() => {
     fetchOptions(`bundle/advert/remains?type=featured`, setHasFeaturedBundle);
@@ -56,6 +56,9 @@ const PaymentSummary = ({
   if (isAdvertUpgrade) {
     upgradedPackage = 1;
   }
+
+  advert_package_id =
+    advert_package_id > 4 ? +advert_package_id - 4 : +advert_package_id - 1;
 
   const filteredPackages = packages
     ? packages.filter(

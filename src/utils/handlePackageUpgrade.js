@@ -2,10 +2,9 @@ import { toast } from "react-toastify";
 
 export const handlePackageUpgrade = (values, setFieldValue) => {
   const currentPackage = values.advert_package || 0; // Default to 0 if advert_package is not set
-  const maxPackage = 3; // Maximum package set to 3
+  const maxPackage = 7; // Maximum package set to 3
 
-  const updatedPackage =
-    currentPackage > 2 ? currentPackage : Number(currentPackage) + 1;
+  const updatedPackage = Number(currentPackage) + 1;
   const nextPackage = updatedPackage > maxPackage ? maxPackage : updatedPackage;
 
   setFieldValue("advert_package", updatedPackage);

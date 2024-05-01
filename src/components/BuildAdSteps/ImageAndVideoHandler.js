@@ -1,6 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { ErrorMessage, useField, useFormikContext } from "formik";
 import { FaPlus, FaTimes } from "react-icons/fa";
+import { AuthContext } from "../../Context/AuthContext";
 
 const ImageAndVideoHandler = ({
   field,
@@ -17,12 +18,15 @@ const ImageAndVideoHandler = ({
   const { values } = useFormikContext();
   const { advert } = Object(values);
   const [imagePreviews, setImagePreviews] = React.useState([]);
+  const { dispatch, deleted_image_ids } = useContext(AuthContext);
+  const [deletedImageIds, setDeletedImageIds] = useState([]);
 
   useEffect(() => {
     // Fetch images from the backend if in edit mode
     if (isEditMode) {
       const { advert } = Object(values);
       const { images } = advert;
+
       if (images && images.length > 0) {
         const imagePreviews = images.map((image) => {
           if (image instanceof File) {
@@ -93,6 +97,30 @@ const ImageAndVideoHandler = ({
     }
   };
 
+  // const handleDelete = (index, type) => {
+  //   let updatedPreviews = [];
+
+  //   if (type === "image") {
+  //     updatedPreviews = [...imagePreviews];
+  //     updatedPreviews.splice(index, 1);
+  //     setImagePreviews(updatedPreviews);
+
+  //     if (isEditMode && advert.images) {
+  //       const updatedImages = advert.images.filter(
+  //         (image, idx) => idx !== index
+  //       );
+  //       form.setFieldValue("advert.images", updatedImages);
+  //     }
+  //   }
+
+  //   if (!isEditMode) {
+  //     const files = form.values[field.name];
+  //     const newFiles = Array.from(files);
+  //     newFiles.splice(index, 1);
+  //     form.setFieldValue(field.name, newFiles);
+  //   }
+  // };
+
   const handleDelete = (index, type) => {
     let updatedPreviews = [];
 
@@ -102,10 +130,18 @@ const ImageAndVideoHandler = ({
       setImagePreviews(updatedPreviews);
 
       if (isEditMode && advert.images) {
+        const deletedImage = advert.images[index];
+        const deletedImageId = deletedImage.id; // Assuming the image object has an 'id' property
         const updatedImages = advert.images.filter(
           (image, idx) => idx !== index
         );
         form.setFieldValue("advert.images", updatedImages);
+
+        // Add the deleted image ID to an array
+        const newDeletedImageIds = [...deletedImageIds, deletedImageId];
+        setDeletedImageIds(newDeletedImageIds);
+
+        // form.setFieldValue("deletedImageIds", deletedImageIds);
       }
     }
 
@@ -116,6 +152,13 @@ const ImageAndVideoHandler = ({
       form.setFieldValue(field.name, newFiles);
     }
   };
+
+  useEffect(() => {
+    dispatch({
+      type: "DELETED_IMAGE_IDS",
+      payload: deletedImageIds,
+    });
+  }, [advert]);
 
   return (
     <>

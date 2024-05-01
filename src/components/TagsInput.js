@@ -64,7 +64,9 @@ export const TagsInput = ({ field, form, isEditMode }) => {
   };
 
   useEffect(() => {
-    setFieldValue("tags", listingTags);
+    if (!isEditMode) {
+      setFieldValue("tags", listingTags);
+    }
   }, []);
 
   console.log(values);

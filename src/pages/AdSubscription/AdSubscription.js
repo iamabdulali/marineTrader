@@ -39,8 +39,6 @@ export default function AdSubscription() {
     return orderA - orderB;
   });
 
-  console.log(sortedPackages);
-
   const tabs = sortedPackages.map((item) => ({
     id: item.name,
     label: item.name,
@@ -78,7 +76,10 @@ export default function AdSubscription() {
         </div>
       </div>
       <div className="lg:flex gap-8 hidden">
-        <LoadingWrapper className="top-44" loading={loading}>
+        <LoadingWrapper
+          className="top-44 xl:-translate-x-0 -translate-x-1/2"
+          loading={loading}
+        >
           {sortedPackages.map(
             ({ name, amount, id, specificity_order, ...props }) => {
               return (
@@ -93,7 +94,8 @@ export default function AdSubscription() {
                   buttonText="Get Started"
                   text="View Display Results"
                   key={id}
-                  id={specificity_order}
+                  id={id}
+                  specificity_order={specificity_order}
                   hasActiveSubscription={hasActiveSubscription}
                   featuresArray={props}
                 />
@@ -110,7 +112,10 @@ export default function AdSubscription() {
           handleTabClick={handleTabClick}
         />
         <div className="lg:hidden block py-10">
-          <LoadingWrapper loading={loading}>
+          <LoadingWrapper
+            loading={loading}
+            className="top-72 xl:-translate-x-0 -translate-x-1/2"
+          >
             {sortedPackages.map(
               ({ name, amount, specificity_order, id, ...props }) => {
                 return (
@@ -128,7 +133,8 @@ export default function AdSubscription() {
                       variant={name}
                       featuresArray={props}
                       key={id}
-                      id={specificity_order}
+                      id={id}
+                      specificity_order={specificity_order}
                       hasActiveSubscription={hasActiveSubscription}
                     />
                   )

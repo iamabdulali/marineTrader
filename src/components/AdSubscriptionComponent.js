@@ -23,6 +23,7 @@ const AdSubscriptionComponent = ({
   hasActiveSubscription,
   hasFeaturedBundle,
   hasPremiumBundle,
+  specificity_order,
 }) => {
   let variantStyles = {};
   let [isSearchResultOpen, setIsSearchResultOpen] = useState(false);
@@ -168,7 +169,8 @@ const AdSubscriptionComponent = ({
 
         <Link
           onClick={() => {
-            dispatch({ type: "SELECT_PACKAGE", payload: id });
+            dispatch({ type: "SELECT_PACKAGE_ID", payload: id });
+            dispatch({ type: "SELECT_PACKAGE", payload: specificity_order });
           }}
           to="/selling/buildAd"
           className={`${variantStyles.buttonBg} hover:bg-opacity-85 text-white font-semibold inline-block py-3 w-9/12 rounded-lg`}

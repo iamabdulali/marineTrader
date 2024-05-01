@@ -30,6 +30,8 @@ export const authReducer = (state, action) => {
       return { ...state, user: null, isAuthenticated: false };
     case "SELECT_PACKAGE":
       return { ...state, selectedPackage: action.payload };
+    case "SELECT_PACKAGE_ID":
+      return { ...state, selectedPackageId: action.payload };
     case "REFRESH_STATE":
       return { ...state, refresh: action.payload };
     case "USER_DETAILS":
@@ -58,6 +60,8 @@ export const authReducer = (state, action) => {
       return { ...state, spotlightCountries: action.payload };
     case "SELECTED_COUNTRY":
       return { ...state, country: action.payload };
+    case "DELETED_IMAGE_IDS":
+      return { ...state, deleted_image_ids: action.payload };
     default:
       return state;
   }
@@ -70,6 +74,7 @@ export const AuthContextProvider = ({ children }) => {
     user: null, // Updated user initialization
     selectedCategory: null,
     listingTags: [],
+    deleted_image_ids: [],
     modificationCheckboxes: [
       "Standard",
       "ECU Upgrade",
@@ -111,6 +116,7 @@ export const AuthContextProvider = ({ children }) => {
     isAuthenticated: false,
     selectedPackage: null, // Adding selectedPackage state
     selectedCategory: null,
+    selectedPackageId: null,
     refresh: false,
     userLocationDetails: [],
     makes: [],

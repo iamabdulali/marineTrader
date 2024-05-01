@@ -29,7 +29,7 @@ import { fetchOptions, getOneAdvert } from "../../utils/fetch/fetchData";
 import LoadingWrapper from "../../utils/LoadingWrapper";
 
 const BuildAd = () => {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(4);
   const [submit, setSubmit] = useState(false);
   const [spinner, setSpinner] = useState(false);
   const NavigateTo = useNavigate();
@@ -39,8 +39,13 @@ const BuildAd = () => {
   const [advert, setAdvert] = useState([]);
   const [loading, setLoading] = useState(true);
   const [hasSpotlight, setHasSpotlights] = useState(false);
-  const { selectedPackage, selectedCategory, dispatch } =
-    useContext(AuthContext);
+  const {
+    selectedPackage,
+    selectedCategory,
+    dispatch,
+    selectedPackageId,
+    deleted_image_ids,
+  } = useContext(AuthContext);
 
   const pathArray = window.location.pathname.split("/");
   const id = pathArray[4];
@@ -101,7 +106,7 @@ const BuildAd = () => {
     price: "",
     paymentMethod: "checkout",
     facilities: [],
-    advert_package: selectedPackage,
+    advert_package: selectedPackageId,
     category_spotlights_countries: [],
     category_spotlights_continents: [],
     home_spotlights_countries: [],
@@ -158,7 +163,7 @@ const BuildAd = () => {
     price: "",
     paymentMethod: "checkout",
     facilities: [],
-    advert_package: selectedPackage,
+    advert_package: selectedPackageId,
     category_spotlights_countries: [],
     category_spotlights_continents: [],
     home_spotlights_countries: [],
@@ -282,6 +287,19 @@ const BuildAd = () => {
     );
   }, [id]);
 
+  function arrayContainsFile(array) {
+    for (var i = 0; i < array.length; i++) {
+      if (array[i] instanceof File) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  function filterFilesFromArray(array) {
+    return array.filter((item) => item instanceof File);
+  }
+
   const handleSubmit = async (values, { setFieldValue }) => {
     setSpinner(true);
 
@@ -300,6 +318,7 @@ const BuildAd = () => {
         features,
         modifications,
         powers,
+        images,
       } = Object(advert);
       const tagNames = tags.map((tag) => tag.name);
       const accessoriesArray = accessories.map((accessory) => accessory.name);
@@ -312,9 +331,12 @@ const BuildAd = () => {
       );
       const powersArray = powers.map((power) => power.name);
 
+      console.log(arrayContainsFile(images));
+
       const updatedValues = {
         ...advert,
         _method: "put",
+        deleted_images_ids: deleted_image_ids,
         make: make?.name || make,
         model: model?.name || model,
         category: category?.id || category,
@@ -327,6 +349,7 @@ const BuildAd = () => {
         features: featuresArray,
         conveniences: conveniencesArray,
         powers: powersArray,
+        images: arrayContainsFile(images) ? filterFilesFromArray(images) : null,
       };
 
       try {

@@ -29,8 +29,6 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
   const { selectedCategory, conditions, makes, types, dispatch, refresh } =
     useContext(AuthContext);
 
-  console.log({ conditions }, { types });
-
   const [showDetails, setShowDetails] = useState(true);
   const [showDimensions, setShowDimensions] = useState(true);
   const [showPerformance, setShowPerformance] = useState(true);
@@ -38,6 +36,8 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
   const { values, setFieldValue } = useFormikContext();
 
   const { advert } = Object(values);
+
+  console.log(values);
 
   const {
     title,
@@ -104,7 +104,6 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
   useEffect(() => {
     if (isEditMode) {
       if (selectedCategory?.id == undefined) {
-        console.log("HELLO");
         dispatch({
           type: "SELECTED_CATEGORY",
           payload: { name: category?.name, id: category?.id },
@@ -144,18 +143,15 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
     }
   }, [selectedCategory, make, values?.make]);
 
-  // console.log(advert);
-  // values?.make, make, model
-
-  console.log(selectedCategory);
+  let numberToSubtract = values?.advert_package > 4 ? 4 : 1;
 
   return (
     <BuildLayout
       heading="Item Description"
       otherContent={`Current Package: ${
         isEditMode
-          ? advertPackages[advert_package_id]
-          : advertPackages[values?.advert_package]
+          ? advertPackages[+advert_package_id - numberToSubtract]
+          : advertPackages[+values?.advert_package - numberToSubtract]
       }`}
     >
       <FormField
@@ -179,12 +175,13 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
             : handleInputChange(e, null, null, null, isEditMode, setFieldValue)
         }
       />
-      {console.log(advert_package_id)}
       <FormField
         FieldType="text"
         inputField={true}
         readOnly={
-          isEditMode ? advert_package_id < "2" : values?.advert_package < "2"
+          isEditMode
+            ? +advert_package_id - numberToSubtract < "2"
+            : +values?.advert_package - numberToSubtract < "2"
         }
         name="sub_title"
         label="Subtitle"
@@ -203,10 +200,10 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
         }
         className={`border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full ${
           isEditMode
-            ? advert_package_id < "2"
+            ? +advert_package_id - numberToSubtract < "2"
               ? "pointer-events-none bg-gray-200"
               : "pointer-events-auto"
-            : values?.advert_package < "2"
+            : +values?.advert_package - numberToSubtract < "2"
             ? "pointer-events-none bg-gray-200"
             : "pointer-events-auto"
         }`}
@@ -219,7 +216,7 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
           ""
         )
       ) : */}
-      {values?.advert_package < "2" ? (
+      {+values?.advert_package - numberToSubtract < "2" ? (
         <UpdateSubtitleNotice values={values} setFieldValue={setFieldValue} />
       ) : (
         ""

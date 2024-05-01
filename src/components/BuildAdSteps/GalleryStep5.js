@@ -16,8 +16,7 @@ const GalleryStep5 = ({ isEditMode }) => {
   }, []);
 
   const totalPhotos = packages[selectedPackage]?.max_photo;
-  console.log(packages[selectedPackage]);
-  console.log(totalPhotos);
+
   return (
     <>
       {" "}
@@ -32,7 +31,6 @@ const GalleryStep5 = ({ isEditMode }) => {
           maxFiles={totalPhotos} // Set the maximum number of files
         />
       </BuildLayout>
-      {console.log(selectedPackage)}
       {selectedPackage == "2" || selectedPackage == "3" ? (
         <BuildLayout heading="Video">
           <Field
