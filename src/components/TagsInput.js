@@ -17,7 +17,8 @@ export const TagsInput = ({ field, form, isEditMode }) => {
 
   const handleTagInput = (e) => {
     const inputValue = e.target.value.trim();
-    form.setFieldValue(field.name, inputValue);
+    // form.setFieldValue(field.name, inputValue);
+    console.log(values?.tags);
   };
 
   function generateUniqueId(maxId) {
