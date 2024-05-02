@@ -15,6 +15,9 @@ const SearchFilter = ({
   setCategoryName,
   make,
   model,
+  condition,
+  type,
+  year,
 }) => {
   const [width] = useWindowSize();
   const [showFilterMenu, setShowFilterMenu] = useState(width > 900);
@@ -118,13 +121,33 @@ const SearchFilter = ({
                   setFieldValue("model", e.target.value);
                 }}
               />
-              <SelectDropdown options={types} label="Type" name="type" />
               <SelectDropdown
+                options={types}
+                label="Type"
+                name="type"
+                value={values?.type || type}
+                onChange={(e) => {
+                  setFieldValue("type", e.target.value);
+                }}
+              />
+              <SelectDropdown
+                value={values?.condition || condition}
                 options={conditions}
                 label="Condition"
                 name="condition"
+                onChange={(e) => {
+                  setFieldValue("condition", e.target.value);
+                }}
               />
-              <SelectDropdown options={yearsArray} label="Year" name="year" />
+              <SelectDropdown
+                value={values?.year || year}
+                options={yearsArray}
+                label="Year"
+                name="year"
+                onChange={(e) => {
+                  setFieldValue("year", e.target.value);
+                }}
+              />
               {/* <SelectDropdown
               options={["priceOptions"]}
               options2={[""]}

@@ -69,6 +69,9 @@ const ListPage = () => {
           setLoading={setLoading}
           make={make}
           model={model}
+          condition={condition}
+          type={type}
+          year={year}
         />
         <div className="flex items-center justify-between mb-8">
           <p className="md:text-2xl text-xl text-[#11133D] font-semibold capitalize">
