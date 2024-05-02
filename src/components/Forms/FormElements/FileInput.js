@@ -5,6 +5,7 @@ import { FaPlus, FaTimes } from "react-icons/fa";
 const FileInput = ({ fieldName, form, label, furtherStyles, ...props }) => {
   const [, , helpers] = useField(fieldName);
   const [imagePreview, setImagePreview] = useState(null);
+  const [isImageUploaded, setIsImageUploaded] = useState(false);
 
   useEffect(() => {
     // Check if form.values[fieldName] already has a file object
@@ -23,6 +24,7 @@ const FileInput = ({ fieldName, form, label, furtherStyles, ...props }) => {
 
     // Update image preview
     if (selectedFile) {
+      setIsImageUploaded(true);
       const reader = new FileReader();
       reader.onloadend = () => {
         setImagePreview(reader.result);
@@ -38,7 +40,11 @@ const FileInput = ({ fieldName, form, label, furtherStyles, ...props }) => {
       <div className="w-full relative">
         <p className="text-[#11133D] font-semibold mb-3">{label}</p>
         <div className="border-2 relative border-[#0D1A8B] border-dashed flex flex-col items-center justify-center w-full rounded-lg max-w-[160px] min-w-[160px] min-h-[160px] max-h-[160px]">
-          <FaPlus size={40} color="#0D1A8B" />
+          <FaPlus
+            size={40}
+            color="#0D1A8B"
+            className={`${isImageUploaded ? "hidden" : "block"}`}
+          />
           <input
             style={{ opacity: "0", inset: "0", position: "absolute" }}
             type="file"
@@ -63,6 +69,7 @@ const FileInput = ({ fieldName, form, label, furtherStyles, ...props }) => {
             <FaTimes
               onClick={() => {
                 setImagePreview(null);
+                setIsImageUploaded(false);
                 form.setFieldValue(fieldName, "");
               }}
               color="#FF4A6B"

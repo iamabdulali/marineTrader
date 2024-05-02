@@ -38,7 +38,7 @@ const PaymentStatus = ({ successStatus, paymentType }) => {
             }  text-center mx-auto`}
           >
             {!successStatus &&
-              "The card details you have entered are incorrect, please try again."}
+              "Payment failed. Please review your information and try again later. Contact support if issue persists."}
             {successStatus &&
               (paymentType === "list"
                 ? "You have successfully listed your item."
