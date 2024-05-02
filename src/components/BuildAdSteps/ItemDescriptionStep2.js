@@ -226,7 +226,7 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
         } Details`}
         setShowContent={setShowDetails}
         textStyles="font-semibold text-[#11133D]"
-        className="flex justify-between border-2 cursor-pointer items-center mb-6 bg-[#f6f6f6] p-3"
+        className="flex justify-between border-2 capitalize cursor-pointer items-center mb-6 bg-[#f6f6f6] p-3"
       />
       <div className={`${showDetails ? "block" : "hidden"}`}>
         <div className="flex sm:flex-row flex-col gap-4 relative">
