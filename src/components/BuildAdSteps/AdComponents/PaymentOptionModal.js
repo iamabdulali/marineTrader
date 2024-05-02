@@ -12,7 +12,11 @@ const PaymentOptionModal = ({
   advert,
 }) => {
   const { advert_package_id } = Object(advert);
-  console.log(advert_package_id);
+
+  let numberToSubtract = advert_package_id > 4 ? 4 : 1;
+
+  let currentPackage = +advert_package_id - numberToSubtract;
+
   return (
     <div className="bg-white rounded-lg border-t-8 border-[#0D1A8B] py-3 px-6">
       <div className={`flex items-center justify-between mt-3`}>
@@ -50,7 +54,7 @@ const PaymentOptionModal = ({
             Inclusive Monthly Allowance
           </label>
         </div> */}
-        {advert_package_id == "1" ? (
+        {currentPackage == "1" ? (
           <div className="radio mt-3">
             <Field
               name="paymentMethod"
@@ -92,7 +96,7 @@ const PaymentOptionModal = ({
           </div>
         )}
       </div>
-      {hasSubscription && !hasSpotlight && advert_package_id != "1" ? (
+      {hasSubscription && !hasSpotlight && currentPackage != "1" ? (
         <Link
           to="/dashboard"
           className="py-3 w-full text-center block mt-7 mb-4 text-white hover:bg-[#0a1dbd] bg-[#0D1A8B] rounded-md"

@@ -218,6 +218,12 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
   //   navigate("/dashboard");
   // }
 
+  console.log(advert_package_id);
+
+  let numberToSubtract = +advert_package_id > 4 ? 4 : 1;
+
+  let currentPackage = +advert_package_id - numberToSubtract;
+
   return (
     <>
       {showStatus ? (
@@ -248,7 +254,7 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
                   />
                   {!isPrivateSeller &&
                   hasBrokerOrDealerSubscription() &&
-                  advertPackages[advert_package_id] != "Standard" &&
+                  advertPackages[currentPackage] != "Standard" &&
                   !isAdvertUpgrade ? (
                     <AvailableUpgrades
                       className="bg-[#1CBF73] flex flex-col gap-5 mt-8 p-5 rounded-lg w-full"
@@ -269,7 +275,7 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
                     handleCombinedPayments
                   }
                   spinner={spinner}
-                  bundleType={advertPackages[advert_package_id]}
+                  bundleType={advertPackages[currentPackage]}
                 />
               </div>
             </Layout>
@@ -294,7 +300,7 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
               <BundlesModal
                 setSelectedBundle={setSelectedBundle}
                 onClick={() => closeModal(setIsBundleOpen)}
-                bundleType={advertPackages[advert_package_id]}
+                bundleType={advertPackages[currentPackage]}
               />
             </Modal>
           </LoadingWrapper>
