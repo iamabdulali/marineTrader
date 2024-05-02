@@ -34,7 +34,7 @@ const CategoryDropdown = ({ onSubmit, category }) => {
     console.log(refresh);
     try {
       const { data } = await axios.get(
-        `${SERVER_BASE_URL}/models?make=${refresh}&category_id=${selectedCategory?.id}`
+        `${SERVER_BASE_URL}/models?make_id=${refresh}&category_id=${selectedCategory?.id}`
       );
       setModals(data.data);
     } catch (error) {
