@@ -37,8 +37,6 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
 
   const { advert } = Object(values);
 
-  console.log(values);
-
   const {
     title,
     sub_title,

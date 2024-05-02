@@ -331,8 +331,6 @@ const BuildAd = () => {
       );
       const powersArray = powers.map((power) => power.name);
 
-      console.log(arrayContainsFile(images));
-
       const updatedValues = {
         ...advert,
         _method: "put",
@@ -353,8 +351,6 @@ const BuildAd = () => {
       };
 
       try {
-        console.log(updatedValues);
-
         const { data } = await axios.post(
           `${SERVER_BASE_URL}/advert/${id}`,
           updatedValues,

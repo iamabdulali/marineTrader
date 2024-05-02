@@ -80,8 +80,6 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
     packageType = advertPackages[advert_package_id];
   }
 
-  console.log(advertPackages[advert_package_id]);
-
   useEffect(() => {
     fetchOptions(`bundles?type=${packageType}`, setBundles, setLoading);
   }, [advert]);
@@ -217,8 +215,6 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
   // if (advert_status == "paid") {
   //   navigate("/dashboard");
   // }
-
-  console.log(advert_package_id);
 
   let numberToSubtract = +advert_package_id > 4 ? 4 : 1;
 
