@@ -441,7 +441,7 @@ const BuildAd = () => {
             : editValues
         }
         validationSchema={EditMode ? emptySchema : validationSchema}
-        onSubmit={handleSubmit}
+        // onSubmit={handleSubmit}
       >
         {({ isValid, values, setErrors, setTouched, setFieldValue }) => (
           <LoadingWrapper loading={EditMode ? loading : false}>
