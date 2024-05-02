@@ -77,6 +77,8 @@ const ItemFeaturesStep3 = ({ isEditMode }) => {
     powers,
   } = Object(advert);
 
+  console.log(engines);
+
   const digits = isEditMode ? Array?.from(engine_count || [])?.map(Number) : [];
 
   const totalNumber = digits?.reduce((acc, digit) => acc + digit, 0);

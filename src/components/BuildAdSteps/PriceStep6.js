@@ -53,8 +53,6 @@ const PriceStep6 = ({ isEditMode }) => {
     setSpotlightType("category");
   };
 
-  console.log(values);
-
   const handleCheckboxChange = (facility) => {
     setFacilities((prevFacilities) => ({
       ...prevFacilities,

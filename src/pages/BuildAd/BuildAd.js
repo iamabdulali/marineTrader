@@ -351,6 +351,7 @@ const BuildAd = () => {
       };
 
       try {
+        console.log(updatedValues);
         const { data } = await axios.post(
           `${SERVER_BASE_URL}/advert/${id}`,
           updatedValues,
@@ -498,7 +499,7 @@ const BuildAd = () => {
                       to="/"
                       type={submit ? "submit" : "button"}
                       onClick={() => {
-                        setSubmit(true);
+                        handleSubmit(values);
                       }}
                       disabled={spinner}
                       className={`bg-[#0D1A8B] hover:bg-[#0a1dbd] text-white p-3 rounded-md inline-block text-center sm:w-28 w-full  ${
