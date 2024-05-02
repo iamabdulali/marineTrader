@@ -171,7 +171,7 @@ const Subscription = () => {
                         categoryId={category_id}
                         category={categoriesList[category_id]}
                         isStandard={false}
-                        featuresArray={featuresObject[name] || ServicePlus}
+                        featuresArray={subscription_plan}
                         expiry_date={end_date}
                         id={id}
                         subscription_plan_id={subscription_plan_id}
@@ -207,7 +207,7 @@ const Subscription = () => {
                           categoryId={category_id}
                           category={categoriesList[category_id]}
                           isStandard={false}
-                          featuresArray={featuresObject[name] || ServicePlus}
+                          featuresArray={subscription_plan}
                           expiry_date={end_date}
                           id={id}
                           subscription_plan_id={subscription_plan_id}

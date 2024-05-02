@@ -3,6 +3,7 @@ import { FaCheck } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../Context/AuthContext";
 import { categoriesList } from "../..";
+import { star } from "../../assets";
 
 const CurrentSubscription = ({
   packageName,
@@ -21,6 +22,40 @@ const CurrentSubscription = ({
 
   const { dispatch, selectedCategory } = useContext(AuthContext);
   console.log(selectedCategory?.name);
+
+  // Map features to text descriptions
+  const mapFeaturesToText = (features) => {
+    const featureText = {
+      customer_reviews:
+        features.customer_reviews === "yes" ? "Customer Reviews" : null,
+      virtual_showroom:
+        features.virtual_showroom === "yes" ? "Virtual Showroom" : null,
+      search_result_boost:
+        features.search_result_boost > 0
+          ? `${features.search_result_boost}x Search Results Boost`
+          : null,
+      website_link: features.website_link === "yes" ? "Website Link" : null,
+      picture_gallery:
+        features.picture_gallery === "yes" ? "Picture Gallery" : null,
+      promotional_discount:
+        features.promotional_discount === "yes"
+          ? "Enables Promotional Discount Offers"
+          : null,
+      company_profile:
+        features.company_profile === "yes" ? "Company Profile" : null,
+      listings_in_business:
+        features.listings_in_business > 0
+          ? `${features.listings_in_business}x Listings in Business Plus+ Directory`
+          : null,
+      premium_per_month:
+        features.premium_per_month > 0
+          ? `${features.premium_per_month} Ads/Month`
+          : null,
+    };
+
+    // Filter out null values (for features that should not be displayed)
+    return Object.values(featureText).filter((text) => text !== null);
+  };
 
   return (
     <div
@@ -84,7 +119,7 @@ const CurrentSubscription = ({
         <span className="text-[#8891B2]">Category: </span>
         {category}
       </p>
-      <div className="mb-8 mt-5 grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 text-[#183B56] gap-y-3">
+      {/* <div className="mb-8 mt-5 grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 text-[#183B56] gap-y-3">
         {featuresArray?.map(({ id, featureName, standOut }) => {
           return (
             <p
@@ -107,6 +142,29 @@ const CurrentSubscription = ({
             </p>
           );
         })}
+      </div> */}
+      {console.log(featuresArray)}
+      <div className="mb-8 mt-5 grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 text-[#183B56] gap-y-3">
+        {mapFeaturesToText(featuresArray)?.map((featureText, index) => (
+          <div className="flex items-baseline font-medium gap-4" key={index}>
+            <p
+              className={`${
+                packageName == "Broker plus" ? "bg-[#e1f4ec]" : "bg-[#ffb80021]"
+              } mt-5 rounded-full h-6 w-6 flex items-center justify-center `}
+            >
+              <FaCheck
+                color={packageName == "Broker plus" ? "#36B37E" : "#FFB800"}
+                size={10}
+              />
+            </p>
+            <div className="flex items-end gap-3">
+              {featureText}
+              {/* {featureText.endsWith("Ads/Month") && (
+                <img className="w-6" src={star} alt="star" />
+              )} */}
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
