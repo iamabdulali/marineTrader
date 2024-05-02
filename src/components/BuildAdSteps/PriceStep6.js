@@ -62,6 +62,10 @@ const PriceStep6 = ({ isEditMode }) => {
     }));
   };
 
+  let numberToSubtract = values?.advert_package > 4 ? 4 : 1;
+
+  let currentPackage = +values?.advert_package - numberToSubtract;
+
   return (
     <BuildLayout heading="Set Price">
       <div>
@@ -275,19 +279,16 @@ const PriceStep6 = ({ isEditMode }) => {
           ""
         )} */}
 
-        {values?.advert_package != 3 ? (
+        {currentPackage != 3 ? (
           <p className="text-sm mt-8">
             <button
-              onClick={() =>
-                handlePackageUpgrade(values, setFieldValue, seller_type)
-              }
+              onClick={() => handlePackageUpgrade(values, setFieldValue)}
               type="button"
               className="text-[#0D1A8B] font-semibold underline "
             >
               UPGRADE
             </button>{" "}
-            to {values?.advert_package < 2 ? "Premium or Featured" : "Featured"}{" "}
-            Package
+            to {currentPackage < 2 ? "Premium or Featured" : "Featured"} Package
           </p>
         ) : (
           ""

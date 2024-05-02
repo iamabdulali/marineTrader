@@ -336,7 +336,7 @@ const BuildAd = () => {
       const updatedValues = {
         ...advert,
         _method: "put",
-        deleted_images_ids: deleted_image_ids,
+        deleted_image_ids: deleted_image_ids,
         make: make?.name || make,
         model: model?.name || model,
         category: category?.id || category,
@@ -349,7 +349,7 @@ const BuildAd = () => {
         features: featuresArray,
         conveniences: conveniencesArray,
         powers: powersArray,
-        images: arrayContainsFile(images) ? filterFilesFromArray(images) : null,
+        images: arrayContainsFile(images) ? filterFilesFromArray(images) : [],
       };
 
       try {
