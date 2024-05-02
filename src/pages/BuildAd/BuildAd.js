@@ -300,7 +300,7 @@ const BuildAd = () => {
     return array.filter((item) => item instanceof File);
   }
 
-  const handleSubmit = async (values, { setFieldValue }) => {
+  const handleSubmit = async (values) => {
     setSpinner(true);
 
     if (EditMode) {
@@ -503,7 +503,9 @@ const BuildAd = () => {
                       }}
                       disabled={spinner}
                       className={`bg-[#0D1A8B] hover:bg-[#0a1dbd] text-white p-3 rounded-md inline-block text-center sm:w-28 w-full  ${
-                        isValid ? "opacity-100" : "opacity-70"
+                        isValid
+                          ? "opacity-100"
+                          : "opacity-70 pointer-events-none"
                       }`}
                     >
                       {spinner ? (
