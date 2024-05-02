@@ -181,7 +181,7 @@ const ListingItem = ({ itemData }) => {
           "-"
         )}-${year}/${id}`}
         className={`${
-          advert_package_id == "3"
+          advert_package_id == "4" || advert_package_id == "7"
             ? "bg-[#FEF9EE] border-4  border-[#FFB800]"
             : "bg-[#F9FBFE]"
         } rounded-lg sm:px-5 sm:py-5 p-4 block mt-11 `}
@@ -199,7 +199,7 @@ const ListingItem = ({ itemData }) => {
                 );
               })}
             </Slider>
-            {advert_package_id == "3" ? (
+            {advert_package_id == "4" || advert_package_id == "7" ? (
               <img
                 src={featuredRevert}
                 className="w-28 absolute top-0 right-0"
@@ -382,7 +382,7 @@ const ListingItem = ({ itemData }) => {
         <Tooltip id="my-tooltip-12" place="bottom" content="Part Exchange" />
         <div
           className={`flex  sm:items-center sm:mt-8 mt-4 sm:flex-row flex-col ${
-            advert_package_id == "3"
+            advert_package_id == "4" || advert_package_id == "7"
               ? "border-t-2 pt-6 pb-3 justify-between"
               : "justify-end"
           }`}
