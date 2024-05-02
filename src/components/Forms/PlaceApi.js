@@ -55,6 +55,7 @@ const PlaceApi = () => {
     });
 
     placeInput?.addEventListener("change", (e) => {
+      console.log("OKAy");
       setFieldValue("city", e.target.value);
       setPlace(e.target.value);
     });
@@ -69,7 +70,7 @@ const PlaceApi = () => {
         placeInput.removeEventListener("blur", handleInputBlur);
       };
     }
-  }, []);
+  }, [values]);
 
   return (
     <>
