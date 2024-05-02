@@ -18,7 +18,6 @@ export const TagsInput = ({ field, form, isEditMode }) => {
   const handleTagInput = (e) => {
     const inputValue = e.target.value.trim();
     // form.setFieldValue(field.name, inputValue);
-    console.log(values?.tags);
   };
 
   function generateUniqueId(maxId) {
@@ -68,8 +67,6 @@ export const TagsInput = ({ field, form, isEditMode }) => {
       setFieldValue("tags", listingTags);
     }
   }, []);
-
-  console.log(values);
 
   const handleTagRemoval = (tagToRemove) => {
     if (isEditMode) {

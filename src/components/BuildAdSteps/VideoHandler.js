@@ -7,7 +7,6 @@ const VideoHandler = ({
   form,
   label,
   accept,
-  allowMultiple,
   maxFiles,
   uploadingText,
   isEditMode,
@@ -16,7 +15,7 @@ const VideoHandler = ({
   const [, , helpers] = useField(field.name);
   const { values } = useFormikContext();
   const { advert } = Object(values);
-  const [videoPreviews, setVideoPreviews] = React.useState([]);
+  const [videoPreview, setVideoPreview] = React.useState(null);
 
   useEffect(() => {
     // Fetch video from the backend if in edit mode
@@ -24,10 +23,14 @@ const VideoHandler = ({
       const { advert } = Object(values);
       const { video } = advert;
       if (video) {
-        setVideoPreviews([URL.createObjectURL(video[0])]);
-      } else if (video && typeof video === "string") {
-        // Assuming video is already a URL
-        setVideoPreviews([video]);
+        if (video instanceof Blob || video instanceof File) {
+          setVideoPreview(URL.createObjectURL(video));
+        } else if (typeof video === "string") {
+          // Assuming video is already a URL
+          setVideoPreview(video);
+        } else {
+          setVideoPreview(video.video);
+        }
       }
     } else {
       if (
@@ -35,61 +38,37 @@ const VideoHandler = ({
         values.video.length > 0 &&
         values.video[0] instanceof File
       ) {
-        setVideoPreviews([URL.createObjectURL(values.video[0])]);
+        setVideoPreview(URL.createObjectURL(values.video[0]));
       }
     }
   }, [isEditMode, values]);
 
   const handleChange = (event) => {
     const { setFieldValue } = form;
-    const files = event.currentTarget.files;
+    const file = event.currentTarget.files[0];
 
-    if (files.length + videoPreviews.length > maxFiles) {
-      // Limiting the number of files to maxFiles
-      alert(`You can upload a maximum of ${maxFiles} files.`);
-      return;
-    }
-
-    if (files.length > 0) {
-      let newVideoPreviews = [...videoPreviews];
-
-      Array.from(files).forEach((file) => {
-        if (file.type.startsWith("video/")) {
-          newVideoPreviews.push(URL.createObjectURL(file));
+    if (file) {
+      if (file instanceof File) {
+        setVideoPreview(URL.createObjectURL(file));
+        if (isEditMode) {
+          // If in edit mode, update Formik values with the new file
+          setFieldValue("advert.video", file);
+        } else {
+          setFieldValue("video", file);
         }
-      });
-
-      setVideoPreviews(newVideoPreviews);
-
-      if (isEditMode) {
-        // If in edit mode, update Formik values with the accumulatedFiles
-        const accumulatedFiles = [...(form.values[field.name] || []), ...files];
-        setFieldValue("advert.video", accumulatedFiles);
       } else {
-        const accumulatedFiles = [...(form.values[field.name] || []), ...files];
-        setFieldValue("video", accumulatedFiles);
+        alert("Please select a valid video file.");
       }
     }
   };
 
-  const handleDelete = (index, type) => {
-    let updatedPreviews = [];
+  const handleDelete = () => {
+    setVideoPreview(null);
 
-    if (type === "video") {
-      updatedPreviews = [...videoPreviews];
-      updatedPreviews.splice(index, 1);
-      setVideoPreviews(updatedPreviews);
-
-      if (isEditMode && advert.video) {
-        form.setFieldValue("advert.video", null); // Remove the video field
-      }
-    }
-
-    if (!isEditMode) {
-      const files = form.values[field.name];
-      const newFiles = Array.from(files);
-      newFiles.splice(index, 1);
-      form.setFieldValue(field.name, newFiles);
+    if (isEditMode && advert.video) {
+      form.setFieldValue("advert.video", null); // Remove the video field
+    } else {
+      form.setFieldValue(field.name, null);
     }
   };
 
@@ -98,51 +77,40 @@ const VideoHandler = ({
       <div className="w-full relative">
         <p className="text-[#11133D] font-semibold mb-3">{label}</p>
 
-        {/* Render image and video previews */}
-        {/* {imagePreviews.concat(videoPreviews).length > 0 ? ( */}
-        <div className="flex smallLg:flex-nowrap flex-wrap justify-start gap-7">
-          {videoPreviews.map((preview, index) => (
-            <div
-              key={`video-${index}`}
-              className="relative smallLg:w-1/5 sm:w-1/3 w-full min-h-[154px] max-h-[154px] mt-5"
+        {/* Render video preview */}
+        {videoPreview && (
+          <div className="relative smallLg:w-1/5 sm:w-1/3 w-full min-h-[154px] max-h-[154px] mt-5">
+            <video
+              className="object-cover rounded-lg w-full min-h-[154px] max-h-[154px]"
+              controls
             >
-              <video className="object-cover rounded-lg w-full min-h-[154px] max-h-[154px]">
-                <source src={preview}></source>
-              </video>
+              <source src={videoPreview}></source>
+            </video>
+            {/* Render delete button */}
+            <button
+              type="button"
+              className="absolute top-2 right-2 bg-white rounded-full p-1"
+              onClick={handleDelete}
+            >
+              <FaTimes color="#FF4A6B" />
+            </button>
+          </div>
+        )}
 
-              {/* {isEditMode && ( */}
-              <button
-                type="button"
-                className="absolute top-2 right-2 bg-white rounded-full p-1"
-                onClick={() => handleDelete(index, "video")}
-              >
-                <FaTimes color="#FF4A6B" />
-              </button>
-              {/* )} */}
-            </div>
-          ))}
-        </div>
-        {/* ) : ( */}
-        <>
+        {/* Render upload button */}
+        {!videoPreview && (
           <div className="border-2 relative rounded mt-5 border-[#0D1A8B] border-dashed flex items-center justify-center smallLg:w-1/5 sm:w-1/3 w-full min-h-[154px] max-h-[154px]">
             <FaPlus size={60} color="#0D1A8B" />
             <input
               style={{ opacity: "0", inset: "0", position: "absolute" }}
               type="file"
               onChange={handleChange}
-              accept={
-                accept ||
-                (allowMultiple
-                  ? "image/jpeg, image/png, video/*"
-                  : "image/jpeg, image/png, video/*")
-              }
-              multiple={allowMultiple}
+              accept={accept || "video/*"}
               className="absolute bg-slate-500 inset-0 cursor-pointer"
               {...props}
             />
           </div>
-        </>
-        {/* )} */}
+        )}
       </div>
     </>
   );

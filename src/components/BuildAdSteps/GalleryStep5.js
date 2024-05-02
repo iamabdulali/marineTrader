@@ -1,15 +1,24 @@
 import React, { useContext, useEffect, useState } from "react";
 import BuildLayout from "./BuildLayout";
-import { Field } from "formik";
+import { Field, useFormikContext } from "formik";
 import ImageAndVideoHandler from "./ImageAndVideoHandler";
 import { AuthContext } from "../../Context/AuthContext";
 import VideoHandler from "./VideoHandler";
 import { getPackages } from "../../utils/fetch/fetchData";
 
 const GalleryStep5 = ({ isEditMode }) => {
-  const { selectedPackage, user } = useContext(AuthContext);
+  const { values } = useFormikContext();
+  const { user } = useContext(AuthContext);
   const { seller_type } = Object(user);
   const [packages, setPackages] = useState([]);
+
+  const { advert } = Object(values);
+
+  const { advert_package_id } = Object(advert);
+  console.log({ advert_package_id });
+
+  let currentPackage = values?.advert_package;
+  let selectedPackage = isEditMode ? advert_package_id : currentPackage;
 
   useEffect(() => {
     getPackages(setPackages, seller_type);
@@ -31,7 +40,11 @@ const GalleryStep5 = ({ isEditMode }) => {
           maxFiles={totalPhotos} // Set the maximum number of files
         />
       </BuildLayout>
-      {selectedPackage == "2" || selectedPackage == "3" ? (
+      {selectedPackage == "1" ||
+      selectedPackage == "2" ||
+      selectedPackage == "4" ? (
+        ""
+      ) : (
         <BuildLayout heading="Video">
           <Field
             uploadingText="Video"
@@ -43,8 +56,6 @@ const GalleryStep5 = ({ isEditMode }) => {
             maxFiles={1} // Set the maximum number of files
           />
         </BuildLayout>
-      ) : (
-        ""
       )}
     </>
   );
