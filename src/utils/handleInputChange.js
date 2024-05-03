@@ -8,6 +8,8 @@ export const handleInputChange = (
   useName
 ) => {
   const { name, value } = e.target;
+
+  console.log({ name, value });
   if (isEditMode) {
     if (name == dropdownName) {
       const selectedCurrency = dropdownOptions.find((c) =>
@@ -22,6 +24,7 @@ export const handleInputChange = (
         console.error(`Selected ${dropdownName} not found`);
       }
     } else {
+      console.log("OK");
       setFieldValue(`${changeFor}.${name}`, value);
     }
   } else {

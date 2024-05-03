@@ -1,28 +1,24 @@
-import React, { useContext, useEffect, useState } from "react";
+import React from "react";
 import BuildLayout from "./BuildLayout";
 import { Field, useFormikContext } from "formik";
 import ImageAndVideoHandler from "./ImageAndVideoHandler";
-import { AuthContext } from "../../Context/AuthContext";
 import VideoHandler from "./VideoHandler";
-import { getPackages } from "../../utils/fetch/fetchData";
 
-const GalleryStep5 = ({ isEditMode }) => {
+const GalleryStep5 = ({ isEditMode, packages }) => {
   const { values } = useFormikContext();
-  const { user } = useContext(AuthContext);
-  const { seller_type } = Object(user);
-  const [packages, setPackages] = useState([]);
 
   const { advert } = Object(values);
 
   const { advert_package_id } = Object(advert);
-  console.log({ advert_package_id });
+
+  let numberToSubtract = values?.advert_package > 4 ? 4 : 0;
 
   let currentPackage = values?.advert_package;
-  let selectedPackage = isEditMode ? advert_package_id : currentPackage;
+  let selectedPackage = isEditMode
+    ? +advert_package_id - numberToSubtract
+    : +currentPackage - numberToSubtract;
 
-  useEffect(() => {
-    getPackages(setPackages, seller_type);
-  }, []);
+  console.log(selectedPackage);
 
   const totalPhotos = packages[selectedPackage]?.max_photo;
 
@@ -42,7 +38,7 @@ const GalleryStep5 = ({ isEditMode }) => {
       </BuildLayout>
       {selectedPackage == "1" ||
       selectedPackage == "2" ||
-      selectedPackage == "4" ? (
+      selectedPackage == "5" ? (
         ""
       ) : (
         <BuildLayout heading="Video">

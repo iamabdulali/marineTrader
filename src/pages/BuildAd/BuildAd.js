@@ -25,7 +25,11 @@ import { toast } from "react-toastify";
 import { displayErrorMessages } from "../../utils/displayErrors";
 import axios from "axios";
 import { Oval } from "react-loader-spinner";
-import { fetchOptions, getOneAdvert } from "../../utils/fetch/fetchData";
+import {
+  fetchOptions,
+  getOneAdvert,
+  getPackages,
+} from "../../utils/fetch/fetchData";
 import LoadingWrapper from "../../utils/LoadingWrapper";
 
 const BuildAd = () => {
@@ -39,13 +43,22 @@ const BuildAd = () => {
   const [advert, setAdvert] = useState([]);
   const [loading, setLoading] = useState(true);
   const [hasSpotlight, setHasSpotlights] = useState(false);
+  const [packages, setPackages] = useState([]);
+
   const {
     selectedPackage,
     selectedCategory,
     dispatch,
     selectedPackageId,
     deleted_image_ids,
+    user,
   } = useContext(AuthContext);
+
+  const { seller_type } = Object(user);
+
+  useEffect(() => {
+    getPackages(setPackages, seller_type);
+  }, []);
 
   const pathArray = window.location.pathname.split("/");
   const id = pathArray[4];
@@ -319,6 +332,10 @@ const BuildAd = () => {
         modifications,
         powers,
         images,
+        category_spotlights_continents,
+        home_spotlights_continents,
+        home_spotlights_countries,
+        category_spotlights_countries,
       } = Object(advert);
       const tagNames = tags.map((tag) => tag.name);
       const accessoriesArray = accessories.map((accessory) => accessory.name);
@@ -330,6 +347,18 @@ const BuildAd = () => {
         (convenience) => convenience.name
       );
       const powersArray = powers.map((power) => power.name);
+      const homeSpotlightsCountries = home_spotlights_countries.map(
+        (country) => country.country_id
+      );
+      const homeSpotlightsCountinents = home_spotlights_continents.map(
+        (continent) => continent.continent_id
+      );
+      const categorySpotlightsCountries = category_spotlights_countries.map(
+        (country) => country.country_id
+      );
+      const categorySpotlightsCountinents = category_spotlights_continents.map(
+        (continent) => continent.continent_id
+      );
 
       const updatedValues = {
         ...advert,
@@ -347,6 +376,10 @@ const BuildAd = () => {
         features: featuresArray,
         conveniences: conveniencesArray,
         powers: powersArray,
+        home_spotlights_countries: homeSpotlightsCountries,
+        home_spotlights_continents: homeSpotlightsCountinents,
+        category_spotlights_countries: categorySpotlightsCountries,
+        category_spotlights_continents: categorySpotlightsCountinents,
         images: arrayContainsFile(images) ? filterFilesFromArray(images) : [],
       };
 
@@ -448,8 +481,12 @@ const BuildAd = () => {
             <Form>
               {step === 1 && <ItemDescriptionStep2 isEditMode={EditMode} />}
               {step === 2 && <ItemFeaturesStep3 isEditMode={EditMode} />}
-              {step === 3 && <NotesSteps4 isEditMode={EditMode} />}
-              {step === 4 && <GalleryStep5 isEditMode={EditMode} />}
+              {step === 3 && (
+                <NotesSteps4 packages={packages} isEditMode={EditMode} />
+              )}
+              {step === 4 && (
+                <GalleryStep5 packages={packages} isEditMode={EditMode} />
+              )}
               {step === 5 && <PriceStep6 isEditMode={EditMode} />}
               {/* Navigation buttons */}
               <div className="flex sm:flex-row flex-col-reverse align-center justify-between mt-10 mb-24">

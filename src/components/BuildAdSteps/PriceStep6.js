@@ -257,27 +257,7 @@ const PriceStep6 = ({ isEditMode }) => {
           ""
         )}
 
-        {/* {(!isPrivateSeller && values?.advert_package == "5") ||
-        values?.advert_package == "6" ? (
-          <div className="mt-6 pt-6 border-t-2">
-            <div className="flex items-center justify-between">
-              <p className="text-[#0D1A8B] font-semibold capitalize sm:text-lg text-sm">
-                Available Upgrades
-              </p>
-              <button
-                onClick={() => openModal(setIsBundleOpen)}
-                type="button"
-                className="bg-[#0D1A8B] hover:bg-[#0a1dbd] text-sm font-medium text-white py-2 px-4 rounded-md"
-              >
-                Buy a Bundle
-              </button>
-            </div>
-          </div>
-        ) : (
-          ""
-        )} */}
-
-        {currentPackage != 3 ? (
+        {!isEditMode && currentPackage != 3 ? (
           <p className="text-sm mt-8">
             <button
               onClick={() => handlePackageUpgrade(values, setFieldValue)}
