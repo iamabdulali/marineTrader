@@ -516,7 +516,8 @@ const ListingTable = ({
                               Pay Now
                             </Link>
                           ) : advert_status == "paid" &&
-                            advert_package_id != "3" ? (
+                            advert_package_id != "4" &&
+                            advert_package_id != "7" ? (
                             <Link
                               to={`/payment/advert-upgrade/${id}`}
                               className={`text-[#FFB800] border-2 border-[#FFB800] hover:bg-[#FFB800] hover:text-white px-3 py-3 w-full text-sm rounded-md block text-center`}
