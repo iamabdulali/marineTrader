@@ -362,12 +362,14 @@ const BuildAd = () => {
         (continent) => continent.continent_id
       );
 
+      console.log(video instanceof File ? video : null);
+
       const updatedValues = {
         ...advert,
         _method: "put",
         deleted_image_ids: deleted_image_ids,
         deleted_video: deleted_video,
-        video: deleted_video == null ? null : video,
+        video: video instanceof File ? video : null,
         make: make?.name || make,
         model: model?.name || model,
         category: category?.id || category,

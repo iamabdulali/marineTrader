@@ -32,7 +32,7 @@ const initialValues = {
   confirmEmail: "",
   password: "",
   confirmPassword: "",
-  countryCode: "",
+  calling_code: "",
   timezone: "",
   open_public_holidays: "",
   company_logo: null,
