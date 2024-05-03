@@ -102,7 +102,7 @@ const PrivateSellerSignUpForm = ({ setFieldValue, values }) => {
               <Field
                 value={getPhoneCodeByCountryName(values?.country)}
                 as="select"
-                name="countryCode"
+                name="calling_code"
                 className="rounded-md py-2 w-full appearance-none sm:appearance-auto bg-white"
               >
                 {countries.map(({ phone_code, iso2, id }) => {

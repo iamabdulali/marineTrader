@@ -83,6 +83,7 @@ const ListingItem = ({ itemData }) => {
     user_name,
     seller_type,
     currency_id,
+    calling_code,
   } = Object(listItemUser);
 
   const [countries, setCountries] = useState([]);
@@ -503,13 +504,17 @@ const ListingItem = ({ itemData }) => {
               data-tooltip-id={`phone_no${id}`}
               onClick={(e) => {
                 e.preventDefault();
-                window.location.href = `tel:${phone_no}`;
+                window.location.href = `tel:${calling_code + phone_no}`;
               }}
               className="bg-[#0D1A8B] hover:bg-[#0a1dbd] sm:w-12 sm:h-12 h-9 w-9 sm:rounded-xl rounded-md flex items-center justify-center"
             >
               <FaPhone className="sm:w-6 sm:h-6 h-4 w-4" color="#fff" />
             </a>
-            <Tooltip id={`phone_no${id}`} place="bottom" content={phone_no} />
+            <Tooltip
+              id={`phone_no${id}`}
+              place="bottom"
+              content={calling_code + phone_no}
+            />
           </div>
         </div>
       </Link>

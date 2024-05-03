@@ -27,6 +27,7 @@ const PrivateSeller = () => {
     city: "",
     postcode: "",
     country: "",
+    calling_code: "",
     region: "",
     currency: "",
     phone_no: "",

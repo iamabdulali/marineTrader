@@ -28,7 +28,6 @@ const handlePlaceChange = (e, setFieldValue) => {
 
 const PlaceApi = () => {
   const { values, setFieldValue } = useFormikContext();
-  console.log(values?.city);
   const [place, setPlace] = useState("");
 
   const handleRequestError = (e) => {
@@ -55,7 +54,6 @@ const PlaceApi = () => {
     });
 
     placeInput?.addEventListener("change", (e) => {
-      console.log("OKAy");
       setFieldValue("city", e.target.value);
       setPlace(e.target.value);
     });

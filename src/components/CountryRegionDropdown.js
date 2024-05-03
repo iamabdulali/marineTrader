@@ -73,7 +73,13 @@ const CountryRegionDropdown = () => {
   //   setCitiesByStates(selectedCities.cities);
   // }
 
-  console.log(values);
+  function getPhoneCodeByCountryName(countryName) {
+    const country = countries.find((country) => country.id == countryName);
+    console.log(country);
+    return country ? country?.phone_code : null;
+  }
+
+  console.log(values?.calling_code);
 
   return (
     <>
@@ -90,10 +96,14 @@ const CountryRegionDropdown = () => {
               name="country"
               className="border-[#CECED7] border-2 rounded-md p-3 w-full appearance-none sm:appearance-auto bg-white"
               onChange={(e) => {
+                console.log(e.target.value);
                 getStatesByCountry(e.target.value);
                 setFieldValue("country", getCountry(e.target.value).id);
-                // setFieldValue("city", "");
                 setFieldValue("region", "");
+                setFieldValue(
+                  "calling_code",
+                  getPhoneCodeByCountryName(getCountry(e.target.value).id)
+                );
               }}
             >
               <option>Select a Country</option>

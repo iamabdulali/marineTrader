@@ -282,9 +282,9 @@ const CompanyInfo = ({ editable, isPrivateSeller }) => {
           <Field
             value={getPhoneCodeByCountryName(values?.user.country)}
             as="select"
-            name="countryCode"
-            disabled={true}
-            className="rounded-md py-2 w-full appearance-none text-sm bg-white"
+            name="calling_code"
+            // disabled={true}
+            className="rounded-md py-2 callingCode w-full appearance-none text-sm bg-white"
           >
             {countries.map(({ phone_code, iso2, id }) => {
               return (
