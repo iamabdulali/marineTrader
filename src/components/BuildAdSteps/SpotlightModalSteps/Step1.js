@@ -41,9 +41,15 @@ const Step1 = ({ showSpotlightSelection, spotlightFor, isEditMode }) => {
     const valueToModify = values?.advert?.[name] || [];
 
     if (isCountrySpotlight || isContinentSpotlight) {
-      const spotlightPrice = Number(
-        selectedType[value]?.spotlight_price.match(/\d+\.\d+/)[0]
-      );
+      // const spotlightPrice = Number(
+      //   selectedType[value]?.spotlight_price.match(/\d+\.\d+/)[0]
+      // );
+
+      const spotlightPriceMatch =
+        selectedType[value]?.spotlight_price.match(/\d+\.\d+/);
+      const spotlightPrice = spotlightPriceMatch
+        ? Number(spotlightPriceMatch[0])
+        : 0; // or any other default value you want
 
       console.log(spotlightPrice);
 
