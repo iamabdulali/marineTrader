@@ -1,6 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { ErrorMessage, useField, useFormikContext } from "formik";
 import { FaPlus, FaTimes } from "react-icons/fa";
+import { AuthContext } from "../../Context/AuthContext";
 
 const VideoHandler = ({
   field,
@@ -15,7 +16,9 @@ const VideoHandler = ({
   const [, , helpers] = useField(field.name);
   const { values } = useFormikContext();
   const { advert } = Object(values);
-  const [videoPreview, setVideoPreview] = React.useState(null);
+  const [videoPreview, setVideoPreview] = useState(null);
+  const [deletedVideoId, setDeletedVideoId] = useState(null);
+  const { dispatch } = useContext(AuthContext);
 
   useEffect(() => {
     // Fetch video from the backend if in edit mode
@@ -66,11 +69,19 @@ const VideoHandler = ({
     setVideoPreview(null);
 
     if (isEditMode && advert.video) {
+      setDeletedVideoId(advert.video.id);
       form.setFieldValue("advert.video", null); // Remove the video field
     } else {
       form.setFieldValue(field.name, null);
     }
   };
+
+  useEffect(() => {
+    dispatch({
+      type: "DELETED_VIDEO_ID",
+      payload: deletedVideoId,
+    });
+  }, [advert]);
 
   return (
     <>

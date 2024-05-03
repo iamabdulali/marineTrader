@@ -11,12 +11,10 @@ const GalleryStep5 = ({ isEditMode, packages }) => {
 
   const { advert_package_id } = Object(advert);
 
-  let numberToSubtract = values?.advert_package > 4 ? 4 : 0;
+  let currentPackage = isEditMode ? advert_package_id : values?.advert_package;
+  let numberToSubtract = currentPackage > 4 ? 4 : 0;
 
-  let currentPackage = values?.advert_package;
-  let selectedPackage = isEditMode
-    ? +advert_package_id - numberToSubtract
-    : +currentPackage - numberToSubtract;
+  let selectedPackage = currentPackage - numberToSubtract;
 
   console.log(selectedPackage);
 
@@ -36,9 +34,7 @@ const GalleryStep5 = ({ isEditMode, packages }) => {
           maxFiles={totalPhotos} // Set the maximum number of files
         />
       </BuildLayout>
-      {selectedPackage == "1" ||
-      selectedPackage == "2" ||
-      selectedPackage == "5" ? (
+      {selectedPackage == "0" || selectedPackage == "1" ? (
         ""
       ) : (
         <BuildLayout heading="Video">

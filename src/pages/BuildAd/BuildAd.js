@@ -51,6 +51,7 @@ const BuildAd = () => {
     dispatch,
     selectedPackageId,
     deleted_image_ids,
+    deleted_video,
     user,
   } = useContext(AuthContext);
 
@@ -336,6 +337,7 @@ const BuildAd = () => {
         home_spotlights_continents,
         home_spotlights_countries,
         category_spotlights_countries,
+        video,
       } = Object(advert);
       const tagNames = tags.map((tag) => tag.name);
       const accessoriesArray = accessories.map((accessory) => accessory.name);
@@ -364,6 +366,8 @@ const BuildAd = () => {
         ...advert,
         _method: "put",
         deleted_image_ids: deleted_image_ids,
+        deleted_video: deleted_video,
+        video: deleted_video == null ? null : video,
         make: make?.name || make,
         model: model?.name || model,
         category: category?.id || category,
@@ -477,7 +481,10 @@ const BuildAd = () => {
         // onSubmit={handleSubmit}
       >
         {({ isValid, values, setErrors, setTouched, setFieldValue }) => (
-          <LoadingWrapper loading={EditMode ? loading : false}>
+          <LoadingWrapper
+            className=" xl:-translate-x-0 -translate-x-1/2"
+            loading={EditMode ? loading : false}
+          >
             <Form>
               {step === 1 && <ItemDescriptionStep2 isEditMode={EditMode} />}
               {step === 2 && <ItemFeaturesStep3 isEditMode={EditMode} />}

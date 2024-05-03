@@ -62,6 +62,8 @@ export const authReducer = (state, action) => {
       return { ...state, country: action.payload };
     case "DELETED_IMAGE_IDS":
       return { ...state, deleted_image_ids: action.payload };
+    case "DELETED_VIDEO_ID":
+      return { ...state, deleted_video: action.payload };
     default:
       return state;
   }
@@ -75,6 +77,7 @@ export const AuthContextProvider = ({ children }) => {
     selectedCategory: null,
     listingTags: [],
     deleted_image_ids: [],
+    deleted_video: null,
     modificationCheckboxes: [
       "Standard",
       "ECU Upgrade",

@@ -141,15 +141,18 @@ const ItemDescriptionStep2 = ({ isEditMode }) => {
     }
   }, [selectedCategory, make, values?.make]);
 
-  let numberToSubtract = values?.advert_package > 4 ? 4 : 1;
+  let currentPackage = isEditMode ? advert_package_id : values?.advert_package;
+  let numberToSubtract = currentPackage > 4 ? 4 : 0;
+
+  let selectedPackage = currentPackage - numberToSubtract;
 
   return (
     <BuildLayout
       heading="Item Description"
       otherContent={`Current Package: ${
         isEditMode
-          ? advertPackages[+advert_package_id - numberToSubtract]
-          : advertPackages[+values?.advert_package - numberToSubtract]
+          ? advertPackages[selectedPackage]
+          : advertPackages[selectedPackage]
       }`}
     >
       <FormField
