@@ -12,13 +12,13 @@ const GalleryStep5 = ({ isEditMode, packages }) => {
   const { advert_package_id } = Object(advert);
 
   let currentPackage = isEditMode ? advert_package_id : values?.advert_package;
-  let numberToSubtract = currentPackage > 4 ? 4 : 0;
+  let numberToSubtract = currentPackage > 4 ? 4 : 1;
 
   let selectedPackage = currentPackage - numberToSubtract;
 
-  console.log(selectedPackage);
-
   const totalPhotos = packages[selectedPackage]?.max_photo;
+
+  console.log(packages[selectedPackage]);
 
   return (
     <>
