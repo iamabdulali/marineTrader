@@ -484,7 +484,7 @@ const BuildAd = () => {
       >
         {({ isValid, values, setErrors, setTouched, setFieldValue }) => (
           <LoadingWrapper
-            className=" xl:-translate-x-0 -translate-x-1/2"
+            className="top-24 xl:-translate-x-0 -translate-x-1/2"
             loading={EditMode ? loading : false}
           >
             <Form>

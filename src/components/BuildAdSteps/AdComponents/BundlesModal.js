@@ -52,6 +52,10 @@ const BundlesModal = ({ onClick, setSelectedBundle, bundleType }) => {
     if (!isValid) toast.error("Please Fill All Fields To Buy Bundle");
   };
 
+  const { user, currencyRates } = useContext(AuthContext);
+
+  const { currency } = Object(user);
+
   return (
     <form>
       <div className="bg-gradient-to-t w-full py-4 rounded-tr-lg rounded-tl-lg from-[#0d1a8b] to-[#3241cb]">
@@ -79,7 +83,9 @@ const BundlesModal = ({ onClick, setSelectedBundle, bundleType }) => {
                 bgColor={`${bgVariants[id - 1]}`}
                 BundleName={name}
                 adverts={total_adverts}
-                price={amount}
+                price={`${currency?.symbol}${Number(
+                  amount * currencyRates[currency?.currency_code]
+                ).toFixed(2)}`}
                 checkbox={id}
                 setSelectedBundle={setSelectedBundle}
               />

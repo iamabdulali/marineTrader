@@ -8,12 +8,10 @@ const NotesSteps4 = ({ isEditMode, packages }) => {
   const { values, setFieldValue } = useFormikContext();
   const { advert } = Object(values);
   const { advert_package_id } = Object(advert);
-  let numberToSubtract = values?.advert_package > 4 ? 4 : 1;
+  let currentPackage = isEditMode ? advert_package_id : values?.advert_package;
+  let numberToSubtract = currentPackage > 4 ? 4 : 1;
 
-  let currentPackage = values?.advert_package;
-  let selectedPackage = isEditMode
-    ? +advert_package_id - numberToSubtract
-    : +currentPackage - numberToSubtract;
+  let selectedPackage = currentPackage - numberToSubtract;
 
   const descriptionLength = packages[selectedPackage]?.description_length;
 

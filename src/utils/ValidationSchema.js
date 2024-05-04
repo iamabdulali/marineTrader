@@ -122,19 +122,19 @@ export const buildAdBigBoatsValidationSchema = Yup.object().shape({
   ),
   bow: Yup.object().shape({
     make: Yup.string().required("Make is required"),
-    model: Yup.string().required("Model is required"),
+    modal: Yup.string().required("Model is required"),
     year: Yup.string().required("Year is required"),
     power: Yup.string().required("Power is required"),
   }),
   stern: Yup.object().shape({
     make: Yup.string().required("Make is required"),
-    model: Yup.string().required("Model is required"),
+    modal: Yup.string().required("Model is required"),
     year: Yup.string().required("Year is required"),
     power: Yup.string().required("Power is required"),
   }),
   generator: Yup.object().shape({
     make: Yup.string().required("Make is required"),
-    model: Yup.string().required("Model is required"),
+    modal: Yup.string().required("Model is required"),
     year: Yup.string().required("Year is required"),
     power: Yup.string().required("Power is required"),
     consumption: Yup.string().required("Consumption is required"),
@@ -153,7 +153,9 @@ export const emptySchema = Yup.object({});
 
 export const privateSellerValidationSchema = Yup.object({
   name: Yup.string().required("Please enter your Full Name"),
-  user_name: Yup.string().required("Please enter your User Name"),
+  user_name: Yup.string()
+    .required("User Name is required")
+    .matches(/^\S*$/, "Username must not contain spaces"),
   email: Yup.string()
     .email("Enter a valid email address")
     .required("Email Address is required"),

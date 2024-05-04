@@ -20,15 +20,10 @@ import Specifications from "./Specifications";
 import ItemVideos from "./ItemVideos";
 
 import HomeHeading from "../../components/HomeHeading";
-import { SpotLightListingsData2 } from "../../utils/DummyData";
 import SpotLightListings from "../../components/SpotLightListings/SpotLightListings";
 import MakeOfferSection from "./MakeOfferSection";
 import OfferSectionHeader from "./OfferSectionHeader";
-import {
-  fetchOptions,
-  getAdvert,
-  getOneAdvert,
-} from "../../utils/fetch/fetchData";
+import { getOneAdvert } from "../../utils/fetch/fetchData";
 import LoadingWrapper from "../../utils/LoadingWrapper";
 import axios from "axios";
 import { SERVER_BASE_URL } from "../..";
@@ -43,10 +38,7 @@ const ItemDetailPage = () => {
   const [similarListings, setSimilarListings] = useState([]);
 
   const pathArray = window.location.pathname.split("/");
-  console.log(pathArray);
-  // const idString = pathArray[2]; // This will give you 'Yamaha-128'
   const id = pathArray[pathArray.length - 1];
-  console.log(id);
 
   useEffect(() => {
     getOneAdvert(setAdvert, id, "advert-details", setLoading);
@@ -74,8 +66,6 @@ const ItemDetailPage = () => {
       console.log(error);
     }
   };
-
-  console.log(refresh);
 
   useEffect(() => {
     fetchSimilarListings();
@@ -218,7 +208,11 @@ const ItemDetailPage = () => {
                       category_id={category_id}
                       price={price}
                       image={images[0]?.image}
-                      advertID={advert_package_id}
+                      advertID={
+                        +advert_package_id > 4
+                          ? +advert_package_id - 4
+                          : +advert_package_id - 1
+                      }
                       setRefresh={setRefresh}
                     />
                   )

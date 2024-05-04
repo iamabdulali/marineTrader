@@ -93,11 +93,14 @@ const PaymentSummary = ({
 
   if (isAdvertUpgrade) {
     if (advertPackages[advert_package_id] == "Premium") {
-      if (hasSubscription != 0 || hasPremiumBundle != 0) packageAmount = 0;
+      if (hasSubscription != 0 || hasPremiumBundle != 0) console.log("HELO");
     } else if (advertPackages[advert_package_id] == "Standard") {
       if (hasSubscription != 0) packageAmount = 0;
     }
   }
+
+  console.log({ hasPremiumBundle });
+  console.log(advertPackages[advert_package_id]);
 
   let subtotal =
     (Number(amount) || 0) +
@@ -106,15 +109,27 @@ const PaymentSummary = ({
     (Number(spotlights) || 0);
 
   if (!isSubscriptionPage) {
-    if (
-      isAdvertUpgrade &&
-      subtotal != 0 &&
-      hasBundle == 0 &&
-      !isBundleSelected
-    ) {
-      subtotal = subtotal - currentPackageAmount;
+    if (isAdvertUpgrade) {
+      if (subtotal != 0 && hasBundle == 0 && !isBundleSelected) {
+        subtotal = subtotal - currentPackageAmount;
+      } else {
+        if (
+          hasSubscription != 0 &&
+          advertPackages[advert_package_id] == "Premium"
+        ) {
+          console.log("HELO");
+          subtotal = subtotal - currentPackageAmount;
+        }
+      }
+    } else {
+      if (
+        hasSubscription != 0 &&
+        advertPackages[advert_package_id] == "Premium"
+      ) {
+        console.log("HELO");
+        subtotal = subtotal - currentPackageAmount;
+      }
     }
-
     if (isBundleSelected) {
       subtotal = subtotal - Number(packageAmount);
     }

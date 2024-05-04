@@ -4,7 +4,7 @@ import { categoryDropdownValidationSchema } from "../../utils/ValidationSchema";
 import { CategorySelectDropdown } from "../CategorySelectDropdown";
 import { yearsArray } from "../../utils/DummyData";
 import { AuthContext } from "../../Context/AuthContext";
-import { SERVER_BASE_URL } from "../..";
+import { SERVER_BASE_URL, categoriesList } from "../..";
 import axios from "axios";
 
 const CategoryDropdown = ({ onSubmit, category }) => {
@@ -27,11 +27,10 @@ const CategoryDropdown = ({ onSubmit, category }) => {
   const [modals, setModals] = useState([]);
   const [refresh, setRefresh] = useState("");
 
-  const { selectedCategory, conditions, makes, types } =
+  const { selectedCategory, conditions, makes, types, categories, dispatch } =
     useContext(AuthContext);
 
   const fetchModalsByMake = async () => {
-    console.log(refresh);
     try {
       const { data } = await axios.get(
         `${SERVER_BASE_URL}/models?make_id=${refresh}&category_id=${selectedCategory?.id}`
@@ -72,16 +71,36 @@ const CategoryDropdown = ({ onSubmit, category }) => {
                   Category
                 </label>
                 <Field
+                  value={selectedCategory?.id}
+                  onChange={(e) => {
+                    setFieldValue("category", e.target.value);
+                    dispatch({
+                      type: "SELECTED_CATEGORY",
+                      payload: {
+                        name: categoriesList[e.target.value],
+                        id: e.target.value,
+                      },
+                    });
+                  }}
                   as="select"
                   label="Category"
                   name="category"
                   className="border-[#CECED7] mb-4 text-[#8891B2] border-2 rounded-md p-3 w-full sm:appearance-auto appearance-none"
                 >
-                  <option value={selectedCategory?.id}>
+                  {/* <option value={selectedCategory?.id}>
                     {selectedCategory?.name || "Select Category"}
-                  </option>
+                  </option> */}
+                  <option value="0">Select Category</option>
+                  {categories.map(({ name, id }) => {
+                    return (
+                      <option key={id} value={id}>
+                        {name}
+                      </option>
+                    );
+                  })}
                 </Field>
               </div>
+              {console.log(values)}
               <CategorySelectDropdown
                 // valueAsString={true}
                 value={values?.make}
@@ -106,7 +125,7 @@ const CategoryDropdown = ({ onSubmit, category }) => {
                   setFieldValue("model", e.target.value);
                 }}
               />
-              {/* <CategorySelectDropdown
+              <CategorySelectDropdown
                 label="Type"
                 name="type"
                 options={types}
@@ -114,8 +133,8 @@ const CategoryDropdown = ({ onSubmit, category }) => {
                 onChange={(e) => {
                   setFieldValue("type", e.target.value);
                 }}
-              /> */}
-              <CategorySelectDropdown
+              />
+              {/* <CategorySelectDropdown
                 label="Max Price"
                 name="max_price"
                 options={types}
@@ -123,7 +142,7 @@ const CategoryDropdown = ({ onSubmit, category }) => {
                 onChange={(e) => {
                   setFieldValue("type", e.target.value);
                 }}
-              />
+              /> */}
             </div>
             {/* <div className="flex lg:flex-row gap-4 ">
               <CategorySelectDropdown

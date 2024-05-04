@@ -69,15 +69,19 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
 
   let packageType;
 
+  let numberToSubtract = +advert_package_id > 4 ? 4 : 1;
+
+  let currentPackage = +advert_package_id - numberToSubtract;
+
   useEffect(() => {
     getOneAdvert(setAdvert, id, "advert", setLoading);
     getPackages(setPackages, seller_type, setLoading);
   }, [user]);
 
-  if (advertPackages[advert_package_id] == "Standard") {
+  if (advertPackages[currentPackage] == "Standard") {
     packageType = "Premium";
   } else {
-    packageType = advertPackages[advert_package_id];
+    packageType = advertPackages[currentPackage];
   }
 
   useEffect(() => {
@@ -86,7 +90,7 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
 
   useEffect(() => {
     fetchOptions(
-      `bundle/advert/remains?type=${advertPackages[advert_package_id]}`,
+      `bundle/advert/remains?type=${advertPackages[currentPackage]}`,
       setHasBundle,
       setLoading
     );
@@ -215,10 +219,6 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
   // if (advert_status == "paid") {
   //   navigate("/dashboard");
   // }
-
-  let numberToSubtract = +advert_package_id > 4 ? 4 : 1;
-
-  let currentPackage = +advert_package_id - numberToSubtract;
 
   return (
     <>

@@ -24,19 +24,52 @@ export default function Notifications() {
     );
   }, []);
 
+  const notificationTypes = [
+    {
+      type: "AppModelsAdvert",
+      path: "/selling",
+    },
+    {
+      type: "AppModelsSubscription",
+      path: "/subscriptions",
+    },
+    {
+      type: "AppModelsOffer",
+      path: "/offers",
+    },
+  ];
+
   return (
     <Layout>
       <p className="rounded-lg shadow-[7px] bg-white font-semibold py-5 px-7">
-        Notifications
-      </p>
+        Notifications{" "}
+      </p>{" "}
       <div className="mt-6 shadow-[7px] bg-white rounded-lg p-7 max-h-[60vh] overflow-y-auto">
         <LoadingWrapper
           loading={loading}
           className="top-0 xl:-translate-x-0 -translate-x-1/2"
         >
-          {notifications.map(({ body, created_at, id }) => {
+          {notifications.map(({ body, created_at, id, notifiable_type }) => {
+            console.log(notifiable_type);
             return (
-              <div
+              <Link
+                to={notificationTypes
+                  .map(({ type, path }) => {
+                    const cleanedNotifiableType = notifiable_type.replace(
+                      /\\/g,
+                      ""
+                    );
+                    console.log(
+                      "Cleaned Notifiable Type:",
+                      cleanedNotifiableType
+                    );
+                    console.log("Type:", type);
+                    const generatedPath =
+                      type === cleanedNotifiableType ? path : "";
+                    console.log("Generated Path:", generatedPath);
+                    return generatedPath;
+                  })
+                  .find((path) => path)} // Find the first non-empty path
                 key={id}
                 className="flex border-b-[1px] py-5 items-center gap-4"
               >
@@ -46,14 +79,14 @@ export default function Notifications() {
                   alt="Notification"
                 />
                 <div>
-                  <p className="text-[#11133D] font-medium mb-2">{body}</p>
-                  <TimeAgo timestamp={created_at} />
-                </div>
-              </div>
+                  <p className="text-[#11133D] font-medium mb-2"> {body} </p>{" "}
+                  <TimeAgo timestamp={created_at} />{" "}
+                </div>{" "}
+              </Link>
             );
-          })}
-        </LoadingWrapper>
-      </div>
+          })}{" "}
+        </LoadingWrapper>{" "}
+      </div>{" "}
     </Layout>
   );
 }

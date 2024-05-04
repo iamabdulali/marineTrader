@@ -22,7 +22,6 @@ const SpotLight = () => {
         }&category_id=${selectedCategory?.id}`
       );
       setData(data.data);
-      console.log(data);
       setLoading(false);
     } catch (error) {
       console.log(error);
@@ -43,8 +42,6 @@ const SpotLight = () => {
       setSpotlightType("category");
     }
   }, [selectedCategory]);
-
-  console.log(spotlightType);
 
   return (
     <div className="mt-24 relative min-h-[40vh]">

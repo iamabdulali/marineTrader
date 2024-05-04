@@ -65,6 +65,7 @@ const CompanyInfo = ({ editable, isPrivateSeller }) => {
   }, []);
 
   function getCountry(countryName) {
+    console.log(countryName);
     const country = countries.find((country) => country?.id == countryName);
     return country;
   }
@@ -107,6 +108,7 @@ const CompanyInfo = ({ editable, isPrivateSeller }) => {
 
   function getPhoneCodeByCountryName(countryName) {
     const country = countries.find((country) => country.id == countryName);
+    console.log(country);
     return country ? country?.phone_code : null;
   }
 
@@ -177,6 +179,11 @@ const CompanyInfo = ({ editable, isPrivateSeller }) => {
             onChange={(e) => {
               handleInputChange(e);
               getStatesByCountry(e.target.value);
+              setFieldValue(
+                "user.calling_code",
+                getPhoneCodeByCountryName(getCountry(e.target.value).id)
+              );
+              console.log(getCountry(e.target.value).id);
             }}
             value={getCountry(values.user.country)?.id}
             disabled={!editable}

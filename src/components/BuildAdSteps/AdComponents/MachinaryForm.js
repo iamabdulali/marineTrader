@@ -142,6 +142,8 @@ const MachinaryForm = ({ formFor, isEditMode, makes }) => {
           />
         )}
 
+        {console.log(values)}
+
         {isCustomModelSelected ? (
           <FormField
             FieldType="text"

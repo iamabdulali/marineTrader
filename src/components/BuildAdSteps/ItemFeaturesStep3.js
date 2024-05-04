@@ -298,7 +298,7 @@ const ItemFeaturesStep3 = ({ isEditMode }) => {
                                       value={
                                         isEditMode
                                           ? engines[selected_engine]?.make
-                                          : values?.engines[selected_engine]
+                                          : values?.engines[selectedEngine]
                                               ?.make
                                       }
                                       // value={modelValue}
@@ -333,7 +333,7 @@ const ItemFeaturesStep3 = ({ isEditMode }) => {
                                       value={
                                         isEditMode
                                           ? engines[selected_engine]?.make
-                                          : values?.engines[selected_engine]
+                                          : values?.engines[selectedEngine]
                                               ?.make
                                       }
                                       onChange={(e) => {
@@ -370,7 +370,7 @@ const ItemFeaturesStep3 = ({ isEditMode }) => {
                                       value={
                                         isEditMode
                                           ? engines[selected_engine]?.model
-                                          : values?.engines[selected_engine]
+                                          : values?.engines[selectedEngine]
                                               ?.model
                                       }
                                       onChange={(e) => {
@@ -404,7 +404,7 @@ const ItemFeaturesStep3 = ({ isEditMode }) => {
                                       value={
                                         isEditMode
                                           ? engines[selected_engine]?.model
-                                          : values?.engines[selected_engine]
+                                          : values?.engines[selectedEngine]
                                               ?.model
                                       }
                                       onChange={(e) => {
@@ -443,7 +443,7 @@ const ItemFeaturesStep3 = ({ isEditMode }) => {
                                       isEditMode
                                         ? engines[selected_engine]?.condition ||
                                           engines[selected_engine]?.condition_id
-                                        : values?.engines[selected_engine]
+                                        : values?.engines[selectedEngine]
                                             ?.condition
                                     }
                                     onChange={(e) => {
@@ -474,7 +474,7 @@ const ItemFeaturesStep3 = ({ isEditMode }) => {
                                       isEditMode
                                         ? engines[selected_engine]?.type ||
                                           engines[selected_engine]?.type_id
-                                        : values?.engines[selected_engine]?.type
+                                        : values?.engines[selectedEngine]?.type
                                     }
                                     onChange={(e) => {
                                       isEditMode
@@ -512,8 +512,7 @@ const ItemFeaturesStep3 = ({ isEditMode }) => {
                                     value={
                                       isEditMode
                                         ? engines[selected_engine]?.hours
-                                        : values?.engines[selected_engine]
-                                            ?.hours
+                                        : values?.engines[selectedEngine]?.hours
                                     }
                                     onChange={(e) =>
                                       isEditMode
@@ -542,7 +541,7 @@ const ItemFeaturesStep3 = ({ isEditMode }) => {
                                     value={
                                       isEditMode
                                         ? engines[selected_engine]?.year
-                                        : values?.engines[selected_engine]?.year
+                                        : values?.engines[selectedEngine]?.year
                                     }
                                     onChange={(e) =>
                                       isEditMode
@@ -580,7 +579,7 @@ const ItemFeaturesStep3 = ({ isEditMode }) => {
                                     value={
                                       isEditMode
                                         ? engines[selected_engine]?.capacity
-                                        : values?.engines[selected_engine]
+                                        : values?.engines[selectedEngine]
                                             ?.capacity
                                     }
                                     onChange={(e) =>
@@ -613,8 +612,7 @@ const ItemFeaturesStep3 = ({ isEditMode }) => {
                                     value={
                                       isEditMode
                                         ? engines[selected_engine]?.power
-                                        : values?.engines[selected_engine]
-                                            ?.power
+                                        : values?.engines[selectedEngine]?.power
                                     }
                                     onChange={(e) =>
                                       isEditMode
@@ -652,7 +650,7 @@ const ItemFeaturesStep3 = ({ isEditMode }) => {
                                     value={
                                       isEditMode
                                         ? engines[selected_engine]?.fuel
-                                        : values?.engines[selected_engine]?.fuel
+                                        : values?.engines[selectedEngine]?.fuel
                                     }
                                     onChange={(e) =>
                                       isEditMode
@@ -685,7 +683,7 @@ const ItemFeaturesStep3 = ({ isEditMode }) => {
                                       isEditMode
                                         ? engines[selected_engine]
                                             ?.service_history
-                                        : values?.engines[selected_engine]
+                                        : values?.engines[selectedEngine]
                                             ?.service_history
                                     }
                                     onChange={(e) =>
@@ -721,7 +719,7 @@ const ItemFeaturesStep3 = ({ isEditMode }) => {
                                     value={
                                       isEditMode
                                         ? engines[selected_engine]?.propeller
-                                        : values?.engines[selected_engine]
+                                        : values?.engines[selectedEngine]
                                             ?.propeller
                                     }
                                     onChange={(e) =>
