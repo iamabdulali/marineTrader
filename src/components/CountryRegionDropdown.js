@@ -79,8 +79,6 @@ const CountryRegionDropdown = () => {
     return country ? country?.phone_code : null;
   }
 
-  console.log(values?.calling_code);
-
   return (
     <>
       <div className="flex gap-4 sm:flex-row flex-col">
@@ -91,18 +89,17 @@ const CountryRegionDropdown = () => {
               size={12}
             />
             <Field
-              value={values.country}
+              value={values?.country}
               as="select"
               name="country"
               className="border-[#CECED7] border-2 rounded-md p-3 w-full appearance-none sm:appearance-auto bg-white"
               onChange={(e) => {
-                console.log(e.target.value);
                 getStatesByCountry(e.target.value);
-                setFieldValue("country", getCountry(e.target.value).id);
+                setFieldValue("country", getCountry(e.target.value)?.id);
                 setFieldValue("region", "");
                 setFieldValue(
                   "calling_code",
-                  getPhoneCodeByCountryName(getCountry(e.target.value).id)
+                  getPhoneCodeByCountryName(getCountry(e.target.value)?.id)
                 );
               }}
             >
@@ -134,7 +131,7 @@ const CountryRegionDropdown = () => {
               className="border-[#CECED7] border-2 rounded-md p-3 w-full appearance-none sm:appearance-auto bg-white"
               as="select"
               onChange={(e) => {
-                setFieldValue("region", getState(e.target.value).id);
+                setFieldValue("region", getState(e.target.value)?.id);
               }}
             >
               <option>Select a Region</option>
