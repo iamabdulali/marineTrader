@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { appErrorImage, error } from "../assets";
-import { Link } from "react-router-dom";
+import { appErrorImage } from "../assets";
 
 class ErrorBoundary extends Component {
   constructor(props) {
@@ -16,7 +15,6 @@ class ErrorBoundary extends Component {
   componentDidCatch(error, errorInfo) {
     // You can also log the error to an error reporting service
     console.error("Error caught by error boundary:", error, errorInfo);
-    alert("Error caught by error boundary:", error, errorInfo);
   }
 
   render() {
@@ -31,7 +29,6 @@ class ErrorBoundary extends Component {
           >
             Back To Homepage
           </a>
-          <p>{error}</p>
         </div>
       );
     }
