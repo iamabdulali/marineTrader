@@ -59,6 +59,9 @@ const PlaceApi = () => {
         setPlace(e.target.value);
       });
 
+      console.log(values);
+      alert(values);
+
       if (placeInput) {
         placeInput.style.border = "none";
         placeInput.style.fontFamily = "Poppins";
