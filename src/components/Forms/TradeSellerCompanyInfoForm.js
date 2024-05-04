@@ -26,7 +26,6 @@ export default function TradeSellerCompanyInfoForm() {
   useEffect(() => {
     fetchOptions("currencies", setCurrency);
     GetCountries().then((result) => {
-      console.log(result);
       setCountries(result);
     });
   }, []);

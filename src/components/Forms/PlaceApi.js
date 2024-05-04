@@ -34,42 +34,6 @@ const PlaceApi = () => {
     console.log(e);
   };
 
-  // useEffect(() => {
-  //   const placeInput =
-  //     document.querySelector("gmpx-place-picker").shadowRoot?.children[1]
-  //       ?.children[0];
-
-  //   const removePlaceBtn =
-  //     document.querySelector("gmpx-place-picker").shadowRoot?.children[1]
-  //       ?.children[1].children[1];
-
-  //   const handleInputBlur = () => {
-  //     if (placeInput.value.trim() === "") {
-  //       setFieldValue("city", "");
-  //     }
-  //   };
-
-  //   removePlaceBtn?.addEventListener("click", () => {
-  //     setFieldValue("city", "");
-  //   });
-
-  //   placeInput?.addEventListener("change", (e) => {
-  //     setFieldValue("city", e.target.value);
-  //     setPlace(e.target.value);
-  //   });
-
-  //   if (placeInput) {
-  //     placeInput.style.border = "none";
-  //     placeInput.style.fontFamily = "Poppins";
-
-  //     placeInput.addEventListener("blur", handleInputBlur);
-
-  //     return () => {
-  //       placeInput.removeEventListener("blur", handleInputBlur);
-  //     };
-  //   }
-  // }, [values]);
-
   useEffect(() => {
     try {
       const placeInput =
@@ -101,12 +65,12 @@ const PlaceApi = () => {
 
         placeInput.addEventListener("blur", handleInputBlur);
 
-        return () => {
-          placeInput.removeEventListener("blur", handleInputBlur);
-        };
+        // return () => {
+        //   placeInput.removeEventListener("blur", handleInputBlur);
+        // };
       }
     } catch (error) {
-      console.error("Error in PlaceApi useEffect:", error);
+      console.log(error);
     }
   }, [values]);
 
