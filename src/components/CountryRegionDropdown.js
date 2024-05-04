@@ -195,7 +195,7 @@ const CountryRegionDropdown = () => {
               </Field>
             )}
           </div> */}
-          {/* <PlaceApi /> */}
+          <PlaceApi />
 
           {/* <ErrorMessage name="city" component="span" className="text-red-500" /> */}
         </div>
