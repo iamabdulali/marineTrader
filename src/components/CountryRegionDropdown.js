@@ -75,7 +75,6 @@ const CountryRegionDropdown = () => {
 
   function getPhoneCodeByCountryName(countryName) {
     const country = countries.find((country) => country.id == countryName);
-    console.log(country);
     return country ? country?.phone_code : null;
   }
 
