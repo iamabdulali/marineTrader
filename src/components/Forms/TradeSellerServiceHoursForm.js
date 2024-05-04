@@ -66,7 +66,7 @@ export default function TradeSellerServiceHoursForm() {
           <SelectDropdown
             name="timezone"
             options={timeZoneOptions}
-            className="border-[#CECED7] border-2 text-[#8891B2] rounded-md p-3 w-full mt-3 mb-2"
+            className="border-[#CECED7] sm:appearance-auto appearance-none border-2 text-[#8891B2] rounded-md p-3 w-full mt-3 mb-2"
           />
         </label>
         <ErrorMessage

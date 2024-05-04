@@ -118,7 +118,7 @@ const ServiceHours = ({
                       onChange={(event) =>
                         handleTimeChange(day, "start_time", event.target.value)
                       }
-                      className="border-[#CECED7] border-2 text-sm rounded-md p-3 sm:w-48 w-full block text-[#8891B2]"
+                      className="border-[#CECED7] sm:appearance-auto appearance-none border-2 text-sm rounded-md p-3 sm:w-48 w-full block text-[#8891B2]"
                     >
                       <Timing />
 
@@ -132,7 +132,7 @@ const ServiceHours = ({
                       onChange={(event) =>
                         handleTimeChange(day, "end_time", event.target.value)
                       }
-                      className="border-[#CECED7] border-2 text-sm rounded-md p-3 sm:w-48 w-full block text-[#8891B2]"
+                      className="border-[#CECED7] sm:appearance-auto appearance-none border-2 text-sm rounded-md p-3 sm:w-48 w-full block text-[#8891B2]"
                     >
                       <Timing />
 
