@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { appErrorImage } from "../assets";
+import { appErrorImage, error } from "../assets";
 import { Link } from "react-router-dom";
 
 class ErrorBoundary extends Component {
@@ -31,6 +31,7 @@ class ErrorBoundary extends Component {
           >
             Back To Homepage
           </a>
+          <p>{error}</p>
         </div>
       );
     }
