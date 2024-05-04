@@ -133,26 +133,26 @@ function App() {
   });
 
   return (
-    <ErrorBoundary>
-      <Router>
-        {/* <Header/> */}
-        <Routes>
-          {routes.map(({ path, element, isAuthRequired }) => {
-            return (
-              <Route
-                key={path}
-                path={path}
-                element={
-                  isAuthRequired ? (
-                    <ProtectedRoute>{element}</ProtectedRoute>
-                  ) : (
-                    element
-                  )
-                }
-              ></Route>
-            );
-          })}
-          {/* <Route path="/" element={<Home />} />
+    // <ErrorBoundary>
+    <Router>
+      {/* <Header/> */}
+      <Routes>
+        {routes.map(({ path, element, isAuthRequired }) => {
+          return (
+            <Route
+              key={path}
+              path={path}
+              element={
+                isAuthRequired ? (
+                  <ProtectedRoute>{element}</ProtectedRoute>
+                ) : (
+                  element
+                )
+              }
+            ></Route>
+          );
+        })}
+        {/* <Route path="/" element={<Home />} />
           <Route path="/:id" element={<Home />} />
           <Route path="/slider" element={<SwiperSlider />} />
           <Route path="/list" element={<ListPage />} />
@@ -333,10 +333,10 @@ function App() {
               </ProtectedRoute>
             }
           /> */}
-        </Routes>
-        <ToastContainer />
-      </Router>
-    </ErrorBoundary>
+      </Routes>
+      <ToastContainer />
+    </Router>
+    // </ErrorBoundary>
   );
 }
 
