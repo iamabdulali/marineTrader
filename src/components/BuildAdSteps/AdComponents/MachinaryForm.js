@@ -58,7 +58,7 @@ const MachinaryForm = ({ formFor, isEditMode, makes }) => {
     console.log(makeValue);
   }, [selectedCategory, makeValue]);
 
-  console.log(advert?.[formFor]?.modal);
+  console.log(advert?.[formFor]?.model);
 
   return (
     <>
@@ -148,12 +148,12 @@ const MachinaryForm = ({ formFor, isEditMode, makes }) => {
           <FormField
             FieldType="text"
             inputField={true}
-            name={`${formFor}.modal`}
+            name={`${formFor}.model`}
             label="Model"
             className="border-[#CECED7] text-[#8891B2] border-2 rounded-md p-3 w-full"
             placeholder={"Model"}
             value={
-              isEditMode ? advert?.[formFor]?.modal : values?.[formFor]?.modal
+              isEditMode ? advert?.[formFor]?.model : values?.[formFor]?.model
             }
             onChange={(e) => {
               isEditMode
@@ -181,10 +181,10 @@ const MachinaryForm = ({ formFor, isEditMode, makes }) => {
             addCustomOption={true}
             valueAsString={true}
             label="Model"
-            name={`${formFor}.modal`}
+            name={`${formFor}.model`}
             options={modals}
             value={
-              isEditMode ? advert?.[formFor]?.modal : values?.[formFor]?.modal
+              isEditMode ? advert?.[formFor]?.model : values?.[formFor]?.model
             }
             onChange={(e) => {
               isEditMode

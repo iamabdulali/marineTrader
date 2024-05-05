@@ -15,10 +15,6 @@ const NotesSteps4 = ({ isEditMode, packages }) => {
 
   const descriptionLength = packages[selectedPackage]?.description_length;
 
-  console.log(packages[selectedPackage]);
-
-  console.log(descriptionLength);
-
   return (
     <>
       <BuildLayout heading="Notes">

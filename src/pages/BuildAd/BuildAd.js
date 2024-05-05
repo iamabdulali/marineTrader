@@ -414,6 +414,8 @@ const BuildAd = () => {
         setSpinner(false);
       }
     } else {
+      console.log(values);
+
       try {
         const { data } = await axios.post(`${SERVER_BASE_URL}/advert`, values, {
           headers: {
