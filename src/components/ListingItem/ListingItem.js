@@ -65,6 +65,7 @@ const ListingItem = ({ itemData }) => {
     water_test_facility,
     part_exchange_available,
     finance_available,
+    advert_status,
   } = Object(itemData);
 
   const { currencyRates, user } = useContext(AuthContext);
@@ -531,6 +532,7 @@ const ListingItem = ({ itemData }) => {
           validationSchema={makeOfferValidationSchema}
           spinner={spinner}
           onClick={() => closeModal(setIsOfferModalOpen)}
+          advertStatus={advert_status}
         />{" "}
       </Modal>
     </>

@@ -10,6 +10,7 @@ const MakeOfferForm = ({
   validationSchema,
   spinner,
   advertStatus,
+  onClick,
 }) => {
   console.log(advertStatus);
 
