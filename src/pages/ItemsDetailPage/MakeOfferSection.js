@@ -207,6 +207,7 @@ const MakeOfferSection = ({ advert }) => {
             handleFormSubmit={handleFormSubmit}
             validationSchema={makeOfferValidationSchema}
             spinner={spinner}
+            advertStatus={advert_status}
           />
         </div>
       </div>
