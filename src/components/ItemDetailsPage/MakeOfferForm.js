@@ -9,17 +9,8 @@ const MakeOfferForm = ({
   handleFormSubmit,
   validationSchema,
   spinner,
-  advert_status,
+  onClick,
 }) => {
-  // Function to handle input change and allow only numeric values
-  const handleNumericInputChange = (e, setFieldValue) => {
-    const value = e.target.value;
-    // Remove non-numeric characters using regular expression
-    const numericValue = value.replace(/\D/g, "");
-    // Set the field value to the cleaned numeric value
-    setFieldValue(e.target.name, numericValue);
-  };
-
   return (
     <>
       {" "}
@@ -62,23 +53,17 @@ const MakeOfferForm = ({
             />
             <FormField
               inputField={true}
-              FieldType="text"
+              FieldType="number"
               name="offer"
               label="Offer"
               className="w-full border-2 px-3 py-3 rounded-md"
               onChange={(e) =>
-                // handleInputChange(e, null, null, null, false, setFieldValue)
-                handleNumericInputChange(e, setFieldValue)
+                handleInputChange(e, null, null, null, false, setFieldValue)
               }
             />
             <button
               type="submit"
-              disabled={advert_status == "paid" ? false : true}
-              className={`w-full bg-[#0D1A8B] ${
-                advert_status == "paid"
-                  ? "opacity-100 pointer-events-auto"
-                  : "opacity-80 pointer-events-none"
-              } hover:bg-[#0a1dbd] my-5 text-white rounded-md p-3 font-medium`}
+              className="w-full bg-[#0D1A8B] hover:bg-[#0a1dbd] my-5 text-white rounded-md p-3 font-medium "
             >
               {spinner ? (
                 <Oval
