@@ -9,7 +9,7 @@ const MakeOfferForm = ({
   handleFormSubmit,
   validationSchema,
   spinner,
-  onClick,
+  advert_status,
 }) => {
   return (
     <>
@@ -63,7 +63,12 @@ const MakeOfferForm = ({
             />
             <button
               type="submit"
-              className="w-full bg-[#0D1A8B] hover:bg-[#0a1dbd] my-5 text-white rounded-md p-3 font-medium "
+              disabled={advert_status == "paid" ? false : true}
+              className={`w-full bg-[#0D1A8B] ${
+                advert_status == "paid"
+                  ? "opacity-100 pointer-events-auto"
+                  : "opacity-80 pointer-events-none"
+              } hover:bg-[#0a1dbd] my-5 text-white rounded-md p-3 font-medium`}
             >
               {spinner ? (
                 <Oval
