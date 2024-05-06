@@ -42,14 +42,8 @@ const MakeOfferSection = ({ advert }) => {
     warranty,
     water_test_facility,
     part_exchange_available,
+    advert_status,
   } = Object(advert);
-
-  console.log({
-    finance_available,
-    warranty,
-    part_exchange_available,
-    water_test_facility,
-  });
 
   const {
     image_field,
@@ -76,7 +70,6 @@ const MakeOfferSection = ({ advert }) => {
   };
 
   const handleFormSubmit = async (values) => {
-    // Your logic for handling form submission
     console.log("Form submitted with values:", values);
     setSpinner(true);
 
@@ -209,6 +202,7 @@ const MakeOfferSection = ({ advert }) => {
             handleFormSubmit={handleFormSubmit}
             validationSchema={makeOfferValidationSchema}
             spinner={spinner}
+            advertStatus={advert_status}
           />
         </div>
       </div>

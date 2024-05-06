@@ -9,8 +9,10 @@ const MakeOfferForm = ({
   handleFormSubmit,
   validationSchema,
   spinner,
-  onClick,
+  advertStatus,
 }) => {
+  console.log(advertStatus);
+
   const handleNumericInputChange = (e, setFieldValue) => {
     const value = e.target.value;
     // Remove non-numeric and non-decimal characters using regular expression
@@ -84,7 +86,9 @@ const MakeOfferForm = ({
             />
             <button
               type="submit"
-              className="w-full bg-[#0D1A8B] hover:bg-[#0a1dbd] my-5 text-white rounded-md p-3 font-medium "
+              className={`w-full bg-[#0D1A8B] hover:bg-[#0a1dbd] my-5 text-white rounded-md p-3 font-medium ${
+                advertStatus == "paid" ? "" : "pointer-events-none opacity-80"
+              }`}
             >
               {spinner ? (
                 <Oval
