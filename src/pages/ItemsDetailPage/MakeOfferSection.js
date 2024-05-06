@@ -42,14 +42,8 @@ const MakeOfferSection = ({ advert }) => {
     warranty,
     water_test_facility,
     part_exchange_available,
+    advert_status,
   } = Object(advert);
-
-  console.log({
-    finance_available,
-    warranty,
-    part_exchange_available,
-    water_test_facility,
-  });
 
   const {
     image_field,
@@ -76,24 +70,28 @@ const MakeOfferSection = ({ advert }) => {
   };
 
   const handleFormSubmit = async (values) => {
-    // Your logic for handling form submission
-    console.log("Form submitted with values:", values);
-    setSpinner(true);
+    if (advert_status == "paid") {
+      // Your logic for handling form submission
+      console.log("Form submitted with values:", values);
+      setSpinner(true);
 
-    try {
-      const { data } = await axios.post(`${SERVER_BASE_URL}/offer`, values, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
-      console.log(data);
-      toast.success(data.message);
-      setSpinner(false);
-    } catch (error) {
-      toast.error(error.response.data.message);
-      console.log(error);
-      setSpinner(false);
+      try {
+        const { data } = await axios.post(`${SERVER_BASE_URL}/offer`, values, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+        console.log(data);
+        toast.success(data.message);
+        setSpinner(false);
+      } catch (error) {
+        toast.error(error.response.data.message);
+        console.log(error);
+        setSpinner(false);
+      }
+    } else {
+      toast.error("You have to pay in order to create offers");
     }
   };
 
