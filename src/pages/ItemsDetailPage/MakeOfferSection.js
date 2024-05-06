@@ -70,23 +70,27 @@ const MakeOfferSection = ({ advert }) => {
   };
 
   const handleFormSubmit = async (values) => {
-    console.log("Form submitted with values:", values);
-    setSpinner(true);
+    if (advert_status == "paid") {
+      console.log("Form submitted with values:", values);
+      setSpinner(true);
 
-    try {
-      const { data } = await axios.post(`${SERVER_BASE_URL}/offer`, values, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
-      console.log(data);
-      toast.success(data.message);
-      setSpinner(false);
-    } catch (error) {
-      toast.error(error.response.data.message);
-      console.log(error);
-      setSpinner(false);
+      try {
+        const { data } = await axios.post(`${SERVER_BASE_URL}/offer`, values, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+        console.log(data);
+        toast.success(data.message);
+        setSpinner(false);
+      } catch (error) {
+        toast.error(error.response.data.message);
+        console.log(error);
+        setSpinner(false);
+      }
+    } else {
+      toast.error("You have to pay for advert in order to create offer");
     }
   };
 
