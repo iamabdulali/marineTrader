@@ -11,6 +11,14 @@ const MakeOfferForm = ({
   spinner,
   onClick,
 }) => {
+  const handleNumericInputChange = (e, setFieldValue) => {
+    const value = e.target.value;
+    // Remove non-numeric and non-decimal characters using regular expression
+    const numericValue = value.replace(/[^0-9.]/g, "");
+    // Set the field value to the cleaned numeric value
+    setFieldValue(e.target.name, numericValue);
+  };
+
   return (
     <>
       {" "}
@@ -53,12 +61,25 @@ const MakeOfferForm = ({
             />
             <FormField
               inputField={true}
-              FieldType="number"
+              // FieldType="number"
               name="offer"
               label="Offer"
+              onKeyPress={(e) => {
+                // Prevent input for non-numeric and non-decimal characters
+                const charCode = e.which ? e.which : e.keyCode;
+                if (
+                  (charCode < 48 || charCode > 57) && // not a number
+                  charCode !== 46 && // not a decimal point
+                  charCode !== 8 && // not a backspace
+                  charCode !== 9 // not a tab
+                ) {
+                  e.preventDefault();
+                }
+              }}
               className="w-full border-2 px-3 py-3 rounded-md"
               onChange={(e) =>
-                handleInputChange(e, null, null, null, false, setFieldValue)
+                // handleInputChange(e, null, null, null, false, setFieldValue)
+                handleNumericInputChange(e, setFieldValue)
               }
             />
             <button

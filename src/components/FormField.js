@@ -14,6 +14,7 @@ export const FormField = ({
   placeholder,
   as,
   padding,
+  onKeyPress,
 }) => (
   <div className="mb-4 w-full text-sm">
     {inputField ? (
@@ -26,6 +27,7 @@ export const FormField = ({
         </label>{" "}
         <Field
           as={as}
+          onKeyPress={onKeyPress}
           type={FieldType}
           name={name}
           value={value}
