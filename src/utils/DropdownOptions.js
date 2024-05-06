@@ -97,26 +97,122 @@ export const currencyOptions = [
 ];
 
 export const timeZoneOptions = [
-  { id: "Europe/London", name: "London (GMT+0)" },
-  { id: "Europe/Paris", name: "Paris (GMT+1)" },
-  { id: "Europe/Berlin", name: "Berlin (GMT+1)" },
-  { id: "Europe/Madrid", name: "Madrid (GMT+1)" },
-  { id: "Europe/Rome", name: "Rome (GMT+1)" },
-  { id: "Europe/Amsterdam", name: "Amsterdam (GMT+1)" },
-  { id: "Europe/Brussels", name: "Brussels (GMT+1)" },
-  { id: "Europe/Oslo", name: "Oslo (GMT+1)" },
-  { id: "Europe/Stockholm", name: "Stockholm (GMT+1)" },
-  { id: "Europe/Copenhagen", name: "Copenhagen (GMT+1)" },
-  { id: "Europe/Warsaw", name: "Warsaw (GMT+1)" },
-  { id: "Europe/Prague", name: "Prague (GMT+1)" },
-  { id: "Europe/Budapest", name: "Budapest (GMT+1)" },
-  { id: "Europe/Athens", name: "Athens (GMT+2)" },
-  { id: "Europe/Istanbul", name: "Istanbul (GMT+3)" },
-  { id: "Europe/Moscow", name: "Moscow (GMT+3)" },
-  { id: "Europe/Helsinki", name: "Helsinki (GMT+2)" },
-  { id: "Europe/Bratislava", name: "Bratislava (GMT+1)" },
-  { id: "Europe/Vienna", name: "Vienna (GMT+1)" },
-  { id: "Europe/Lisbon", name: "Lisbon (GMT)" },
-  { id: "Europe/Dublin", name: "Dublin (GMT)" },
-  // Add more options as needed
+  {
+    id: "Eniwetok, Kwajalein (GMT -12:00)",
+    name: "Eniwetok, Kwajalein (GMT -12:00)",
+  },
+  {
+    id: "Midway Island, Samoa (GMT -11:00)",
+    name: "Midway Island, Samoa (GMT -11:00)",
+  },
+  { id: "Hawaii (GMT -10:00)", name: "Hawaii (GMT -10:00)" },
+  { id: "Taiohae (GMT -9:30)", name: "Taiohae (GMT -9:30)" },
+  { id: "Alaska (GMT -9:00)", name: "Alaska (GMT -9:00)" },
+  {
+    id: "Pacific Time (US & Canada) (GMT -8:00)",
+    name: "Pacific Time (US & Canada) (GMT -8:00)",
+  },
+  {
+    id: "Mountain Time (US & Canada) (GMT -7:00)",
+    name: "Mountain Time (US & Canada) (GMT -7:00)",
+  },
+  {
+    id: "Central Time (US & Canada), Mexico City (GMT -6:00)",
+    name: "Central Time (US & Canada), Mexico City (GMT -6:00)",
+  },
+  {
+    id: "Eastern Time (US & Canada), Bogota, Lima (GMT -5:00)",
+    name: "Eastern Time (US & Canada), Bogota, Lima (GMT -5:00)",
+  },
+  { id: "Caracas (GMT -4:30)", name: "Caracas (GMT -4:30)" },
+  {
+    id: "Atlantic Time (Canada), Caracas, La Paz (GMT -4:00)",
+    name: "Atlantic Time (Canada), Caracas, La Paz (GMT -4:00)",
+  },
+  { id: "Newfoundland (GMT -3:30)", name: "Newfoundland (GMT -3:30)" },
+  {
+    id: "Brazil, Buenos Aires, Georgetown (GMT -3:00)",
+    name: "Brazil, Buenos Aires, Georgetown (GMT -3:00)",
+  },
+  { id: "Mid-Atlantic (GMT -2:00)", name: "Mid-Atlantic (GMT -2:00)" },
+  {
+    id: "Azores, Cape Verde Islands (GMT -1:00)",
+    name: "Azores, Cape Verde Islands (GMT -1:00)",
+  },
+  {
+    id: "Western Europe Time, London, Lisbon, Casablanca (GMT)",
+    name: "Western Europe Time, London, Lisbon, Casablanca (GMT)",
+  },
+  {
+    id: "Brussels, Copenhagen, Madrid, Paris (GMT +1:00)",
+    name: "Brussels, Copenhagen, Madrid, Paris (GMT +1:00)",
+  },
+  {
+    id: "Kaliningrad, South Africa (GMT +2:00)",
+    name: "Kaliningrad, South Africa (GMT +2:00)",
+  },
+  {
+    id: "Baghdad, Riyadh, Moscow, St. Petersburg (GMT +3:00)",
+    name: "Baghdad, Riyadh, Moscow, St. Petersburg (GMT +3:00)",
+  },
+  { id: "Tehran (GMT +3:50)", name: "Tehran (GMT +3:50)" },
+  {
+    id: "Abu Dhabi, Muscat, Baku, Tbilisi (GMT +4:00)",
+    name: "Abu Dhabi, Muscat, Baku, Tbilisi (GMT +4:00)",
+  },
+  { id: "Kabul (GMT +4:50)", name: "Kabul (GMT +4:50)" },
+  {
+    id: "Ekaterinburg, Islamabad, Karachi, Tashkent (GMT +5:00)",
+    name: "Ekaterinburg, Islamabad, Karachi, Tashkent (GMT +5:00)",
+  },
+  {
+    id: "Bombay, Calcutta, Madras, New Delhi (GMT +5:30)",
+    name: "Bombay, Calcutta, Madras, New Delhi (GMT +5:30)",
+  },
+  {
+    id: "Kathmandu, Pokhara (GMT +5:45)",
+    name: "Kathmandu, Pokhara (GMT +5:45)",
+  },
+  {
+    id: "Almaty, Dhaka, Colombo (GMT +6:00)",
+    name: "Almaty, Dhaka, Colombo (GMT +6:00)",
+  },
+  { id: "Yangon, Mandalay (GMT +6:30)", name: "Yangon, Mandalay (GMT +6:30)" },
+  {
+    id: "Bangkok, Hanoi, Jakarta (GMT +7:00)",
+    name: "Bangkok, Hanoi, Jakarta (GMT +7:00)",
+  },
+  {
+    id: "Beijing, Perth, Singapore, Hong Kong (GMT +8:00)",
+    name: "Beijing, Perth, Singapore, Hong Kong (GMT +8:00)",
+  },
+  { id: "Eucla (GMT +8:45)", name: "Eucla (GMT +8:45)" },
+  {
+    id: "Tokyo, Seoul, Osaka, Sapporo, Yakutsk (GMT +9:00)",
+    name: "Tokyo, Seoul, Osaka, Sapporo, Yakutsk (GMT +9:00)",
+  },
+  { id: "Adelaide, Darwin (GMT +9:30)", name: "Adelaide, Darwin (GMT +9:30)" },
+  {
+    id: "Eastern Australia, Guam, Vladivostok (GMT +10:00)",
+    name: "Eastern Australia, Guam, Vladivostok (GMT +10:00)",
+  },
+  {
+    id: "Lord Howe Island (GMT +10:30)",
+    name: "Lord Howe Island (GMT +10:30)",
+  },
+  {
+    id: "Magadan, Solomon Islands, New Caledonia (GMT +11:00)",
+    name: "Magadan, Solomon Islands, New Caledonia (GMT +11:00)",
+  },
+  { id: "Norfolk Island (GMT +11:30)", name: "Norfolk Island (GMT +11:30)" },
+  {
+    id: "Auckland, Wellington, Fiji, Kamchatka (GMT +12:00)",
+    name: "Auckland, Wellington, Fiji, Kamchatka (GMT +12:00)",
+  },
+  { id: "Chatham Islands (GMT +12:45)", name: "Chatham Islands (GMT +12:45)" },
+  { id: "Apia, Nukualofa (GMT +13:00)", name: "Apia, Nukualofa (GMT +13:00)" },
+  {
+    id: "Line Islands, Tokelau (GMT +14:00)",
+    name: "Line Islands, Tokelau (GMT +14:00)",
+  },
 ];

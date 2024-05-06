@@ -8,6 +8,7 @@ import { countryOptions, regionOptions } from "../../utils/DropdownOptions";
 import { GetCountries } from "react-country-state-city/dist/cjs";
 import axios from "axios";
 import { FaChevronDown } from "react-icons/fa";
+import PlaceApi from "../../components/Forms/PlaceApi";
 
 const CompanyInfo = ({ editable, isPrivateSeller }) => {
   const [countries, setCountries] = useState([]);
@@ -188,7 +189,7 @@ const CompanyInfo = ({ editable, isPrivateSeller }) => {
             value={getCountry(values.user.country)?.id}
             disabled={!editable}
             as="select"
-            className={`border-b-2 text-sm font-semibold outline-none ${
+            className={`border-b-2 text-sm font-semibold outline-none sm:appearance-auto appearance-none ${
               !editable ? "border-[#f1f1f1]" : "border-[#000]"
             }  py-2 px-0 text-[#11133D] w-full`}
             name={"country"}
@@ -219,7 +220,7 @@ const CompanyInfo = ({ editable, isPrivateSeller }) => {
             value={getState(values.user.region)?.id}
             disabled={!editable}
             as="select"
-            className={`border-b-2 text-sm font-semibold outline-none ${
+            className={`border-b-2 text-sm font-semibold outline-none sm:appearance-auto appearance-none ${
               !editable ? "border-[#f1f1f1]" : "border-[#000]"
             }  py-2 px-0 text-[#11133D] w-full`}
             name={"region"}
@@ -236,15 +237,23 @@ const CompanyInfo = ({ editable, isPrivateSeller }) => {
         </div>
       </div>
       <div className="flex sm:gap-6 items-center sm:flex-row flex-col">
-        <FormField
-          label="Town/City"
-          FieldType="text"
-          inputField={false}
-          value={values.user.city}
-          name="city"
-          onChange={(e) => handleInputChange(e)}
-          readOnly={!editable}
-        />
+        {editable ? (
+          <div className="w-full">
+            {" "}
+            <PlaceApi />
+          </div>
+        ) : (
+          <FormField
+            label="Town/City"
+            FieldType="text"
+            inputField={false}
+            value={values.user.city}
+            name="city"
+            onChange={(e) => handleInputChange(e)}
+            readOnly={!editable}
+          />
+        )}
+
         {/* <div className="w-full mb-4">
           <label
             className="block text-[#8891B2] text-sm font-medium"
@@ -290,8 +299,8 @@ const CompanyInfo = ({ editable, isPrivateSeller }) => {
             value={getPhoneCodeByCountryName(values?.user.country)}
             as="select"
             name="calling_code"
-            // disabled={true}
-            className="rounded-md py-2 callingCode w-full appearance-none text-sm bg-white"
+            disabled={true}
+            className="rounded-md py-2 appearance-none callingCode w-full  text-sm bg-white"
           >
             {countries.map(({ phone_code, iso2, id }) => {
               return (
@@ -325,15 +334,19 @@ const CompanyInfo = ({ editable, isPrivateSeller }) => {
             value={values.user?.currency?.id}
             disabled={!editable}
             as="select"
-            className={`border-b-2 text-sm font-semibold outline-none ${
+            className={`border-b-2 text-sm font-semibold outline-none sm:appearance-auto appearance-none ${
               !editable ? "border-[#f1f1f1]" : "border-[#000]"
             }  py-2 px-0 text-[#11133D] w-full`}
             name={"currency"}
           >
             <option>Select a {"currency"}</option>
             {currency.map((option) => (
-              <option key={option.id} value={option.id} label={option.name}>
-                {option.name}
+              <option
+                key={option.id}
+                value={option.id}
+                label={option.currency_code}
+              >
+                {option.currency_code}
               </option>
             ))}
           </Field>

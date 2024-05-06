@@ -16,6 +16,8 @@ const PaymentSummary = ({
   spotlights,
   hasSubscription,
   hasBundle,
+  hasPremiumBundle,
+  hasFeaturedBundle,
   isAdvertUpgrade,
   categoryCountrySpotlights,
   categoryContinentSpotlights,
@@ -24,17 +26,22 @@ const PaymentSummary = ({
   existingSubscriptionData,
 }) => {
   const { user, currencyRates } = useContext(AuthContext);
-  const [hasFeaturedBundle, setHasFeaturedBundle] = useState(0);
-  const [hasPremiumBundle, setHasPremiumBundle] = useState(0);
+
   const { currency } = Object(user);
   const [coupenCode, setCoupenCode] = useState("");
   const [couponApplied, setCouponApplied] = useState(false);
   let { advert_package_id } = Object(advert);
 
-  useEffect(() => {
-    fetchOptions(`bundle/advert/remains?type=featured`, setHasFeaturedBundle);
-    fetchOptions(`bundle/advert/remains?type=premium`, setHasPremiumBundle);
-  }, []);
+  // useEffect(() => {
+  //   fetchOptions(
+  //     `bundle/advert/remains?type=featured&category_id=${id}`,
+  //     setHasFeaturedBundle
+  //   );
+  //   fetchOptions(
+  //     `bundle/advert/remains?type=premium&category_id=${id}`,
+  //     setHasPremiumBundle
+  //   );
+  // }, []);
 
   const filteredSubscriptions = subscription
     ? subscription.filter((sub) => sub?.id == id)
@@ -99,43 +106,139 @@ const PaymentSummary = ({
     }
   }
 
-  console.log({ hasPremiumBundle });
-  console.log(advertPackages[advert_package_id]);
-
   let subtotal =
     (Number(amount) || 0) +
     (Number(bundleAmount) || 0) +
     (Number(packageAmount) || 0) +
     (Number(spotlights) || 0);
 
+  // if (!isSubscriptionPage) {
+  //   if (isAdvertUpgrade) {
+  //     if (
+  //       subtotal != 0 &&
+  //       hasPremiumBundle == 0 &&
+  //       hasFeaturedBundle == 0 &&
+  //       !isBundleSelected
+  //     ) {
+  //       subtotal = subtotal - currentPackageAmount;
+  //     } else {
+  //       if (
+  //         (hasSubscription != 0 || hasPremiumBundle != 0) &&
+  //         advertPackages[advert_package_id] == "Premium"
+  //       ) {
+  //         console.log("HELO");
+  //         subtotal = subtotal - currentPackageAmount;
+  //       } else if (
+  //         hasFeaturedBundle != 0 &&
+  //         advertPackages[advert_package_id] == "Featured"
+  //       ) {
+  //         console.log("HELO2323");
+  //         subtotal = subtotal - currentPackageAmount;
+  //       }
+  //     }
+  //   } else {
+  //     if (
+  //       (hasSubscription != 0 || hasPremiumBundle != 0) &&
+  //       advertPackages[advert_package_id] == "Premium"
+  //     ) {
+  //       console.log("HELO");
+  //       subtotal = subtotal - currentPackageAmount;
+  //     }
+  //     console.log({ hasFeaturedBundle });
+  //     if (
+  //       advertPackages[advert_package_id] == "Featured" &&
+  //       hasFeaturedBundle != 0
+  //     ) {
+  //       subtotal = subtotal - currentPackageAmount;
+  //     }
+  //   }
+  //   if (isBundleSelected) {
+  //     subtotal = subtotal - Number(packageAmount);
+  //   }
+  // } else {
+  //   if ((existingSubscriptionData != undefined || null) && !isRenew) {
+  //     subtotal = subtotal - existingSubAmount;
+  //   }
+  // }
+
   if (!isSubscriptionPage) {
     if (isAdvertUpgrade) {
-      if (subtotal != 0 && hasBundle == 0 && !isBundleSelected) {
-        subtotal = subtotal - currentPackageAmount;
+      if (
+        subtotal !== 0 &&
+        hasPremiumBundle == 0 &&
+        hasFeaturedBundle == 0 &&
+        !isBundleSelected
+      ) {
+        subtractCurrentPackageAmount();
+      } else if (
+        (hasSubscription != 0 || hasPremiumBundle != 0) &&
+        advertPackages[advert_package_id] != "Standard" &&
+        hasFeaturedBundle != 0
+      ) {
+        subtractCurrentPackageAmount();
       } else {
-        if (
-          hasSubscription != 0 &&
-          advertPackages[advert_package_id] == "Premium"
-        ) {
-          console.log("HELO");
-          subtotal = subtotal - currentPackageAmount;
-        }
+        handlePremiumAndFeaturedBundles();
       }
     } else {
-      if (
-        hasSubscription != 0 &&
-        advertPackages[advert_package_id] == "Premium"
-      ) {
-        console.log("HELO");
-        subtotal = subtotal - currentPackageAmount;
-      }
+      handlePremiumAndFeaturedBundles();
     }
-    if (isBundleSelected) {
-      subtotal = subtotal - Number(packageAmount);
+    if (
+      isBundleSelected &&
+      advertPackages[advert_package_id] == "Premium" &&
+      hasSubscription == 0 &&
+      hasPremiumBundle == 0
+    ) {
+      subtotal -= Number(packageAmount);
+    } else if (
+      isBundleSelected &&
+      hasFeaturedBundle == 0 &&
+      advertPackages[advert_package_id] == "Featured"
+    ) {
+      subtotal -= Number(packageAmount);
     }
   } else {
-    if ((existingSubscriptionData != undefined || null) && !isRenew) {
-      subtotal = subtotal - existingSubAmount;
+    if (existingSubscriptionData && !isRenew) {
+      subtotal -= existingSubAmount;
+    }
+  }
+
+  function subtractCurrentPackageAmount() {
+    if (advertPackages[advert_package_id] != "Standard") {
+      console.log("THIS");
+      if (
+        (hasSubscription != 0 || hasPremiumBundle != 0) &&
+        hasFeaturedBundle != 0
+      ) {
+        subtotal = 0;
+      } else if (
+        (hasSubscription != 0 || hasPremiumBundle != 0) &&
+        advertPackages[advert_package_id] === "Premium"
+      ) {
+        subtotal -= currentPackageAmount;
+      } else if (
+        hasFeaturedBundle != 0 &&
+        advertPackages[advert_package_id] === "Featured"
+      ) {
+        subtotal -= currentPackageAmount;
+      } else {
+        subtotal -= currentPackageAmount;
+      }
+    } else {
+      subtotal -= currentPackageAmount;
+    }
+  }
+
+  function handlePremiumAndFeaturedBundles() {
+    if (
+      (hasSubscription != 0 || hasPremiumBundle != 0) &&
+      advertPackages[advert_package_id] === "Premium"
+    ) {
+      subtotal -= currentPackageAmount;
+    } else if (
+      hasFeaturedBundle != 0 &&
+      advertPackages[advert_package_id] === "Featured"
+    ) {
+      subtotal -= currentPackageAmount;
     }
   }
 
@@ -287,7 +390,10 @@ const PaymentSummary = ({
 
         {isSubscriptionPage !== "subscription" ? (
           <>
-            {hasBundle == 0 && hasSubscription == 0 && !isAdvertUpgrade ? (
+            {hasPremiumBundle == 0 &&
+            hasFeaturedBundle == 0 &&
+            hasSubscription == 0 &&
+            !isAdvertUpgrade ? (
               <>
                 <div className=" flex items-center justify-between mt-2">
                   <p className="text-[#696E9D]">{packageName} Advert:</p>
@@ -298,7 +404,10 @@ const PaymentSummary = ({
                   </p>
                 </div>
               </>
-            ) : hasBundle == 0 && hasSubscription == 0 && isAdvertUpgrade ? (
+            ) : hasPremiumBundle == 0 &&
+              hasFeaturedBundle == 0 &&
+              hasSubscription == 0 &&
+              isAdvertUpgrade ? (
               <>
                 <div className=" flex items-center justify-between mt-2">
                   <p className="text-[#696E9D]">
@@ -329,8 +438,15 @@ const PaymentSummary = ({
                   <p className="text-[#696E9D]">
                     Upgrading To: {packageName} Advert
                   </p>
-                  {hasFeaturedBundle == 0 &&
+                  {hasPremiumBundle == 0 &&
                   advertPackages[advert_package_id] == "Premium" ? (
+                    <p className="text-[#11133D] font-semibold">
+                      {`${currency?.symbol}${Number(
+                        packageAmount * currencyRates[currency?.currency_code]
+                      ).toFixed(2)}`}
+                    </p>
+                  ) : hasFeaturedBundle == 0 &&
+                    advertPackages[advert_package_id] == "Premium" ? (
                     <p className="text-[#11133D] font-semibold">
                       {`${currency?.symbol}${Number(
                         packageAmount * currencyRates[currency?.currency_code]
@@ -365,9 +481,23 @@ const PaymentSummary = ({
             ) : (
               <>
                 <div className=" flex items-center justify-between mt-2">
-                  <p className="text-[#696E9D]">{packageName} Advert:</p>
-                  <p className="text-[#11133D] font-semibold">
-                    {advertPackages[advert_package_id] == "Premium"
+                  <p
+                    className={`text-[#696E9D] ${
+                      isBundleSelected ? "line-through" : ""
+                    }`}
+                  >
+                    {packageName} Advert:
+                  </p>
+                  <p
+                    className={`text-[#11133d] font-semibold ${
+                      isBundleSelected ? "line-through" : ""
+                    }`}
+                  >
+                    {advertPackages[advert_package_id] == "Premium" &&
+                    (hasPremiumBundle != 0 || hasSubscription != 0)
+                      ? "Bundle/Subscription"
+                      : advertPackages[advert_package_id] == "Featured" &&
+                        hasFeaturedBundle != 0
                       ? "Bundle/Subscription"
                       : `${currency?.symbol}${Number(
                           packageAmount * currencyRates[currency?.currency_code]

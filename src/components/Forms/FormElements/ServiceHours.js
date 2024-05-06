@@ -167,7 +167,7 @@ const ServiceHours = ({
                           event.target.value
                         )
                       }
-                      className="border-[#CECED7] border-2 rounded-md p-3 sm:w-48 w-full block text-[#8891B2]"
+                      className="border-[#CECED7] sm:appearance-auto appearance-none border-2 rounded-md p-3 sm:w-48 w-full block text-[#8891B2]"
                     >
                       <option value="">Select Start Time</option>
                       <option value="00:00">12:00 AM</option>
@@ -281,7 +281,7 @@ const ServiceHours = ({
                           event.target.value
                         )
                       }
-                      className="border-[#CECED7] border-2 rounded-md p-3 sm:w-48 w-full block text-[#8891B2]"
+                      className="border-[#CECED7] sm:appearance-auto appearance-none border-2 rounded-md p-3 sm:w-48 w-full block text-[#8891B2]"
                     >
                       <option value="">Select End Time</option>
                       <option value="00:00">12:00 AM</option>

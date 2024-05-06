@@ -50,12 +50,12 @@ export default function AdSubscription() {
 
   useEffect(() => {
     fetchOptions(
-      `bundle/advert/remains?type=premium`,
+      `bundle/advert/remains?type=premium&category_id=${selectedCategory?.id}`,
       setHasPremiumBundle,
       setLoading
     );
     fetchOptions(
-      `bundle/advert/remains?type=featured`,
+      `bundle/advert/remains?type=featured&category_id=${selectedCategory?.id}`,
       setHasFeaturedBundle,
       setLoading
     );

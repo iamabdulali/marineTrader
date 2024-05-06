@@ -39,11 +39,12 @@ const BuildAd = () => {
   const NavigateTo = useNavigate();
   const [advertID, setAdvertID] = useState(null);
   const [hasSubscription, setHasSubscription] = useState(0);
-  const [hasBundle, setHasBundle] = useState(0);
   const [advert, setAdvert] = useState([]);
   const [loading, setLoading] = useState(true);
   const [hasSpotlight, setHasSpotlights] = useState(false);
   const [packages, setPackages] = useState([]);
+  const [hasFeaturedBundle, setHasFeaturedBundle] = useState(0);
+  const [hasPremiumBundle, setHasPremiumBundle] = useState(0);
 
   const {
     selectedPackage,
@@ -293,13 +294,30 @@ const BuildAd = () => {
     }
   };
 
+  const { category_id } = Object(advert);
+
   useEffect(() => {
-    fetchOptions("bundle/advert/remains", setHasBundle);
     fetchOptions(
-      `subscription/advert/remains/${selectedCategory?.id}`,
+      `bundle/advert/remains?type=featured&category_id=${
+        EditMode ? category_id : selectedCategory?.id
+      }`,
+      setHasFeaturedBundle
+    );
+    fetchOptions(
+      `bundle/advert/remains?type=premium&category_id=${
+        EditMode ? category_id : selectedCategory?.id
+      }`,
+      setHasPremiumBundle
+    );
+    fetchOptions(
+      `subscription/advert/remains/${
+        EditMode ? category_id : selectedCategory?.id
+      }`,
       setHasSubscription
     );
   }, [id]);
+
+  console.log(hasSubscription);
 
   function arrayContainsFile(array) {
     for (var i = 0; i < array.length; i++) {
@@ -583,6 +601,8 @@ const BuildAd = () => {
                   onClose={() => closeModal(setIsPaymentOptionOpen)}
                   hasSubscription={hasSubscription}
                   hasSpotlight={hasSpotlight}
+                  hasPremiumBundle={hasPremiumBundle}
+                  hasFeaturedBundle={hasFeaturedBundle}
                 />
               </Modal>
             </Form>

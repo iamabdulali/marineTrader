@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { FaCheck, FaInfo } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
 import selected from "../../assets/selected.png";
 import star from "../../assets/star.png";
+import { AuthContext } from "../../Context/AuthContext";
 
 const Subscriptions = ({
   featuresArray,
@@ -65,6 +66,9 @@ const Subscriptions = ({
     return Object.values(featureText).filter((text) => text !== null);
   };
 
+  const { currencyRates, user } = useContext(AuthContext);
+  const { currency } = Object(user);
+
   return (
     <div
       key={id}
@@ -77,7 +81,9 @@ const Subscriptions = ({
       } shadow-[7px] lg:w-6/12 w-full border-t-4 relative py-6 sm:px-5 px-3 ${borderColor}`}
     >
       <p className="text-[#11133D] font-bold text-3xl">
-        {packagePrice}
+        {`${currency?.symbol}${Number(
+          packagePrice * currencyRates[currency?.currency_code]
+        ).toFixed(0)}`}
         <span className="text-[#8891B2] font-medium text-sm ml-2">
           {subHeading}
         </span>
@@ -126,15 +132,27 @@ const Subscriptions = ({
       <div className="flex sm:gap-4 gap-2 border-t-2 pt-6 w-full">
         <div className="bg-[#1A84FF] w-full text-white rounded-lg sm:p-4 p-3 text-center">
           <p className="sm:text-base text-sm">Standard</p>
-          <p className="mt-2 font-semibold sm:text-base text-sm">£1.49</p>
+          <p className="mt-2 font-semibold sm:text-base text-sm">{`${
+            currency?.symbol
+          }${Number(1.49 * currencyRates[currency?.currency_code]).toFixed(
+            2
+          )}`}</p>
         </div>
         <div className="bg-[#FFB800] w-full text-white rounded-lg sm:p-4 p-3 text-center">
           <p className="sm:text-base text-sm">Premium</p>
-          <p className="mt-2 font-semibold sm:text-base text-sm">£5.99</p>
+          <p className="mt-2 font-semibold sm:text-base text-sm">{`${
+            currency?.symbol
+          }${Number(5.99 * currencyRates[currency?.currency_code]).toFixed(
+            2
+          )}`}</p>
         </div>
         <div className="bg-[#36B37E] w-full text-white rounded-lg sm:p-4 p-3 text-center">
           <p className="sm:text-base text-sm">Featured</p>
-          <p className="mt-2 font-semibold sm:text-base text-sm">£11.99</p>
+          <p className="mt-2 font-semibold sm:text-base text-sm">
+            {`${currency?.symbol}${Number(
+              11.99 * currencyRates[currency?.currency_code]
+            ).toFixed(2)}`}{" "}
+          </p>
         </div>
       </div>
 

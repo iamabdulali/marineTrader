@@ -124,7 +124,7 @@ const BusinessDetails = ({ editable, user }) => {
           value={values.user.timezone}
           disabled={!editable}
           as="select"
-          className={`border-b-2 text-sm font-semibold outline-none ${
+          className={`border-b-2 text-sm font-semibold outline-none sm:appearance-auto appearance-none ${
             !editable ? "border-[#f1f1f1]" : "border-[#000]"
           }  py-2 px-0 text-[#11133D] w-full`}
           name={"timezone"}

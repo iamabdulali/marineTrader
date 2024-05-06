@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import Subscriptions from "../../components/Subscriptions/Subscriptions";
 import Heading from "../../components/Heading";
-import { DealerPlus, ServicePlus, StandardTrade } from "../../utils/DummyData";
 import Tabs from "../../components/Tabs";
 import {
   checkCategorySubscription,
@@ -10,7 +9,6 @@ import {
 import LoadingWrapper from "../../utils/LoadingWrapper";
 import { AuthContext } from "../../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 import { categoriesList } from "../..";
 
 const SubscriptionStep2 = () => {
@@ -38,7 +36,9 @@ const SubscriptionStep2 = () => {
     setSelectedTab(tab);
   };
 
-  const { selectedCategory } = useContext(AuthContext);
+  const { selectedCategory, currencyRates, user } = useContext(AuthContext);
+  const { currency } = Object(user);
+
   const categoryToCheck =
     selectedCategory?.id || categoriesList.indexOf(selectedCategory.name);
 
@@ -59,8 +59,6 @@ const SubscriptionStep2 = () => {
       setHasActiveSubscriptionData
     );
   }, [selectedCategory, subscriptions]);
-
-  const featuresArray = [DealerPlus, ServicePlus];
 
   return (
     <>
@@ -86,7 +84,7 @@ const SubscriptionStep2 = () => {
                 key={id}
                 id={id}
                 featuresArray={props}
-                packagePrice={`£${Number(amount).toFixed(0)}`}
+                packagePrice={amount}
                 packageName={name}
                 subHeading="/12 months package"
                 textColor={
@@ -119,7 +117,7 @@ const SubscriptionStep2 = () => {
                     selectedSubscription={hasActiveSubscriptionData}
                     id={id}
                     featuresArray={props}
-                    packagePrice={`£${Number(amount).toFixed(0)}`}
+                    packagePrice={amount}
                     packageName={name}
                     subHeading="/12 months package"
                     textColor={

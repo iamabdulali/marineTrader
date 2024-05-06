@@ -11,7 +11,12 @@ import { displayErrorMessages } from "../../../utils/displayErrors";
 import { Oval } from "react-loader-spinner";
 import { AuthContext } from "../../../Context/AuthContext";
 
-const BundlesModal = ({ onClick, setSelectedBundle, bundleType }) => {
+const BundlesModal = ({
+  onClick,
+  setSelectedBundle,
+  bundleType,
+  categoryId,
+}) => {
   const [bundles, setBundles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [spinner, setSpinner] = useState(false);
@@ -20,8 +25,14 @@ const BundlesModal = ({ onClick, setSelectedBundle, bundleType }) => {
     bundleType = "Premium";
   }
 
+  console.log(categoryId);
+
   useEffect(() => {
-    fetchOptions(`bundles?type=${bundleType}`, setBundles, setLoading);
+    fetchOptions(
+      `bundles?type=${bundleType}&category_id=${categoryId}`,
+      setBundles,
+      setLoading
+    );
   }, []);
 
   const { isValid } = useFormikContext();
@@ -59,7 +70,7 @@ const BundlesModal = ({ onClick, setSelectedBundle, bundleType }) => {
   return (
     <form>
       <div className="bg-gradient-to-t w-full py-4 rounded-tr-lg rounded-tl-lg from-[#0d1a8b] to-[#3241cb]">
-        <p className="text-white text-xl font-semibold text-center mb-1">
+        <p className="text-white text-xl font-semibold text-center mb-1 capitalize">
           BUNDLES : {bundleType} Advert
         </p>
         <p className="text-[#A2A9EB] text-sm text-center font-semibold">
@@ -74,23 +85,29 @@ const BundlesModal = ({ onClick, setSelectedBundle, bundleType }) => {
           loading={loading}
           className="top-1/2 -translate-y-1/2  -translate-x-1/2"
         >
-          {bundles?.map(({ id, name, amount, total_adverts }) => {
-            return (
-              <Bundles
-                key={id}
-                bundleNameColor={`${textVariants[id - 1]}`}
-                bundleBorder={`${variants[id - 1]}`}
-                bgColor={`${bgVariants[id - 1]}`}
-                BundleName={name}
-                adverts={total_adverts}
-                price={`${currency?.symbol}${Number(
-                  amount * currencyRates[currency?.currency_code]
-                ).toFixed(2)}`}
-                checkbox={id}
-                setSelectedBundle={setSelectedBundle}
-              />
-            );
-          })}
+          {bundles.length == 0 ? (
+            <p className="font-medium text-center absolute left-1/2 top-1/2 -translate-y-1/2  -translate-x-1/2">
+              No Bundles Found For This Category
+            </p>
+          ) : (
+            bundles?.map(({ id, name, amount, total_adverts }) => {
+              return (
+                <Bundles
+                  key={id}
+                  bundleNameColor={`${textVariants[id - 1]}`}
+                  bundleBorder={`${variants[id - 1]}`}
+                  bgColor={`${bgVariants[id - 1]}`}
+                  BundleName={name}
+                  adverts={total_adverts}
+                  price={`${currency?.symbol}${Number(
+                    amount * currencyRates[currency?.currency_code]
+                  ).toFixed(2)}`}
+                  checkbox={id}
+                  setSelectedBundle={setSelectedBundle}
+                />
+              );
+            })
+          )}
         </LoadingWrapper>
       </div>
       <div className="text-right pr-6 pb-6">

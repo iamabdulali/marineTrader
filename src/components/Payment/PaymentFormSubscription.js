@@ -245,7 +245,7 @@ const PaymentFormSubscription = () => {
                     existingSubscriptionData={hasActiveSubscriptionData}
                   />
                   {!isPrivateSeller &&
-                  hasActiveSubscriptionData == undefined &&
+                  // hasActiveSubscriptionData == undefined &&
                   name == "Broker plus" ? (
                     <AvailableUpgrades
                       className="bg-[#1CBF73] flex flex-col gap-5 mt-8 p-5 rounded-lg w-full"
@@ -279,6 +279,7 @@ const PaymentFormSubscription = () => {
                 setSelectedBundle={setSelectedBundle}
                 onClick={() => closeModal(setIsBundleOpen)}
                 bundleType={"premium"}
+                categoryId={selectedCategory?.id}
               />
             </Modal>
           </LoadingWrapper>

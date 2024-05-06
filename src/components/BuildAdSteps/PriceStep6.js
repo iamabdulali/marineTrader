@@ -149,6 +149,7 @@ const PriceStep6 = ({ isEditMode }) => {
         {priceInfoType === "enterInfo" ? (
           <div className="flex mt-5 md:gap-4 gap-0 md:flex-row flex-col">
             <CategorySelectDropdown
+              isCurrencyField={true}
               label="Currency"
               name="currency"
               options={currency}

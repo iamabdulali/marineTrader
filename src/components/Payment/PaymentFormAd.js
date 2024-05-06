@@ -32,7 +32,8 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
   const [selectedBundle, setSelectedBundle] = useState(null);
   let [isSpotlightOpen, setIsSpotlightOpen] = useState(false);
   let [isBundleOpen, setIsBundleOpen] = useState(false);
-  const [hasBundle, setHasBundle] = useState(0);
+  const [hasFeaturedBundle, setHasFeaturedBundle] = useState(0);
+  const [hasPremiumBundle, setHasPremiumBundle] = useState(0);
   const [categorySubscription, setCategorySubscription] = useState(0);
   const [subscritpions, setSubscriptions] = useState([]);
   const [advert, setAdvert] = useState([]);
@@ -90,8 +91,13 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
 
   useEffect(() => {
     fetchOptions(
-      `bundle/advert/remains?type=${advertPackages[currentPackage]}`,
-      setHasBundle,
+      `bundle/advert/remains?type=premium&category_id=${category_id}`,
+      setHasPremiumBundle,
+      setLoading
+    );
+    fetchOptions(
+      `bundle/advert/remains?type=featured&category_id=${category_id}`,
+      setHasFeaturedBundle,
       setLoading
     );
     fetchOptions(
@@ -182,7 +188,7 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
         );
       }
 
-      toast.success(adPaymentResponse.data.message);
+      toast.success(adPaymentResponse?.data?.message);
 
       // Bundle Payment (if selectedBundle is defined)
       if (selectedBundle !== undefined && selectedBundle !== null) {
@@ -201,7 +207,7 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
           }
         );
 
-        toast.success(bundlePaymentResponse.data.message);
+        toast.success(bundlePaymentResponse?.data?.message);
       }
 
       setSpinner(false);
@@ -212,7 +218,7 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
       setSpinner(false);
       setSuccess(false);
       setShowStatus(true);
-      toast.error(error.response.data.message);
+      toast.error(error?.response?.data?.message);
     }
   };
 
@@ -240,7 +246,9 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
                     isBundleSelected={selectedBundle}
                     bundles={bundles}
                     spotlights={spotlights}
-                    hasBundle={hasBundle}
+                    id={category_id}
+                    hasPremiumBundle={hasPremiumBundle}
+                    hasFeaturedBundle={hasFeaturedBundle}
                     hasSubscription={categorySubscription}
                     isAdvertUpgrade={isAdvertUpgrade}
                     categoryCountrySpotlights={category_spotlights_countries}
@@ -263,7 +271,6 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
                   )}
                 </div>
                 <StripePaymentForm
-                  hasBundle={hasBundle}
                   hasSubscription={categorySubscription}
                   id={category_id}
                   handlePaymentSubmit={
@@ -271,7 +278,9 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
                     handleCombinedPayments
                   }
                   spinner={spinner}
-                  bundleType={advertPackages[currentPackage]}
+                  advertType={advertPackages[currentPackage]}
+                  hasFeaturedBundle={hasFeaturedBundle}
+                  hasPremiumBundle={hasPremiumBundle}
                 />
               </div>
             </Layout>
@@ -297,6 +306,7 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
                 setSelectedBundle={setSelectedBundle}
                 onClick={() => closeModal(setIsBundleOpen)}
                 bundleType={advertPackages[currentPackage]}
+                categoryId={category_id}
               />
             </Modal>
           </LoadingWrapper>

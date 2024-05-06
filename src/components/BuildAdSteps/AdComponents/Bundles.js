@@ -32,13 +32,13 @@ const Bundles = ({
           <p className="text-xs text-[#8891B2] font-medium line-through">
             {oldPrice}
           </p>
-          <p className="font-semibold sm:text-sm text-xs">£{price}</p>
+          <p className="font-semibold sm:text-sm text-xs">{price}</p>
           <p className="bg-[#FFB800] absolute text-[#11133D] min-w-16 right-0 -top-8 font-semibold text-xs py-1 px-2 rounded-md">
             20% Off
           </p>
         </div>
       ) : (
-        <p className="font-semibold sm:text-base text-xs">£{price}</p>
+        <p className="font-semibold sm:text-base text-xs">{price}</p>
       )}
       <Field
         type="radio"

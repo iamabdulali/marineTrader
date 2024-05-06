@@ -158,6 +158,7 @@ export default function TradeSellerCompanyInfoForm() {
                 size={12}
               />
               <SelectDropdown
+                isCurrencyField={true}
                 name="currency"
                 options={currency}
                 className="border-[#CECED7] border-2 rounded-md p-3 w-full appearance-none sm:appearance-auto bg-white"

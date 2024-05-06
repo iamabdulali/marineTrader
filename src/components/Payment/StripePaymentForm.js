@@ -16,7 +16,9 @@ const StripePaymentForm = ({
   spinner,
   id,
   hasSubscription,
-  hasBundle,
+  advertType,
+  hasFeaturedBundle,
+  hasPremiumBundle,
 }) => {
   const [postalCode, setPostalCode] = useState("");
   const [country, setCountry] = useState("");
@@ -53,17 +55,21 @@ const StripePaymentForm = ({
     // Enable or disable the Pay button based on form validity
     const isValid = checkValidity();
     setIsFormValid(isValid);
-
-    console.log(hasSubscription, hasBundle);
   }, [elements, postalCode, country]);
 
-  const [hasFeaturedBundle, setHasFeaturedBundle] = useState(0);
-  const [hasPremiumBundle, setHasPremiumBundle] = useState(0);
+  // const [hasFeaturedBundle, setHasFeaturedBundle] = useState(0);
+  // const [hasPremiumBundle, setHasPremiumBundle] = useState(0);
 
-  useEffect(() => {
-    fetchOptions(`bundle/advert/remains?type=featured`, setHasFeaturedBundle);
-    fetchOptions(`bundle/advert/remains?type=premium`, setHasPremiumBundle);
-  }, []);
+  // useEffect(() => {
+  //   fetchOptions(
+  //     `bundle/advert/remains?type=featured&category_id=${id}`,
+  //     setHasFeaturedBundle
+  //   );
+  //   fetchOptions(
+  //     `bundle/advert/remains?type=premium&category_id=${id}`,
+  //     setHasPremiumBundle
+  //   );
+  // }, [id]);
 
   return (
     <div className="smallLg:w-1/2 w-full">
@@ -180,9 +186,12 @@ const StripePaymentForm = ({
           )}
         </button>
       </form>
-      {(!isPrivateSeller && hasSubscription != 0) ||
-      hasPremiumBundle != 0 ||
-      hasFeaturedBundle != 0 ? (
+      {!isPrivateSeller &&
+      advertType != "Standard" &&
+      !window.location.href.includes("subscription") &&
+      (hasSubscription != 0 ||
+        hasFeaturedBundle != 0 ||
+        hasPremiumBundle != 0) ? (
         <div className="bg-[#1C5DBF] text-white p-6 mt-8 shadow-[7px]">
           <p className="sm:text-2xl text-base font-semibold">
             <img

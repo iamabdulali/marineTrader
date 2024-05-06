@@ -17,6 +17,7 @@ const handlePlaceChange = (e, setFieldValue) => {
 
       if (formattedPrediction) {
         setFieldValue("city", formattedPrediction);
+        setFieldValue("user.city", formattedPrediction);
       } else {
         console.error("No formatted prediction found.");
       }
@@ -56,6 +57,8 @@ const PlaceApi = () => {
 
       placeInput?.addEventListener("change", (e) => {
         setFieldValue("city", e.target.value);
+        setFieldValue("user.city", e.target.value);
+
         setPlace(e.target.value);
       });
 

@@ -12,7 +12,7 @@ const PaymentStatus = ({ successStatus, paymentType }) => {
 
   useEffect(() => {
     setTimeout(() => {
-      navigate("/dashboard");
+      successStatus ? navigate("/dashboard") : navigate("/selling");
     }, 5000);
   }, []);
 
@@ -48,7 +48,7 @@ const PaymentStatus = ({ successStatus, paymentType }) => {
           </p>
         </div>
         <Link
-          to={successStatus ? "/dashboard" : `/payment/${id}`}
+          to={successStatus ? "/dashboard" : `/selling`}
           className="text-[#0D1A8B] font-semibold underline flex items-center gap-4 justify-center mt-5"
         >
           {successStatus ? (

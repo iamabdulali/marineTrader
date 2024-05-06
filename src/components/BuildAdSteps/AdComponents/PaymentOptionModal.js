@@ -10,6 +10,8 @@ const PaymentOptionModal = ({
   hasSubscription,
   hasSpotlight,
   advert,
+  hasFeaturedBundle,
+  hasPremiumBundle,
 }) => {
   const { advert_package_id } = Object(advert);
 
@@ -69,7 +71,19 @@ const PaymentOptionModal = ({
               Checkout
             </label>
           </div>
-        ) : hasSubscription && !hasSpotlight ? (
+        ) : currentPackage == "2" &&
+          (hasSubscription != 0 || hasPremiumBundle != 0) &&
+          !hasSpotlight ? (
+          <div className="radio mt-3">
+            <label
+              htmlFor="allowance"
+              className="radio-label mr-5 font-medium text-[#11133D]"
+            >
+              Dont worry, Your subscription allowance or your bundle has covered
+              this ad!
+            </label>
+          </div>
+        ) : !hasSpotlight && currentPackage == "3" && hasFeaturedBundle != 0 ? (
           <div className="radio mt-3">
             <label
               htmlFor="allowance"
@@ -96,7 +110,16 @@ const PaymentOptionModal = ({
           </div>
         )}
       </div>
-      {hasSubscription && !hasSpotlight && currentPackage != "1" ? (
+      {(hasSubscription != 0 || hasPremiumBundle != 0) &&
+      !hasSpotlight &&
+      currentPackage == "2" ? (
+        <Link
+          to="/dashboard"
+          className="py-3 w-full text-center block mt-7 mb-4 text-white hover:bg-[#0a1dbd] bg-[#0D1A8B] rounded-md"
+        >
+          Back To Dashboard
+        </Link>
+      ) : !hasSpotlight && currentPackage == "3" && hasFeaturedBundle != 0 ? (
         <Link
           to="/dashboard"
           className="py-3 w-full text-center block mt-7 mb-4 text-white hover:bg-[#0a1dbd] bg-[#0D1A8B] rounded-md"

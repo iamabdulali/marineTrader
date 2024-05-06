@@ -8,6 +8,7 @@ export const CategorySelectDropdown = ({
   onChange,
   addCustomOption,
   valueAsString,
+  isCurrencyField,
 }) => (
   <div className="mb-4 w-full text-sm">
     <label
@@ -30,9 +31,9 @@ export const CategorySelectDropdown = ({
               {name}
             </option>
           ))
-        : options.map(({ id, name }) => (
+        : options.map(({ id, name, currency_code }) => (
             <option key={id} value={id}>
-              {name}
+              {isCurrencyField ? currency_code : name}
             </option>
           ))}
 
