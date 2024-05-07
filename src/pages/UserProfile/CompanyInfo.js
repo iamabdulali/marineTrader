@@ -66,7 +66,6 @@ const CompanyInfo = ({ editable, isPrivateSeller }) => {
   }, []);
 
   function getCountry(countryName) {
-    console.log(countryName);
     const country = countries.find((country) => country?.id == countryName);
     return country;
   }
@@ -237,7 +236,7 @@ const CompanyInfo = ({ editable, isPrivateSeller }) => {
         </div>
       </div>
       <div className="flex sm:gap-6 items-center sm:flex-row flex-col">
-        {editable ? (
+        {/* {editable ? (
           <div className="w-full">
             {" "}
             <PlaceApi />
@@ -252,7 +251,23 @@ const CompanyInfo = ({ editable, isPrivateSeller }) => {
             onChange={(e) => handleInputChange(e)}
             readOnly={!editable}
           />
-        )}
+        )} */}
+
+        <div className={`w-full ${editable ? "block" : "hidden"}`}>
+          {" "}
+          <PlaceApi isEditProfile={true} existingCityValue={values.user.city} />
+        </div>
+        <div className={`w-full ${editable ? "hidden" : "block"}`}>
+          <FormField
+            label="Town/City"
+            FieldType="text"
+            inputField={false}
+            value={values.user.city}
+            name="city"
+            onChange={(e) => handleInputChange(e)}
+            readOnly={!editable}
+          />
+        </div>
 
         {/* <div className="w-full mb-4">
           <label

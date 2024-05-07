@@ -27,7 +27,7 @@ const handlePlaceChange = (e, setFieldValue) => {
     });
 };
 
-const PlaceApi = () => {
+const PlaceApi = ({ isEditProfile, existingCityValue }) => {
   const { values, setFieldValue } = useFormikContext();
   const [place, setPlace] = useState("");
 
@@ -50,6 +50,10 @@ const PlaceApi = () => {
           setFieldValue("city", "");
         }
       };
+
+      if (isEditProfile) {
+        placeInput.value = existingCityValue;
+      }
 
       removePlaceBtn?.addEventListener("click", () => {
         setFieldValue("city", "");
