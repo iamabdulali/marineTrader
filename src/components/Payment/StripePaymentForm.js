@@ -193,41 +193,55 @@ const StripePaymentForm = ({
         hasFeaturedBundle != 0 ||
         hasPremiumBundle != 0) ? (
         <div className="bg-[#1C5DBF] text-white p-6 mt-8 shadow-[7px]">
-          <p className="sm:text-2xl text-base font-semibold">
-            <img
-              className="inline-block w-10 sm:mr-0 mr-3"
-              src={stackIcon}
-              alt="stackIcon"
-            />{" "}
-            Allowances/Bundles
-          </p>
           {hasSubscription != 0 && advertType == "Premium" ? (
-            <div className="flex items-center sm:text-base text-sm justify-between border-b-2 border-white mt-4 pb-3">
-              <p>Inclusive Monthly Allowance</p>
-              <p className="font-medium sm:text-lg text-base">
-                {hasSubscription}
+            <>
+              <p className="sm:text-2xl text-base font-semibold">
+                <img
+                  className="inline-block w-10 sm:mr-0 mr-3"
+                  src={stackIcon}
+                  alt="stackIcon"
+                />{" "}
+                Allowances/Bundles
               </p>
-            </div>
+              <div className="flex items-center sm:text-base text-sm justify-between border-b-2 border-white mt-4 pb-3">
+                <p>Inclusive Monthly Allowance</p>
+                <p className="font-medium sm:text-lg text-base">
+                  {hasSubscription}
+                </p>
+              </div>
+            </>
           ) : (
             ""
           )}
           {hasPremiumBundle != 0 && advertType == "Premium" ? (
-            <div className="flex items-center sm:text-base text-sm justify-between mt-3">
-              <p>Premium Bundle Balance</p>
-              <p className="font-medium sm:text-lg text-base">
-                {hasPremiumBundle}
-              </p>
-            </div>
+            <>
+              <div className="flex items-center sm:text-base text-sm justify-between mt-3">
+                <p>Premium Bundle Balance</p>
+                <p className="font-medium sm:text-lg text-base">
+                  {hasPremiumBundle}
+                </p>
+              </div>
+            </>
           ) : (
             ""
           )}
           {hasFeaturedBundle != 0 && advertType == "Featured" ? (
-            <div className="flex items-center sm:text-base text-sm justify-between mt-3">
-              <p>Featured Bundle Balance</p>
-              <p className="font-medium sm:text-lg text-base">
-                {hasFeaturedBundle}
+            <>
+              <p className="sm:text-2xl text-base font-semibold">
+                <img
+                  className="inline-block w-10 sm:mr-0 mr-3"
+                  src={stackIcon}
+                  alt="stackIcon"
+                />{" "}
+                Allowances/Bundles
               </p>
-            </div>
+              <div className="flex items-center sm:text-base text-sm justify-between mt-3">
+                <p>Featured Bundle Balance</p>
+                <p className="font-medium sm:text-lg text-base">
+                  {hasFeaturedBundle}
+                </p>
+              </div>
+            </>
           ) : (
             ""
           )}
