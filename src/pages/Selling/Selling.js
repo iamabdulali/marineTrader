@@ -20,12 +20,18 @@ export default function Selling() {
   const [loading, setLoading] = useState(true);
   const [hasListing, setHasListing] = useState(true);
   let [isVideoOpen, setIsVideoOpen] = useState(false);
-  const [originalAdverts, setOriginalAdverts] = useState([]);
+  let [originalAdverts, setOriginalAdverts] = useState([]);
   const [filteredAdverts, setFilteredAdverts] = useState([]);
   const { categories, dispatch } = useContext(AuthContext);
 
   useEffect(() => {
-    getAdvert(setOriginalAdverts, setLoading);
+    getAdvert((adverts) => {
+      // Filter out completed adverts and store them in originalAdverts
+      setOriginalAdverts(
+        adverts.filter((advert) => advert.advert_status !== "completed")
+      );
+      setLoading(false);
+    });
   }, []);
 
   const handleDelete = (idToDelete) => {

@@ -323,31 +323,6 @@ const ListingTable = ({
                       </td>
                       <td className="py-4 px-4">
                         <div className="flex font-semibold items-center justify-center">
-                          {/* <Link
-                            to={
-                              advert_status == "draft" ||
-                              spotlight_status == "draft"
-                                ? `/payment/advert/${id}`
-                                : "/"
-                            }
-                            className={` ${
-                              advert_status == "draft" ||
-                              spotlight_status == "draft"
-                                ? "text-[#0D1A8B] border-2 border-[#0D1A8B] hover:bg-[#0D1A8B] hover:text-white"
-                                : advert_status == "paid"
-                                ? "text-[#FFB800] border-2 border-[#FFB800] hover:bg-[#FFB800] hover:text-white"
-                                : "text-[#2AD18A] border-2 border-[#2AD18A] hover:bg-[#2AD18A] hover:text-white"
-                            } px-3 py-3 min-w-24 text-sm rounded-md block text-center`}
-                          >
-                            {advert_status == "draft" ||
-                            spotlight_status == "draft"
-                              ? "Pay Now"
-                              : advert_status == "paid" &&
-                                advert_package_id != "3" &&
-                                advert_package_id != "6"
-                              ? "Upgrade"
-                              : "Maxed"}
-                          </Link> */}
                           {spotlight_status == "draft" ||
                           advert_status == "draft" ? (
                             <Link
@@ -582,7 +557,7 @@ const ListingTable = ({
                         <div className="flex items-center gap-2">
                           <img
                             src={advert?.images[0]?.image}
-                            alt="Item"
+                            alt="N/A"
                             className="w-16 h-16 object-cover rounded-lg mr-2"
                           />
                           <div>
@@ -651,7 +626,11 @@ const ListingTable = ({
                           {status == "pending" ? (
                             <div className="flex gap-3 font-semibold items-center justify-cente">
                               <button
-                                disabled={status != "pending" ? true : false}
+                                disabled={
+                                  status != "pending" || advert == null
+                                    ? true
+                                    : false
+                                }
                                 onClick={() => {
                                   handleOfferStatus(id, "accepted");
                                   setDeleteAdvertId(id);
@@ -661,7 +640,11 @@ const ListingTable = ({
                                 <FaCheck />
                               </button>
                               <button
-                                disabled={status != "pending" ? true : false}
+                                disabled={
+                                  status != "pending" || advert == null
+                                    ? true
+                                    : false
+                                }
                                 onClick={() => {
                                   handleOfferStatus(id, "rejected");
                                   setDeleteAdvertId(id);
@@ -671,6 +654,11 @@ const ListingTable = ({
                                 <FaTimes />
                               </button>
                               <button
+                                disabled={
+                                  status != "pending" || advert == null
+                                    ? true
+                                    : false
+                                }
                                 onClick={() => {
                                   openModal(setIsOfferOpen);
                                   setCounterOfferId(id);
@@ -711,7 +699,7 @@ const ListingTable = ({
                     >
                       <img
                         src={advert?.images[0]?.image}
-                        alt="Item"
+                        alt="Offer Not Available"
                         className="sm:w-4/12 smallLg:max-h-[auto]  max-h-[250px] w-full object-cover rounded-lg sm:mr-2 mb-4"
                       />
                       <div className="sm:w-8/12 w-full">
@@ -758,49 +746,6 @@ const ListingTable = ({
                             {phone}
                           </span>
                         </p>
-                        {/* <div className="flex gap-3 font-semibold items-center mt-4">
-                          <button
-                            disabled={
-                              status == "accepted"
-                                ? true
-                                : status == "rejected"
-                                ? true
-                                : disabledBtn
-                            }
-                            onClick={() => {
-                              handleOfferStatus(id, "accepted");
-                              setDeleteAdvertId(id);
-                            }}
-                            className="bg-[#36B37E] p-3 rounded-md flex items-center justify-center text-white w-full"
-                          >
-                            <FaCheck size={20} />
-                          </button>
-                          <button
-                            disabled={
-                              status == "accepted"
-                                ? true
-                                : status == "rejected"
-                                ? true
-                                : disabledBtn
-                            }
-                            onClick={() => {
-                              handleOfferStatus(id, "rejected");
-                              setDeleteAdvertId(id);
-                            }}
-                            className="bg-[#FF4A6B] p-3 rounded-md flex items-center justify-center text-white w-full"
-                          >
-                            <FaTimes size={20} />
-                          </button>
-                          <button
-                            onClick={() => {
-                              openModal(setIsOfferOpen);
-                              setCounterOfferId(id);
-                            }}
-                            className="bg-[#FFB800] flex p-3 rounded-md items-center justify-center text-white w-full"
-                          >
-                            <FaDollarSign size={20} />
-                          </button>
-                        </div> */}
                         <div className="flex gap-3 font-semibold items-center mt-4">
                           <div className="w-full">
                             {status == "accepted" ? (
@@ -847,7 +792,11 @@ const ListingTable = ({
                             {status == "pending" ? (
                               <div className="flex gap-3 font-semibold items-center justify-cente">
                                 <button
-                                  disabled={status != "pending" ? true : false}
+                                  disabled={
+                                    status != "pending" || advert == null
+                                      ? true
+                                      : false
+                                  }
                                   onClick={() => {
                                     handleOfferStatus(id, "accepted");
                                     setDeleteAdvertId(id);
@@ -857,7 +806,11 @@ const ListingTable = ({
                                   <FaCheck />
                                 </button>
                                 <button
-                                  disabled={status != "pending" ? true : false}
+                                  disabled={
+                                    status != "pending" || advert == null
+                                      ? true
+                                      : false
+                                  }
                                   onClick={() => {
                                     handleOfferStatus(id, "rejected");
                                     setDeleteAdvertId(id);
@@ -867,6 +820,11 @@ const ListingTable = ({
                                   <FaTimes />
                                 </button>
                                 <button
+                                  disabled={
+                                    status != "pending" || advert == null
+                                      ? true
+                                      : false
+                                  }
                                   onClick={() => {
                                     openModal(setIsOfferOpen);
                                     setCounterOfferId(id);

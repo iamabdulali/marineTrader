@@ -40,7 +40,13 @@ export default function Dashboard() {
   const { seller_type } = Object(user);
 
   useEffect(() => {
-    getAdvert(setAdverts, setLoading);
+    getAdvert((adverts) => {
+      // Filter out completed adverts and store them in originalAdverts
+      setAdverts(
+        adverts.filter((advert) => advert.advert_status !== "completed")
+      );
+      setLoading(false);
+    });
   }, []);
 
   const handleDelete = (idToDelete) => {
