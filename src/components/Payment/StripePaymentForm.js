@@ -215,8 +215,8 @@ const StripePaymentForm = ({
             ""
           )}
           {hasPremiumBundle != 0 && advertType == "Premium" ? (
-            <div className="bg-[#1C5DBF] text-white p-6 mt-8 shadow-[7px]">
-              <div className="flex items-center sm:text-base text-sm justify-between mt-3">
+            <div className="bg-[#1C5DBF] text-white  p-6 pt-0 shadow-[7px]">
+              <div className="flex items-center sm:text-base text-sm justify-between">
                 <p>Premium Bundle Balance</p>
                 <p className="font-medium sm:text-lg text-base">
                   {hasPremiumBundle}
@@ -227,7 +227,7 @@ const StripePaymentForm = ({
             ""
           )}
           {hasFeaturedBundle != 0 && advertType == "Featured" ? (
-            <div className="bg-[#1C5DBF] text-white p-6 mt-8 shadow-[7px]">
+            <div className="bg-[#1C5DBF] text-white p-6 pt-0 shadow-[7px]">
               <p className="sm:text-2xl text-base font-semibold">
                 <img
                   className="inline-block w-10 sm:mr-0 mr-3"
@@ -236,7 +236,7 @@ const StripePaymentForm = ({
                 />{" "}
                 Allowances/Bundles
               </p>
-              <div className="flex items-center sm:text-base text-sm justify-between mt-3">
+              <div className="flex items-center sm:text-base text-sm justify-between">
                 <p>Featured Bundle Balance</p>
                 <p className="font-medium sm:text-lg text-base">
                   {hasFeaturedBundle}
