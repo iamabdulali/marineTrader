@@ -24,6 +24,10 @@ export default function Selling() {
   const [filteredAdverts, setFilteredAdverts] = useState([]);
   const { categories, dispatch } = useContext(AuthContext);
 
+  // useEffect(() => {
+  //   getAdvert(setOriginalAdverts, setLoading);
+  // }, []);
+
   useEffect(() => {
     getAdvert((adverts) => {
       // Filter out completed adverts and store them in originalAdverts

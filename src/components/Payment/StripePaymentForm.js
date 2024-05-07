@@ -201,7 +201,7 @@ const StripePaymentForm = ({
             />{" "}
             Allowances/Bundles
           </p>
-          {hasSubscription != 0 ? (
+          {hasSubscription != 0 && advertType == "Premium" ? (
             <div className="flex items-center sm:text-base text-sm justify-between border-b-2 border-white mt-4 pb-3">
               <p>Inclusive Monthly Allowance</p>
               <p className="font-medium sm:text-lg text-base">
@@ -211,7 +211,7 @@ const StripePaymentForm = ({
           ) : (
             ""
           )}
-          {hasPremiumBundle != 0 ? (
+          {hasPremiumBundle != 0 && advertType == "Premium" ? (
             <div className="flex items-center sm:text-base text-sm justify-between mt-3">
               <p>Premium Bundle Balance</p>
               <p className="font-medium sm:text-lg text-base">
@@ -221,7 +221,7 @@ const StripePaymentForm = ({
           ) : (
             ""
           )}
-          {hasFeaturedBundle != 0 ? (
+          {hasFeaturedBundle != 0 && advertType == "Featured" ? (
             <div className="flex items-center sm:text-base text-sm justify-between mt-3">
               <p>Featured Bundle Balance</p>
               <p className="font-medium sm:text-lg text-base">
