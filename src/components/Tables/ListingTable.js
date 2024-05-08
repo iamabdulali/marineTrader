@@ -556,7 +556,10 @@ const ListingTable = ({
                       <td className="py-4 px-4 whitespace-nowrap">
                         <div className="flex items-center gap-2">
                           <img
-                            src={advert?.images[0]?.image}
+                            src={
+                              advert?.images[0]?.image ||
+                              "https://cdn-icons-png.flaticon.com/512/16/16096.png"
+                            }
                             alt="N/A"
                             className="w-16 h-16 object-cover rounded-lg mr-2"
                           />
@@ -698,7 +701,10 @@ const ListingTable = ({
                       className="bg-white sm:text-base text-sm block rounded-lg sm:flex gap-4 w-full p-4"
                     >
                       <img
-                        src={advert?.images[0]?.image}
+                        src={
+                          advert?.images[0]?.image ||
+                          "https://cdn-icons-png.flaticon.com/512/16/16096.png"
+                        }
                         alt="Offer Not Available"
                         className="sm:w-4/12 smallLg:max-h-[auto]  max-h-[250px] w-full object-cover rounded-lg sm:mr-2 mb-4"
                       />
