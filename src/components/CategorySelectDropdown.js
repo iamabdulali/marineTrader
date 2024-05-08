@@ -38,7 +38,10 @@ export const CategorySelectDropdown = ({
           ))}
 
       {addCustomOption ? (
-        <option value="custom" label={`Select a custom ${name}`} />
+        <option
+          value="custom"
+          label={`Select a custom ${name}`}
+        >{`Select a custom ${name}`}</option>
       ) : (
         ""
       )}
