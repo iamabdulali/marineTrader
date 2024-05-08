@@ -146,7 +146,7 @@ const StripePaymentForm = ({
               value={country}
               onChange={(e) => setCountry(e.target.value)}
               required
-              className="border-[#8891B2] font-medium text-[#8891B2] border-2 rounded-lg p-3 w-full text-sm"
+              className="border-[#8891B2] appearance-none sm:appearance-auto font-medium text-[#8891B2] border-2 rounded-lg p-3 w-full text-sm"
             >
               <option value={``}>Select Country</option>;
               {countryOptions.map(({ name, id }) => {
