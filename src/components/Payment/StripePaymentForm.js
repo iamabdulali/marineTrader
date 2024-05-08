@@ -20,6 +20,9 @@ const StripePaymentForm = ({
   hasFeaturedBundle,
   hasPremiumBundle,
 }) => {
+  const [cardNum, setCardNum] = useState(false);
+  const [cardCvv, setCardCvv] = useState(false);
+  const [cardExpiryDate, setCardExpiryDate] = useState(false);
   const [postalCode, setPostalCode] = useState("");
   const [country, setCountry] = useState("");
   const [isFormValid, setIsFormValid] = useState(false);
@@ -55,21 +58,7 @@ const StripePaymentForm = ({
     // Enable or disable the Pay button based on form validity
     const isValid = checkValidity();
     setIsFormValid(isValid);
-  }, [elements, postalCode, country]);
-
-  // const [hasFeaturedBundle, setHasFeaturedBundle] = useState(0);
-  // const [hasPremiumBundle, setHasPremiumBundle] = useState(0);
-
-  // useEffect(() => {
-  //   fetchOptions(
-  //     `bundle/advert/remains?type=featured&category_id=${id}`,
-  //     setHasFeaturedBundle
-  //   );
-  //   fetchOptions(
-  //     `bundle/advert/remains?type=premium&category_id=${id}`,
-  //     setHasPremiumBundle
-  //   );
-  // }, [id]);
+  }, [elements, postalCode, country, cardCvv, cardExpiryDate, cardNum]);
 
   return (
     <div className="smallLg:w-1/2 w-full">
@@ -82,6 +71,12 @@ const StripePaymentForm = ({
           Card Number
         </label>
         <CardNumberElement
+          onChange={() => {
+            setCardNum((prev) => !prev);
+          }}
+          onFocus={() => {
+            setCardNum((prev) => !prev);
+          }}
           className="border-[#8891B2] border-2 rounded-lg p-3"
           options={{
             showIcon: true,
@@ -103,6 +98,12 @@ const StripePaymentForm = ({
               CVC
             </label>
             <CardCvcElement
+              onChange={() => {
+                setCardCvv((prev) => !prev);
+              }}
+              onFocus={() => {
+                setCardCvv((prev) => !prev);
+              }}
               options={{
                 style: {
                   base: {
@@ -122,6 +123,12 @@ const StripePaymentForm = ({
               Expiry
             </label>
             <CardExpiryElement
+              onChange={() => {
+                setCardExpiryDate((prev) => !prev);
+              }}
+              onFocus={() => {
+                setCardExpiryDate((prev) => !prev);
+              }}
               options={{
                 style: {
                   base: {
@@ -150,7 +157,11 @@ const StripePaymentForm = ({
             >
               <option value={``}>Select Country</option>;
               {countryOptions.map(({ name, id }) => {
-                return <option value={`${id}`}>{name}</option>;
+                return (
+                  <option key={id} value={`${id}`}>
+                    {name}
+                  </option>
+                );
               })}
             </select>
           </div>
