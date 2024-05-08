@@ -523,7 +523,7 @@ const BuildAd = () => {
                   <Link
                     to={"/selling"}
                     type="button"
-                    className="bg-white text-center sm:order-none order-1 hover:bg-[#8891B2] hover:text-white border-2 sm:w-28 min-h-[48px] w-full border-[#8891B2] text-[#8891B2] p-3 rounded-md  text-sm font-medium "
+                    className="bg-white text-center sm:order-none order-1 hover:bg-[#8891B2] hover:text-white border-2 sm:w-28 min-h-[48px] sm:appearance-auto appearance-none w-full border-[#8891B2] text-[#8891B2] p-3 rounded-md  text-sm font-medium "
                   >
                     Cancel
                   </Link>

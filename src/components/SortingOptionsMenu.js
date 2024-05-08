@@ -19,12 +19,20 @@ const SortingOptionsMenu = ({
               handleSortByStatus("show all", items, setItems);
               setSortType(e.target.textContent.toLowerCase());
             }}
+            onTouchStart={(e) => {
+              handleSortByStatus("show all", items, setItems);
+              setSortType(e.target.textContent.toLowerCase());
+            }}
             className="mt-3 flex items-center gap-4 text-[#11133D] cursor-pointer font-medium "
           >
             <FaCalendarAlt /> Show All
           </p>
           <p
             onClick={(e) => {
+              handleSortByStatus("pending", items, setItems);
+              setSortType(e.target.textContent.toLowerCase());
+            }}
+            onTouchStart={(e) => {
               handleSortByStatus("pending", items, setItems);
               setSortType(e.target.textContent.toLowerCase());
             }}
@@ -37,12 +45,20 @@ const SortingOptionsMenu = ({
               handleSortByStatus("accepted", items, setItems);
               setSortType(e.target.textContent);
             }}
+            onTouchStart={(e) => {
+              handleSortByStatus("accepted", items, setItems);
+              setSortType(e.target.textContent);
+            }}
             className="mt-3 text-[#11133D] flex items-center gap-4 cursor-pointer font-medium "
           >
             <FaCalendarAlt /> Accepted
           </p>
           <p
             onClick={(e) => {
+              handleSortByStatus("rejected", items, setItems);
+              setSortType(e.target.textContent);
+            }}
+            onTouchStart={(e) => {
               handleSortByStatus("rejected", items, setItems);
               setSortType(e.target.textContent);
             }}
@@ -58,6 +74,10 @@ const SortingOptionsMenu = ({
               handleSortByStatus("show all", items, setItems);
               setSortType(e.target.textContent.toLowerCase());
             }}
+            onTouchStart={(e) => {
+              handleSortByStatus("show all", items, setItems);
+              setSortType(e.target.textContent.toLowerCase());
+            }}
             className="mt-3 flex items-center gap-4 text-[#11133D] cursor-pointer font-medium "
           >
             <FaCalendarAlt /> Show All
@@ -67,12 +87,25 @@ const SortingOptionsMenu = ({
               handleSortByStatus("paid", items, setItems);
               setSortType(e.target.textContent.toLowerCase());
             }}
+            onTouchStart={(e) => {
+              handleSortByStatus("paid", items, setItems);
+              setSortType(e.target.textContent.toLowerCase());
+            }}
             className="mt-3 flex items-center gap-4 text-[#11133D] cursor-pointer font-medium "
           >
             <FaCalendarAlt /> Active
           </p>
           <p
             onClick={(e) => {
+              handleSortByStatus(
+                // e.target.textContent.trim().toLowerCase(),
+                "draft",
+                items,
+                setItems
+              );
+              setSortType(e.target.textContent);
+            }}
+            onTouchStart={(e) => {
               handleSortByStatus(
                 // e.target.textContent.trim().toLowerCase(),
                 "draft",
@@ -91,6 +124,10 @@ const SortingOptionsMenu = ({
               handleSortByStatus("expired", items, setItems);
               setSortType(e.target.textContent);
             }}
+            onTouchStart={(e) => {
+              handleSortByStatus("expired", items, setItems);
+              setSortType(e.target.textContent);
+            }}
             className="mt-3 text-[#11133D] flex items-center gap-4 cursor-pointer font-medium "
           >
             <FaDollarSign /> Expired
@@ -103,12 +140,20 @@ const SortingOptionsMenu = ({
               handleSortByDate(true, items, setItems);
               setSortType(e.target.textContent);
             }}
+            onTouchStart={(e) => {
+              handleSortByDate(true, items, setItems);
+              setSortType(e.target.textContent);
+            }}
             className="mt-3 flex items-center gap-4 text-[#11133D] cursor-pointer font-medium "
           >
             <FaCalendarAlt /> Date Asc
           </p>
           <p
             onClick={(e) => {
+              handleSortByDate(false, items, setItems);
+              setSortType(e.target.textContent);
+            }}
+            onTouchStart={(e) => {
               handleSortByDate(false, items, setItems);
               setSortType(e.target.textContent);
             }}
@@ -121,12 +166,20 @@ const SortingOptionsMenu = ({
               handleSortByPrice(false, items, setItems);
               setSortType(e.target.textContent);
             }}
+            onTouchStart={(e) => {
+              handleSortByPrice(false, items, setItems);
+              setSortType(e.target.textContent);
+            }}
             className="mt-3 text-[#11133D] flex items-center gap-4 cursor-pointer font-medium "
           >
             <FaDollarSign /> Price Highest
           </p>
           <p
             onClick={(e) => {
+              setSortType(e.target.textContent);
+              handleSortByPrice(true, items, setItems);
+            }}
+            onTouchStart={(e) => {
               setSortType(e.target.textContent);
               handleSortByPrice(true, items, setItems);
             }}
