@@ -265,27 +265,161 @@ const Step1 = ({ showSpotlightSelection, spotlightFor, isEditMode }) => {
     );
   };
 
+  // useEffect(() => {
+  //   if (isEditMode) {
+  //     // const lengthOfCountryArray =
+  //     //   advert[`${spotlightFor}_spotlights_countries`]?.length;
+
+  //     // const lengthOfContinentArray =
+  //     //   advert[`${spotlightFor}_spotlights_continents`]?.length;
+
+  //     // setTotalCount(
+  //     //   lengthOfCountryArray * 6.99 + lengthOfContinentArray * 89.99
+  //     // );
+
+  //     const countriesArrayConvertion = advert[
+  //       `${spotlightFor}_spotlights_countries`
+  //     ].map((item) => item?.country_id);
+
+  //     const continentsArrayConvertion = advert[
+  //       `${spotlightFor}_spotlights_continents`
+  //     ].map((item) => item?.continent_id);
+
+  //     const selectedContinentsArray = selectedContinents.filter((item) =>
+  //       continentsArrayConvertion.includes(item.id.toString())
+  //     );
+
+  //     const selectedCountriesArray = selectedCountries.filter((item) =>
+  //       countriesArrayConvertion.includes(item?.id.toString())
+  //     );
+
+  //     const spotlightPricesForContinents = selectedContinentsArray.map((item) =>
+  //       parseFloat(item.spotlight_price)
+  //     );
+  //     const spotlightPricesForCountries = selectedCountriesArray.map((item) =>
+  //       parseFloat(item.spotlight_price)
+  //     );
+
+  //     const sumForContinentsPrices = spotlightPricesForContinents.reduce(
+  //       (total, currentValue) => total + currentValue,
+  //       0
+  //     );
+  //     const sumForCountriesPrices = spotlightPricesForCountries.reduce(
+  //       (total, currentValue) => total + currentValue,
+  //       0
+  //     );
+
+  //     setTotalCount(
+  //       // lengthOfCountryArray * 6.99 + lengthOfContinentArray * 89.99
+  //       sumForContinentsPrices + sumForCountriesPrices
+  //     );
+  //   } else {
+  //     // let lengthOfCountryArray =
+  //     //   values[`${spotlightFor}_spotlights_countries`]?.length;
+  //     // let lengthOfContinentArray =
+  //     //   values[`${spotlightFor}_spotlights_continents`]?.length;
+
+  //     const selectedContinentsArray = selectedContinents.filter((item) =>
+  //       values[`${spotlightFor}_spotlights_continents`].includes(
+  //         item.id.toString()
+  //       )
+  //     );
+
+  //     const selectedCountriesArray = selectedCountries.filter((item) =>
+  //       values[`${spotlightFor}_spotlights_countries`].includes(
+  //         item.id.toString()
+  //       )
+  //     );
+
+  //     const spotlightPricesForContinents = selectedContinentsArray.map((item) =>
+  //       parseFloat(item.spotlight_price)
+  //     );
+  //     const spotlightPricesForCountries = selectedCountriesArray.map((item) =>
+  //       parseFloat(item.spotlight_price)
+  //     );
+
+  //     const sumForContinentsPrices = spotlightPricesForContinents.reduce(
+  //       (total, currentValue) => total + currentValue,
+  //       0
+  //     );
+  //     const sumForCountriesPrices = spotlightPricesForCountries.reduce(
+  //       (total, currentValue) => total + currentValue,
+  //       0
+  //     );
+
+  //     setTotalCount(
+  //       // lengthOfCountryArray * 6.99 + lengthOfContinentArray * 89.99
+  //       sumForContinentsPrices + sumForCountriesPrices
+  //     );
+  //   }
+  // });
+
   useEffect(() => {
+    const calculateTotalCount = (continentItems, countryItems, isEditMode) => {
+      let totalCount = 0;
+
+      const selectedContinentsArray = selectedContinents.filter((item) =>
+        isEditMode
+          ? continentItems
+              .map((obj) => obj.continent_id)
+              .includes(item.id.toString())
+          : continentItems.includes(item.id.toString())
+      );
+
+      const selectedCountriesArray = selectedCountries.filter((item) =>
+        isEditMode
+          ? countryItems
+              .map((obj) => obj.country_id)
+              .includes(item.id.toString())
+          : countryItems.includes(item.id.toString())
+      );
+
+      const spotlightPricesForItems = (selectedItems) =>
+        selectedItems.flatMap((item) => parseFloat(item.spotlight_price));
+
+      const sumForItemsPrices = (prices) =>
+        prices.reduce((total, currentValue) => total + currentValue, 0);
+
+      const spotlightPricesForContinents = spotlightPricesForItems(
+        selectedContinentsArray
+      );
+      const spotlightPricesForCountries = spotlightPricesForItems(
+        selectedCountriesArray
+      );
+
+      const sumForContinentsPrices = sumForItemsPrices(
+        spotlightPricesForContinents
+      );
+      const sumForCountriesPrices = sumForItemsPrices(
+        spotlightPricesForCountries
+      );
+
+      totalCount = sumForContinentsPrices + sumForCountriesPrices;
+
+      setTotalCount(totalCount);
+    };
+
     if (isEditMode) {
-      const lengthOfCountryArray =
-        advert[`${spotlightFor}_spotlights_countries`]?.length;
-
-      const lengthOfContinentArray =
-        advert[`${spotlightFor}_spotlights_continents`]?.length;
-
-      setTotalCount(
-        lengthOfCountryArray * 6.99 + lengthOfContinentArray * 89.99
+      calculateTotalCount(
+        advert[`${spotlightFor}_spotlights_continents`] || [],
+        advert[`${spotlightFor}_spotlights_countries`] || [],
+        isEditMode
       );
     } else {
-      let lengthOfCountryArray =
-        values[`${spotlightFor}_spotlights_countries`]?.length;
-      let lengthOfContinentArray =
-        values[`${spotlightFor}_spotlights_continents`]?.length;
-      setTotalCount(
-        lengthOfCountryArray * 6.99 + lengthOfContinentArray * 89.99
+      calculateTotalCount(
+        values[`${spotlightFor}_spotlights_continents`] || [],
+        values[`${spotlightFor}_spotlights_countries`] || [],
+        isEditMode
       );
     }
-  });
+  }, [
+    isEditMode,
+    selectedContinents,
+    selectedCountries,
+    spotlightFor,
+    advert,
+    values,
+  ]);
 
   return (
     <>
