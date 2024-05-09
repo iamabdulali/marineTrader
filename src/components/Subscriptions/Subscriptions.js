@@ -16,18 +16,22 @@ const Subscriptions = ({
   id,
   selectedSubscription,
 }) => {
-  // Check if the user is subscribed to Broker plus within the same category
+  // Check if the user is subscribed to Broker plus or Dealer plus within the same category
   const isSubscribedToBrokerPlus =
     selectedSubscription?.subscription_plan?.name === "Broker plus";
 
-  // Disable Service plus if subscribed to Broker plus
+  const isSubscribedToDealerPlus =
+    selectedSubscription?.subscription_plan?.name === "Dealer plus";
+
+  // Disable Service plus if subscribed to Broker plus or Dealer plus
   const isServicePlusDisabled =
-    packageName === "Service plus" && isSubscribedToBrokerPlus;
+    (packageName === "Service plus" && isSubscribedToBrokerPlus) ||
+    (packageName === "Service plus" && isSubscribedToDealerPlus);
 
-  // Disable Standard Trader if subscribed to Broker plus
+  // Disable Standard Trader if subscribed to Broker plus or Dealer plus
   const isStandardTraderDisabled =
-    packageName === "Standard Trader" && isSubscribedToBrokerPlus;
-
+    (packageName === "Standard Trader" && isSubscribedToBrokerPlus) ||
+    (packageName === "Standard Trader" && isSubscribedToDealerPlus);
   // Check if the current package is selected or subscribed to
   const isSelectedOrSubscribed =
     packageName === selectedSubscription?.subscription_plan?.name;
