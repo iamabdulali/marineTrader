@@ -118,6 +118,26 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
   };
 
   let spotlights = 0;
+  const convertedCategoryCountrySpotlight = conversionToArray(
+    category_spotlights_countries
+  );
+  const convertedCategoryContinentSpotlight = conversionToArray(
+    category_spotlights_continents
+  );
+  const convertedHomeContinentSpotlight = conversionToArray(
+    home_spotlights_continents
+  );
+  const convertedHomeCountrySpotlight = conversionToArray(
+    home_spotlights_countries
+  );
+
+  function conversionToArray(array) {
+    return array?.map((item) => parseFloat(item?.spotlight_price));
+  }
+
+  function addPrices(prices) {
+    return prices?.reduce((total, currentValue) => total + currentValue, 0);
+  }
 
   if (
     (category_spotlights_countries?.length === 0 &&
@@ -129,10 +149,14 @@ const PaymentFormAd = ({ setFieldValue, values }) => {
     spotlights = false;
   } else {
     spotlights =
-      category_spotlights_countries?.length * 6.99 +
-      category_spotlights_continents?.length * 89.99 +
-      home_spotlights_countries?.length * 6.99 +
-      home_spotlights_continents?.length * 89.99;
+      // category_spotlights_countries?.length * 6.99 +
+      // category_spotlights_continents?.length * 89.99 +
+      // home_spotlights_countries?.length * 6.99 +
+      // home_spotlights_continents?.length * 89.99;
+      addPrices(convertedCategoryCountrySpotlight) +
+      addPrices(convertedCategoryContinentSpotlight) +
+      addPrices(convertedHomeContinentSpotlight) +
+      addPrices(convertedHomeCountrySpotlight);
   }
 
   const generateStripeToken = async () => {
