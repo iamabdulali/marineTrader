@@ -62,8 +62,6 @@ const PriceStep6 = ({ isEditMode }) => {
 
   let currentPackage = +values?.advert_package - numberToSubtract;
 
-  console.log(values);
-
   return (
     <BuildLayout heading="Set Price">
       <div>
@@ -267,10 +265,17 @@ const PriceStep6 = ({ isEditMode }) => {
                     className={`min-w-[20px] min-h-[20px] text-blue-600 bg-gray-100 border-gray-300 rounded mr-3`}
                     type="checkbox"
                     name={facility.key}
-                    checked={values[facility.key] === "yes"}
+                    checked={
+                      isEditMode
+                        ? advert[facility.key] === "yes"
+                        : values[facility.key] === "yes"
+                    }
                     onChange={(e) => {
                       const value = e.target.checked ? "yes" : "no";
-                      setFieldValue(facility.key, value);
+
+                      isEditMode
+                        ? setFieldValue(`advert.${facility.key}`, value)
+                        : setFieldValue(facility.key, value);
                     }}
                   />
                   {facility.name}
