@@ -33,7 +33,12 @@ const PriceStep6 = ({ isEditMode }) => {
   const isPrivateSeller = seller_type == "private seller";
 
   const { advert } = Object(values);
-  const { price_type, currency: advert_currency, price } = Object(advert);
+  const {
+    price_type,
+    currency: advert_currency,
+    price,
+    tax_id,
+  } = Object(advert);
 
   const [priceInfoType, setPriceInfoType] = useState(
     isEditMode ? price_type : values?.price_type
@@ -53,16 +58,11 @@ const PriceStep6 = ({ isEditMode }) => {
     setSpotlightType("category");
   };
 
-  const handleCheckboxChange = (facility) => {
-    setFacilities((prevFacilities) => ({
-      ...prevFacilities,
-      [facility]: !prevFacilities[facility],
-    }));
-  };
-
   let numberToSubtract = values?.advert_package > 4 ? 4 : 1;
 
   let currentPackage = +values?.advert_package - numberToSubtract;
+
+  console.log(values);
 
   return (
     <BuildLayout heading="Set Price">
@@ -202,7 +202,31 @@ const PriceStep6 = ({ isEditMode }) => {
                     )
               }
             />
-            <CategorySelectDropdown label="Tax" name="tax" options={taxes} />
+            <CategorySelectDropdown
+              value={isEditMode ? tax_id : values?.tax_id}
+              label="Tax"
+              name="tax_id"
+              options={taxes}
+              onChange={(e) =>
+                isEditMode
+                  ? handleInputChange(
+                      e,
+                      null,
+                      null,
+                      "advert",
+                      isEditMode,
+                      setFieldValue
+                    )
+                  : handleInputChange(
+                      e,
+                      null,
+                      null,
+                      null,
+                      isEditMode,
+                      setFieldValue
+                    )
+              }
+            />
           </div>
         ) : (
           <div className="text-sm mt-5 mb-6  text-[#11133D] bg-[#FFE8E8] py-7 sm:px-7 px-4 rounded-lg">

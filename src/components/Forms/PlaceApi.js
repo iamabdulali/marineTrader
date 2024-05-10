@@ -34,9 +34,6 @@ const handlePlaceChange = (e, setFieldValue) => {
         }
       }
 
-      // Use formattedPrediction here
-      console.log(formattedPrediction);
-
       if (formattedPrediction) {
         setFieldValue("city", formattedPrediction);
         setFieldValue("user.city", formattedPrediction);
