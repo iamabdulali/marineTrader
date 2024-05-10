@@ -1,23 +1,14 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import MakeOfferForm from "../../components/ItemDetailsPage/MakeOfferForm";
 import { CiDeliveryTruck } from "react-icons/ci";
 import { BiDroplet } from "react-icons/bi";
 import { userProfile } from "../../assets";
-import {
-  FaChevronDown,
-  FaChevronUp,
-  FaEnvelope,
-  FaFlag,
-  FaHandHoldingUsd,
-  FaPhone,
-  FaTools,
-} from "react-icons/fa";
+import { FaHandHoldingUsd, FaTools } from "react-icons/fa";
 import ContentToggle from "../../components/ItemDetailsPage/ToggleContent";
 import OfferSectionHeader from "./OfferSectionHeader";
 import axios from "axios";
 import { SERVER_BASE_URL } from "../..";
 import { convertTimestampToMonthYear } from "../../utils/TimeStampConverter";
-import { AuthContext } from "../../Context/AuthContext";
 import { makeOfferValidationSchema } from "../../utils/ValidationSchema";
 import { toast } from "react-toastify";
 import { Tooltip } from "react-tooltip";
@@ -25,17 +16,11 @@ import { GetCountries } from "react-country-state-city/dist/cjs";
 
 const MakeOfferSection = ({ advert }) => {
   const [spinner, setSpinner] = useState(false);
-  const [showTiming, setShowTiming] = useState(true);
   const [showFacilities, setShowFacilities] = useState(true);
   const [countries, setCountries] = useState([]);
-  const [states, setStates] = useState([]);
-  const [cities, setCities] = useState([]);
-  const [AllStates, setAllStates] = useState([]);
-  const [cityByStates, setCitiesByStates] = useState([]);
 
   const {
     currency_id,
-    advert_package_id,
     user,
     id,
     finance_available,
@@ -48,14 +33,15 @@ const MakeOfferSection = ({ advert }) => {
   const {
     image_field,
     created_at,
-    name,
-    region,
     seller_type,
     facilities,
     user_name,
     city,
+    calling_code,
     country,
     main_picture,
+    email,
+    phone_no,
   } = Object(user);
 
   const isPrivateSeller = seller_type == "private seller";
@@ -94,23 +80,10 @@ const MakeOfferSection = ({ advert }) => {
     }
   };
 
-  const getOptions = async (url, setData) => {
-    try {
-      const { data } = await axios.get(url);
-      setData(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
     GetCountries().then((result) => {
       setCountries(result);
     });
-    getOptions(
-      "https://venkatmcajj.github.io/react-country-state-city/data/statesminified.json",
-      setStates
-    );
   }, []);
 
   function getCountry(countryName) {
@@ -118,26 +91,16 @@ const MakeOfferSection = ({ advert }) => {
     return country;
   }
 
-  useEffect(() => {
-    setAllStates((prevStates) => {
-      const newStates = cities?.reduce((acc, city) => {
-        return acc.concat(Object(city)?.states);
-      }, []);
-
-      return [...prevStates, ...newStates];
-    });
-  }, [cities]);
-
-  function getCitiesByStates(stateID) {
-    const selectedCities = AllStates?.find((state) => state?.id == stateID);
-    setCitiesByStates(selectedCities?.cities);
-  }
-
   return (
     <div className="xl:w-4/12 w-full">
       <div className="rounded-lg border-2">
         <div className="hidden sm:block">
-          <OfferSectionHeader advert={advert} />
+          <OfferSectionHeader
+            phone_no={phone_no}
+            email={email}
+            calling_code={calling_code}
+            advert={advert}
+          />
         </div>
 
         <Tooltip id="my-tooltip-5" place="bottom" content="Finance" />
@@ -160,7 +123,7 @@ const MakeOfferSection = ({ advert }) => {
               Member Since {convertTimestampToMonthYear(created_at)}
             </p>
             <p className="text-[#11133D] font-semibold text-sm">
-              {getCountry(country)?.name}
+              {city}, {getCountry(country)?.name}
             </p>
           </div>
         </div>

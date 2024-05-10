@@ -28,7 +28,6 @@ const CompanyInfo = ({ editable, isPrivateSeller }) => {
     // For the currency field, extract the ID from the selected currency object
     if (name === "currency") {
       const selectedCurrency = currency.find((c) => c.id === parseInt(value));
-      console.log(selectedCurrency);
       if (selectedCurrency) {
         setFieldValue("user.currency", selectedCurrency?.id);
       } else {
@@ -108,7 +107,6 @@ const CompanyInfo = ({ editable, isPrivateSeller }) => {
 
   function getPhoneCodeByCountryName(countryName) {
     const country = countries.find((country) => country.id == countryName);
-    console.log(country);
     return country ? country?.phone_code : null;
   }
 
@@ -183,7 +181,6 @@ const CompanyInfo = ({ editable, isPrivateSeller }) => {
                 "user.calling_code",
                 getPhoneCodeByCountryName(getCountry(e.target.value).id)
               );
-              console.log(getCountry(e.target.value).id);
             }}
             value={getCountry(values.user.country)?.id}
             disabled={!editable}

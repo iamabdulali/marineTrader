@@ -8,12 +8,34 @@ import { ErrorMessage, Field, useFormikContext } from "formik";
 const handlePlaceChange = (e, setFieldValue) => {
   e.srcElement.autocomplete.promise
     .then((result) => {
+      // let formattedPrediction;
+      // if (result.gm_accessors_.place.Fs) {
+      //   formattedPrediction = result.gm_accessors_.place.Fs.formattedPrediction;
+      // } else if (result.gm_accessors_.place.Gs) {
+      //   formattedPrediction = result.gm_accessors_.place.Gs.formattedPrediction;
+      // } else if (result.gm_accessors_.place.Hs) {
+      //   formattedPrediction = result.gm_accessors_.place.Hs.formattedPrediction;
+      // }
+
+      // console.log(result);
+
       let formattedPrediction;
-      if (result.gm_accessors_.place.Fs) {
-        formattedPrediction = result.gm_accessors_.place.Fs.formattedPrediction;
-      } else if (result.gm_accessors_.place.Gs) {
-        formattedPrediction = result.gm_accessors_.place.Gs.formattedPrediction;
+
+      // Get all keys of result.gm_accessors_.place
+      const keys = Object.keys(result.gm_accessors_.place);
+
+      // Iterate over keys and find the one containing formattedPrediction
+      for (let i = 0; i < keys.length; i++) {
+        const key = keys[i];
+        if (result.gm_accessors_.place[key].formattedPrediction) {
+          formattedPrediction =
+            result.gm_accessors_.place[key].formattedPrediction;
+          break; // Exit loop once formattedPrediction is found
+        }
       }
+
+      // Use formattedPrediction here
+      console.log(formattedPrediction);
 
       if (formattedPrediction) {
         setFieldValue("city", formattedPrediction);
@@ -44,6 +66,8 @@ const PlaceApi = ({ isEditProfile, existingCityValue }) => {
       const removePlaceBtn =
         document.querySelector("gmpx-place-picker").shadowRoot?.children[1]
           ?.children[1].children[1];
+
+      removePlaceBtn.style.display = "none";
 
       const handleInputBlur = () => {
         if (placeInput.value.trim() === "") {
