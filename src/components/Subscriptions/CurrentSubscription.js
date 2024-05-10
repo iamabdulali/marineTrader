@@ -16,7 +16,7 @@ const CurrentSubscription = ({
   subscription_plan_id,
 }) => {
   const dynamicClasses =
-    packageName == "Broker plus" || "Dealer plus"
+    packageName == "Broker plus" || packageName == "Dealer plus"
       ? "border-[#36B37E] text-[#36B37E] "
       : "border-[#FFB800] text-[#FFB800]";
 
@@ -69,7 +69,7 @@ const CurrentSubscription = ({
             (12 months package)
           </span>
         </p>
-        {packageName == "Broker plus" || "Dealer plus" ? (
+        {packageName == "Broker plus" || packageName == "Dealer plus" ? (
           <Link
             to={`/payment/subscription/${subscription_plan_id}`}
             onClick={() => {
@@ -81,7 +81,7 @@ const CurrentSubscription = ({
               // document.querySelector(`.${selectedCategory?.name}`).click();
             }}
             className={`border-[3px] sm:w-auto ${
-              packageName == "Broker plus"
+              packageName == "Broker plus" || packageName == "Dealer plus"
                 ? "hover:bg-[#36B37E]"
                 : "hover:bg-[#FFB800]"
             } ] hover:text-white w-full sm:text-base text-sm  text-center block rounded-md  py-3 px-10 font-semibold ${dynamicClasses}`}
@@ -99,7 +99,7 @@ const CurrentSubscription = ({
               // document.querySelector(`.category-${categoryId}`).click();
             }}
             className={`border-[3px] sm:w-auto ${
-              packageName == "Broker plus" || "Dealer plus"
+              packageName == "Broker plus" || packageName == "Dealer plus"
                 ? "hover:bg-[#36B37E]"
                 : "hover:bg-[#FFB800]"
             } ] hover:text-white w-full sm:text-base text-sm  text-center block rounded-md  py-3 px-10 font-semibold ${dynamicClasses}`}
@@ -124,14 +124,14 @@ const CurrentSubscription = ({
           <div className="flex items-baseline font-medium gap-4" key={index}>
             <p
               className={`${
-                packageName == "Broker plus" || "Dealer plus"
+                packageName == "Broker plus" || packageName == "Dealer plus"
                   ? "bg-[#e1f4ec]"
                   : "bg-[#ffb80021]"
               } mt-5 rounded-full h-6 w-6 flex items-center justify-center `}
             >
               <FaCheck
                 color={
-                  packageName == "Broker plus" || "Dealer plus"
+                  packageName == "Broker plus" || packageName == "Dealer plus"
                     ? "#36B37E"
                     : "#FFB800"
                 }
