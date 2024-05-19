@@ -12,14 +12,20 @@ import LoadingWrapper from "../../utils/LoadingWrapper";
 import axios from "axios";
 import { SERVER_BASE_URL } from "../..";
 import { toast } from "react-toastify";
+import { isUserLoggedIn } from "../../utils/isLoggedIn";
 
 const ContactUs = () => {
   const { selectedCategory, categories } = useContext(AuthContext);
   const [spinner, setSpinner] = useState(false);
   const [loading, setLoading] = useState(true);
+
+  const { user } = useContext(AuthContext);
+  const { seller_type, email, phone_no, city, country, user_name } =
+    Object(user);
+
   const initialValues = {
-    user_name: "",
-    user_email: "",
+    user_name: isUserLoggedIn() ? user_name : "",
+    user_email: isUserLoggedIn() ? email : "",
     category: "",
     category_selection: "",
     description: "",
@@ -53,9 +59,6 @@ const ContactUs = () => {
     categories?.length != 0 ? setLoading(false) : setLoading(true);
   }, [categories]);
 
-  const { user } = useContext(AuthContext);
-  const { seller_type, email, phone_no, city, country } = Object(user);
-
   return (
     <LoadingWrapper
       loading={loading}
@@ -76,41 +79,38 @@ const ContactUs = () => {
           <div
             className={`bg-white sm:p-5 py-7 px-3 lg:w-7/12 w-full rounded-lg shadow-[7px]`}
           >
-            {/* <p className="font-medium text-sm">Seller Type</p>
-            <div className="flex items-center justify-between mt-4 border-2 rounded-md p-3 text-sm font-medium">
-              <button className="bg-[#0D1A8B] hover:bg-[#0a1dbd] text-white py-4 rounded-sm block w-full">
-                Private
-              </button>
-              <button className="block w-full">Seller</button>
-              <button className="block w-full">Not a Member</button>
-            </div> */}
             <Formik initialValues={initialValues} onSubmit={onSubmit}>
               {({ isValid, values, setErrors, setTouched, setFieldValue }) => (
                 <Form className="mt-4 ">
-                  <div className="sm:flex-row flex-col flex items-center gap-5">
-                    <div className="w-full">
-                      <label className="text-sm font-medium block mb-1">
-                        Username
-                      </label>
-                      <Field
-                        type="text"
-                        name="user_name"
-                        className="border-2 rounded-md px-3 py-3 w-full text-sm"
-                        placeholder="Username"
-                      />
+                  {isUserLoggedIn() ? (
+                    ""
+                  ) : (
+                    <div className="sm:flex-row flex-col flex items-center gap-5">
+                      <div className="w-full">
+                        <label className="text-sm font-medium block mb-1">
+                          Username
+                        </label>
+                        <Field
+                          type="text"
+                          name="user_name"
+                          className="border-2 rounded-md px-3 py-3 w-full text-sm"
+                          placeholder="Username"
+                        />
+                      </div>
+                      <div className="w-full">
+                        <label className="text-sm font-medium block mb-1">
+                          Email
+                        </label>
+                        <Field
+                          type="email"
+                          name="user_email"
+                          className="border-2 rounded-md px-3 py-3 w-full text-sm"
+                          placeholder="Email"
+                        />
+                      </div>
                     </div>
-                    <div className="w-full">
-                      <label className="text-sm font-medium block mb-1">
-                        Email
-                      </label>
-                      <Field
-                        type="email"
-                        name="user_email"
-                        className="border-2 rounded-md px-3 py-3 w-full text-sm"
-                        placeholder="Email"
-                      />
-                    </div>
-                  </div>
+                  )}
+
                   <div className="mt-6">
                     <p className=" font-semibold">Enquiry Information</p>
                     <p className=" text-sm font-semibold mt-7">

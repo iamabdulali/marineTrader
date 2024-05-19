@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { greenNotification } from "../../assets";
+import { greenNotification, warningIcon } from "../../assets";
 import Layout from "../../components/Layout/Layout";
 import { Link } from "react-router-dom";
 import { fetchOptions } from "../../utils/fetch/fetchData";
 import TimeAgo from "../../components/TimeAgo";
 import LoadingWrapper from "../../utils/LoadingWrapper";
+import { GiRadiations } from "react-icons/gi";
 
 export default function Notifications() {
   const [notifications, setNotifications] = useState([]);
@@ -37,6 +38,10 @@ export default function Notifications() {
       type: "AppModelsOffer",
       path: "/offers",
     },
+    {
+      type: "AppModelsAlertNotification",
+      path: "/selling",
+    },
   ];
 
   return (
@@ -59,14 +64,9 @@ export default function Notifications() {
                       /\\/g,
                       ""
                     );
-                    console.log(
-                      "Cleaned Notifiable Type:",
-                      cleanedNotifiableType
-                    );
-                    console.log("Type:", type);
+
                     const generatedPath =
                       type === cleanedNotifiableType ? path : "";
-                    console.log("Generated Path:", generatedPath);
                     return generatedPath;
                   })
                   .find((path) => path)} // Find the first non-empty path
@@ -75,7 +75,12 @@ export default function Notifications() {
               >
                 <img
                   className="w-10"
-                  src={greenNotification}
+                  src={
+                    notifiable_type.replace(/\\/g, "") ==
+                    "AppModelsAlertNotification"
+                      ? warningIcon
+                      : greenNotification
+                  }
                   alt="Notification"
                 />
                 <div>
