@@ -1,66 +1,52 @@
-import { useState } from "react";
-import { useAuthContext } from "./useAuthContext";
+import { useContext, useState } from "react";
+import { toast } from "react-toastify";
+import { AuthContext } from "../Context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import { displayErrorMessages } from "../utils/displayErrors";
 import axios from "axios";
+import { SERVER_BASE_URL } from "..";
 
-export const useSignup = () => {
-  const { dispatch } = useAuthContext();
-  const [error, setError] = useState(null);
-  const [isLoading, setIsLoading] = useState(null);
+const useSignUp = () => {
+  const NavigateTo = useNavigate();
+  const [spinner, setSpinner] = useState(false);
+  const { dispatch } = useContext(AuthContext);
+  let updatedValues = {};
 
-  const signup = async (
-    name,
-    email,
-    buildingNumber,
-    streetName,
-    city,
-    postcode,
-    country,
-    phoneNo,
-    timeZone,
-    password,
-    sellerType,
-    imageField
-  ) => {
-    setIsLoading(true);
-    setError(null);
-
-    const response = await fetch(
-      "https://marine.takhleeqsoft.com/public/api/register",
-      {
-        method: "post",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name,
-          email,
-          buildingNumber,
-          streetName,
-          city,
-          postcode,
-          country,
-          phoneNo,
-          timeZone,
-          password,
-          sellerType,
-          imageField,
-        }),
-      }
-    );
-
-    const json = await response.json();
-
-    if (!response.ok) {
-      setError(json.error);
-    }
-    if (response.ok) {
-      localStorage.setItem("user", JSON.stringify(json));
-      dispatch({ typeof: "LOGIN", payload: JSON });
+  const signUp = async (values, url, sellerType = "trade") => {
+    if (sellerType == "trade") {
+      Object.assign(updatedValues, {
+        ...values,
+        service_hours: JSON.stringify(values.service_hours),
+      });
+    } else {
+      updatedValues = {};
     }
 
-    // const response = .....
-
-    // localStorage.setItem('user', JSON.stringify())
-
-    // dispatch({typeof:'LOGIN', payload:JSON})
+    setSpinner(true);
+    try {
+      const { data } = await axios.post(
+        `${SERVER_BASE_URL}/${url}`,
+        sellerType == "trade" ? updatedValues : values,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      toast.success(data.message);
+      localStorage.setItem("token", data.token);
+      dispatch({ type: "SET_USER", payload: data.data });
+      setSpinner(false);
+      NavigateTo("/dashboard");
+    } catch (error) {
+      console.error("An unexpected error occurred:", error);
+      const { errors } = error.response.data;
+      displayErrorMessages(errors);
+      setSpinner(false);
+    }
   };
-  return { signup, error };
+
+  return { signUp, spinner };
 };
+
+export default useSignUp;

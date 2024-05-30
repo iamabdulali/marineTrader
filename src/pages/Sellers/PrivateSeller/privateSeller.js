@@ -1,66 +1,19 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React from "react";
+import { Link } from "react-router-dom";
 import { Formik, Form } from "formik";
 import { privateSellerValidationSchema } from "../../../utils/ValidationSchema.js";
-import PrivateSellerSignUpForm from "../../../components/Forms/PrivateSellerSignUpForm.js";
 import Ship from "../../../assets/ship.png";
 import { logo } from "../../../assets/index.js";
-import Heading from "../../../components/Heading.jsx";
-import axios from "axios";
-import { toast } from "react-toastify";
-import { displayErrorMessages } from "../../../utils/displayErrors.js";
 import { Oval } from "react-loader-spinner";
-import { SERVER_BASE_URL } from "../../../index.js";
-import { AuthContext } from "../../../Context/AuthContext.js";
-import { fetchOptions } from "../../../utils/fetch/fetchData.js";
+import { Heading, PrivateSellerSignUpForm } from "../../../components/index.js";
+import { privateSellerInitialValues } from "../../../utils/DummyData.js";
+import useSignUp from "../../../Hooks/useSignUp.js";
 
 const PrivateSeller = () => {
-  const { dispatch } = useContext(AuthContext);
-  const [spinner, setSpinner] = useState(false);
+  const { signUp, spinner } = useSignUp();
 
-  const NavigateTo = useNavigate();
-  const initialValues = {
-    name: "",
-    email: "",
-    building_number: "",
-    street_name: "",
-    city: "",
-    postcode: "",
-    country: "",
-    calling_code: "",
-    region: "",
-    currency: "",
-    phone_no: "",
-    timezone: "dasdad",
-    password: "",
-    sellerType: "private seller",
-    image_field: "",
-    user_name: "",
-  };
-
-  const onSubmit = async (values) => {
-    setSpinner(true);
-    try {
-      const { data } = await axios.post(
-        `${SERVER_BASE_URL}/private/register`,
-        values,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-      toast.success(data.message);
-      localStorage.setItem("token", data.token);
-      dispatch({ type: "SET_USER", payload: data.data });
-      setSpinner(false);
-      NavigateTo("/dashboard");
-    } catch (error) {
-      console.error("An unexpected error occurred:", error);
-      const { errors } = error.response.data;
-      displayErrorMessages(errors);
-      setSpinner(false);
-    }
+  const handleSignUp = async (values) => {
+    signUp(values, "private/register", "private");
   };
 
   return (
@@ -75,15 +28,12 @@ const PrivateSeller = () => {
         />
         {/* Left side (Form) */}
         <Formik
-          initialValues={initialValues}
+          initialValues={privateSellerInitialValues}
           validationSchema={privateSellerValidationSchema}
-          onSubmit={onSubmit}
+          onSubmit={handleSignUp}
         >
-          {({ handleSubmit, values, setFieldValue, errors, touched }) => (
-            <Form
-              onSubmit={handleSubmit}
-              className="flex flex-col gap-4 text-[#8891B2] text-sm md:mx-8 mx-0 mt-10"
-            >
+          {({ values, setFieldValue }) => (
+            <Form className="flex flex-col gap-4 text-[#8891B2] text-sm md:mx-8 mx-0 mt-10">
               <PrivateSellerSignUpForm
                 setFieldValue={setFieldValue}
                 values={values}

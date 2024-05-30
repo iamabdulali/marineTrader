@@ -3,24 +3,15 @@ import { eye } from "../../assets";
 import { FaChevronDown, FaEye } from "react-icons/fa";
 import { Field, ErrorMessage, useFormikContext } from "formik";
 import SelectDropdown from "./FormElements/SelectDropdown";
-
 import Heading from "../Heading";
 import { fetchOptions } from "../../utils/fetch/fetchData";
-import {
-  CitySelect,
-  CountrySelect,
-  StateSelect,
-  GetCountries,
-} from "react-country-state-city";
+import { GetCountries } from "react-country-state-city";
 import "react-country-state-city/dist/react-country-state-city.css";
 import CountryRegionDropdown from "../CountryRegionDropdown";
-import PlaceApi from "../Forms/PlaceApi.js";
 
-export default function TradeSellerCompanyInfoForm() {
+export default function TradeSellerCompanyInfoForm({ sellerType }) {
   const [showPassword1, setShowPassword1] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
-  const [countryid, setCountryid] = useState(0);
-  const [stateid, setstateid] = useState(0);
   const [currency, setCurrency] = useState([]);
   const [countries, setCountries] = useState([]);
   useEffect(() => {
@@ -38,19 +29,23 @@ export default function TradeSellerCompanyInfoForm() {
     }
   };
 
-  const { values, setFieldValue } = useFormikContext();
+  const { values } = useFormikContext();
 
   function getPhoneCodeByCountryName(countryName) {
     const country = countries.find((country) => country.id == countryName);
     return country ? country?.phone_code : null;
   }
 
+  const seller_type = sellerType == "trade" ? true : false;
+
   return (
-    <div className="md:mx-8 mx-0 ">
-      <Heading content="Company Info" />
-      {/* Left side (Form) */}
-      <div className="flex flex-col gap-4 text-[#8891B2] text-sm my-8">
-        {/* Form rows */}
+    <div className={`${seller_type ? "md:mx-8" : "md:mx-0"}  mx-0`}>
+      {seller_type ? <Heading content="Company Info" /> : ""}
+      <div
+        className={`flex flex-col gap-4 text-[#8891B2] text-sm ${
+          sellerType ? "my-8" : "my-0"
+        }`}
+      >
         <div className="flex gap-4 sm:flex-row flex-col">
           <div className="w-full">
             <Field
@@ -71,11 +66,11 @@ export default function TradeSellerCompanyInfoForm() {
             <Field
               className="border-[#CECED7] border-2 rounded-md p-3 w-full"
               type="text"
-              placeholder="Company Name"
-              name="company_name"
+              placeholder={`${seller_type ? "Company Name" : "Your Name"}`}
+              name={`${seller_type ? "company_name" : "name"}`}
             />
             <ErrorMessage
-              name="company_name"
+              name={`${seller_type ? "company_name" : "name"}`}
               component="span"
               className="text-red-500"
             />
@@ -109,9 +104,7 @@ export default function TradeSellerCompanyInfoForm() {
             />
           </div>
         </div>
-
         <CountryRegionDropdown />
-
         <div className="flex gap-4 sm:flex-row flex-col">
           <div className="w-full relative">
             {/* Country Code Dropdown */}

@@ -4,7 +4,6 @@ import CategoryList from "../../components/categoryList/CategoryList";
 import Heading from "../../components/Heading";
 import { Link, useNavigate } from "react-router-dom";
 import CurrentSubscription from "../../components/Subscriptions/CurrentSubscription";
-import { DealerPlus, ServicePlus } from "../../utils/DummyData";
 import SubscriptionStep2 from "./SubscriptionStep2";
 import { FaArrowLeft } from "react-icons/fa";
 import {
@@ -38,21 +37,6 @@ const Subscription = () => {
       navigate("/dashboard");
     }
   }, [user]);
-
-  const featuresArray = [
-    {
-      "Broker plus": DealerPlus,
-    },
-    {
-      "Service plus": ServicePlus,
-    },
-  ];
-
-  const featuresObject = featuresArray.reduce((acc, obj) => {
-    const key = Object.keys(obj)[0];
-    acc[key] = obj[key];
-    return acc;
-  }, {});
 
   const categoryToCheck = selectedCategory?.id;
 
@@ -110,24 +94,6 @@ const Subscription = () => {
         loading={loading}
         className="top-0 xl:-translate-x-0 -translate-x-1/2"
       >
-        {/* <div className="category-menu">
-          <CategoryList
-            initialCategory={-1}
-            className="flex smallLg:flex-nowrap smallLg:justify-between flex-wrap lg:w-full min-h-[88px] mt-5 justify-start smallLg:gap-0  gap-4 px-4 bg-white border-2 rounded-lg border-[#D9DFF5]
-               smallLg:w-auto"
-            activeCategory={`${
-              showAllActiveSubscriptions
-                ? "py-3"
-                : "border-b-4 border-[#0D1A8B] py-3"
-            } `}
-            unActiveCategory="py-3"
-            onCategoryChange={() => {
-              setShowAllActiveSubscription(false);
-            }}
-            onCategoryClick={() => {}}
-            categories={categories}
-          />
-        </div> */}
         <div className="category-menu overflow-x-auto ">
           <CategoryList
             className="flex flex-nowrap justify-between lg:w-full min-h-[88px]  smallLg:gap-0 gap-4 bg-white
