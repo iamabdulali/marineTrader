@@ -1,21 +1,16 @@
 import axios from "axios";
 import { ErrorMessage, Field, useFormikContext } from "formik";
-
 import { useEffect, useState } from "react";
-import { GetCity, GetCountries, GetState } from "react-country-state-city";
+import { GetCountries } from "react-country-state-city";
 import "react-country-state-city/dist/react-country-state-city.css";
 import { FaChevronDown } from "react-icons/fa";
 import PlaceApi from "./Forms/PlaceApi";
+import { getPhoneCodeByCountryName } from "../utils/getPhoneCodeByCountryName";
 
 const CountryRegionDropdown = () => {
   const [countries, setCountries] = useState([]);
   const [states, setStates] = useState([]);
   const [statesByCountries, setStatesByCountries] = useState([]);
-  const [country, setCountry] = useState([]);
-  const [cities, setCities] = useState([]);
-  const [AllStates, setAllStates] = useState([]);
-  const [cityByStates, setCitiesByStates] = useState([]);
-  const [customCity, setCustomCity] = useState(false);
 
   const { values, setFieldValue } = useFormikContext();
 
@@ -36,11 +31,6 @@ const CountryRegionDropdown = () => {
       "https://venkatmcajj.github.io/react-country-state-city/data/statesminified.json",
       setStates
     );
-
-    // getOptions(
-    //   "https://venkatmcajj.github.io/react-country-state-city/data/citiesminified.json",
-    //   setCities
-    // );
   }, []);
 
   function getStatesByCountry(countryId) {
@@ -56,26 +46,6 @@ const CountryRegionDropdown = () => {
   function getState(stateID) {
     const state = statesByCountries.find((state) => state.id == stateID);
     return state;
-  }
-
-  // useEffect(() => {
-  //   setAllStates((prevStates) => {
-  //     const newStates = cities.reduce((acc, city) => {
-  //       return acc.concat(Object(city).states);
-  //     }, []);
-
-  //     return [...prevStates, ...newStates];
-  //   });
-  // }, [cities]);
-
-  // function getCitiesByStates(stateID) {
-  //   const selectedCities = AllStates.find((state) => state.id == stateID);
-  //   setCitiesByStates(selectedCities.cities);
-  // }
-
-  function getPhoneCodeByCountryName(countryName) {
-    const country = countries.find((country) => country.id == countryName);
-    return country ? country?.phone_code : null;
   }
 
   return (
@@ -98,7 +68,10 @@ const CountryRegionDropdown = () => {
                 setFieldValue("region", "");
                 setFieldValue(
                   "calling_code",
-                  getPhoneCodeByCountryName(getCountry(e.target.value)?.id)
+                  getPhoneCodeByCountryName(
+                    countries,
+                    getCountry(e.target.value)?.id
+                  )
                 );
               }}
             >

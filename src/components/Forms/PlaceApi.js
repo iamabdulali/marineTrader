@@ -18,8 +18,6 @@ const PlaceApi = () => {
     });
   };
 
-  console.log(values.city);
-
   const handlePlaceSelect = async (updateQuery) => {
     try {
       const addressObject = await autoComplete.getPlace();
