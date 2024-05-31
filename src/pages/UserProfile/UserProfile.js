@@ -7,6 +7,7 @@ import { Formik } from "formik";
 import { deepEqual } from "../../utils/deepEqual";
 import MainForm from "./components/MainForm";
 import { useSignUp } from "../../Hooks";
+import { convertJSONToArray } from "../../utils/convertJSONToArray";
 
 const UserInfo = () => {
   const [loading, setLoading] = useState(true);
@@ -32,18 +33,6 @@ const UserInfo = () => {
 
   let updatedValues = {};
 
-  function convertJSONToArray(propertyName) {
-    if (
-      updatedValues.hasOwnProperty(propertyName) &&
-      Array.isArray(updatedValues[propertyName])
-    ) {
-      updatedValues[propertyName] =
-        propertyName === "service_hours"
-          ? JSON.stringify(updatedValues[propertyName])
-          : updatedValues[propertyName].map((property) => property.name);
-    }
-  }
-
   const onSubmit = async (values) => {
     for (const fieldName in values.user) {
       if (
@@ -53,9 +42,9 @@ const UserInfo = () => {
         updatedValues[fieldName] = values.user[fieldName];
       }
     }
-    convertJSONToArray("facilities");
-    convertJSONToArray("working_days");
-    convertJSONToArray("service_hours");
+    convertJSONToArray(updatedValues, "facilities");
+    convertJSONToArray(updatedValues, "working_days");
+    convertJSONToArray(updatedValues, "service_hours");
     signUp(
       isPrivateSeller ? "private/update" : "trade-seller/update",
       updatedValues,

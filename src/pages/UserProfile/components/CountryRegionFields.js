@@ -1,6 +1,7 @@
 import axios from "axios";
 import { Field } from "formik";
 import React, { useEffect, useState } from "react";
+import { getPhoneCodeByCountryName } from "../../../utils/getPhoneCodeByCountryName";
 
 function CountryRegionFields({
   values,
@@ -47,11 +48,6 @@ function CountryRegionFields({
     getStatesByCountry(values.user.country);
   }, [editable, states, countries]);
 
-  function getPhoneCodeByCountryName(countryName) {
-    const country = countries.find((country) => country.id == countryName);
-    return country ? country?.phone_code : null;
-  }
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFieldValue(`user.${name}`, value);
@@ -73,7 +69,10 @@ function CountryRegionFields({
               getStatesByCountry(e.target.value);
               setFieldValue(
                 "user.calling_code",
-                getPhoneCodeByCountryName(getCountry(e.target.value).id)
+                getPhoneCodeByCountryName(
+                  countries,
+                  getCountry(e.target.value).id
+                )
               );
             }}
             value={getCountry(values.user.country)?.id}

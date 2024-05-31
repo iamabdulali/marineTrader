@@ -1,6 +1,7 @@
 import { Field } from "formik";
 import React from "react";
 import { FormField } from "../../../components/FormField";
+import { getPhoneCodeByCountryName } from "../../../utils/getPhoneCodeByCountryName";
 
 function CurrencyAndPhoneFields({
   countries,
@@ -9,16 +10,11 @@ function CurrencyAndPhoneFields({
   onChange,
   editable,
 }) {
-  function getPhoneCodeByCountryName(countryName) {
-    const country = countries.find((country) => country.id == countryName);
-    return country ? country?.phone_code : null;
-  }
-
   return (
     <div className="flex sm:gap-6 items-center sm:flex-row flex-col relative">
       <div className="absolute left-0 sm:top-auto top-[14%] flex items-center ">
         <Field
-          value={getPhoneCodeByCountryName(values?.user.country)}
+          value={getPhoneCodeByCountryName(countries, values?.user.country)}
           as="select"
           name="calling_code"
           disabled={true}
