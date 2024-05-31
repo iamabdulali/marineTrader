@@ -1,38 +1,23 @@
-// CompanyInfo.js
 import React, { useContext, useEffect, useState } from "react";
 import Layout from "../../components/Layout/Layout";
 import { FaPencilAlt } from "react-icons/fa";
-import Tabs from "../../components/Tabs";
-import BusinessDetails from "./BusinessDetails";
-import ContactPersonDetails from "./ContactPersonDetails";
-import CompanyInfo from "./CompanyInfo";
 import { AuthContext } from "../../Context/AuthContext";
 import LoadingWrapper from "../../utils/LoadingWrapper";
-import { Formik, Form } from "formik";
-import { SERVER_BASE_URL } from "../..";
-import { toast } from "react-toastify";
-import { displayErrorMessages } from "../../utils/displayErrors";
-import axios from "axios";
-import { Oval } from "react-loader-spinner";
-import ImageSection from "./ImageSection";
+import { Formik } from "formik";
 import { deepEqual } from "../../utils/deepEqual";
+import MainForm from "./components/MainForm";
+import { useSignUp } from "../../Hooks";
 
 const UserInfo = () => {
   const [loading, setLoading] = useState(true);
-  const [selectedTab, setSelectedTab] = useState("companyInfo");
-  const [spinner, setSpinner] = useState(false);
-
-  const [editing, setEditing] = useState(false);
-  const { user, dispatch, refresh } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const { seller_type } = Object(user);
   const isPrivateSeller = seller_type == "private seller";
 
+  const { signUp, spinner, editing, setEditing } = useSignUp();
+
   const handleEditClick = () => {
     setEditing(true);
-  };
-
-  const handleTabClick = (tab) => {
-    setSelectedTab(tab);
   };
 
   useEffect(() => {
@@ -41,95 +26,42 @@ const UserInfo = () => {
     }
   }, [user]);
 
-  const tabs = [
-    { id: "companyInfo", label: "Company Info" },
-    { id: "businessDetails", label: "Business Details" },
-    { id: "contactPersonDetails", label: "Contact Person Details" },
-  ];
-
   const initialValues = {
     user,
   };
 
-  const onSubmit = async (values) => {
-    let updatedValues = {};
+  let updatedValues = {};
 
-    // Iterate over all fields in values.user object
+  function convertJSONToArray(propertyName) {
+    if (
+      updatedValues.hasOwnProperty(propertyName) &&
+      Array.isArray(updatedValues[propertyName])
+    ) {
+      updatedValues[propertyName] =
+        propertyName === "service_hours"
+          ? JSON.stringify(updatedValues[propertyName])
+          : updatedValues[propertyName].map((property) => property.name);
+    }
+  }
+
+  const onSubmit = async (values) => {
     for (const fieldName in values.user) {
-      console.log(fieldName);
-      // Check if the field exists in the user object and if its value has changed
       if (
         values.user.hasOwnProperty(fieldName) &&
         !deepEqual(values.user[fieldName], user[fieldName])
       ) {
-        // Update the updatedValues object with the new value
         updatedValues[fieldName] = values.user[fieldName];
       }
     }
-
-    // Convert facilities to an array of names if it's an array of objects
-    if (
-      updatedValues.hasOwnProperty("facilities") &&
-      Array.isArray(updatedValues["facilities"])
-    ) {
-      updatedValues["facilities"] = updatedValues["facilities"].map(
-        (facility) => facility.name
-      );
-    }
-
-    if (
-      updatedValues.hasOwnProperty("working_days") &&
-      Array.isArray(updatedValues["working_days"])
-    ) {
-      updatedValues["working_days"] = updatedValues["working_days"].map(
-        (day) => day.day
-      );
-    }
-
-    if (
-      updatedValues.hasOwnProperty("service_hours") &&
-      Array.isArray(updatedValues["service_hours"])
-    ) {
-      updatedValues["service_hours"] = JSON.stringify(
-        updatedValues["service_hours"]
-      );
-    }
-
-    // // Check if any updates are needed
-    // if (Object.keys(updatedValues).length === 0) {
-    //   // If no differences, no need to send any updates
-    //   return;
-    // }
-
-    setSpinner(true);
-
-    console.log(updatedValues);
-
-    try {
-      const { data } = await axios.post(
-        `${SERVER_BASE_URL}/${
-          isPrivateSeller ? "private" : "trade-seller"
-        }/update`,
-        updatedValues,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
-      toast.success(data.message);
-      dispatch({ type: "REFRESH_STATE", payload: !refresh });
-
-      dispatch({ type: "SET_USER", payload: data.data });
-      setSpinner(false);
-      setEditing(false);
-    } catch (error) {
-      console.error("An unexpected error occurred:", error);
-      const { errors } = error.response.data;
-      displayErrorMessages(errors);
-      setSpinner(false);
-    }
+    convertJSONToArray("facilities");
+    convertJSONToArray("working_days");
+    convertJSONToArray("service_hours");
+    signUp(
+      isPrivateSeller ? "private/update" : "trade-seller/update",
+      updatedValues,
+      "",
+      true
+    );
   };
   return (
     <Layout>
@@ -149,63 +81,14 @@ const UserInfo = () => {
         </div>
         <Formik onSubmit={onSubmit} initialValues={initialValues}>
           {({ values, setFieldValue }) => (
-            <Form>
-              <div className="mt-6 flex smallLg:flex-row flex-col rounded-lg bg-white min-h-screen">
-                <ImageSection
-                  setFieldValue={setFieldValue}
-                  company_logo={values.user.company_logo}
-                  image_field={values.user.image_field}
-                  main_picture={values.user.main_picture}
-                  isPrivateSeller={isPrivateSeller}
-                />
-                <div className="smallLg:w-8/12 w-full overflow-x-hidden">
-                  {isPrivateSeller ? (
-                    ""
-                  ) : (
-                    <div className="sm:overflow-x-hidden overflow-x-scroll userProfileTab">
-                      <Tabs
-                        tabs={tabs}
-                        selectedTab={selectedTab}
-                        handleTabClick={handleTabClick}
-                        className="xl:text-base text-sm sm:w-auto w-[700px]"
-                      />
-                    </div>
-                  )}
-                  <div className="tab-content px-6 py-10">
-                    {selectedTab === "companyInfo" && (
-                      <CompanyInfo
-                        editable={editing}
-                        user={user}
-                        isPrivateSeller={isPrivateSeller}
-                      />
-                    )}
-                    {selectedTab === "businessDetails" && (
-                      <BusinessDetails editable={editing} user={user} />
-                    )}
-                    {selectedTab === "contactPersonDetails" && (
-                      <ContactPersonDetails editable={editing} user={user} />
-                    )}
-                  </div>
-                </div>
-              </div>
-              <button
-                type="submit"
-                disabled={spinner}
-                className="hover:bg-[#0a1dbd] mt-6 block ml-auto bg-[#0D1A8B] hover:text-white font-medium text-white px-6 py-3 rounded cursor-pointer min-w-44 min-h-12"
-              >
-                {spinner ? (
-                  <Oval
-                    secondaryColor="#fff"
-                    color="#fff"
-                    width={20}
-                    height={20}
-                    wrapperClass="justify-center"
-                  />
-                ) : (
-                  " Save Changes"
-                )}
-              </button>
-            </Form>
+            <MainForm
+              setFieldValue={setFieldValue}
+              values={values}
+              spinner={spinner}
+              editing={editing}
+              user={user}
+              isPrivateSeller={isPrivateSeller}
+            />
           )}
         </Formik>
       </LoadingWrapper>

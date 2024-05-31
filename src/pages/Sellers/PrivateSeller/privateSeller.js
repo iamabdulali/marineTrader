@@ -13,7 +13,7 @@ const PrivateSeller = () => {
   const { signUp, spinner } = useSignUp();
 
   const handleSignUp = async (values) => {
-    signUp(values, "private/register", "private");
+    signUp("private/register", values);
   };
 
   return (
@@ -41,7 +41,7 @@ const PrivateSeller = () => {
               <button
                 type="submit"
                 disabled={spinner}
-                className="bg-[#0D1A8B] text-white p-3 rounded-md"
+                className="bg-[#0D1A8B] text-white p-3 rounded-md mb-12"
               >
                 {spinner ? (
                   <Oval

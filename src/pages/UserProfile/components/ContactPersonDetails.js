@@ -1,5 +1,5 @@
 import React from "react";
-import { FormField } from "../../components/FormField";
+import { FormField } from "../../../components/FormField";
 import { useFormikContext } from "formik";
 
 const ContactPersonDetails = ({ editable, user }) => {

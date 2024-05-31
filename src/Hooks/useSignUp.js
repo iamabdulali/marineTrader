@@ -10,34 +10,37 @@ const useSignUp = () => {
   const NavigateTo = useNavigate();
   const [spinner, setSpinner] = useState(false);
   const { dispatch } = useContext(AuthContext);
-  let updatedValues = {};
+  const [editing, setEditing] = useState(false);
 
-  const signUp = async (values, url, sellerType = "trade") => {
-    if (sellerType == "trade") {
-      Object.assign(updatedValues, {
-        ...values,
-        service_hours: JSON.stringify(values.service_hours),
-      });
-    } else {
-      updatedValues = {};
-    }
-
+  const signUp = async (
+    url,
+    updatedValues = {},
+    navigate = "/dashboard",
+    refresh
+  ) => {
     setSpinner(true);
     try {
       const { data } = await axios.post(
         `${SERVER_BASE_URL}/${url}`,
-        sellerType == "trade" ? updatedValues : values,
+        updatedValues,
         {
           headers: {
             "Content-Type": "multipart/form-data",
+            Authorization: refresh
+              ? `Bearer ${localStorage.getItem("token")}`
+              : "",
           },
         }
       );
       toast.success(data.message);
       localStorage.setItem("token", data.token);
       dispatch({ type: "SET_USER", payload: data.data });
+      if (refresh) {
+        dispatch({ type: "REFRESH_STATE", payload: !refresh });
+      }
       setSpinner(false);
-      NavigateTo("/dashboard");
+      setEditing(false);
+      NavigateTo(navigate);
     } catch (error) {
       console.error("An unexpected error occurred:", error);
       const { errors } = error.response.data;
@@ -46,7 +49,7 @@ const useSignUp = () => {
     }
   };
 
-  return { signUp, spinner };
+  return { signUp, spinner, editing, setEditing };
 };
 
 export default useSignUp;

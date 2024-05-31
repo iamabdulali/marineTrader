@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FaPencilAlt } from "react-icons/fa";
-import { cameraIcon } from "../../assets";
+import { cameraIcon } from "../../../assets";
 
 const ImageSection = ({
   isPrivateSeller,

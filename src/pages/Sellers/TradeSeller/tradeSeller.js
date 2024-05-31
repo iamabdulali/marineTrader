@@ -1,24 +1,19 @@
 // TradeSeller.js
 import React from "react";
-import { Formik, Form } from "formik";
+import { Formik } from "formik";
 import Ship from "../../../assets/ship.png";
 import { logo } from "../../../assets";
 import { validationSchema } from "../../../utils/ValidationSchema";
 import { Link } from "react-router-dom";
-import { Oval } from "react-loader-spinner";
 import {
   stepOneFields,
   stepThreeFields,
   stepTwoFields,
   tradeSellerInitialValues,
 } from "../../../utils/DummyData";
-import {
-  ProgressSteps,
-  TradeSellerCompanyInfoForm,
-  TradeSellerFacilitiesForm,
-  TradeSellerServiceHoursForm,
-} from "../../../components";
+import { ProgressSteps } from "../../../components";
 import { useErrorDisplay, useSignUp } from "../../../Hooks";
+import MainForm from "../../../components/Forms/FormElements/MainForm";
 
 const TradeSeller = () => {
   const { step, setStep, nextStep } = useErrorDisplay(
@@ -36,7 +31,11 @@ const TradeSeller = () => {
   const { signUp, spinner } = useSignUp();
 
   const onSubmit = async (values) => {
-    signUp(values, "trade-seller/register", "trade");
+    const updatedValues = {
+      ...values,
+      service_hours: JSON.stringify(values.service_hours),
+    };
+    signUp("trade-seller/register", updatedValues);
   };
 
   return (
@@ -59,53 +58,15 @@ const TradeSeller = () => {
           validationSchema={validationSchema}
         >
           {({ isValid, values, setErrors, setTouched }) => (
-            <Form>
-              {" "}
-              {step === 1 && <TradeSellerCompanyInfoForm sellerType="trade" />}
-              {step === 2 && <TradeSellerServiceHoursForm values={values} />}
-              {step === 3 && <TradeSellerFacilitiesForm />}
-              <div className="text-right sm:mr-8 mt-10 flex items-center gap-5 justify-end">
-                {step > 1 && (
-                  <button
-                    type="button"
-                    onClick={prevStep}
-                    className="bg-[#8891B2] text-white p-3 rounded-md w-28 "
-                  >
-                    Back
-                  </button>
-                )}
-                {step < 3 ? (
-                  <button
-                    type="button"
-                    onClick={() => nextStep(values, { setTouched, setErrors })}
-                    className={`bg-[#0D1A8B] hover:bg-[#0a1dbd] text-white p-3 rounded-md w-28`}
-                  >
-                    Next
-                  </button>
-                ) : (
-                  <button
-                    type="button"
-                    onClick={() => onSubmit(values)}
-                    disabled={!isValid}
-                    className={`bg-[#0D1A8B] hover:bg-[#0a1dbd] text-white p-3 min-h-12 rounded-md w-28  ${
-                      isValid ? "opacity-100" : "opacity-70"
-                    }`}
-                  >
-                    {spinner ? (
-                      <Oval
-                        secondaryColor="#fff"
-                        color="#fff"
-                        width={20}
-                        height={20}
-                        wrapperClass="justify-center"
-                      />
-                    ) : (
-                      " Submit"
-                    )}
-                  </button>
-                )}
-              </div>
-            </Form>
+            <MainForm
+              values={values}
+              isValid={isValid}
+              prevStep={prevStep}
+              spinner={spinner}
+              step={step}
+              onSubmit={() => onSubmit(values)}
+              nextStep={() => nextStep(values, { setTouched, setErrors })}
+            />
           )}
         </Formik>
       </div>

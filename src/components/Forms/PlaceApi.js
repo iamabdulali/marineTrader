@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 
 let autoComplete;
 
-const PlaceApi = () => {
+const PlaceApi = ({ isEditProfile }) => {
   const { values, setFieldValue } = useFormikContext();
   const [query, setQuery] = useState("");
   const autoCompleteRef = useRef(null);
@@ -24,7 +24,7 @@ const PlaceApi = () => {
 
       const query = addressObject.formatted_address;
       updateQuery(query);
-      setFieldValue("city", query);
+      setFieldValue(`${isEditProfile ? "user.city" : "city"}`, query);
       console.log({ query });
     } catch (error) {
       console.log(error);
@@ -42,10 +42,13 @@ const PlaceApi = () => {
         className="w-full border-2 p-[.75em] rounded-md border-[#CECED7]"
         onChange={(event) => {
           setQuery(event.target.value);
-          setFieldValue("city", event.target.value);
+          setFieldValue(
+            `${isEditProfile ? "user.city" : "city"}`,
+            event.target.value
+          );
         }}
         placeholder="Search Places ..."
-        value={query}
+        value={query || values?.city}
       />
       <ErrorMessage component="span" name="city" className="text-red-500" />
     </div>

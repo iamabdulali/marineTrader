@@ -1,13 +1,11 @@
-import React, { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { logo } from "../../assets";
 import { loginValidationSchema } from "../../utils/ValidationSchema";
-import { toast } from "react-toastify";
-import axios from "axios";
 import { Oval } from "react-loader-spinner";
-import { SERVER_BASE_URL } from "../..";
 import { AuthContext } from "../../Context/AuthContext";
+import { useSignUp } from "../../Hooks";
 
 const Login = () => {
   const initialValues = {
@@ -15,38 +13,18 @@ const Login = () => {
     password: "",
   };
 
-  const [spinner, setSpinner] = useState(false);
-  const { fcmToken, dispatch } = useContext(AuthContext);
-  const NavigateTo = useNavigate();
+  const { fcmToken } = useContext(AuthContext);
+  const { signUp, spinner } = useSignUp();
 
   console.log(fcmToken);
 
   const onSubmit = async (values) => {
-    setSpinner(true);
     const updatedValues = {
       ...values,
       fcm_token: fcmToken,
     };
-    try {
-      const { data } = await axios.post(
-        `${SERVER_BASE_URL}/login`,
-        updatedValues,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-      toast.success(data.message);
-      localStorage.setItem("token", data.token);
-      dispatch({ type: "SET_USER", payload: data.data });
-      setSpinner(false);
-      NavigateTo("/dashboard");
-    } catch (error) {
-      console.error("An unexpected error occurred:", error);
-      toast.error(error.response.data.message);
-      setSpinner(false);
-    }
+
+    signUp("login", updatedValues);
   };
 
   return (
